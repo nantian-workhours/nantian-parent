@@ -2,7 +2,6 @@ package cn.com.nantian.controller;
 
 import cn.com.nantian.pojo.NtDepartment;
 import cn.com.nantian.pojo.entity.ResponseData;
-import cn.com.nantian.pojo.entity.Result;
 import cn.com.nantian.service.DepartmentService;
 import cn.com.nantian.service.UserService;
 import org.slf4j.Logger;

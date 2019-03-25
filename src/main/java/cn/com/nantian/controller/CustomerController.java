@@ -2,7 +2,7 @@ package cn.com.nantian.controller;
 
 
 import cn.com.nantian.pojo.NtCustTypeKey;
-import cn.com.nantian.pojo.entity.Result;
+
 import cn.com.nantian.service.CustomerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,19 +31,19 @@ public class CustomerController {
     }
 
     //新增客户类别管理
-    @RequestMapping("addtype")
-    @ResponseBody
-    public Result addType(String projectName,Map<String ,String> type,String leave){
-        try {
-            customerService.addCustType(projectName,type,leave);
-            return new Result(true, "添加成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "添加失败");
-        }
+//    @RequestMapping("addtype")
+//    @ResponseBody
+//    public Result addType(String projectName,Map<String ,String> type,String leave){
+//        try {
+//            customerService.addCustType(projectName,type,leave);
+//            return new Result(true, "添加成功");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return new Result(false, "添加失败");
+//        }
+//
 
-
-    }
+//    }
 
 
 

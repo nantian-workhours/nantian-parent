@@ -4,7 +4,6 @@ package cn.com.nantian.controller;
 import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtTypeDictionaries;
 import cn.com.nantian.pojo.entity.ResponseData;
-import cn.com.nantian.pojo.entity.Result;
 import cn.com.nantian.service.SystemService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;

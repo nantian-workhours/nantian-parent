@@ -2,7 +2,7 @@ package cn.com.nantian.controller;
 
 import cn.com.nantian.pojo.*;
 import cn.com.nantian.pojo.entity.ResponseData;
-import cn.com.nantian.pojo.entity.Result;
+
 import cn.com.nantian.service.CustomerService;
 import cn.com.nantian.service.DepartmentService;
 import cn.com.nantian.service.PerAliasService;
