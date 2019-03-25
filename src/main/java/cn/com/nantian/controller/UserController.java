@@ -1,23 +1,19 @@
 package cn.com.nantian.controller;
 
-import cn.com.nantian.pojo.*;
+import cn.com.nantian.pojo.Item1;
+import cn.com.nantian.pojo.NtPersonnel;
+import cn.com.nantian.pojo.PersonnelItem;
 import cn.com.nantian.pojo.entity.ResponseData;
-
-import cn.com.nantian.service.CustomerService;
 import cn.com.nantian.service.DepartmentService;
 import cn.com.nantian.service.PerAliasService;
 import cn.com.nantian.service.UserService;
-import com.alibaba.fastjson.JSONObject;
-import org.springframework.data.annotation.Reference;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.List;
 
 //员工录入信息
 @Controller
@@ -31,8 +27,6 @@ public class UserController {
     private DepartmentService departmentService;
     @Resource
     private PerAliasService perAliasService;
-    @Resource
-    private CustomerService customerService;
 
 
     /**添加员工基本信息NT_PERSONNEL
