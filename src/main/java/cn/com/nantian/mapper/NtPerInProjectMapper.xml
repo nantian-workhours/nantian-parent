@@ -87,6 +87,16 @@
     </if>
   </select>
 
+  <!-- 查询员工项目集合 start-->
+  <select id="selectPerInProjectList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProject" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_per_in_project t
+    WHERE t.PROJECT_NUMBER=#{projectNumber}
+    AND (t.PROJECT_ENDDATE>= NOW() or  t.PROJECT_ENDDATE is null )
+  </select>
+  <!-- 查询项目人数 end-->
+
   <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

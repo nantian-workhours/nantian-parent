@@ -69,6 +69,29 @@
   <sql id="Base_Column_List" >
     PROJECT_NUMBER, PROJECT_NAME, CUST_TYPE, DEPT_ID, CHARGE_ID
   </sql>
+  <!--查询客户信息列表 -->
+  <select id="selectCustomerList" parameterType="cn.com.nantian.pojo.NtProjectInfo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />,
+    nt_department.DEPT_NAME,
+    nt_personnel.`NAME` chargeName
+    from nt_project_info
+    LEFT JOIN nt_department ON nt_project_info.DEPT_ID=nt_department.DEPT_ID
+    LEFT JOIN nt_personnel ON nt_project_info.CHARGE_ID=nt_personnel.PER_ID
+    <where>
+      <if test="deptId !=null and deptId >0">
+        and nt_project_info.DEPT_ID =#{deptId}
+      </if>
+      <if test="custType !=null and custType !=''">
+        and nt_project_info.CUST_TYPE = #{custType}
+      </if>
+      <if test="projectName !=null and projectName !=''">
+        and nt_project_info.PROJECT_NAME like CONCAT('%',#{projectName},'%')
+      </if>
+    </where>
+    order by nt_project_info.PROJECT_NUMBER DESC
+  </select>
+  <!--查询客户信息列表 -->
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtProjectInfoExample" >
     select
     <if test="distinct" >

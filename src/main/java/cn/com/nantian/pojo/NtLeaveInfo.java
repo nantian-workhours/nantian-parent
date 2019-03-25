@@ -1,8 +1,17 @@
 package cn.com.nantian.pojo;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.util.Date;
 
+
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class NtLeaveInfo {
+    /**主键id*/
+    private Integer priceId;
+
     private String custType;
 
     private String workType;
@@ -17,59 +26,14 @@ public class NtLeaveInfo {
 
     private Integer projectNumber;
 
-    public String getCustType() {
-        return custType;
-    }
+    //====================================
+    /**客户类别名称*/
+    private String custTypeName;
+    /**工作类别名称*/
+    private String workTypeName;
+    /**技术等级名称*/
+    private String workLeaveName;
 
-    public void setCustType(String custType) {
-        this.custType = custType == null ? null : custType.trim();
-    }
 
-    public String getWorkType() {
-        return workType;
-    }
 
-    public void setWorkType(String workType) {
-        this.workType = workType == null ? null : workType.trim();
-    }
-
-    public String getWorkLeave() {
-        return workLeave;
-    }
-
-    public void setWorkLeave(String workLeave) {
-        this.workLeave = workLeave == null ? null : workLeave.trim();
-    }
-
-    public Double getLeavePrice() {
-        return leavePrice;
-    }
-
-    public void setLeavePrice(Double leavePrice) {
-        this.leavePrice = leavePrice;
-    }
-
-    public Date getProjectBegdate() {
-        return projectBegdate;
-    }
-
-    public void setProjectBegdate(Date projectBegdate) {
-        this.projectBegdate = projectBegdate;
-    }
-
-    public Date getProjectEnddate() {
-        return projectEnddate;
-    }
-
-    public void setProjectEnddate(Date projectEnddate) {
-        this.projectEnddate = projectEnddate;
-    }
-
-    public Integer getProjectNumber() {
-        return projectNumber;
-    }
-
-    public void setProjectNumber(Integer projectNumber) {
-        this.projectNumber = projectNumber;
-    }
 }

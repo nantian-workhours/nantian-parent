@@ -1,35 +1,29 @@
 package cn.com.nantian.pojo;
 
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
 import java.io.Serializable;
 
+/**
+ * 客户类型实体
+ */
+@Data
+@EqualsAndHashCode(callSuper = false)
 public class NtCustTypeKey implements Serializable {
+    /**客户类别*/
     private String custType;
-
+    /**工作类别*/
     private String workType;
-
+    /**工作级别*/
     private String workLeave;
 
-    public String getCustType() {
-        return custType;
-    }
+    //============================
+    /**客户类别名称*/
+    private String custTypeName;
+    /**工作类别名称*/
+    private String workTypeName;
+    /**工作级别名称*/
+    private String workLeaveName;
 
-    public void setCustType(String custType) {
-        this.custType = custType == null ? null : custType.trim();
-    }
-
-    public String getWorkType() {
-        return workType;
-    }
-
-    public void setWorkType(String workType) {
-        this.workType = workType == null ? null : workType.trim();
-    }
-
-    public String getWorkLeave() {
-        return workLeave;
-    }
-
-    public void setWorkLeave(String workLeave) {
-        this.workLeave = workLeave == null ? null : workLeave.trim();
-    }
 }

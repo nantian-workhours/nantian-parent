@@ -2,10 +2,29 @@ package cn.com.nantian.mapper;
 
 import cn.com.nantian.pojo.NtDictionariesExample;
 import cn.com.nantian.pojo.NtDictionariesKey;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface NtDictionariesMapper {
+
+    /**
+     * @Description: 根据条件查询字典数据
+     * @Param: [dictionariesKey]
+     * @Return: java.util.List<cn.com.nantian.pojo.NtDictionariesKey>
+     * @Auther: Fly
+     * @Date: 2019/3/19 16:46
+     **/
+    List<NtDictionariesKey> selectDictionariesList(NtDictionariesKey dictionariesKey);
+
+    /**
+     * @Description: 根据条件查询字典数据
+     * @Param: [dictionariesKey]
+     * @Return: cn.com.nantian.pojo.NtDictionariesKey
+     * @Auther: Fly
+     * @Date: 2019/3/20 15:25
+     **/
+    NtDictionariesKey selectDictionaries(NtDictionariesKey dictionariesKey);
     /**
      * 根据参数类型和code值查询
      * @param dicType

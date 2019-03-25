@@ -67,6 +67,28 @@
   <sql id="Base_Column_List" >
     CUST_TYPE, WORK_TYPE, WORK_LEAVE
   </sql>
+  <!-- 查询客户类型集合 start-->
+  <select id="selectCustTypeList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_cust_type
+    <where>
+      <if test="custType !=null and custType !=''">
+        nt_cust_type.CUST_TYPE=#{custType}
+      </if>
+    </where>
+  </select>
+  <!-- 查询客户类型集合 end-->
+  <!-- 查询客户类型 start-->
+  <select id="selectCustType" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_cust_type
+    WHERE CUST_TYPE=#{custType}
+    AND WORK_TYPE=#{workType}
+    AND WORK_LEAVE=#{workLeave}
+  </select>
+  <!-- 查询客户类型 end-->
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustTypeExample" >
     select
     <if test="distinct" >
@@ -84,8 +106,8 @@
   <delete id="deleteByPrimaryKey" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
     delete from nt_cust_type
     where CUST_TYPE = #{custType,jdbcType=VARCHAR}
-      and WORK_TYPE = #{workType,jdbcType=CHAR}
-      and WORK_LEAVE = #{workLeave,jdbcType=CHAR}
+    and WORK_TYPE = #{workType,jdbcType=CHAR}
+    and WORK_LEAVE = #{workLeave,jdbcType=CHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtCustTypeExample" >
     delete from nt_cust_type
@@ -95,9 +117,9 @@
   </delete>
   <insert id="insert" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
     insert into nt_cust_type (CUST_TYPE, WORK_TYPE, WORK_LEAVE
-      )
+    )
     values (#{custType,jdbcType=VARCHAR}, #{workType,jdbcType=CHAR}, #{workLeave,jdbcType=CHAR}
-      )
+    )
   </insert>
   <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
     insert into nt_cust_type
@@ -150,10 +172,24 @@
   <update id="updateByExample" parameterType="map" >
     update nt_cust_type
     set CUST_TYPE = #{record.custType,jdbcType=VARCHAR},
-      WORK_TYPE = #{record.workType,jdbcType=CHAR},
-      WORK_LEAVE = #{record.workLeave,jdbcType=CHAR}
+    WORK_TYPE = #{record.workType,jdbcType=CHAR},
+    WORK_LEAVE = #{record.workLeave,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
+  </update>
+  <update id="updateCustType" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
+    update nt_cust_type
+    <set>
+      <if test="custType != null" >
+        CUST_TYPE = #{custType},
+      </if>
+      <if test="workType != null" >
+        WORK_TYPE = #{workType},
+      </if>
+      <if test="workLeave != null" >
+        WORK_LEAVE = #{workLeave},
+      </if>
+    </set>
   </update>
 </mapper>

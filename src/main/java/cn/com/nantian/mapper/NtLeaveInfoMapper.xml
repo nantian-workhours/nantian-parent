@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.nantian.mapper.NtLeaveInfoMapper" >
   <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtLeaveInfo" >
+    <result column="PRICE_ID" property="priceId" jdbcType="INTEGER" />
     <result column="CUST_TYPE" property="custType" jdbcType="CHAR" />
     <result column="WORK_TYPE" property="workType" jdbcType="VARCHAR" />
     <result column="WORK_LEAVE" property="workLeave" jdbcType="VARCHAR" />
@@ -69,22 +70,23 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    CUST_TYPE, WORK_TYPE, WORK_LEAVE, LEAVE_PRICE, PROJECT_BEGDATE, PROJECT_ENDDATE, 
+    PRICE_ID,CUST_TYPE, WORK_TYPE, WORK_LEAVE, LEAVE_PRICE, PROJECT_BEGDATE, PROJECT_ENDDATE,
     PROJECT_NUMBER
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtLeaveInfoExample" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    DELETE from nt_leave_info
+    WHERE PRICE_ID = #{priceId}
+  </delete>
+  <select id="selectLeaveInfoList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtLeaveInfo" >
     select
-    <if test="distinct" >
-      distinct
-    </if>
     <include refid="Base_Column_List" />
     from nt_leave_info
-    <if test="_parameter != null" >
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null" >
-      order by ${orderByClause}
-    </if>
+  </select>
+  <select id="selectLeaveInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_leave_info
+    WHERE PRICE_ID = #{priceId}
   </select>
   <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtLeaveInfoExample" >
     delete from nt_leave_info
@@ -93,12 +95,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.com.nantian.pojo.NtLeaveInfo" >
-    insert into nt_leave_info (CUST_TYPE, WORK_TYPE, WORK_LEAVE, 
-      LEAVE_PRICE, PROJECT_BEGDATE, PROJECT_ENDDATE, 
-      PROJECT_NUMBER)
-    values (#{custType,jdbcType=CHAR}, #{workType,jdbcType=VARCHAR}, #{workLeave,jdbcType=VARCHAR}, 
-      #{leavePrice,jdbcType=DOUBLE}, #{projectBegdate,jdbcType=DATE}, #{projectEnddate,jdbcType=DATE}, 
-      #{projectNumber,jdbcType=INTEGER})
+    insert into nt_leave_info (CUST_TYPE, WORK_TYPE, WORK_LEAVE,
+    LEAVE_PRICE, PROJECT_BEGDATE, PROJECT_ENDDATE,
+    PROJECT_NUMBER)
+    values (#{custType,jdbcType=CHAR}, #{workType,jdbcType=VARCHAR}, #{workLeave,jdbcType=VARCHAR},
+    #{leavePrice,jdbcType=DOUBLE}, #{projectBegdate,jdbcType=DATE}, #{projectEnddate,jdbcType=DATE},
+    #{projectNumber,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtLeaveInfo" >
     insert into nt_leave_info
@@ -155,44 +157,41 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-  <update id="updateByExampleSelective" parameterType="map" >
+  <update id="updateByExampleSelective" parameterType="cn.com.nantian.pojo.NtLeaveInfo" >
     update nt_leave_info
     <set >
-      <if test="record.custType != null" >
-        CUST_TYPE = #{record.custType,jdbcType=CHAR},
+      <if test="custType != null" >
+        CUST_TYPE = #{custType,jdbcType=CHAR},
       </if>
-      <if test="record.workType != null" >
-        WORK_TYPE = #{record.workType,jdbcType=VARCHAR},
+      <if test="workType != null" >
+        WORK_TYPE = #{workType,jdbcType=VARCHAR},
       </if>
-      <if test="record.workLeave != null" >
-        WORK_LEAVE = #{record.workLeave,jdbcType=VARCHAR},
+      <if test="workLeave != null" >
+        WORK_LEAVE = #{workLeave,jdbcType=VARCHAR},
       </if>
-      <if test="record.leavePrice != null" >
-        LEAVE_PRICE = #{record.leavePrice,jdbcType=DOUBLE},
+      <if test="leavePrice != null" >
+        LEAVE_PRICE = #{leavePrice,jdbcType=DOUBLE},
       </if>
-      <if test="record.projectBegdate != null" >
-        PROJECT_BEGDATE = #{record.projectBegdate,jdbcType=DATE},
+      <if test="projectBegdate != null" >
+        PROJECT_BEGDATE = #{projectBegdate,jdbcType=DATE},
       </if>
-      <if test="record.projectEnddate != null" >
-        PROJECT_ENDDATE = #{record.projectEnddate,jdbcType=DATE},
+      <if test="projectEnddate != null" >
+        PROJECT_ENDDATE = #{projectEnddate,jdbcType=DATE},
       </if>
-      <if test="record.projectNumber != null" >
-        PROJECT_NUMBER = #{record.projectNumber,jdbcType=INTEGER},
+      <if test="projectNumber != null" >
+        PROJECT_NUMBER = #{projectNumber,jdbcType=INTEGER},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
   </update>
   <update id="updateByExample" parameterType="map" >
     update nt_leave_info
     set CUST_TYPE = #{record.custType,jdbcType=CHAR},
-      WORK_TYPE = #{record.workType,jdbcType=VARCHAR},
-      WORK_LEAVE = #{record.workLeave,jdbcType=VARCHAR},
-      LEAVE_PRICE = #{record.leavePrice,jdbcType=DOUBLE},
-      PROJECT_BEGDATE = #{record.projectBegdate,jdbcType=DATE},
-      PROJECT_ENDDATE = #{record.projectEnddate,jdbcType=DATE},
-      PROJECT_NUMBER = #{record.projectNumber,jdbcType=INTEGER}
+    WORK_TYPE = #{record.workType,jdbcType=VARCHAR},
+    WORK_LEAVE = #{record.workLeave,jdbcType=VARCHAR},
+    LEAVE_PRICE = #{record.leavePrice,jdbcType=DOUBLE},
+    PROJECT_BEGDATE = #{record.projectBegdate,jdbcType=DATE},
+    PROJECT_ENDDATE = #{record.projectEnddate,jdbcType=DATE},
+    PROJECT_NUMBER = #{record.projectNumber,jdbcType=INTEGER}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>

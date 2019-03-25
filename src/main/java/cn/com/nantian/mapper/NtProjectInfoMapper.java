@@ -2,10 +2,20 @@ package cn.com.nantian.mapper;
 
 import cn.com.nantian.pojo.NtProjectInfo;
 import cn.com.nantian.pojo.NtProjectInfoExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface NtProjectInfoMapper {
+    /**
+     * @Description: 查询员工项目集合
+     * @Param: [perInProject]
+     * @Return: java.util.List<cn.com.nantian.pojo.NtPerInProject>
+     * @Auther: Fly
+     * @Date: 2019/3/20 10:16
+     **/
+    List<NtProjectInfo> selectPerInProjectList(NtProjectInfo ntProjectInfo);
+
     int countByExample(NtProjectInfoExample example);
 
     int deleteByExample(NtProjectInfoExample example);

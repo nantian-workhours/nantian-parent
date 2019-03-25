@@ -76,6 +76,30 @@
     </if>
   </select>
 
+  <!-- 根据条件查询数据 start-->
+  <select id="selectDictionariesList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtDictionariesKey" >
+    select
+    <include refid="Base_Column_List"/>
+    from nt_dictionaries
+    <where>
+      <if test="dicType !=null and dicType !=''" >
+        and nt_dictionaries.DIC_TYPE=#{dicType}
+      </if>
+      <if test="dicCode !=null and dicCode !=''">
+        and nt_dictionaries.DIC_CODE=#{dicCode}
+      </if>
+    </where>
+  </select>
+  <!-- 根据条件查询数据 end-->
+  <!-- 根据条件查询数据 start-->
+  <select id="selectDictionaries" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtDictionariesKey" >
+    select
+    <include refid="Base_Column_List"/>
+    from nt_dictionaries
+    where nt_dictionaries.DIC_TYPE=#{dicType}
+    and nt_dictionaries.DIC_CODE=#{dicCode}
+  </select>
+  <!-- 根据条件查询数据 end-->
   <select id="selectByTypeAndCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
