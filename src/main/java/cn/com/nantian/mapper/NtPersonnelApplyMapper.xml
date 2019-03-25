@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.nantian.mapper.NtPersonnelApplyMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtPersonnelApply" >
+    <id column="APPLY_SEQ" property="applySeq" jdbcType="INTEGER" />
+    <result column="PER_ID" property="perId" jdbcType="INTEGER" />
+    <result column="APPLY_DATE" property="applyDate" jdbcType="TIMESTAMP" />
+    <result column="APPLY_TYPE" property="applyType" jdbcType="CHAR" />
+    <result column="APPLY_VALUE" property="applyValue" jdbcType="VARCHAR" />
+    <result column="WORK_DATE" property="workDate" jdbcType="DATE" />
+    <result column="APPLY_STATUS" property="applyStatus" jdbcType="CHAR" />
+    <result column="ERR_DESCRIBE" property="errDescribe" jdbcType="VARCHAR" />
+    <result column="APPROVE_DATE" property="approveDate" jdbcType="TIMESTAMP" />
+    <result column="MANAGER_ID" property="managerId" jdbcType="INTEGER" />
+    <result column="FILE_PATH" property="filePath" jdbcType="VARCHAR" />
+    <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
+    <result column="APPROVE_OPN" property="approveOpn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    APPLY_SEQ, PER_ID, APPLY_DATE, APPLY_TYPE, APPLY_VALUE, WORK_DATE, APPLY_STATUS, 
+    ERR_DESCRIBE, APPROVE_DATE, MANAGER_ID, FILE_PATH, FILE_NAME, APPROVE_OPN
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPersonnelApplyExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from nt_personnel_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from nt_personnel_apply
+    where APPLY_SEQ = #{applySeq,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from nt_personnel_apply
+    where APPLY_SEQ = #{applySeq,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtPersonnelApplyExample" >
+    delete from nt_personnel_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
+    insert into nt_personnel_apply (APPLY_SEQ, PER_ID, APPLY_DATE, 
+      APPLY_TYPE, APPLY_VALUE, WORK_DATE, 
+      APPLY_STATUS, ERR_DESCRIBE, APPROVE_DATE, 
+      MANAGER_ID, FILE_PATH, FILE_NAME, 
+      APPROVE_OPN)
+    values (#{applySeq,jdbcType=INTEGER}, #{perId,jdbcType=INTEGER}, #{applyDate,jdbcType=TIMESTAMP}, 
+      #{applyType,jdbcType=CHAR}, #{applyValue,jdbcType=VARCHAR}, #{workDate,jdbcType=DATE}, 
+      #{applyStatus,jdbcType=CHAR}, #{errDescribe,jdbcType=VARCHAR}, #{approveDate,jdbcType=TIMESTAMP}, 
+      #{managerId,jdbcType=INTEGER}, #{filePath,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
+      #{approveOpn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
+    insert into nt_personnel_apply
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="applySeq != null" >
+        APPLY_SEQ,
+      </if>
+      <if test="perId != null" >
+        PER_ID,
+      </if>
+      <if test="applyDate != null" >
+        APPLY_DATE,
+      </if>
+      <if test="applyType != null" >
+        APPLY_TYPE,
+      </if>
+      <if test="applyValue != null" >
+        APPLY_VALUE,
+      </if>
+      <if test="workDate != null" >
+        WORK_DATE,
+      </if>
+      <if test="applyStatus != null" >
+        APPLY_STATUS,
+      </if>
+      <if test="errDescribe != null" >
+        ERR_DESCRIBE,
+      </if>
+      <if test="approveDate != null" >
+        APPROVE_DATE,
+      </if>
+      <if test="managerId != null" >
+        MANAGER_ID,
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH,
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME,
+      </if>
+      <if test="approveOpn != null" >
+        APPROVE_OPN,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="applySeq != null" >
+        #{applySeq,jdbcType=INTEGER},
+      </if>
+      <if test="perId != null" >
+        #{perId,jdbcType=INTEGER},
+      </if>
+      <if test="applyDate != null" >
+        #{applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyType != null" >
+        #{applyType,jdbcType=CHAR},
+      </if>
+      <if test="applyValue != null" >
+        #{applyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="workDate != null" >
+        #{workDate,jdbcType=DATE},
+      </if>
+      <if test="applyStatus != null" >
+        #{applyStatus,jdbcType=CHAR},
+      </if>
+      <if test="errDescribe != null" >
+        #{errDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="approveDate != null" >
+        #{approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerId != null" >
+        #{managerId,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null" >
+        #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="approveOpn != null" >
+        #{approveOpn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.com.nantian.pojo.NtPersonnelApplyExample" resultType="java.lang.Integer" >
+    select count(*) from nt_personnel_apply
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nt_personnel_apply
+    <set >
+      <if test="record.applySeq != null" >
+        APPLY_SEQ = #{record.applySeq,jdbcType=INTEGER},
+      </if>
+      <if test="record.perId != null" >
+        PER_ID = #{record.perId,jdbcType=INTEGER},
+      </if>
+      <if test="record.applyDate != null" >
+        APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.applyType != null" >
+        APPLY_TYPE = #{record.applyType,jdbcType=CHAR},
+      </if>
+      <if test="record.applyValue != null" >
+        APPLY_VALUE = #{record.applyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workDate != null" >
+        WORK_DATE = #{record.workDate,jdbcType=DATE},
+      </if>
+      <if test="record.applyStatus != null" >
+        APPLY_STATUS = #{record.applyStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.errDescribe != null" >
+        ERR_DESCRIBE = #{record.errDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approveDate != null" >
+        APPROVE_DATE = #{record.approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.managerId != null" >
+        MANAGER_ID = #{record.managerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.filePath != null" >
+        FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileName != null" >
+        FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.approveOpn != null" >
+        APPROVE_OPN = #{record.approveOpn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nt_personnel_apply
+    set APPLY_SEQ = #{record.applySeq,jdbcType=INTEGER},
+      PER_ID = #{record.perId,jdbcType=INTEGER},
+      APPLY_DATE = #{record.applyDate,jdbcType=TIMESTAMP},
+      APPLY_TYPE = #{record.applyType,jdbcType=CHAR},
+      APPLY_VALUE = #{record.applyValue,jdbcType=VARCHAR},
+      WORK_DATE = #{record.workDate,jdbcType=DATE},
+      APPLY_STATUS = #{record.applyStatus,jdbcType=CHAR},
+      ERR_DESCRIBE = #{record.errDescribe,jdbcType=VARCHAR},
+      APPROVE_DATE = #{record.approveDate,jdbcType=TIMESTAMP},
+      MANAGER_ID = #{record.managerId,jdbcType=INTEGER},
+      FILE_PATH = #{record.filePath,jdbcType=VARCHAR},
+      FILE_NAME = #{record.fileName,jdbcType=VARCHAR},
+      APPROVE_OPN = #{record.approveOpn,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
+    update nt_personnel_apply
+    <set >
+      <if test="perId != null" >
+        PER_ID = #{perId,jdbcType=INTEGER},
+      </if>
+      <if test="applyDate != null" >
+        APPLY_DATE = #{applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="applyType != null" >
+        APPLY_TYPE = #{applyType,jdbcType=CHAR},
+      </if>
+      <if test="applyValue != null" >
+        APPLY_VALUE = #{applyValue,jdbcType=VARCHAR},
+      </if>
+      <if test="workDate != null" >
+        WORK_DATE = #{workDate,jdbcType=DATE},
+      </if>
+      <if test="applyStatus != null" >
+        APPLY_STATUS = #{applyStatus,jdbcType=CHAR},
+      </if>
+      <if test="errDescribe != null" >
+        ERR_DESCRIBE = #{errDescribe,jdbcType=VARCHAR},
+      </if>
+      <if test="approveDate != null" >
+        APPROVE_DATE = #{approveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerId != null" >
+        MANAGER_ID = #{managerId,jdbcType=INTEGER},
+      </if>
+      <if test="filePath != null" >
+        FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      </if>
+      <if test="fileName != null" >
+        FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="approveOpn != null" >
+        APPROVE_OPN = #{approveOpn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where APPLY_SEQ = #{applySeq,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
+    update nt_personnel_apply
+    set PER_ID = #{perId,jdbcType=INTEGER},
+      APPLY_DATE = #{applyDate,jdbcType=TIMESTAMP},
+      APPLY_TYPE = #{applyType,jdbcType=CHAR},
+      APPLY_VALUE = #{applyValue,jdbcType=VARCHAR},
+      WORK_DATE = #{workDate,jdbcType=DATE},
+      APPLY_STATUS = #{applyStatus,jdbcType=CHAR},
+      ERR_DESCRIBE = #{errDescribe,jdbcType=VARCHAR},
+      APPROVE_DATE = #{approveDate,jdbcType=TIMESTAMP},
+      MANAGER_ID = #{managerId,jdbcType=INTEGER},
+      FILE_PATH = #{filePath,jdbcType=VARCHAR},
+      FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      APPROVE_OPN = #{approveOpn,jdbcType=VARCHAR}
+    where APPLY_SEQ = #{applySeq,jdbcType=INTEGER}
+  </update>
+</mapper>

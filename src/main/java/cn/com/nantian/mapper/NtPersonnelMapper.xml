@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.nantian.mapper.NtPersonnelMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtPersonnel" >
+    <id column="PER_ID" property="perId" jdbcType="INTEGER" />
+    <result column="DEPT_ID" property="deptId" jdbcType="INTEGER" />
+    <result column="SEX" property="sex" jdbcType="CHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="MOBILE_NO" property="mobileNo" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="BIRTHDAY" property="birthday" jdbcType="DATE" />
+    <result column="ETHNIC" property="ethnic" jdbcType="VARCHAR" />
+    <result column="EDUCATION" property="education" jdbcType="VARCHAR" />
+    <result column="UNIVERSITY" property="university" jdbcType="VARCHAR" />
+    <result column="MAJOR" property="major" jdbcType="VARCHAR" />
+    <result column="GRADUATION_DATE" property="graduationDate" jdbcType="DATE" />
+    <result column="ENTRY_DATE" property="entryDate" jdbcType="DATE" />
+    <result column="LEAVE_DATE" property="leaveDate" jdbcType="DATE" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="POSITION" property="position" jdbcType="CHAR" />
+    <result column="COMPANY_EMAIL" property="companyEmail" jdbcType="VARCHAR" />
+    <result column="PERSON_EMAIL" property="personEmail" jdbcType="VARCHAR" />
+    <result column="POST" property="post" jdbcType="CHAR" />
+    <result column="PASSWORD" property="password" jdbcType="VARCHAR" />
+    <result column="NATIVE_PLACE" property="nativePlace" jdbcType="VARCHAR" />
+    <result column="MARRIAGE_STATUS" property="marriageStatus" jdbcType="CHAR" />
+    <result column="JURISDICTION" property="jurisdiction" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    PER_ID, DEPT_ID, SEX, NAME, MOBILE_NO, ID_NO, BIRTHDAY, ETHNIC, EDUCATION, UNIVERSITY, 
+    MAJOR, GRADUATION_DATE, ENTRY_DATE, LEAVE_DATE, STATUS, POSITION, COMPANY_EMAIL, 
+    PERSON_EMAIL, POST, PASSWORD, NATIVE_PLACE, MARRIAGE_STATUS, JURISDICTION
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPersonnelExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from nt_personnel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  
+   <select id="selectByPrimaryIdNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_personnel
+    where ID_NO = #{idNo,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByName" resultMap="BaseResultMap"  parameterType="java.lang.String"  >
+    select
+    <include refid="Base_Column_List" />
+    from nt_personnel
+    where NAME = #{name,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByEmial" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_personnel
+    where COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryMobileNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_personnel
+    where MOBILE_NO = #{mobileNo,jdbcType=VARCHAR}
+  </select>
+
+
+  <select id="selectByUserId" parameterType="java.lang.Integer" resultType="java.lang.String" >
+    select  NAME  from nt_personnel
+    where PER_ID = #{perId,jdbcType=INTEGER}
+  </select>
+  
+    <select id="findPersonnelBydeptIdAndName"  resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_personnel
+    where DEPT_ID = #{deptId,jdbcType=INTEGER}
+    AND NAME = #{name,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from nt_personnel
+    where PER_ID = #{perId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from nt_personnel
+    where PER_ID = #{perId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtPersonnelExample" >
+    delete from nt_personnel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+
+
+  <delete id="deleteByIdNo" parameterType="java.lang.String" >
+    delete from nt_personnel
+    WHERE  ID_NO=#{idNo,jdbcType=VARCHAR}
+  </delete>
+
+
+  <insert id="insert" parameterType="cn.com.nantian.pojo.NtPersonnel" >
+    insert into nt_personnel (PER_ID, DEPT_ID, SEX, 
+      NAME, MOBILE_NO, ID_NO, 
+      BIRTHDAY, ETHNIC, EDUCATION, 
+      UNIVERSITY, MAJOR, GRADUATION_DATE, 
+      ENTRY_DATE, LEAVE_DATE, STATUS, 
+      POSITION, COMPANY_EMAIL, PERSON_EMAIL, 
+      POST, PASSWORD, NATIVE_PLACE, 
+      MARRIAGE_STATUS, JURISDICTION)
+    values (#{perId,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{sex,jdbcType=CHAR}, 
+      #{name,jdbcType=VARCHAR}, #{mobileNo,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=DATE}, #{ethnic,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
+      #{university,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{graduationDate,jdbcType=DATE}, 
+      #{entryDate,jdbcType=DATE}, #{leaveDate,jdbcType=DATE}, #{status,jdbcType=CHAR}, 
+      #{position,jdbcType=CHAR}, #{companyEmail,jdbcType=VARCHAR}, #{personEmail,jdbcType=VARCHAR}, 
+      #{post,jdbcType=CHAR}, #{password,jdbcType=VARCHAR}, #{nativePlace,jdbcType=VARCHAR}, 
+      #{marriageStatus,jdbcType=CHAR}, #{jurisdiction,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtPersonnel" >
+    insert into nt_personnel
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="perId != null" >
+        PER_ID,
+      </if>
+      <if test="deptId != null" >
+        DEPT_ID,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="mobileNo != null" >
+        MOBILE_NO,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY,
+      </if>
+      <if test="ethnic != null" >
+        ETHNIC,
+      </if>
+      <if test="education != null" >
+        EDUCATION,
+      </if>
+      <if test="university != null" >
+        UNIVERSITY,
+      </if>
+      <if test="major != null" >
+        MAJOR,
+      </if>
+      <if test="graduationDate != null" >
+        GRADUATION_DATE,
+      </if>
+      <if test="entryDate != null" >
+        ENTRY_DATE,
+      </if>
+      <if test="leaveDate != null" >
+        LEAVE_DATE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="position != null" >
+        POSITION,
+      </if>
+      <if test="companyEmail != null" >
+        COMPANY_EMAIL,
+      </if>
+      <if test="personEmail != null" >
+        PERSON_EMAIL,
+      </if>
+      <if test="post != null" >
+        POST,
+      </if>
+      <if test="password != null" >
+        PASSWORD,
+      </if>
+      <if test="nativePlace != null" >
+        NATIVE_PLACE,
+      </if>
+      <if test="marriageStatus != null" >
+        MARRIAGE_STATUS,
+      </if>
+      <if test="jurisdiction != null" >
+        JURISDICTION,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="perId != null" >
+        #{perId,jdbcType=INTEGER},
+      </if>
+      <if test="deptId != null" >
+        #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null" >
+        #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="ethnic != null" >
+        #{ethnic,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="university != null" >
+        #{university,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationDate != null" >
+        #{graduationDate,jdbcType=DATE},
+      </if>
+      <if test="entryDate != null" >
+        #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="leaveDate != null" >
+        #{leaveDate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=CHAR},
+      </if>
+      <if test="companyEmail != null" >
+        #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="personEmail != null" >
+        #{personEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null" >
+        #{post,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="marriageStatus != null" >
+        #{marriageStatus,jdbcType=CHAR},
+      </if>
+      <if test="jurisdiction != null" >
+        #{jurisdiction,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.com.nantian.pojo.NtPersonnelExample" resultType="java.lang.Integer" >
+    select count(*) from nt_personnel
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update nt_personnel
+    <set >
+      <if test="record.perId != null" >
+        PER_ID = #{record.perId,jdbcType=INTEGER},
+      </if>
+      <if test="record.deptId != null" >
+        DEPT_ID = #{record.deptId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sex != null" >
+        SEX = #{record.sex,jdbcType=CHAR},
+      </if>
+      <if test="record.name != null" >
+        NAME = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobileNo != null" >
+        MOBILE_NO = #{record.mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.idNo != null" >
+        ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null" >
+        BIRTHDAY = #{record.birthday,jdbcType=DATE},
+      </if>
+      <if test="record.ethnic != null" >
+        ETHNIC = #{record.ethnic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null" >
+        EDUCATION = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.university != null" >
+        UNIVERSITY = #{record.university,jdbcType=VARCHAR},
+      </if>
+      <if test="record.major != null" >
+        MAJOR = #{record.major,jdbcType=VARCHAR},
+      </if>
+      <if test="record.graduationDate != null" >
+        GRADUATION_DATE = #{record.graduationDate,jdbcType=DATE},
+      </if>
+      <if test="record.entryDate != null" >
+        ENTRY_DATE = #{record.entryDate,jdbcType=DATE},
+      </if>
+      <if test="record.leaveDate != null" >
+        LEAVE_DATE = #{record.leaveDate,jdbcType=DATE},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.position != null" >
+        POSITION = #{record.position,jdbcType=CHAR},
+      </if>
+      <if test="record.companyEmail != null" >
+        COMPANY_EMAIL = #{record.companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personEmail != null" >
+        PERSON_EMAIL = #{record.personEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.post != null" >
+        POST = #{record.post,jdbcType=CHAR},
+      </if>
+      <if test="record.password != null" >
+        PASSWORD = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nativePlace != null" >
+        NATIVE_PLACE = #{record.nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marriageStatus != null" >
+        MARRIAGE_STATUS = #{record.marriageStatus,jdbcType=CHAR},
+      </if>
+      <if test="record.jurisdiction != null" >
+        JURISDICTION = #{record.jurisdiction,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update nt_personnel
+    set PER_ID = #{record.perId,jdbcType=INTEGER},
+      DEPT_ID = #{record.deptId,jdbcType=INTEGER},
+      SEX = #{record.sex,jdbcType=CHAR},
+      NAME = #{record.name,jdbcType=VARCHAR},
+      MOBILE_NO = #{record.mobileNo,jdbcType=VARCHAR},
+      ID_NO = #{record.idNo,jdbcType=VARCHAR},
+      BIRTHDAY = #{record.birthday,jdbcType=DATE},
+      ETHNIC = #{record.ethnic,jdbcType=VARCHAR},
+      EDUCATION = #{record.education,jdbcType=VARCHAR},
+      UNIVERSITY = #{record.university,jdbcType=VARCHAR},
+      MAJOR = #{record.major,jdbcType=VARCHAR},
+      GRADUATION_DATE = #{record.graduationDate,jdbcType=DATE},
+      ENTRY_DATE = #{record.entryDate,jdbcType=DATE},
+      LEAVE_DATE = #{record.leaveDate,jdbcType=DATE},
+      STATUS = #{record.status,jdbcType=CHAR},
+      POSITION = #{record.position,jdbcType=CHAR},
+      COMPANY_EMAIL = #{record.companyEmail,jdbcType=VARCHAR},
+      PERSON_EMAIL = #{record.personEmail,jdbcType=VARCHAR},
+      POST = #{record.post,jdbcType=CHAR},
+      PASSWORD = #{record.password,jdbcType=VARCHAR},
+      NATIVE_PLACE = #{record.nativePlace,jdbcType=VARCHAR},
+      MARRIAGE_STATUS = #{record.marriageStatus,jdbcType=CHAR},
+      JURISDICTION = #{record.jurisdiction,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.nantian.pojo.NtPersonnel" >
+    update nt_personnel
+    <set >
+      <if test="deptId != null" >
+        DEPT_ID = #{deptId,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null" >
+        MOBILE_NO = #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="ethnic != null" >
+        ETHNIC = #{ethnic,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        EDUCATION = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="university != null" >
+        UNIVERSITY = #{university,jdbcType=VARCHAR},
+      </if>
+      <if test="major != null" >
+        MAJOR = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="graduationDate != null" >
+        GRADUATION_DATE = #{graduationDate,jdbcType=DATE},
+      </if>
+      <if test="entryDate != null" >
+        ENTRY_DATE = #{entryDate,jdbcType=DATE},
+      </if>
+      <if test="leaveDate != null" >
+        LEAVE_DATE = #{leaveDate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="position != null" >
+        POSITION = #{position,jdbcType=CHAR},
+      </if>
+      <if test="companyEmail != null" >
+        COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="personEmail != null" >
+        PERSON_EMAIL = #{personEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="post != null" >
+        POST = #{post,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nativePlace != null" >
+        NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+      </if>
+      <if test="marriageStatus != null" >
+        MARRIAGE_STATUS = #{marriageStatus,jdbcType=CHAR},
+      </if>
+      <if test="jurisdiction != null" >
+        JURISDICTION = #{jurisdiction,jdbcType=CHAR},
+      </if>
+    </set>
+    where PER_ID = #{perId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.nantian.pojo.NtPersonnel" >
+    update nt_personnel
+    set DEPT_ID = #{deptId,jdbcType=INTEGER},
+      SEX = #{sex,jdbcType=CHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      MOBILE_NO = #{mobileNo,jdbcType=VARCHAR},
+      ID_NO = #{idNo,jdbcType=VARCHAR},
+      BIRTHDAY = #{birthday,jdbcType=DATE},
+      ETHNIC = #{ethnic,jdbcType=VARCHAR},
+      EDUCATION = #{education,jdbcType=VARCHAR},
+      UNIVERSITY = #{university,jdbcType=VARCHAR},
+      MAJOR = #{major,jdbcType=VARCHAR},
+      GRADUATION_DATE = #{graduationDate,jdbcType=DATE},
+      ENTRY_DATE = #{entryDate,jdbcType=DATE},
+      LEAVE_DATE = #{leaveDate,jdbcType=DATE},
+      STATUS = #{status,jdbcType=CHAR},
+      POSITION = #{position,jdbcType=CHAR},
+      COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR},
+      PERSON_EMAIL = #{personEmail,jdbcType=VARCHAR},
+      POST = #{post,jdbcType=CHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
+      MARRIAGE_STATUS = #{marriageStatus,jdbcType=CHAR},
+      JURISDICTION = #{jurisdiction,jdbcType=CHAR}
+    where PER_ID = #{perId,jdbcType=INTEGER}
+  </update>
+</mapper>

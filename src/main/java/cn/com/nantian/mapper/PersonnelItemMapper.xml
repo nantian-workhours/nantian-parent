@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.nantian.mapper.PersonnelItemMapper" >
+    <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.PersonnelItem" >
+
+        <result column="DEPT_ID" property="deptId" jdbcType="INTEGER" />
+        <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="CHAR" />
+        <result column="IN_PROJECT_NAME" property="inProjectName" jdbcType="VARCHAR" />
+        <result column="CUST_TYPE" property="custType" jdbcType="CHAR" />
+    </resultMap>
+
+    <select id="selectPersonnel" resultMap="BaseResultMap"  >
+        SELECT
+     p.NAME,P.DEPT_ID,p.ID_NO  ,p.STATUS  ,a.IN_PROJECT_NAME ,C.CUST_TYPE
+        FROM nt_personnel p
+        LEFT JOIN nt_per_alias a  ON a.PER_ID = p.PER_ID
+        LEFT JOIN NT_PROJECT_INFO c ON c.PROJECT_NUMBER=p.DEPT_ID
+        WHERE p.NAME = #{name,jdbcType=VARCHAR}
+        AND  p.DEPT_ID =#{deptId,jdbcType=INTEGER}
+    </select>
+
+
+</mapper>
