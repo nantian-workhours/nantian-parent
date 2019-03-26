@@ -1,8 +1,8 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtProjectInfo;
 import cn.com.nantian.pojo.entity.ResponseData;
-import cn.com.nantian.pojo.entity.Result;
 import cn.com.nantian.service.ProjectInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,20 +13,19 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Map;
 
 //客户管理
 @Controller
-@RequestMapping("/NtProjectInfo")
+@RequestMapping("/ntProjectInfo")
 public class ProjectInfoController {
     private static final Logger logger = LoggerFactory.getLogger(ProjectInfoController.class);
 
     @Resource
-    private ProjectInfoService NtProjectInfoService;
+    private ProjectInfoService projectInfoService;
 
-    @InitBinder("NtProjectInfo")
+    @InitBinder("ntProjectInfo")
     public void initBindNtProjectInfo(HttpServletRequest request, ServletRequestDataBinder binder) {
-        binder.setFieldDefaultPrefix("NtProjectInfo.");
+        binder.setFieldDefaultPrefix("ntProjectInfo.");
     }
 
     /**
@@ -38,11 +37,11 @@ public class ProjectInfoController {
      **/
     @RequestMapping("/findAll")
     @ResponseBody
-    public ResponseData findAll(@ModelAttribute("NtProjectInfo") NtProjectInfo NtProjectInfo) {
+    public ResponseData findAll(@ModelAttribute("ntProjectInfo") NtProjectInfo ntProjectInfo) {
         try {
-            List<NtProjectInfo> NtProjectInfoList = NtProjectInfoService.selectPerInProjectList(NtProjectInfo);
-            NtProjectInfoService.setNtProjectInfoTypeName(NtProjectInfoList);
-            return ResponseData.ok().putDataValue("data", NtProjectInfoList);
+            List<NtProjectInfo> ntProjectInfoList = projectInfoService.selectNtProjectInfoList(ntProjectInfo);
+            projectInfoService.setNtProjectInfoTypeName(ntProjectInfoList);
+            return ResponseData.ok().putDataValue("data", ntProjectInfoList);
         } catch (Exception e) {
             logger.error("NtProjectInfoController.findAll", e);
             return ResponseData.forbidden();
@@ -60,7 +59,7 @@ public class ProjectInfoController {
     @ResponseBody
     public ResponseData deleteNtProjectInfo(@RequestParam("projectNumber") int projectNumber) {
         try {
-            int num = NtProjectInfoService.deleteNtProjectInfo(projectNumber);
+            int num = projectInfoService.deleteNtProjectInfo(projectNumber);
             return ResponseData.ok().putDataValue("delete number", num);
         } catch (Exception e) {
             logger.error("NtProjectInfoController.deleteNtProjectInfo", e);
@@ -77,10 +76,19 @@ public class ProjectInfoController {
      **/
     @RequestMapping("/add")
     @ResponseBody
-    public ResponseData addNtProjectInfo(@ModelAttribute("NtProjectInfo") NtProjectInfo NtProjectInfo) {
+    public ResponseData addNtProjectInfo(@ModelAttribute("ntProjectInfo") NtProjectInfo ntProjectInfo) {
         try {
-            int id = NtProjectInfoService.addNtProjectInfo(NtProjectInfo);
-            return ResponseData.ok().putDataValue(" Add success num ", id);
+            String result = projectInfoService.checkAttribute(ntProjectInfo);
+            if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
+                return ResponseData.isfailed().putDataValue("202", result);
+            }
+            boolean repeat = projectInfoService.checkWhetherRepeat(ntProjectInfo);
+            if (repeat) {//判断是否存在重复数据
+                return ResponseData.isfailed().putDataValue("202", "数据已存在，请修改！");
+            } else {
+                int id = projectInfoService.addNtProjectInfo(ntProjectInfo);
+                return ResponseData.ok().putDataValue(" Add success num ", id);
+            }
         } catch (Exception e) {
             logger.error("NtProjectInfoController.addNtProjectInfo", e);
             return ResponseData.forbidden();
@@ -96,26 +104,22 @@ public class ProjectInfoController {
      **/
     @RequestMapping("/update")
     @ResponseBody
-    public ResponseData updateNtProjectInfo(@ModelAttribute("NtProjectInfo") NtProjectInfo NtProjectInfo) {
+    public ResponseData updateNtProjectInfo(@ModelAttribute("ntProjectInfo") NtProjectInfo ntProjectInfo) {
         try {
-            int d = NtProjectInfoService.updateNtProjectInfo(NtProjectInfo);
-            return ResponseData.ok().putDataValue("update number", d);
+            String result = projectInfoService.checkAttribute(ntProjectInfo);
+            if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
+                return ResponseData.isfailed().putDataValue("202", result);
+            }
+            boolean repeat = projectInfoService.checkWhetherRepeat(ntProjectInfo);
+            if (repeat) {//判断是否存在重复数据
+                return ResponseData.isfailed().putDataValue("202", "数据已存在，请修改！");
+            } else {
+                int d = projectInfoService.updateNtProjectInfo(ntProjectInfo);
+                return ResponseData.ok().putDataValue("update number", d);
+            }
         } catch (Exception e) {
             logger.error("NtProjectInfoController.updateNtProjectInfo", e);
             return ResponseData.forbidden();
-        }
-    }
-
-    //新增客户类别管理
-    @RequestMapping("addtype")
-    @ResponseBody
-    public Result addType(String projectName, Map<String, String> type, String leave) {
-        try {
-            NtProjectInfoService.addCustType(projectName, type, leave);
-            return new Result(true, "添加成功");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new Result(false, "添加失败");
         }
     }
 }

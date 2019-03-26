@@ -1,5 +1,6 @@
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.mapper.NtCustTypeMapper;
 import cn.com.nantian.pojo.NtCustTypeKey;
 import cn.com.nantian.pojo.NtDictionariesKey;
@@ -126,5 +127,48 @@ public class CustTypeServiceImpl implements CustTypeService {
      **/
     public NtCustTypeKey selectCustType(NtCustTypeKey custTypeKey){
         return custTypeMapper.selectCustType(custTypeKey);
+    }
+
+    /**
+      * @Description: 检查传入的对象所有属性值，在表中是否已存在
+      * @Auther: Mr.Kong
+      * @Date: 2019/3/26 14:25
+      * @Param: [ntCustTypeKey]
+      * @Return: boolean
+      **/
+    public boolean checkWhetherRepeat(NtCustTypeKey ntCustTypeKey){
+        List<NtCustTypeKey> ntCustTypeKeyList=this.selectCustTypeList(null);
+        boolean repeat=false;
+        if(ObjectUtils.isNotNull(ntCustTypeKeyList) && ObjectUtils.isNotNull(ntCustTypeKey)){
+            for (NtCustTypeKey ntCustTypeKey1:ntCustTypeKeyList) {
+                if(ntCustTypeKey1.equals(ntCustTypeKey)){
+                    repeat=true;
+                    break;
+                }
+            }
+        }
+        return repeat;
+    }
+
+    /**
+      * @Description: 检查属性值是否为空
+      * @Auther: Mr.Kong
+      * @Date: 2019/3/26 14:23
+      * @Param: [ntCustType]
+      * @Return: java.lang.String
+      **/
+    public String checkAttribute(NtCustTypeKey ntCustType){
+        if (ObjectUtils.isNotNull(ntCustType)){
+            if(ObjectUtils.isNull(ntCustType.getCustType())){
+                return "ntProjectInfo.custType 属性值不能为空！";
+            }
+            if(ObjectUtils.isNull(ntCustType.getWorkType())){
+                return "ntProjectInfo.workType 属性值不能为空！";
+            }
+            if(ObjectUtils.isNull(ntCustType.getWorkLeave())){
+                return "ntProjectInfo.workLeave 属性值不能为空！";
+            }
+        }
+        return "";
     }
 }

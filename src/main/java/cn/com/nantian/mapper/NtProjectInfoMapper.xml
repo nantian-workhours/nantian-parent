@@ -70,7 +70,7 @@
     PROJECT_NUMBER, PROJECT_NAME, CUST_TYPE, DEPT_ID, CHARGE_ID
   </sql>
   <!--查询客户信息列表 -->
-  <select id="selectCustomerList" parameterType="cn.com.nantian.pojo.NtProjectInfo" resultMap="BaseResultMap">
+  <select id="selectNtProjectInfoList" parameterType="cn.com.nantian.pojo.NtProjectInfo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />,
     nt_department.DEPT_NAME,
