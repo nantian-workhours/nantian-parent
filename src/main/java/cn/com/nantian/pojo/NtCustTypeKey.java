@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 import java.io.Serializable;
 
 /**
- * 客户类型实体
+ * 客户类型实体1
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
