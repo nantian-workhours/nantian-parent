@@ -61,13 +61,13 @@ public class WorkHoursController {
 
         if (myfile != null){
             String filename=myfile.getOriginalFilename();
-            String a=request.getRealPath("D:/item");
+            String a=request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
             try {
                 //将数据查入到库中
-                Map<String ,Object> resultMap = workHoursService.importImportExcel(myfile,custType);
-                //保存到服务器的路径
-                SaveFileFromInputStream(myfile.getInputStream(),a,filename);
+                    Map<String ,Object> resultMap = workHoursService.importImportExcel(myfile,custType);
                 if (!resultMap.isEmpty()) {
+                    //保存到服务器的路径
+                    SaveFileFromInputStream(myfile.getInputStream(),a,filename);
                     return ResponseData.ok().putDataValue("code",resultMap);
                 } else {
                     return ResponseData.isfailed().putDataValue("data","Upload data is empty");

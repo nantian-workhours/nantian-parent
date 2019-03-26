@@ -91,6 +91,18 @@
     where PER_ID = #{perId,jdbcType=INTEGER}
       and WORK_DATE = #{workDate,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByAll" resultMap="BaseResultMap"   >
+    select
+    <include refid="Base_Column_List" />
+    from nt_working_hours
+    where PER_ID = #{perId,jdbcType=INTEGER}
+      and WORK_DATE = #{workDate,jdbcType=INTEGER}
+      and NORMAL_HOURS =  #{normalHours,jdbcType=REAL}
+      AND OVERTIME_HOURS = #{overtimeHours,jdbcType=REAL}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="cn.com.nantian.pojo.NtWorkingHoursKey" >
     delete from nt_working_hours
     where PER_ID = #{perId,jdbcType=INTEGER}

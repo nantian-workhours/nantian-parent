@@ -1,4 +1,4 @@
-package cn.com.nantian.util;
+package cn.com.nantian.common;
 
 import java.io.*;
 import java.text.DecimalFormat;

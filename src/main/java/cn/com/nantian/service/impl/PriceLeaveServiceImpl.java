@@ -5,8 +5,8 @@ import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtLeaveInfo;
 import cn.com.nantian.service.DictionariesService;
 import cn.com.nantian.service.PriceLeaveService;
-import cn.com.nantian.util.ClassCompareUtil;
-import cn.com.nantian.util.ObjectUtils;
+import cn.com.nantian.common.ClassCompareUtil;
+import cn.com.nantian.common.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

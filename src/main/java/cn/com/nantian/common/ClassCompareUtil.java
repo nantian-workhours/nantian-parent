@@ -1,4 +1,4 @@
-package cn.com.nantian.util;
+package cn.com.nantian.common;
 
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
