@@ -10,7 +10,6 @@ import java.util.Objects;
  * 客户类型实体1
  */
 @Data
-@EqualsAndHashCode(callSuper = false)
 public class NtCustTypeKey implements Serializable {
     /**客户类别*/
     private String custType;
