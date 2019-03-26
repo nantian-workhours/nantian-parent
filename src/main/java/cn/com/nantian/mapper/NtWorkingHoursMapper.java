@@ -40,17 +40,15 @@ public interface NtWorkingHoursMapper {
      * @param overtimeHours
      * @return
      */
-    int insertOne(@Param("perId")int perId,@Param("workDate")Date workDate,@Param("normalHours")Float normalHours,@Param("overtimeHours")Float overtimeHours);
+    int insertOneTmp(@Param("perId")int perId,@Param("workDate")Date workDate,@Param("normalHours")Float normalHours,@Param("overtimeHours")Float overtimeHours);
 
     /**
-     * 根据所有条件查询是否有该数据
+     * 根据员工id和日期查询是否有该数据
      * @param perId
      * @param workDate
-     * @param normalHours
-     * @param overtimeHours
      * @return
      */
-    NtWorkingHours selectByAll(@Param("perId")int perId,@Param("workDate")Date workDate,@Param("normalHours")Float normalHours,@Param("overtimeHours")Float overtimeHours);
+    NtWorkingHours selectByOne(@Param("perId")int perId,@Param("workDate")Date workDate);
 
 
 }

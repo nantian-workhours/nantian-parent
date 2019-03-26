@@ -92,14 +92,13 @@
       and WORK_DATE = #{workDate,jdbcType=INTEGER}
   </select>
 
-  <select id="selectByAll" resultMap="BaseResultMap"   >
+  <select id="selectByOne" resultMap="BaseResultMap"   >
     select
     <include refid="Base_Column_List" />
     from nt_working_hours
     where PER_ID = #{perId,jdbcType=INTEGER}
       and WORK_DATE = #{workDate,jdbcType=INTEGER}
-      and NORMAL_HOURS =  #{normalHours,jdbcType=REAL}
-      AND OVERTIME_HOURS = #{overtimeHours,jdbcType=REAL}
+
   </select>
 
 
@@ -123,8 +122,8 @@
       )
   </insert>
 
-  <insert id="insertOne" parameterType="cn.com.nantian.pojo.NtWorkingHours" >
-    insert into nt_working_hours (PER_ID, WORK_DATE, NORMAL_HOURS,
+  <insert id="insertOneTmp" parameterType="cn.com.nantian.pojo.NtWorkingHours" >
+    insert into nt_working_hours_tmp (PER_ID, WORK_DATE, NORMAL_HOURS,
       OVERTIME_HOURS
       )
     values (#{perId,jdbcType=INTEGER}, #{workDate,jdbcType=INTEGER}, #{normalHours,jdbcType=REAL},

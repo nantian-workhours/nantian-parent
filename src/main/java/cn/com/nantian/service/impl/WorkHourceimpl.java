@@ -67,8 +67,8 @@ public class WorkHourceimpl  implements WorkHoursService{
     public Map<String ,Object> importImportExcel(MultipartFile myfile , String custType)  {
         try {
             if(custType.equals(ParamUntil._1)) {//表示中国银行的模板
-                Map<String, Object> map = new HashMap<>();
-                Map<Integer, Object> map1 = new HashMap<>();
+                Map<String, Object> map=new HashMap<>();
+
                 String msg = "";
                 //初始化成功条数
                 int suct = 0;
@@ -121,13 +121,26 @@ public class WorkHourceimpl  implements WorkHoursService{
                         //string 转float
                         Float normalHoursF = Float.parseFloat(normalHours);
                         Float overtimeHoursF = Float.parseFloat(overtimeHours);
-                        //判断该条数据是否以添加
-//                        int num = workingHoursMapper.selectByAll(perAlias.getPerId(),date,normalHoursF,overtimeHoursF);
-                        //将数据插入表中
-                        workingHoursMapper.insertOne(perAlias.getPerId(), date, normalHoursF, overtimeHoursF);
+                        if (i==1) {
+                            //判断库中是否有该员工数据
+                            NtWorkingHours workingHours = workingHoursMapper.selectByOne(perAlias.getPerId(), date);
+                            //判断是否有该数据
+                            if(workingHours.getPerId()==perAlias.getPerId() && workingHours.getWorkDate().equals(date)){
+                                map.put("error","The table has been imported");
+                                return  map;
+                            }
+                        }
+
+                        //将数据插入临时表中
+                        workingHoursMapper.insertOneTmp(perAlias.getPerId(), date, normalHoursF, overtimeHoursF);
                         suct++;
                     }
                 }
+                //将数据统计到目标表
+
+
+                //清空临时表内容
+
                 map.put("rows ", rows);//总行数
                 map.put("success num ", suct);//成功条数
                 map.put("failed num ", dift);//失败条数
