@@ -21,6 +21,14 @@ public interface ProjectInfoService {
      **/
     public List<NtProjectInfo> selectNtProjectInfoList(NtProjectInfo ntProjectInfo);
     /**
+      * @Description: 根据项目编号查询详情
+      * @Auther: Mr.Kong
+      * @Date: 2019/3/27 14:25
+      * @Param: [projectNumber]
+      * @Return: cn.com.nantian.pojo.NtProjectInfo
+      **/
+    NtProjectInfo selectByPrimaryKey(Integer projectNumber);
+    /**
      * @Description: 设置客户类型名称 项目人数
      * @Param: [NtProjectInfoList]
      * @Return: void
@@ -28,6 +36,14 @@ public interface ProjectInfoService {
      * @Date: 2019/3/19 16:55
      **/
     public void setNtProjectInfoTypeName(List<NtProjectInfo> NtProjectInfoList);
+    /**
+     * @Description: 设置客户类型名称 项目人数
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/27 14:38
+     * @Param: [ntProjectInfo]
+     * @Return: void
+     **/
+    public void setNtProjectInfoTypeName(NtProjectInfo ntProjectInfo);
     /**
      * @Description: 根据项目编号删除一条数据
      * @Param: [projectNumber]
