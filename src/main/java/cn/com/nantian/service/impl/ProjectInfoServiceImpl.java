@@ -1,6 +1,7 @@
 package cn.com.nantian.service.impl;
 
 import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.mapper.NtCustTypeMapper;
 import cn.com.nantian.mapper.NtDictionariesMapper;
 import cn.com.nantian.mapper.NtPerInProjectMapper;
@@ -43,7 +44,18 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     }
 
     /**
-     * @Description: 设置客户类型 项目人数
+     * @Description: 根据项目编号查询详情
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/27 14:25
+     * @Param: [projectNumber]
+     * @Return: cn.com.nantian.pojo.NtProjectInfo
+     **/
+    public NtProjectInfo selectByPrimaryKey(Integer projectNumber){
+        return projectInfoMapper.selectByPrimaryKey(projectNumber);
+    }
+
+    /**
+     * @Description: 设置客户类型名称 项目人数
      * @Param: [NtProjectInfoList]
      * @Return: void
      * @Auther: Fly
@@ -66,6 +78,30 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
                 if(dictionariesKeyList!=null && dictionariesKeyList.size()>0){
                     NtProjectInfo.setCustTypeName(dictionariesKeyList.get(0).getDicValue());
                 }
+            }
+        }
+    }
+    /**
+      * @Description: 设置客户类型名称 项目人数
+      * @Auther: Mr.Kong
+      * @Date: 2019/3/27 14:38
+      * @Param: [ntProjectInfo]
+      * @Return: void
+      **/
+    public void setNtProjectInfoTypeName(NtProjectInfo ntProjectInfo){
+        if(ObjectUtils.isNotNull(ntProjectInfo)){
+            //设置项目人数
+            NtPerInProject perInProject=new NtPerInProject();
+            perInProject.setProjectNumber(ntProjectInfo.getProjectNumber());
+            List<NtPerInProject> perInProjectList=perInProjectMapper.selectPerInProjectList(perInProject);
+            ntProjectInfo.setPeopleNumber(perInProjectList.size());
+            //设置客户类型
+            NtDictionariesKey dictionariesKey=new NtDictionariesKey();
+            dictionariesKey.setDicType(ParamUntil.cust);
+            dictionariesKey.setDicCode(ntProjectInfo.getCustType());
+            List<NtDictionariesKey> dictionariesKeyList=dictionariesMapper.selectDictionariesList(dictionariesKey);
+            if(ObjectUtils.isNotNull(dictionariesKeyList)){
+                ntProjectInfo.setCustTypeName(dictionariesKeyList.get(0).getDicValue());
             }
         }
     }

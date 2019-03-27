@@ -48,6 +48,8 @@ public class ProjectInfoController {
         }
     }
 
+
+
     /**
      * @Description: 根据项目编号删除一条数据
      * @Param: [projectNumber]  项目编号
@@ -119,6 +121,27 @@ public class ProjectInfoController {
             }
         } catch (Exception e) {
             logger.error("NtProjectInfoController.updateNtProjectInfo", e);
+            return ResponseData.forbidden();
+        }
+    }
+
+
+    /**
+      * @Description: 根据项目编号查询详情
+      * @Auther: Mr.Kong
+      * @Date: 2019/3/27 14:28
+      * @Param: [projectNumber] 项目编号
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping("/findOne")
+    @ResponseBody
+    public ResponseData selectNtProjectInfoOne(@RequestParam("projectNumber") int projectNumber) {
+        try {
+            NtProjectInfo ntProjectInfo=projectInfoService.selectByPrimaryKey(projectNumber);
+            projectInfoService.setNtProjectInfoTypeName(ntProjectInfo);
+            return ResponseData.ok().putDataValue("data", ntProjectInfo);
+        } catch (Exception e) {
+            logger.error("NtProjectInfoController.addNtProjectInfo", e);
             return ResponseData.forbidden();
         }
     }

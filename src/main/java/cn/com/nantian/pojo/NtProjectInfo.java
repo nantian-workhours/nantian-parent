@@ -17,9 +17,9 @@ public class NtProjectInfo {
     private String custType;
     /**部门编号*/
     private Integer deptId;
-    /**在场负责人*/
+    /**在场负责人id*/
     private Integer chargeId;
-    /**地址*/
+    /**办公地址*/
     private String address;
 
     //======================
@@ -27,7 +27,7 @@ public class NtProjectInfo {
     private String deptName;
     /**在场负责人姓名*/
     private String chargeName;
-    /**客户类别*/
+    /**客户类别名称*/
     private String custTypeName;
     /**项目人数*/
     private Integer peopleNumber;
