@@ -1,5 +1,6 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtCustTypeKey;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.CustTypeService;
@@ -89,8 +90,17 @@ public class CustTypeController {
     @ResponseBody
     public ResponseData addCustomer(@ModelAttribute("ntCustType") NtCustTypeKey ntCustType) {
         try {
-            int id = custTypeService.addCustType(ntCustType);
-            return ResponseData.ok().putDataValue(" Add success num ", id);
+            String result = custTypeService.checkAttribute(ntCustType);
+            if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
+                return ResponseData.isfailed().putDataValue("202", result);
+            }
+            boolean repeat = custTypeService.checkWhetherRepeat(ntCustType);
+            if (repeat) {//判断是否存在重复数据
+                return ResponseData.isfailed().putDataValue("202", "数据已存在，请修改！");
+            } else {
+                int id = custTypeService.addCustType(ntCustType);
+                return ResponseData.ok().putDataValue(" Add success num ", id);
+            }
         } catch (Exception e) {
             logger.error("CustTypeController.addCustomer", e);
             return ResponseData.forbidden();
@@ -108,8 +118,17 @@ public class CustTypeController {
     @ResponseBody
     public ResponseData updateCustType(@ModelAttribute("ntCustType") NtCustTypeKey ntCustType) {
         try {
-            int d = custTypeService.updateCustType(ntCustType);
-            return ResponseData.ok().putDataValue("update number", d);
+            String result = custTypeService.checkAttribute(ntCustType);
+            if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
+                return ResponseData.isfailed().putDataValue("202", result);
+            }
+            boolean repeat = custTypeService.checkWhetherRepeat(ntCustType);
+            if (repeat) {//判断是否存在重复数据
+                return ResponseData.isfailed().putDataValue("202", "数据已存在，请修改！");
+            } else {
+                int d = custTypeService.updateCustType(ntCustType);
+                return ResponseData.ok().putDataValue("update number", d);
+            }
         } catch (Exception e) {
             logger.error("CustTypeController.updateCustType", e);
             return ResponseData.forbidden();
@@ -138,5 +157,4 @@ public class CustTypeController {
             return ResponseData.forbidden();
         }
     }
-
 }

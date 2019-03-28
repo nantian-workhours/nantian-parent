@@ -20,13 +20,14 @@ public interface CustTypeService {
      * @Date: 2019/3/20 15:04
      **/
     public List<NtCustTypeKey> selectCustTypeList(NtCustTypeKey custTypeKey);
+
     /**
-      * @Description: 设置客户类别、工作类别、技术等级 名称
-      * @Param: [custTypeKeyList]
-      * @Return: void
-      * @Auther: Fly
-      * @Date: 2019/3/20 15:17
-      **/
+     * @Description: 设置客户类别、工作类别、技术等级 名称
+     * @Param: [custTypeKeyList]
+     * @Return: void
+     * @Auther: Fly
+     * @Date: 2019/3/20 15:17
+     **/
     public void setCustTypeName(List<NtCustTypeKey> custTypeKeyList);
 
     /**
@@ -37,21 +38,23 @@ public interface CustTypeService {
      * @Date: 2019/3/20 17:17
      **/
     public void setCustTypeName(NtCustTypeKey custTypeKey);
+
     /**
-      * @Description: 删除客户类别
-      * @Param: [custTypeKey] 删除条件
-      * @Return: int
-      * @Auther: Fly
-      * @Date: 2019/3/20 15:55
-      **/
+     * @Description: 删除客户类别
+     * @Param: [custTypeKey] 删除条件
+     * @Return: int
+     * @Auther: Fly
+     * @Date: 2019/3/20 15:55
+     **/
     public int deleteCustType(NtCustTypeKey custTypeKey);
+
     /**
-      * @Description: 新增客户类别
-      * @Param: [custTypeKey]
-      * @Return: int
-      * @Auther: Fly
-      * @Date: 2019/3/20 16:48
-      **/
+     * @Description: 新增客户类别
+     * @Param: [custTypeKey]
+     * @Return: int
+     * @Auther: Fly
+     * @Date: 2019/3/20 16:48
+     **/
     public int addCustType(NtCustTypeKey custTypeKey);
 
     /**
@@ -72,6 +75,21 @@ public interface CustTypeService {
      **/
     NtCustTypeKey selectCustType(NtCustTypeKey custTypeKey);
 
+    /**
+     * @Description: 检查客户类别属性值是否为空
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/26 14:19
+     * @Param: [ntCustTypeKey]
+     * @Return: java.lang.String
+     **/
+    public String checkAttribute(NtCustTypeKey ntCustTypeKey);
 
-
+    /**
+     * @Description: 检查传入的对象所有属性值，在表中是否已存在
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/26 14:20
+     * @Param: [ntCustTypeKey]
+     * @Return: boolean false 不存在，true 存在
+     **/
+    public boolean checkWhetherRepeat(NtCustTypeKey ntCustTypeKey);
 }

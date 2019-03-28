@@ -8,13 +8,13 @@ import java.util.List;
 
 public interface NtProjectInfoMapper {
     /**
-     * @Description: 查询员工项目集合
+     * @Description: 查询客户信息集合
      * @Param: [perInProject]
      * @Return: java.util.List<cn.com.nantian.pojo.NtPerInProject>
      * @Auther: Fly
      * @Date: 2019/3/20 10:16
      **/
-    List<NtProjectInfo> selectPerInProjectList(NtProjectInfo ntProjectInfo);
+    List<NtProjectInfo> selectNtProjectInfoList(NtProjectInfo ntProjectInfo);
 
     int countByExample(NtProjectInfoExample example);
 

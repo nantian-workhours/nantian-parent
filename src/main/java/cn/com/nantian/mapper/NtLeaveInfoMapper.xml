@@ -81,6 +81,20 @@
     select
     <include refid="Base_Column_List" />
     from nt_leave_info
+    <where>
+      <if test="custType !=null and custType !=''">
+        and CUST_TYPE=#{custType}
+      </if>
+      <if test="workType !=null and workType !=''">
+        and WORK_TYPE=#{workType}
+      </if>
+      <if test="projectBegdate !=null and projectBegdate !=''">
+        and <![CDATA[ PROJECT_BEGDATE>=#{e.projectBegdate}]]>
+      </if>
+      <if test="projectEnddate !=null and projectEnddate !=''">
+        and <![CDATA[ PROJECT_ENDDATE<=#{e.projectEnddate}]]>
+      </if>
+    </where>
   </select>
   <select id="selectLeaveInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
