@@ -84,6 +84,39 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="selectPerId" resultType="java.lang.Integer" >
+    select
+    <!--<if test="distinct" >-->
+      <!--distinct-->
+    <!--</if>-->
+    distinct(PER_ID)
+    from nt_working_hours_tmp
+  </select>
+
+  <select id="selectWorkDate" resultType="java.util.Date" >
+    select
+    <!--<if test="distinct" >-->
+      <!--distinct-->
+    <!--</if>-->
+    distinct(WORK_DATE)
+    from nt_working_hours_tmp
+  </select>
+
+  <select id="selectByUnify"  resultMap="BaseResultMap"  >
+    select
+    PER_ID, WORK_DATE, SUM(NORMAL_HOURS) as NORMAL_HOURS , SUM(OVERTIME_HOURS) as OVERTIME_HOURS
+    from nt_working_hours_tmp
+    where  PER_ID = #{perId,jdbcType=INTEGER}
+    and   WORK_DATE = #{workDate,jdbcType=DATE}
+
+  </select>
+
+  <update id="truncateTable">
+    truncate table nt_working_hours_tmp
+  </update>
+
+
   <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtWorkingHoursTmpExample" >
     delete from nt_working_hours_tmp
     <if test="_parameter != null" >
@@ -149,8 +182,17 @@
     values (#{perId,jdbcType=INTEGER}, #{workDate,jdbcType=DATE}, #{normalHours,jdbcType=REAL},
     #{overtimeHours,jdbcType=REAL}
     )
-
   </insert>
+
+  <insert id="insertOneTmpLife" parameterType="cn.com.nantian.pojo.NtWorkingHours" >
+    insert into nt_working_hours_tmp (PER_ID, WORK_DATE, SIGNIN_TIME, SIGNBACK_TIME
+    )
+    values (#{perId,jdbcType=INTEGER}, #{workDate,jdbcType=DATE},
+     #{signinTime,jdbcType=TIME}, #{signbackTime,jdbcType=TIME}
+    )
+  </insert>
+
+
 
   <select id="countByExample" parameterType="cn.com.nantian.pojo.NtWorkingHoursTmpExample" resultType="java.lang.Integer" >
     select count(*) from nt_working_hours_tmp

@@ -3,7 +3,7 @@
 <mapper namespace="cn.com.nantian.mapper.NtWorkingHoursMapper" >
   <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtWorkingHours" >
     <id column="PER_ID" property="perId" jdbcType="INTEGER" />
-    <id column="WORK_DATE" property="workDate" jdbcType="INTEGER" />
+    <id column="WORK_DATE" property="workDate" jdbcType="DATE" />
     <result column="NORMAL_HOURS" property="normalHours" jdbcType="REAL" />
     <result column="OVERTIME_HOURS" property="overtimeHours" jdbcType="REAL" />
     <result column="SIGNIN_TIME" property="signinTime" jdbcType="TIME" />
@@ -89,7 +89,7 @@
     <include refid="Base_Column_List" />
     from nt_working_hours
     where PER_ID = #{perId,jdbcType=INTEGER}
-      and WORK_DATE = #{workDate,jdbcType=INTEGER}
+      and WORK_DATE = #{workDate,jdbcType=DATE}
   </select>
 
   <select id="selectByOne" resultMap="BaseResultMap"   >
@@ -97,7 +97,7 @@
     <include refid="Base_Column_List" />
     from nt_working_hours
     where PER_ID = #{perId,jdbcType=INTEGER}
-      and WORK_DATE = #{workDate,jdbcType=INTEGER}
+      and WORK_DATE = #{workDate,jdbcType=DATE}
 
   </select>
 
@@ -105,7 +105,7 @@
   <delete id="deleteByPrimaryKey" parameterType="cn.com.nantian.pojo.NtWorkingHoursKey" >
     delete from nt_working_hours
     where PER_ID = #{perId,jdbcType=INTEGER}
-      and WORK_DATE = #{workDate,jdbcType=INTEGER}
+      and WORK_DATE = #{workDate,jdbcType=DATE}
   </delete>
   <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtWorkingHoursExample" >
     delete from nt_working_hours
@@ -117,19 +117,28 @@
     insert into nt_working_hours (PER_ID, WORK_DATE, NORMAL_HOURS, 
       OVERTIME_HOURS, SIGNIN_TIME, SIGNBACK_TIME
       )
-    values (#{perId,jdbcType=INTEGER}, #{workDate,jdbcType=INTEGER}, #{normalHours,jdbcType=REAL}, 
+    values (#{perId,jdbcType=INTEGER}, #{workDate,jdbcType=DATE}, #{normalHours,jdbcType=REAL},
       #{overtimeHours,jdbcType=REAL}, #{signinTime,jdbcType=TIME}, #{signbackTime,jdbcType=TIME}
       )
   </insert>
 
-  <insert id="insertOneTmp" parameterType="cn.com.nantian.pojo.NtWorkingHours" >
-    insert into nt_working_hours_tmp (PER_ID, WORK_DATE, NORMAL_HOURS,
-      OVERTIME_HOURS
-      )
-    values (#{perId,jdbcType=INTEGER}, #{workDate,jdbcType=INTEGER}, #{normalHours,jdbcType=REAL},
-      #{overtimeHours,jdbcType=REAL}
-      )
 
+
+  <insert id="insertOne" parameterType="cn.com.nantian.pojo.NtWorkingHours" >
+    insert into nt_working_hours (PER_ID, WORK_DATE, NORMAL_HOURS,
+    OVERTIME_HOURS
+    )
+    values (#{perId,jdbcType=INTEGER}, #{workDate,jdbcType=DATE}, #{normalHours,jdbcType=REAL},
+    #{overtimeHours,jdbcType=REAL}
+    )
+  </insert>
+
+  <insert id="insertOneTmpLife" parameterType="cn.com.nantian.pojo.NtWorkingHours" >
+    insert into nt_working_hours (PER_ID, WORK_DATE, SIGNIN_TIME, SIGNBACK_TIME
+    )
+    values (#{perId,jdbcType=INTEGER}, #{workDate,jdbcType=DATE},
+    #{signinTime,jdbcType=TIME}, #{signbackTime,jdbcType=TIME}
+    )
   </insert>
 
 
@@ -160,7 +169,7 @@
         #{perId,jdbcType=INTEGER},
       </if>
       <if test="workDate != null" >
-        #{workDate,jdbcType=INTEGER},
+        #{workDate,jdbcType=DATE},
       </if>
       <if test="normalHours != null" >
         #{normalHours,jdbcType=REAL},
@@ -189,7 +198,7 @@
         PER_ID = #{record.perId,jdbcType=INTEGER},
       </if>
       <if test="record.workDate != null" >
-        WORK_DATE = #{record.workDate,jdbcType=INTEGER},
+        WORK_DATE = #{record.workDate,jdbcType=DATE},
       </if>
       <if test="record.normalHours != null" >
         NORMAL_HOURS = #{record.normalHours,jdbcType=REAL},
@@ -211,7 +220,7 @@
   <update id="updateByExample" parameterType="map" >
     update nt_working_hours
     set PER_ID = #{record.perId,jdbcType=INTEGER},
-      WORK_DATE = #{record.workDate,jdbcType=INTEGER},
+      WORK_DATE = #{record.workDate,jdbcType=DATE},
       NORMAL_HOURS = #{record.normalHours,jdbcType=REAL},
       OVERTIME_HOURS = #{record.overtimeHours,jdbcType=REAL},
       SIGNIN_TIME = #{record.signinTime,jdbcType=TIME},
@@ -237,7 +246,7 @@
       </if>
     </set>
     where PER_ID = #{perId,jdbcType=INTEGER}
-      and WORK_DATE = #{workDate,jdbcType=INTEGER}
+      and WORK_DATE = #{workDate,jdbcType=DATE}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.com.nantian.pojo.NtWorkingHours" >
     update nt_working_hours
@@ -246,6 +255,6 @@
       SIGNIN_TIME = #{signinTime,jdbcType=TIME},
       SIGNBACK_TIME = #{signbackTime,jdbcType=TIME}
     where PER_ID = #{perId,jdbcType=INTEGER}
-      and WORK_DATE = #{workDate,jdbcType=INTEGER}
+      and WORK_DATE = #{workDate,jdbcType=DATE}
   </update>
 </mapper>

@@ -4,6 +4,7 @@ import cn.com.nantian.pojo.NtWorkingHours;
 import cn.com.nantian.pojo.NtWorkingHoursExample;
 import cn.com.nantian.pojo.NtWorkingHoursKey;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -31,7 +32,6 @@ public interface NtWorkingHoursMapper {
 
     int updateByPrimaryKey(NtWorkingHours record);
 
-
     /**
      * 插入工时数据
      * @param perId
@@ -40,7 +40,18 @@ public interface NtWorkingHoursMapper {
      * @param overtimeHours
      * @return
      */
-    int insertOneTmp(@Param("perId")int perId,@Param("workDate")Date workDate,@Param("normalHours")Float normalHours,@Param("overtimeHours")Float overtimeHours);
+    int insertOne(@Param("perId")int perId, @Param("workDate")Date workDate, @Param("normalHours")Float normalHours, @Param("overtimeHours")Float overtimeHours);
+
+    /**
+     * 插入工时数据(人寿)
+     * @param perId
+     * @param workDate
+     * @param signinTime
+     * @param signbackTime
+     * @return
+     */
+    int insertOneTmpLife(@Param("perId")int perId, @Param("workDate")Date workDate, @Param("signinTime")Time signinTime, @Param("signbackTime")Time signbackTime);
+
 
     /**
      * 根据员工id和日期查询是否有该数据

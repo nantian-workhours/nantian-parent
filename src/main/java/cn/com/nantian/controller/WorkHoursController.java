@@ -10,11 +10,13 @@ import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtPerAlias;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.pojo.entity.ResultData;
+import cn.com.nantian.service.UserService;
 import cn.com.nantian.service.WorkHoursService;
 import com.alibaba.druid.util.StringUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,6 +47,9 @@ public class WorkHoursController {
 
     @Resource
     private WorkHoursService workHoursService;
+    @Resource
+    private UserService userService;
+
     /**
      * 导入工时
      * @param myfile
@@ -52,34 +57,43 @@ public class WorkHoursController {
      */
     @RequestMapping("/importExcel")
     @ResponseBody
-    public ResponseData importProcess(HttpServletRequest request, @RequestParam("myFile") MultipartFile myfile ,String custType) {
-        File tempFile =new File( ParamUntil.excelPath1+"\\"+myfile.getOriginalFilename());
-        //判断文件是否已经存在
-        if( tempFile.exists() ){
-             return ResponseData.isfailed().putDataValue("data","The file has been imported");
-        }else{
+    public ResponseData importProcess(HttpServletRequest request, @RequestParam("myFile") MultipartFile myfile ,String custType,String jurisdiction) {
+        //获取登录人的姓名
+//        String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
+        //判断权限是否许可
+        if(Integer.valueOf(jurisdiction) <= 1){
 
-        if (myfile != null){
-            String filename=myfile.getOriginalFilename();
-            String a=request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
-            try {
-                //将数据查入到库中
-                    Map<String ,Object> resultMap = workHoursService.importImportExcel(myfile,custType);
-                if (!resultMap.isEmpty()) {
-                    //保存到服务器的路径
-                    SaveFileFromInputStream(myfile.getInputStream(),a,filename);
-                    return ResponseData.ok().putDataValue("code",resultMap);
-                } else {
+            File tempFile =new File( ParamUntil.excelPath1+"\\"+myfile.getOriginalFilename());
+            if (myfile != null){
+                    String filename=myfile.getOriginalFilename();
+                    String a=request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
+                    try {
+                        //将数据查入到库中
+                        Map<String ,Object> resultMap = workHoursService.importImportExcel(myfile,custType);
+                        if (!resultMap.isEmpty()) {
+                            if(tempFile.exists()){
+                                return ResponseData.ok().putDataValue("code",resultMap);
+                            }else{
+                                //保存到服务器的路径
+                                SaveFileFromInputStream(myfile.getInputStream(),a,filename);
+                                return ResponseData.ok().putDataValue("code",resultMap);
+                            }
+                        } else {
+                            return ResponseData.isfailed().putDataValue("data","Upload data is empty");
+                        }
+                    } catch (IOException e) {
+                        return ResponseData.isfailed().putDataValue("data",e.toString());
+                    }
+                }else{
                     return ResponseData.isfailed().putDataValue("data","Upload data is empty");
                 }
-            } catch (IOException e) {
-                return ResponseData.isfailed().putDataValue("data","Upload data is empty");
-            }
+
+
         }else{
-          return ResponseData.isfailed().putDataValue("data","Upload data is empty");
+            return ResponseData.forbidden();
         }
 
-        }
+
    }
 
 

@@ -24,7 +24,8 @@ public class ParamUntil {
     public static String excelPath=null;  //excel保存路径
     public static String excelPath1=null;  //excel保存路径
     public static String _1;  //客户类别.中国银行
-    public static String _2;  //客户类别.中国人寿
+    public static String _2;  //客户类别.中国邮储
+    public static String _3;  //客户类别.中国人寿
 
 
     static {
@@ -53,6 +54,7 @@ public class ParamUntil {
             excelPath1=prop.getProperty("excelPath1");
             _1=prop.getProperty("_1");
             _2=prop.getProperty("_2");
+            _3=prop.getProperty("_3");
 
         } catch (IOException e) {
             e.printStackTrace();
