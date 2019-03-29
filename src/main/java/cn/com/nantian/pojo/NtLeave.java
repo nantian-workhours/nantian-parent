@@ -1,7 +1,9 @@
 package cn.com.nantian.pojo;
 
-import java.util.Date;
+import lombok.Data;
 
+import java.util.Date;
+@Data
 public class NtLeave {
     private Integer perId;
 
