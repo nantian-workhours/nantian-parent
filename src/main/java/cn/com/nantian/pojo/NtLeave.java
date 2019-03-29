@@ -3,105 +3,45 @@ package cn.com.nantian.pojo;
 import lombok.Data;
 
 import java.util.Date;
+
 @Data
 public class NtLeave {
+    /**主键id*/
+    private Integer leaveId;
+    /**员工编号*/
     private Integer perId;
-
+    /**请假开始日期*/
     private Date begDate;
-
+    /**请假结束日期*/
     private Date endDate;
-
+    /**请假类型*/
     private String leaveType;
-
+    /**请假天数*/
     private Float leaveCount;
-
+    /**请假说明*/
     private String leaveRemark;
-
+    /**审批状态 R 审核中，Y 通过，N 退回*/
     private String applyStatus;
-
+    /**审批时间*/
     private Date approveDate;
-
+    /**审批人ID*/
     private Integer managerId;
-
+    /**审批意见*/
     private String approveOpn;
 
-    public Integer getPerId() {
-        return perId;
-    }
+    //============================
+    /**员工姓名*/
+    private String userName;
+    /**部门id*/
+    private String deptId;
+    /**部门名称*/
+    private String deptName;
+    /**请假类型名称*/
+    private String leaveTypeName;
+    /**审批状态名称 R 审核中，Y 通过，N 退回*/
+    private String applyStatusName;
 
-    public void setPerId(Integer perId) {
-        this.perId = perId;
-    }
 
-    public Date getBegDate() {
-        return begDate;
-    }
 
-    public void setBegDate(Date begDate) {
-        this.begDate = begDate;
-    }
 
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public String getLeaveType() {
-        return leaveType;
-    }
-
-    public void setLeaveType(String leaveType) {
-        this.leaveType = leaveType == null ? null : leaveType.trim();
-    }
-
-    public Float getLeaveCount() {
-        return leaveCount;
-    }
-
-    public void setLeaveCount(Float leaveCount) {
-        this.leaveCount = leaveCount;
-    }
-
-    public String getLeaveRemark() {
-        return leaveRemark;
-    }
-
-    public void setLeaveRemark(String leaveRemark) {
-        this.leaveRemark = leaveRemark == null ? null : leaveRemark.trim();
-    }
-
-    public String getApplyStatus() {
-        return applyStatus;
-    }
-
-    public void setApplyStatus(String applyStatus) {
-        this.applyStatus = applyStatus == null ? null : applyStatus.trim();
-    }
-
-    public Date getApproveDate() {
-        return approveDate;
-    }
-
-    public void setApproveDate(Date approveDate) {
-        this.approveDate = approveDate;
-    }
-
-    public Integer getManagerId() {
-        return managerId;
-    }
-
-    public void setManagerId(Integer managerId) {
-        this.managerId = managerId;
-    }
-
-    public String getApproveOpn() {
-        return approveOpn;
-    }
-
-    public void setApproveOpn(String approveOpn) {
-        this.approveOpn = approveOpn == null ? null : approveOpn.trim();
-    }
 }

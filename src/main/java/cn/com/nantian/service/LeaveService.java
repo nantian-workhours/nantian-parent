@@ -1,10 +1,10 @@
-package cn.com.nantian.mapper;
+package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtLeave;
 
 import java.util.List;
 
-public interface NtLeaveMapper {
+public interface LeaveService {
 
     List<NtLeave> selectLeaveList(NtLeave leave);
 
