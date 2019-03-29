@@ -1,10 +1,10 @@
-package cn.com.nantian.mapper;
+package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtHolInfo;
 
 import java.util.List;
 
-public interface NtHolInfoMapper {
+public interface HolInfoService {
 
     List<NtHolInfo> selectHolInfoList(NtHolInfo ntHolInfo);
 
