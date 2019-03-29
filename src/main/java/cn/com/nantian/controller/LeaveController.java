@@ -48,7 +48,7 @@ public class LeaveController {
     public ResponseData findAll(@ModelAttribute("ntLeave") NtLeave leave) {
         try {
             List<NtLeave> leaveList = leaveService.selectLeaveList(leave);
-            //projectInfoService.setNtProjectInfoTypeName(ntProjectInfoList);
+            leaveService.setLeaveTypeName(leaveList);
             return ResponseData.ok().putDataValue("data", leaveList);
         } catch (Exception e) {
             logger.error("LeaveController.findAll", e);
