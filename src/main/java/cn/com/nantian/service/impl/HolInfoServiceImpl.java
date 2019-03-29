@@ -36,31 +36,31 @@ public class HolInfoServiceImpl implements HolInfoService {
 
     @Override
     public int deleteByPrimaryKey(Integer perId) {
-        return 0;
+        return holInfoMapper.deleteByPrimaryKey(perId);
     }
 
     @Override
     public int insert(NtHolInfo record) {
-        return 0;
+        return holInfoMapper.insert(record);
     }
 
     @Override
     public int insertSelective(NtHolInfo record) {
-        return 0;
+        return holInfoMapper.insertSelective(record);
     }
 
     @Override
     public NtHolInfo selectByPrimaryKey(Integer perId) {
-        return null;
+        return holInfoMapper.selectByPrimaryKey(perId);
     }
 
     @Override
     public int updateByPrimaryKeySelective(NtHolInfo record) {
-        return 0;
+        return holInfoMapper.updateByPrimaryKeySelective(record);
     }
 
     @Override
     public int updateByPrimaryKey(NtHolInfo record) {
-        return 0;
+        return holInfoMapper.updateByPrimaryKey(record);
     }
 }
