@@ -1,5 +1,5 @@
 /**
- * @Description:
+ * @Description: 年假信息管理
  * @ClassName: HolInfoController
  * @Author： Mr.Kong
  * @Date: 2019/3/29 16:13
@@ -35,33 +35,24 @@ public class HolInfoController {
         binder.setFieldDefaultPrefix("ntHolInfo.");
     }
 
-
+    /**
+     * @Description: 查询年假信息列表
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 16:39
+     * @Param: [ntHolInfo]
+     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     **/
     @RequestMapping("/ntHolInfo/findAll")
     @ResponseBody
     public ResponseData findAll(@ModelAttribute("ntHolInfo") NtHolInfo ntHolInfo) {
         try {
             List<NtHolInfo> holInfoList = holInfoService.selectHolInfoList(ntHolInfo);
-            //leaveService.setLeaveTypeName(leaveList);
             return ResponseData.ok().putDataValue("data", holInfoList);
         } catch (Exception e) {
             logger.error("HolInfoController.findAll", e);
             return ResponseData.forbidden();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

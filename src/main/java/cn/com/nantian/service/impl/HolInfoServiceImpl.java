@@ -1,5 +1,5 @@
 /**
- * @Description:
+ * @Description: 年假信息管理
  * @ClassName: HolInfoServiceImpl
  * @Author： Mr.Kong
  * @Date: 2019/3/29 16:05
@@ -14,12 +14,21 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+
 @Service
-public class HolInfoServiceImpl implements HolInfoService{
+public class HolInfoServiceImpl implements HolInfoService {
 
     @Resource
     private NtHolInfoMapper holInfoMapper;
 
+
+    /**
+     * @Description: 查询年假信息列表
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 16:40
+     * @Param: [ntHolInfo]
+     * @Return: java.util.List<cn.com.nantian.pojo.NtHolInfo>
+     **/
     @Override
     public List<NtHolInfo> selectHolInfoList(NtHolInfo ntHolInfo) {
         return holInfoMapper.selectHolInfoList(ntHolInfo);

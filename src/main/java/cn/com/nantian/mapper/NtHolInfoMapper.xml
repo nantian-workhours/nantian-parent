@@ -9,12 +9,15 @@
     <result column="OVER_DAY_OFF_DAYS" jdbcType="REAL" property="overDayOffDays" />
   </resultMap>
   <sql id="Base_Column_List">
-    PER_ID, YEAR_DAYS, OVER_YEAR_DAYS, DAY_OFF_DAYS, OVER_DAY_OFF_DAYS
+    nt_hol_info.PER_ID, nt_hol_info.YEAR_DAYS, nt_hol_info.OVER_YEAR_DAYS, nt_hol_info.DAY_OFF_DAYS, nt_hol_info.OVER_DAY_OFF_DAYS
   </sql>
   <select id="selectHolInfoList" parameterType="cn.com.nantian.pojo.NtHolInfo" resultMap="BaseResultMap">
     select
-    <include refid="Base_Column_List" />
-    from nt_hol_info
+    <include refid="Base_Column_List" />,
+    nt_personnel.`NAME` userName
+    FROM
+    nt_hol_info
+    LEFT JOIN nt_personnel on nt_hol_info.PER_ID=nt_personnel.PER_ID
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
