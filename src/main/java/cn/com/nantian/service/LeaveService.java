@@ -7,6 +7,15 @@ import java.util.List;
 public interface LeaveService {
 
     /**
+     * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:52
+     * @Param: [leave]
+     * @Return: int
+     **/
+    int updateLeaveStatus(NtLeave leave);
+
+    /**
      * @Description: 设置请假类别名称、审批状态名称
      * @Auther: Mr.Kong
      * @Date: 2019/3/29 15:32

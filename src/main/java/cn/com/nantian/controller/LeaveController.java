@@ -37,7 +37,7 @@ public class LeaveController {
     }
 
     /**
-     * @Description: 查询客户信息列表
+     * @Description: 查询请假信息列表
      * @Param: [NtProjectInfo] 客户实体
      * @Return: cn.com.nantian.pojo.entity.ResponseData
      * @Auther: Fly
@@ -56,25 +56,41 @@ public class LeaveController {
         }
     }
 
+    /**
+     * @Description: 请假申请录入
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:45
+     * @Param: [leave]
+     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     **/
+    @RequestMapping("/ntLeave/add")
+    @ResponseBody
+    public ResponseData insert(@ModelAttribute("ntLeave") NtLeave leave) {
+        try {
+            int id = leaveService.insertSelective(leave);
+            return ResponseData.ok().putDataValue(" Add success num ", id);
+        } catch (Exception e) {
+            logger.error("LeaveController.insert", e);
+            return ResponseData.forbidden();
+        }
+    }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:50
+     * @Param: [leave]
+     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     **/
+    @RequestMapping("/ntLeave/update")
+    @ResponseBody
+    public ResponseData update(@ModelAttribute("ntLeave") NtLeave leave) {
+        try {
+            int d = leaveService.updateLeaveStatus(leave);
+            return ResponseData.ok().putDataValue("update number", d);
+        } catch (Exception e) {
+            logger.error("LeaveController.update", e);
+            return ResponseData.forbidden();
+        }
+    }
 }

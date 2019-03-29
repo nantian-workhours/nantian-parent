@@ -182,4 +182,13 @@
     APPROVE_OPN = #{approveOpn,jdbcType=VARCHAR}
     where LEAVE_ID = #{leaveId,jdbcType=INTEGER}
   </update>
+  <update id="updateLeaveStatus" parameterType="cn.com.nantian.pojo.NtLeave">
+    update nt_leave
+    set
+    APPLY_STATUS = #{applyStatus,jdbcType=CHAR},
+    APPROVE_DATE = #{approveDate,jdbcType=TIMESTAMP},
+    MANAGER_ID = #{managerId,jdbcType=INTEGER},
+    APPROVE_OPN = #{approveOpn,jdbcType=VARCHAR}
+    where LEAVE_ID = #{leaveId,jdbcType=INTEGER}
+  </update>
 </mapper>
