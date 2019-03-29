@@ -1,5 +1,5 @@
 /**
- * @Description:
+ * @Description: 请假信息管理
  * @ClassName: LeaveServiceImpl
  * @Author： Mr.Kong
  * @Date: 2019/3/29 15:03

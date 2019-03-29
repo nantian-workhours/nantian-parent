@@ -1,5 +1,5 @@
 /**
- * @Description:
+ * @Description: 请假信息管理
  * @ClassName: LeaveController
  * @Author： Mr.Kong
  * @Date: 2019/3/29 15:02
@@ -38,10 +38,10 @@ public class LeaveController {
 
     /**
      * @Description: 查询请假信息列表
-     * @Param: [NtProjectInfo] 客户实体
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:55
+     * @Param: [leave]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
-     * @Date: 2019/3/19 14:21
      **/
     @RequestMapping("/ntLeave/findAll")
     @ResponseBody
