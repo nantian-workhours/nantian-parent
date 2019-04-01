@@ -1,53 +1,20 @@
 package cn.com.nantian.pojo;
 
+import lombok.Data;
+
+@Data
 public class NtHolInfo {
+    /**员工编号*/
     private Integer perId;
-
+    /**年假天数*/
     private Float yearDays;
-
+    /**剩余年假天数*/
     private Float overYearDays;
-
+    /**调休天数*/
     private Float dayOffDays;
-
+    /**剩余调休天数*/
     private Float overDayOffDays;
-
-    public Integer getPerId() {
-        return perId;
-    }
-
-    public void setPerId(Integer perId) {
-        this.perId = perId;
-    }
-
-    public Float getYearDays() {
-        return yearDays;
-    }
-
-    public void setYearDays(Float yearDays) {
-        this.yearDays = yearDays;
-    }
-
-    public Float getOverYearDays() {
-        return overYearDays;
-    }
-
-    public void setOverYearDays(Float overYearDays) {
-        this.overYearDays = overYearDays;
-    }
-
-    public Float getDayOffDays() {
-        return dayOffDays;
-    }
-
-    public void setDayOffDays(Float dayOffDays) {
-        this.dayOffDays = dayOffDays;
-    }
-
-    public Float getOverDayOffDays() {
-        return overDayOffDays;
-    }
-
-    public void setOverDayOffDays(Float overDayOffDays) {
-        this.overDayOffDays = overDayOffDays;
-    }
+    //===================================
+    /**员工姓名*/
+    private String userName;
 }

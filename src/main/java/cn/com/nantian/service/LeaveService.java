@@ -1,10 +1,11 @@
-package cn.com.nantian.mapper;
+package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtLeave;
 
 import java.util.List;
 
-public interface NtLeaveMapper {
+public interface LeaveService {
+
     /**
      * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
      * @Auther: Mr.Kong
@@ -15,9 +16,27 @@ public interface NtLeaveMapper {
     int updateLeaveStatus(NtLeave leave);
 
     /**
+     * @Description: 设置请假类别名称、审批状态名称
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:32
+     * @Param: [leaveList]
+     * @Return: void
+     **/
+    public void setLeaveTypeName(List<NtLeave> leaveList);
+
+    /**
+     * @Description: 设置请假类别名称、审批状态名称
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:33
+     * @Param: [leave]
+     * @Return: void
+     **/
+    public void setLeaveTypeName(NtLeave leave);
+
+    /**
      * @Description: 查询请假信息列表
      * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:52
+     * @Date: 2019/3/29 15:25
      * @Param: [leave]
      * @Return: java.util.List<cn.com.nantian.pojo.NtLeave>
      **/
