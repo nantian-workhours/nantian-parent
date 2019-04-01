@@ -17,4 +17,8 @@ public class NtHolInfo {
     //===================================
     /**员工姓名*/
     private String userName;
+    /**部门名称*/
+    private String deptName;
+    /**部门id*/
+    private Integer deptId;
 }

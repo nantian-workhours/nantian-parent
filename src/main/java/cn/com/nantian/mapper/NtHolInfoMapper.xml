@@ -14,10 +14,21 @@
   <select id="selectHolInfoList" parameterType="cn.com.nantian.pojo.NtHolInfo" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />,
-    nt_personnel.`NAME` userName
+    nt_personnel.`NAME` userName,
+    nt_department.DEPT_NAME deptName,
+    nt_department.DEPT_ID deptId
     FROM
     nt_hol_info
-    LEFT JOIN nt_personnel on nt_hol_info.PER_ID=nt_personnel.PER_ID
+    LEFT JOIN nt_personnel ON nt_hol_info.PER_ID=nt_personnel.PER_ID
+    LEFT JOIN nt_department ON nt_personnel.DEPT_ID=nt_department.DEPT_ID
+    <where>
+      <if test="userName !=null and userName !=''">
+        and nt_personnel.NAME like CONCAT('%',#{userName},'%')
+      </if>
+      <if test="deptId !=null and deptId >0">
+        and nt_department.DEPT_ID=#{deptId}
+      </if>
+    </where>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
