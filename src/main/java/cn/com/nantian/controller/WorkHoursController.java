@@ -74,7 +74,7 @@ public class WorkHoursController {
                     String a=request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
                     try {
                         //将数据查入到库中
-                        Map<String ,Object> resultMap = workHoursService.importImportExcel(myfile,custType);
+                        Map<String ,Object> resultMap = workHoursService.importExcel(myfile,custType);
                         if (!resultMap.isEmpty()) {
                             if(tempFile.exists()){
                                 return ResponseData.ok().putDataValue("code",resultMap);
@@ -158,7 +158,7 @@ public class WorkHoursController {
         String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
 
         //判断员工权限
-        if(Integer.valueOf(jurisdiction) <=1){//管理员权限,查询所有
+        if(Integer.valueOf(jurisdiction) ==1 || Integer.valueOf(jurisdiction) ==0){//管理员权限,查询所有
             List<NtWorkingHours> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
 
 

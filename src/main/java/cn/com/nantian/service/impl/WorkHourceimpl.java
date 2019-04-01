@@ -58,7 +58,7 @@ public class WorkHourceimpl  implements WorkHoursService{
     /**
      *
      * 查询工时
-     * @param perId 员工id
+     * @param perId 查询的员工id
      * @param custType 客户类别
      * @param startDate 开始日期
      * @param endDate 结束日期
@@ -67,11 +67,9 @@ public class WorkHourceimpl  implements WorkHoursService{
     @Override
     public List<NtWorkingHours> findAllWorkHours(int perId, String custType, Date startDate, Date endDate) {
 
-        if(custType == null || "".equals(custType)){//直接计算所有工时
-            List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId);
-            for (NtWorkingHours workingHours:workingHoursList) {
+        if(custType == null || "".equals(custType)){//直接计算所有员工工时
 
-            }
+
 
 
 
@@ -85,12 +83,81 @@ public class WorkHourceimpl  implements WorkHoursService{
     }
 
     /**
+     * 根据用户编号和客户名称查询加班时间
+     * @param perId
+     * @param custType
+     * @return
+     */
+    private Map<Object,Object> findAllWorkHours(int perId, String custType){
+        //初始化map
+        Map<Object, Object> map = new HashMap<>();
+
+        if(custType.equals(ParamUntil._3)){//如果客户类型是中国人寿
+        List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId);
+        for (NtWorkingHours workingHours:workingHoursList) {
+            //判断签到签退时间和签退时间是否为空
+            String isSignbackTime = workingHours.getSignbackTime().toString();
+            String isSigninTime = workingHours.getSigninTime().toString();
+
+            if (isSignbackTime == null || "".equals(isSignbackTime) && isSigninTime == null || "".equals(isSigninTime)) {
+                //签到签退两者都为空的情况--->直接查询正常工时和加班工时
+
+
+            } else if (isSignbackTime == null && isSigninTime != null) {
+                //签退时间为空,签到时间不为空
+
+            } else if (isSignbackTime != null && isSigninTime == null) {
+                //签到时间为空,签退时间不为空
+
+
+            } else {//直接使用正常工时和加班工时
+
+
+            }
+        }
+        }else if(custType.equals(ParamUntil._1)){
+            //如果客户类型是中国银行
+//            初始化参数
+            int workDay =0; //当月正常工作日
+            int normalWorkTime =0; //当月正常工时
+            int workTime =0; //当月正常出勤工时
+            int addedHours =0; //当月加班工时
+
+            //查询工时列表
+            List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId);
+            //循环工时
+            for (NtWorkingHours workingHours:workingHoursList) {
+                //获取月份
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+                String dateWork = sdf.format(workingHours.getWorkDate());
+
+                map.put(dateWork,workingHours);
+
+
+            }
+
+
+        }else{
+            return  new HashMap<>();
+        }
+
+            return null;
+    }
+
+
+
+
+
+
+
+
+    /**
      * 中行导入工时
      * @param myfile
      * @return
      */
     @Override
-    public Map<String ,Object> importImportExcel(MultipartFile myfile , String custType)  {
+    public Map<String ,Object> importExcel(MultipartFile myfile , String custType)  {
         try {
             if(custType.equals(ParamUntil._1)) {//表示中国银行的模板
                 Map<String, Object> map=new HashMap<>();

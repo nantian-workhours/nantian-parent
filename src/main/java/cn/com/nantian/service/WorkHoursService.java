@@ -18,7 +18,7 @@ public interface WorkHoursService {
      * @param myfile
      * @return
      */
-    Map<String ,Object> importImportExcel(MultipartFile myfile , String custType);
+    Map<String ,Object> importExcel(MultipartFile myfile , String custType);
 
 
 
