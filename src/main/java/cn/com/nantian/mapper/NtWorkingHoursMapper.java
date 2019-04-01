@@ -62,4 +62,10 @@ public interface NtWorkingHoursMapper {
     NtWorkingHours selectByOne(@Param("perId")int perId,@Param("workDate")Date workDate);
 
 
+    /**
+     * 根据perId查询工时信息
+     * @param perId
+     * @return
+     */
+    List<NtWorkingHours> selectByPerId(int perId);
 }

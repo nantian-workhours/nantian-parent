@@ -101,6 +101,13 @@
 
   </select>
 
+  <select id="selectByPerId" resultMap="BaseResultMap"   >
+    select
+    <include refid="Base_Column_List" />
+    from nt_working_hours
+    where PER_ID = #{perId,jdbcType=INTEGER}
+  </select>
+
 
   <delete id="deleteByPrimaryKey" parameterType="cn.com.nantian.pojo.NtWorkingHoursKey" >
     delete from nt_working_hours
