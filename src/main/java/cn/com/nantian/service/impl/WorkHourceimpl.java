@@ -3,15 +3,9 @@ package cn.com.nantian.service.impl;
 
 import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.common.WDWUtil;
-import cn.com.nantian.mapper.NtPerAliasMapper;
+import cn.com.nantian.mapper.*;
 
-import cn.com.nantian.mapper.NtProjectInfoMapper;
-import cn.com.nantian.mapper.NtWorkingHoursMapper;
-import cn.com.nantian.mapper.NtWorkingHoursTmpMapper;
-import cn.com.nantian.pojo.NtPerAlias;
-import cn.com.nantian.pojo.NtProjectInfo;
-import cn.com.nantian.pojo.NtWorkingHours;
-import cn.com.nantian.pojo.NtWorkingHoursTmp;
+import cn.com.nantian.pojo.*;
 import cn.com.nantian.pojo.entity.ProList;
 import cn.com.nantian.service.WorkHoursService;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -55,13 +49,40 @@ public class WorkHourceimpl  implements WorkHoursService{
     @Resource
     private NtWorkingHoursTmpMapper workingHoursTmpMapper;
 
+    @Resource
+    private  NtPersonnelMapper personnelMapper;
+
+
+
+
+    /**
+     *
+     * 查询工时
+     * @param perId 员工id
+     * @param custType 客户类别
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @return
+     */
     @Override
-    public String getWorkerHours(String userName , String projectName ,Date start, Date end) {
+    public List<NtWorkingHours> findAllWorkHours(int perId, String custType, Date startDate, Date endDate) {
+
+        if(custType == null || "".equals(custType)){//直接计算所有工时
+            List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId);
+            for (NtWorkingHours workingHours:workingHoursList) {
+
+            }
+
+
+
+        }else{//根据客户类别查询工时
+//            workingHoursMapper.selectWorkHoursByNameAndDate();
+
+        }
 
 
         return null;
     }
-
 
     /**
      * 中行导入工时

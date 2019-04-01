@@ -3,50 +3,51 @@ package cn.com.nantian.pojo;
 import java.util.Date;
 
 public class NtPersonnel {
+    //员工id
     private Integer perId;
-
+    //部门id
     private Integer deptId;
-
+    //性别
     private String sex;
-
+    //姓名
     private String name;
-
+    //手机号
     private String mobileNo;
-
+    //身份证号
     private String idNo;
-
+    //生日
     private Date birthday;
-
+    //民族
     private String ethnic;
-
+    //学历
     private String education;
-
+    //院校
     private String university;
-
+    //专业
     private String major;
-
+//    毕业日期
     private Date graduationDate;
-
+//    入司日期
     private Date entryDate;
-
+    //离职日期
     private Date leaveDate;
-
+    //状态
     private String status;
-
+    //职位
     private String position;
-
+    //公司邮箱
     private String companyEmail;
-
+    //个人邮箱
     private String personEmail;
-
+    //岗位
     private String post;
-
+    //密码
     private String password;
-
+    //籍贯
     private String nativePlace;
-
+    //婚姻
     private String marriageStatus;
-
+    //权限
     private String jurisdiction;
 
     public Integer getPerId() {

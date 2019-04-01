@@ -70,4 +70,11 @@ public interface UserService {
      * @return
      */
     int byIdNoUpdatePW(String idNo,String password);
+
+    /**
+     * 根据员工姓名 员工信息
+     * @param name
+     * @return
+     */
+    List<NtPersonnel> findByName(String name);
 }

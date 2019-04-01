@@ -3,12 +3,13 @@ package cn.com.nantian.pojo;
 import java.util.Date;
 
 public class NtWorkingHours extends NtWorkingHoursKey {
+    //正常工时
     private Float normalHours;
-
+    //加班工时
     private Float overtimeHours;
-
+    //签到时间
     private Date signinTime;
-
+    //签退时间
     private Date signbackTime;
 
     public Float getNormalHours() {

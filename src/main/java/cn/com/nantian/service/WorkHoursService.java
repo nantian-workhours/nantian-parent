@@ -1,15 +1,17 @@
 package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtPerAlias;
+import cn.com.nantian.pojo.NtWorkingHours;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 //工时管理类
 public interface WorkHoursService {
 
-    String getWorkerHours(String userName ,String projectName , Date start,Date end);
+
 
     /**
      * 导入工时
@@ -21,4 +23,18 @@ public interface WorkHoursService {
 
 
 //    NtPerAlias getAliasByCustType(String custType, String name);
+
+
+    /**
+     * 可以查询所有员工工时信息
+     * @param perId
+     * @param custType
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<NtWorkingHours> findAllWorkHours(int  perId, String custType, Date startDate,Date endDate);
+
+
+
 }

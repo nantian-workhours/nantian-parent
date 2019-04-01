@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 //员工录入信息
 @Controller
@@ -217,6 +219,28 @@ public class UserController {
             return ResponseData.forbidden().putDataValue(" ",e.toString());
         }
     }
+
+
+
+    /**
+     * 根据员工姓名 员工信息
+     * @param name
+     * @return
+     */
+    @RequestMapping("/findbyname")
+    @ResponseBody
+    public ResponseData selectByName( String name){
+        Map<String, Object> objectObjectHashMap = new HashMap<>();
+        List<NtPersonnel> personnelList = userService.findByName(name);
+        if(personnelList.size() > 0){
+            return ResponseData.ok().putDataValue("data",personnelList);
+        }else{
+            return ResponseData.notFound().putDataValue("code","Without the employee");
+        }
+    }
+
+
+
 }
 
 

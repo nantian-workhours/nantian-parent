@@ -5,9 +5,12 @@ package cn.com.nantian.controller;
  */
 
 
+import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtPerAlias;
+import cn.com.nantian.pojo.NtPersonnel;
+import cn.com.nantian.pojo.NtWorkingHours;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.pojo.entity.ResultData;
 import cn.com.nantian.service.UserService;
@@ -33,6 +36,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +53,7 @@ public class WorkHoursController {
     private WorkHoursService workHoursService;
     @Resource
     private UserService userService;
+
 
     /**
      * 导入工时
@@ -135,6 +140,36 @@ public class WorkHoursController {
         }
 
     }
+
+
+    /**
+     * 查询工时
+     * @param perId 员工id
+     * @param custType 客户类别
+     * @param startDate 开始日期
+     * @param endDate 结束日期
+     * @param jurisdiction 当前查询员工的权限
+     * @return
+     */
+    @RequestMapping("/selectworkhours")
+    @ResponseBody
+    public ResponseData selectWorkHours(int perId, String custType, Date startDate,Date endDate,String jurisdiction) {
+        //获取登录人的姓名
+        String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
+
+        //判断员工权限
+        if(Integer.valueOf(jurisdiction) <=1){//管理员权限,查询所有
+            List<NtWorkingHours> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
+
+
+        }else{//普通员工权限,查询自己
+//            workHoursService.selectWorkHoursByPerId(perId,custType,startDate,endDate);
+
+        }
+
+        return ResponseData.ok().putDataValue("",null);
+    }
+
 
     }
 
