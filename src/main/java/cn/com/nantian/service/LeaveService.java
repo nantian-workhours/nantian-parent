@@ -1,8 +1,11 @@
 package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtLeave;
+import org.apache.poi.ss.usermodel.Cell;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 public interface LeaveService {
 
@@ -53,4 +56,21 @@ public interface LeaveService {
     int updateByPrimaryKeySelective(NtLeave record);
 
     int updateByPrimaryKey(NtLeave record);
+
+    /**
+     * @Description: 导入请假信息
+     * @Auther: Mr.Kong
+     * @Date: 2019/4/1 17:07
+     * @Param: [myfile]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    Map<String ,Object>  importExcel(MultipartFile myfile);
+    /**
+     * @Description: 获得xsscell内容
+     * @Auther: Mr.Kong
+     * @Date: 2019/4/1 17:07
+     * @Param: [cell]
+     * @Return: java.lang.Object
+     **/
+    Object getCellValue(Cell cell);
 }
