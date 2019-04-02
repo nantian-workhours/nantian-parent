@@ -106,6 +106,7 @@
     <include refid="Base_Column_List" />
     from nt_working_hours
     where PER_ID = #{perId,jdbcType=INTEGER}
+    AND  WORK_DATE between #{normalHours,jdbcType=REAL} and #{overtimeHours,jdbcType=REAL}
   </select>
 
 
@@ -198,6 +199,10 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
+
+
+
   <update id="updateByExampleSelective" parameterType="map" >
     update nt_working_hours
     <set >

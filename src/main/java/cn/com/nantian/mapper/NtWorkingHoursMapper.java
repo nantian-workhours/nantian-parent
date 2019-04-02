@@ -63,9 +63,9 @@ public interface NtWorkingHoursMapper {
 
 
     /**
-     * 根据perId查询工时信息
+     * 根据perId,开始时间和结束时间查询工时信息
      * @param perId
      * @return
      */
-    List<NtWorkingHours> selectByPerId(int perId);
+    List<NtWorkingHours> selectByPerId(@Param("perId")int perId,@Param("normalHours")Date normalHours, @Param("overtimeHours")Date overtimeHours);
 }

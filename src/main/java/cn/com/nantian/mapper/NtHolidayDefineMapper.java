@@ -2,11 +2,15 @@ package cn.com.nantian.mapper;
 
 import cn.com.nantian.pojo.NtHolidayDefine;
 import cn.com.nantian.pojo.NtHolidayDefineExample;
+
+import java.util.Date;
 import java.util.List;
+
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import org.apache.ibatis.annotations.Param;
 
 public interface NtHolidayDefineMapper {
-    int countByExample(NtHolidayDefineExample example);
+     int countByExample(NtHolidayDefineExample example);
 
     int deleteByExample(NtHolidayDefineExample example);
 
@@ -27,4 +31,12 @@ public interface NtHolidayDefineMapper {
     int updateByPrimaryKeySelective(NtHolidayDefine record);
 
     int updateByPrimaryKey(NtHolidayDefine record);
+
+    /**
+     *
+     * @param holidayDate
+     * @return
+     */
+    int countByDay(Date holidayDate);
+
 }

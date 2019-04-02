@@ -148,6 +148,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </select>
+
+
+  <select id="countByDay" resultType="java.lang.Integer" >
+    select count(*) from nt_holiday_define
+    WHERE  HOLIDAY_DATE = #{record.holidayDate,jdbcType=DATE}
+  </select>
+
+
+
   <update id="updateByExampleSelective" parameterType="map" >
     update nt_holiday_define
     <set >

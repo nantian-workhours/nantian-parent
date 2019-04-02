@@ -19,6 +19,7 @@ import com.alibaba.druid.util.StringUtils;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -153,14 +154,19 @@ public class WorkHoursController {
      */
     @RequestMapping("/selectworkhours")
     @ResponseBody
-    public ResponseData selectWorkHours(int perId, String custType, Date startDate,Date endDate,String jurisdiction) {
+
+    public ResponseData selectWorkHours(int perId, String custType, @DateTimeFormat(pattern = "yyyy-MM")Date startDate,@DateTimeFormat(pattern = "yyyy-MM")Date endDate,String jurisdiction) {
         //获取登录人的姓名
-        String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
+//        String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
 
         //判断员工权限
         if(Integer.valueOf(jurisdiction) ==1 || Integer.valueOf(jurisdiction) ==0){//管理员权限,查询所有
-            List<NtWorkingHours> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
-
+            if(startDate.before(endDate)){//开始的时间要早于结束的时间
+                Map<Object,Object> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
+                return ResponseData.ok().putDataValue("data",workingHoursList);
+            }else{
+                return ResponseData.notFound().putDataValue("code","Start later than finish");
+            }
 
         }else{//普通员工权限,查询自己
 //            workHoursService.selectWorkHoursByPerId(perId,custType,startDate,endDate);

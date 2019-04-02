@@ -37,7 +37,7 @@ import java.util.*;
 //工时管理类
 @Service
 @Transactional
-public class WorkHourceimpl  implements WorkHoursService{
+public class WorkHourceImpl implements WorkHoursService{
 
     @Resource
     private NtWorkingHoursMapper workingHoursMapper;
@@ -48,7 +48,8 @@ public class WorkHourceimpl  implements WorkHoursService{
     private  NtProjectInfoMapper projectInfoMapper;
     @Resource
     private NtWorkingHoursTmpMapper workingHoursTmpMapper;
-
+    @Resource
+    private NtHolidayDefineMapper holidayDefineMapper;
     @Resource
     private  NtPersonnelMapper personnelMapper;
 
@@ -64,23 +65,23 @@ public class WorkHourceimpl  implements WorkHoursService{
      * @param endDate 结束日期
      * @return
      */
-    @Override
-    public List<NtWorkingHours> findAllWorkHours(int perId, String custType, Date startDate, Date endDate) {
-
-        if(custType == null || "".equals(custType)){//直接计算所有员工工时
-
-
-
-
-
-        }else{//根据客户类别查询工时
-//            workingHoursMapper.selectWorkHoursByNameAndDate();
-
-        }
-
-
-        return null;
-    }
+//    @Override
+//    public Map<Object,Object>  findAllWorkHours(int perId, String custType, Date startDate, Date endDate) {
+//
+//        if(custType == null || "".equals(custType)){//直接计算所有员工工时
+//
+//
+//
+//
+//
+//        }else{//根据客户类别查询工时
+////            workingHoursMapper.selectWorkHoursByNameAndDate();
+//           return findWorkHours(perId,custType,  startDate,  endDate);
+//        }
+//
+//
+//        return null;
+//    }
 
     /**
      * 根据用户编号和客户名称查询加班时间
@@ -88,68 +89,221 @@ public class WorkHourceimpl  implements WorkHoursService{
      * @param custType
      * @return
      */
-    private Map<Object,Object> findAllWorkHours(int perId, String custType){
+    public  Map<Object,Object> findAllWorkHours(int perId, String custType,Date startDate, Date endDate){
         //初始化map
         Map<Object, Object> map = new HashMap<>();
-
         if(custType.equals(ParamUntil._3)){//如果客户类型是中国人寿
-        List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId);
-        for (NtWorkingHours workingHours:workingHoursList) {
-            //判断签到签退时间和签退时间是否为空
-            String isSignbackTime = workingHours.getSignbackTime().toString();
-            String isSigninTime = workingHours.getSigninTime().toString();
+            double days=0.0;//初始化当月天数
+            double daysHours=0.0;//初始化当月工时数
+            try {
+                SimpleDateFormat sdf  = new SimpleDateFormat("yyyy-MM");
+                String startDateStr  = sdf.format(startDate);
+                String endDateStr = sdf.format(endDate);
+                //获取两个时间之间的月份
+                List<String>  daysList =getMonthBetween(startDateStr,endDateStr);
+                for (String strDate:daysList) {
+                    float workTime =0; //当月正常出勤工时
+                    float addedHours =0; //当月加班工时
 
-            if (isSignbackTime == null || "".equals(isSignbackTime) && isSigninTime == null || "".equals(isSigninTime)) {
-                //签到签退两者都为空的情况--->直接查询正常工时和加班工时
+                    Map<Object, Object> workMap = new HashMap<>();
+                    //将时间转化为每个月的1号
+                    String strDateDay =strDate+"-01";
+                    if (strDateDay!=null) {
+                        //获取这个月的开始时间和结束时间,返回一个数组
+                        String[] strArrDate = getMonthStartAndEndDate(strDateDay);
+                        //将字符串格式转化为date
+                        SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
+                        Date mStartDate =simple.parse(strArrDate[0]);
+                        Date mEndDate =simple.parse(strArrDate[1]);
+                        //获取这个月的正常工作日天数
+                        days = calLeaveDays(simple.parse(strArrDate[0]),simple.parse(strArrDate[1]));
+                        //获取当月工时数
+                        daysHours = days * 8;
+                        //查询每个月的工时信息列表
+                        List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId,mStartDate,mEndDate);
+                        //循环工时
+                        for (NtWorkingHours workingHours:workingHoursList) {
+                            List<Float> list=new ArrayList<>();
+                            list.add(0,workingHours.getNormalHours());//添加正常工时
+                            list.add(1,workingHours.getOvertimeHours());//添加加班工时
+                            workTime += workingHours.getNormalHours();//正常工时累加
 
+                            addedHours += workingHours.getOvertimeHours();//加班工时累加
+                            workMap.put(workingHours.getWorkDate(),list);//添加平时工作日
 
-            } else if (isSignbackTime == null && isSigninTime != null) {
-                //签退时间为空,签到时间不为空
-
-            } else if (isSignbackTime != null && isSigninTime == null) {
-                //签到时间为空,签退时间不为空
-
-
-            } else {//直接使用正常工时和加班工时
-
-
+                        }
+                        workMap.put("workingDays",Math.floor(days));//向下取整 当月天数
+                        workMap.put("workingHours",Math.floor(daysHours));//向下取整  当月工时数
+                        workMap.put("custType","中国银行");
+                        workMap.put("allHours",workTime);
+                        workMap.put("addedHours",addedHours);
+                        map.put(strDate,workMap);
+                    }
+                }
+                return map;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return  new HashMap<>();
             }
-        }
+
         }else if(custType.equals(ParamUntil._1)){
             //如果客户类型是中国银行
-//            初始化参数
-            int workDay =0; //当月正常工作日
-            int normalWorkTime =0; //当月正常工时
-            int workTime =0; //当月正常出勤工时
-            int addedHours =0; //当月加班工时
 
-            //查询工时列表
-            List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId);
-            //循环工时
-            for (NtWorkingHours workingHours:workingHoursList) {
-                //获取月份
+
+            double days=0.0;//初始化当月天数
+            double daysHours=0.0;//初始化当月工时数
+            try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
-                String dateWork = sdf.format(workingHours.getWorkDate());
+                String startDateStr = sdf.format(startDate);
+                String endDateStr = sdf.format(endDate);
 
-                map.put(dateWork,workingHours);
+                List<String>  daysList =getMonthBetween(startDateStr,endDateStr);
+                for (String strDate:daysList) {
+                    float workTime =0; //当月正常出勤工时
+                    float addedHours =0; //当月加班工时
 
+                    Map<Object, Object> workMap = new HashMap<>();
+                    //将时间转化为每个月的1号
+                    String strDateDay =strDate+"-01";
+                    if (strDateDay!=null) {
+                        //获取这个月的开始时间和结束时间,返回一个数组
+                        String[] strArrDate = getMonthStartAndEndDate(strDateDay);
+                        //将字符串格式转化为date
+                        SimpleDateFormat simple = new SimpleDateFormat("yyyy-MM-dd");
+                        Date mStartDate =simple.parse(strArrDate[0]);
+                        Date mEndDate =simple.parse(strArrDate[1]);
+                        //获取这个月的正常工作日天数
+                        days = calLeaveDays(simple.parse(strArrDate[0]),simple.parse(strArrDate[1]));
+                        //获取当月工时数
+                        daysHours = days * 8;
+                        //查询每个月的工时信息列表
+                        List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId,mStartDate,mEndDate);
+                        //循环工时
+                        for (NtWorkingHours workingHours:workingHoursList) {
+                            List<Float> list=new ArrayList<>();
+                            list.add(0,workingHours.getNormalHours());//添加正常工时
+                            list.add(1,workingHours.getOvertimeHours());//添加加班工时
+                            workTime += workingHours.getNormalHours();//正常工时累加
 
+                            addedHours += workingHours.getOvertimeHours();//加班工时累加
+                            workMap.put(workingHours.getWorkDate(),list);//添加平时工作日
+
+                        }
+                        workMap.put("workingDays",Math.floor(days));//向下取整 当月天数
+                        workMap.put("workingHours",Math.floor(daysHours));//向下取整  当月工时数
+                        workMap.put("custType","中国银行");
+                        workMap.put("allHours",workTime);
+                        workMap.put("addedHours",addedHours);
+                        map.put(strDate,workMap);
+                    }
+                }
+                return map;
+            } catch (ParseException e) {
+                e.printStackTrace();
+                return  new HashMap<>();
             }
-
-
-        }else{
+        }else{//
             return  new HashMap<>();
         }
-
-            return null;
     }
 
 
+    /**
+     * 得到这个月份的开始日期和结束日期
+     * @param todayTime
+     * @return
+     * @throws ParseException
+     */
+    public static String[] getMonthStartAndEndDate(String todayTime) throws ParseException {
+        String[] arr = new String[2];
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar c = Calendar.getInstance();
+        c.setTime(sdf.parse(todayTime));
+        c.set(Calendar.DAY_OF_MONTH, 1);
+        arr[0] = sdf.format(c.getTime());
+        c.set(Calendar.DAY_OF_MONTH, c.getActualMaximum(Calendar.DAY_OF_MONTH));
+        arr[1] = sdf.format(c.getTime());
+        return arr;
+    }
 
 
+    /**
+     * 获取两个月时间的所有月份
+     * @param minDate
+     * @param maxDate
+     * @return
+     * @throws ParseException
+     */
+    public static List<String> getMonthBetween(String minDate, String maxDate) throws ParseException {
+        ArrayList<String> result = new ArrayList<String>();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");//格式化为年月
+
+        Calendar min = Calendar.getInstance();
+        Calendar max = Calendar.getInstance();
+
+        min.setTime(sdf.parse(minDate));
+        min.set(min.get(Calendar.YEAR), min.get(Calendar.MONTH), 1);
+
+        max.setTime(sdf.parse(maxDate));
+        max.set(max.get(Calendar.YEAR), max.get(Calendar.MONTH), 2);
+
+        Calendar curr = min;
+        while (curr.before(max)) {
+            result.add(sdf.format(curr.getTime()));
+            curr.add(Calendar.MONTH, 1);
+        }
+
+        return result;
+    }
 
 
+    /**
+     *获取这两个时间段时间的正常工作日
+     * @param startTime
+     * @param endTime
+     * @return
+     */
+    public  double calLeaveDays(Date startTime, Date endTime) {
+        double leaveDays = 0;
+        //从startTime开始循环，若该日期不是节假日或者不是周六日则请假天数+1
+        Date flag = startTime;//设置循环开始日期
+        Calendar cal = Calendar.getInstance();
+            //循环遍历每个日期
+        while (flag.compareTo(endTime) != 1) {
+            cal.setTime(flag);
+            //判断是否为周六日
+            int week = cal.get(Calendar.DAY_OF_WEEK) - 1;
+            if (week == 0 || week == 6) {//0为周日，6为周六
+                //跳出循环进入下一个日期
+                cal.add(Calendar.DAY_OF_MONTH, +1);
+                flag = cal.getTime();
+                continue;
+            }
+            //判断是否为节假日
+            try {
+                //从数据库查找该日期是否在节假日中
+                /**这里为数据库操作*/
 
+                int count = holidayDefineMapper.countByDay(flag);
+                /**传入该日期flag,使用sql语句判断flag是否between节假日开始日期and节假日结束日期*/
+                /**count为从数据库查出的行数*/
+                if (count > 0) {
+                    //跳出循环进入下一个日期
+                    cal.add(Calendar.DAY_OF_MONTH, +1);
+                    flag = cal.getTime();
+                    continue;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //不是节假日或者周末，天数+1
+            leaveDays = leaveDays + 1;
+            //日期往后加一天
+            cal.add(Calendar.DAY_OF_MONTH, +1);
+            flag = cal.getTime();
+        }
+        return leaveDays;
+    }
 
     /**
      * 中行导入工时
