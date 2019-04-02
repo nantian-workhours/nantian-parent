@@ -15,13 +15,24 @@ import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtLeave;
 import cn.com.nantian.service.DictionariesService;
 import cn.com.nantian.service.LeaveService;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class LeaveServiceImpl implements LeaveService{
+public class LeaveServiceImpl implements LeaveService {
 
     @Resource
     private NtLeaveMapper leaveMapper;
@@ -30,76 +41,77 @@ public class LeaveServiceImpl implements LeaveService{
 
 
     /**
-      * @Description: 更新审批状态(R 审核中,Y 通过,N 退回)
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/29 15:52
-      * @Param: [leave]
-      * @Return: int
-      **/
+     * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:52
+     * @Param: [leave]
+     * @Return: int
+     **/
     @Override
     public int updateLeaveStatus(NtLeave leave) {
         return leaveMapper.updateLeaveStatus(leave);
     }
 
     /**
-      * @Description: 设置请假类别名称、审批状态名称
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/29 15:32
-      * @Param: [leaveList]
-      * @Return: void
-      **/
-    public void setLeaveTypeName(List<NtLeave> leaveList){
-        if (ObjectUtils.isNotNull(leaveList)){
-            for (NtLeave leave:leaveList){
+     * @Description: 设置请假类别名称、审批状态名称
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:32
+     * @Param: [leaveList]
+     * @Return: void
+     **/
+    public void setLeaveTypeName(List<NtLeave> leaveList) {
+        if (ObjectUtils.isNotNull(leaveList)) {
+            for (NtLeave leave : leaveList) {
                 //设置请假类别名称
                 NtDictionariesKey dictionariesKey = dictionariesService.selectDictionaries(ParamUntil.hol, leave.getLeaveType());
-                if (ObjectUtils.isNotNull(dictionariesKey)){
+                if (ObjectUtils.isNotNull(dictionariesKey)) {
                     leave.setLeaveTypeName(dictionariesKey.getDicValue());
                 }
                 //设置审批状态名称 R 审核中，Y 通过，N 退回
-                if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("R")){
+                if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("R")) {
                     leave.setApplyStatusName("审核中");
-                }else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("Y")){
+                } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("Y")) {
                     leave.setApplyStatusName("通过");
-                }else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("N")){
+                } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("N")) {
                     leave.setApplyStatusName("退回");
                 }
             }
         }
     }
+
     /**
-      * @Description: 设置请假类别名称、审批状态名称
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/29 15:33
-      * @Param: [leave]
-      * @Return: void
-      **/
-    public void setLeaveTypeName(NtLeave leave){
-        if (ObjectUtils.isNotNull(leave)){
-                //设置请假类别名称
-                NtDictionariesKey dictionariesKey = dictionariesService.selectDictionaries(ParamUntil.hol, leave.getLeaveType());
-                if (ObjectUtils.isNotNull(dictionariesKey)){
-                    leave.setLeaveTypeName(dictionariesKey.getDicValue());
-                }
-                //设置审批状态名称 R 审核中，Y 通过，N 退回
-                if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("R")){
-                    leave.setApplyStatusName("审核中");
-                }
-                if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("Y")){
-                    leave.setApplyStatusName("通过");
-                }else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("N")){
-                    leave.setApplyStatusName("退回");
-                }
+     * @Description: 设置请假类别名称、审批状态名称
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:33
+     * @Param: [leave]
+     * @Return: void
+     **/
+    public void setLeaveTypeName(NtLeave leave) {
+        if (ObjectUtils.isNotNull(leave)) {
+            //设置请假类别名称
+            NtDictionariesKey dictionariesKey = dictionariesService.selectDictionaries(ParamUntil.hol, leave.getLeaveType());
+            if (ObjectUtils.isNotNull(dictionariesKey)) {
+                leave.setLeaveTypeName(dictionariesKey.getDicValue());
+            }
+            //设置审批状态名称 R 审核中，Y 通过，N 退回
+            if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("R")) {
+                leave.setApplyStatusName("审核中");
+            }
+            if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("Y")) {
+                leave.setApplyStatusName("通过");
+            } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("N")) {
+                leave.setApplyStatusName("退回");
+            }
         }
     }
 
     /**
-      * @Description: 查询请假信息列表
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/29 15:25
-      * @Param: [leave]
-      * @Return: java.util.List<cn.com.nantian.pojo.NtLeave>
-      **/
+     * @Description: 查询请假信息列表
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/29 15:25
+     * @Param: [leave]
+     * @Return: java.util.List<cn.com.nantian.pojo.NtLeave>
+     **/
     @Override
     public List<NtLeave> selectLeaveList(NtLeave leave) {
         return leaveMapper.selectLeaveList(leave);
@@ -134,4 +146,137 @@ public class LeaveServiceImpl implements LeaveService{
     public int updateByPrimaryKey(NtLeave record) {
         return leaveMapper.updateByPrimaryKey(record);
     }
+
+
+    /**
+     * @Description: 导入请假信息
+     * @Auther: Mr.Kong
+     * @Date: 2019/4/1 17:07
+     * @Param: [myfile]
+     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     **/
+    public Map<String, Object> importExcel(MultipartFile myfile) {
+        try {
+            Map<String, Object> map = new HashMap<>();
+            String msg = "";
+            int suct = 0; //初始化成功条数
+            int dift = 0; //初始化出错条数
+            XSSFWorkbook xssfWorkbook = null;
+            xssfWorkbook = new XSSFWorkbook(myfile.getInputStream());
+            XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
+            int rows = sheet.getLastRowNum(); //指的行数，一共有多少行+
+            for (int i = 2; i <= rows + 1; i++) {
+                XSSFRow row = sheet.getRow(i); //读取左上端单元格
+                if (row != null) { //行不为空
+                    // **读取cell**
+                    String userName = getCellValue(row.getCell((short) 1)).toString();//员工姓名
+                    if (StringUtils.isEmpty(userName)) {
+                        msg += "第" + i + "行 员工姓名为空; ";
+                        dift++;
+                        continue;
+                    }
+                    String leaveTypeName = getCellValue(row.getCell((short) 2)).toString();//请假类型
+                    if (StringUtils.isEmpty(leaveTypeName)) {
+                        msg += "第" + i + "行 请假类型为空; ";
+                        dift++;
+                        continue;
+                    }
+                    Float leaveDays = Float.valueOf(getCellValue(row.getCell((short) 3)).toString());//请假天数
+                    if (ObjectUtils.isNull(leaveDays)) {
+                        msg += "第" + i + "行 请假天数为空; ";
+                        dift++;
+                        continue;
+                    }
+                    Date begDate = (Date) getCellValue(row.getCell((short) 4));//请假开始时间
+                    if (ObjectUtils.isNull(begDate)) {
+                        msg += "第" + i + "行 请假开始时间为空; ";
+                        dift++;
+                        continue;
+                    }
+                    Date endDate = (Date) getCellValue(row.getCell((short) 5));//请假结时间束
+                    if (ObjectUtils.isNull(endDate)) {
+                        msg += "第" + i + "行 请假结时间束为空; ";
+                        dift++;
+                        continue;
+                    }
+                    String leaveRemark = getCellValue(row.getCell((short) 6)).toString();//请假明细
+                    //时间格式转化
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    String begin = sdf.format(begDate);
+                    begDate = sdf.parse(begin);
+                    String end = sdf.format(endDate);
+                    endDate = sdf.parse(end);
+                    //新增请假信息
+                    NtLeave ntLeave = new NtLeave();
+                    NtDictionariesKey dic = new NtDictionariesKey();
+                    dic.setDicType(ParamUntil.hol);
+                    List<NtDictionariesKey> dicList = dictionariesService.selectDictionariesList(dic);
+                    if (ObjectUtils.isNotNull(dicList)) {
+                        for (NtDictionariesKey dick : dicList) {
+                            if (dick.getDicValue().equals(leaveTypeName)) {
+                                ntLeave.setLeaveType(dick.getDicCode()); //设置请假类型
+                            }
+                        }
+                    }
+                    if (StringUtils.isEmpty(ntLeave.getLeaveType())) {
+                        msg += "第" + i + "行 请假类型填写错误; ";
+                        dift++;
+                        continue;
+                    }
+                    ntLeave.setPerId(1);
+                    ntLeave.setBegDate(begDate);
+                    ntLeave.setEndDate(endDate);
+                    ntLeave.setLeaveCount(leaveDays);
+                    ntLeave.setLeaveRemark(leaveRemark);
+                    ntLeave.setApplyStatus("R");
+                    this.insertSelective(ntLeave);
+                    suct++;
+                }
+            }
+            map.put("rows ", rows);//总行数
+            map.put("success num ", suct);//成功条数
+            map.put("failed num ", dift);//失败条数
+            map.put("error ", msg);//异常行数
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+    }
+
+    /**
+     * @Description: 获得xsscell内容
+     * @Auther: Mr.Kong
+     * @Date: 2019/4/1 17:07
+     * @Param: [cell]
+     * @Return: java.lang.Object
+     **/
+    public Object getCellValue(Cell cell) {
+        Object value = "";
+        DecimalFormat df = new DecimalFormat("0");//格式化number String字符串
+        if (cell != null) {
+            switch (cell.getCellType()) {
+                case Cell.CELL_TYPE_FORMULA:
+                    break;
+                case Cell.CELL_TYPE_NUMERIC:
+                    if (DateUtil.isCellDateFormatted(cell)) {
+                        value = cell.getDateCellValue();
+                    } else if ("General".equals(cell.getCellStyle().getDataFormatString())) {
+                        value = df.format(cell.getNumericCellValue());
+                    } else {
+                        value = df.format(cell.getNumericCellValue());
+                    }
+                    break;
+                case Cell.CELL_TYPE_STRING:
+                    value = cell.getStringCellValue().trim();
+                    break;
+                default:
+                    value = "";
+                    break;
+            }
+        }
+        return value;
+    }
+
+
 }
