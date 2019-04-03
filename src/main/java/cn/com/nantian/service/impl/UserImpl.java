@@ -78,9 +78,19 @@ public class UserImpl implements UserService{
      * @return
      */
     public List<PersonnelItem> findPersonnelBydeptIdAndName(int deptId , String name){
-//        List<NtPersonnel>  personnelList = personnelMapper.findPersonnelBydeptIdAndName(deptId,name);
         List<PersonnelItem>  personnelList = personnelItemMapper.selectPersonnel(deptId,name);
 
+        return personnelList;
+    }
+    /**
+      * @Description: 根据部门deptId和员工name查询员工信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/3 14:55
+      * @Param: [deptId, name]
+      * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+      **/
+    public List<NtPersonnel> findPerByDeptIdAndName(int deptId , String name){
+        List<NtPersonnel>  personnelList = personnelMapper.findPersonnelBydeptIdAndName(deptId,name);
         return personnelList;
     }
     /**

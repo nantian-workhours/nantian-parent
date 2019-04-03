@@ -25,6 +25,15 @@ public interface UserService {
      */
     List<PersonnelItem> findPersonnelBydeptIdAndName(int deptId , String name);
 
+    /**
+      * @Description: 根据部门deptId和员工name查询员工信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/3 14:56
+      * @Param: [deptId, name]
+      * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+      **/
+    public List<NtPersonnel> findPerByDeptIdAndName(int deptId , String name);
+
 
     /**
      * 根据身份证号查询员工信息

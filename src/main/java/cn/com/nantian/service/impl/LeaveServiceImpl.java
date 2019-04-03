@@ -11,10 +11,11 @@ import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.NtLeaveMapper;
-import cn.com.nantian.pojo.NtDictionariesKey;
-import cn.com.nantian.pojo.NtLeave;
+import cn.com.nantian.pojo.*;
+import cn.com.nantian.service.DepartmentService;
 import cn.com.nantian.service.DictionariesService;
 import cn.com.nantian.service.LeaveService;
+import cn.com.nantian.service.UserService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -38,7 +39,10 @@ public class LeaveServiceImpl implements LeaveService {
     private NtLeaveMapper leaveMapper;
     @Resource
     private DictionariesService dictionariesService;
-
+    @Resource
+    private DepartmentService departmentService;
+    @Resource
+    private UserService userService;
 
     /**
      * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
@@ -167,11 +171,23 @@ public class LeaveServiceImpl implements LeaveService {
             int rows = sheet.getLastRowNum(); //指的行数，一共有多少行+
             for (int i = 2; i <= rows + 1; i++) {
                 XSSFRow row = sheet.getRow(i); //读取左上端单元格
-                if (row != null) { //行不为空
-                    // **读取cell**
+                if (row != null) { //行不为空 读取cell
+                    String deptName = getCellValue(row.getCell((short) 0)).toString();//部门名称
+                    Integer deptId=selectDeptId(deptName);
+                    if(ObjectUtils.isNull(deptId)){
+                        msg += "第" + i + "行 部门名称为空或不正确; ";
+                        dift++;
+                        continue;
+                    }
                     String userName = getCellValue(row.getCell((short) 1)).toString();//员工姓名
                     if (StringUtils.isEmpty(userName)) {
                         msg += "第" + i + "行 员工姓名为空; ";
+                        dift++;
+                        continue;
+                    }
+                    List<NtPersonnel> userList = userService.findPerByDeptIdAndName(deptId, userName);
+                    if(ObjectUtils.isNull(userList)){
+                        msg += "第" + i + "行 员工不存在; ";
                         dift++;
                         continue;
                     }
@@ -223,7 +239,7 @@ public class LeaveServiceImpl implements LeaveService {
                         dift++;
                         continue;
                     }
-                    ntLeave.setPerId(1);
+                    ntLeave.setPerId(userList.get(0).getPerId());
                     ntLeave.setBegDate(begDate);
                     ntLeave.setEndDate(endDate);
                     ntLeave.setLeaveCount(leaveDays);
@@ -278,5 +294,24 @@ public class LeaveServiceImpl implements LeaveService {
         return value;
     }
 
-
+    /**
+      * @Description: 查询部门id
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/3 14:31
+      * @Param: [deptName] 部门名称
+      * @Return: int  部门id
+      **/
+    public Integer selectDeptId(String deptName){
+        Integer deptId=null;
+        List<NtDepartment> departmentList = departmentService.findAll();
+        if(ObjectUtils.isNotNull(departmentList) && StringUtils.isNotEmpty(deptName)){
+            for (NtDepartment department:departmentList){
+                if(department.getDeptName().equals(deptName)){
+                    deptId=department.getDeptId();
+                    break;
+                }
+            }
+        }
+        return deptId;
+    }
 }
