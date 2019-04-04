@@ -4,6 +4,7 @@ import cn.com.nantian.pojo.NtPerAlias;
 import cn.com.nantian.pojo.NtWorkingHours;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +35,11 @@ public interface WorkHoursService {
      * @return
      */
     Map<Object,Object>  findAllWorkHours(int  perId, String custType, Date startDate,Date endDate);
-
-
+    /**
+     * 根据 修改工时
+     * @param workingHours
+     * @return
+     */
+   int updateWorkHours(NtWorkingHours workingHours);
 
 }

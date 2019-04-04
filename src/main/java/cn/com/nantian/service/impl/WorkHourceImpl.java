@@ -16,6 +16,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -23,6 +24,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.xml.crypto.Data;
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -51,8 +53,16 @@ public class WorkHourceImpl implements WorkHoursService{
     @Resource
     private  NtPersonnelMapper personnelMapper;
 
-
-
+    /**
+     * 根据主键(perId和日期)修改工时
+     * @param workingHours
+     * @return
+     */
+    @Override
+    public int updateWorkHours(NtWorkingHours workingHours) {
+       int t =  workingHoursMapper.updateByPrimaryKey(workingHours);
+        return t;
+    }
 
     /**
      *

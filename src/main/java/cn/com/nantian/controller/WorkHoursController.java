@@ -22,10 +22,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,6 +30,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -187,6 +185,36 @@ public class WorkHoursController {
     }
 
 
+
+
+    /**
+     *  修改工时
+
+     * @param workingHours
+     * @return
+     */
+    @RequestMapping("updatewh")
+    @ResponseBody
+    public ResponseData updateWorkHours(@RequestBody NtWorkingHours workingHours) {
+                try {
+                    //将数据查入到库中
+                    int cod = workHoursService.updateWorkHours(workingHours);
+                    if(cod > 0){
+                        //修改成功
+                        return ResponseData.ok().putDataValue("status","add update " + cod);
+                    } else {
+                        //查询失败
+                        return ResponseData.isfailed().putDataValue("status","update failed");
+                    }
+                } catch ( Exception e) {
+                    return ResponseData.isfailed().putDataValue("data",e.toString());
+                }
+
+
+
+
+
+     }
     }
 
 
