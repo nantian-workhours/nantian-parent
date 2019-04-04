@@ -63,30 +63,6 @@ public class WorkHourceImpl implements WorkHoursService{
      * @param endDate 结束日期
      * @return
      */
-//    @Override
-//    public Map<Object,Object>  findAllWorkHours(int perId, String custType, Date startDate, Date endDate) {
-//
-//        if(custType == null || "".equals(custType)){//直接计算所有员工工时
-//
-//
-//
-//
-//
-//        }else{//根据客户类别查询工时
-////            workingHoursMapper.selectWorkHoursByNameAndDate();
-//           return findWorkHours(perId,custType,  startDate,  endDate);
-//        }
-//
-//
-//        return null;
-//    }
-
-    /**
-     * 根据用户编号和客户名称查询加班时间
-     * @param perId
-     * @param custType
-     * @return
-     */
     public  Map<Object,Object> findAllWorkHours(int perId, String custType,Date startDate, Date endDate){
         //初始化map
         Map<Object, Object> map = new HashMap<>();
@@ -200,12 +176,16 @@ public class WorkHourceImpl implements WorkHoursService{
 //                            workMap.put(cal.get(Calendar.DAY_OF_MONTH),list);//添加平时工作日
                             workMap.put(date,list);//添加平时工作日
                         }
-                        workMap.put("workingDays",Math.floor(days));//向下取整 当月天数
-                        workMap.put("workingHours",Math.floor(daysHours));//向下取整  当月工时数
-                        workMap.put("custType","中国人寿");
-                        workMap.put("allHours",workTime);
-                        workMap.put("addedHours",addedHours);
-                        map.put(strDate,workMap);
+                        if(workMap==null){
+                            workMap.put("workingDays",Math.floor(days));//向下取整 当月天数
+                            workMap.put("workingHours",Math.floor(daysHours));//向下取整  当月工时数
+                            workMap.put("custType","中国人寿");
+                            workMap.put("allHours",workTime);
+                            workMap.put("addedHours",addedHours);
+                        }
+
+                            map.put(strDate, workMap);
+
                     }
                 }
                 return map;
@@ -255,12 +235,16 @@ public class WorkHourceImpl implements WorkHoursService{
                             workMap.put(workingHours.getWorkDate(),list);//添加平时工作日
 
                         }
-                        workMap.put("workingDays",Math.floor(days));//向下取整 当月天数
-                        workMap.put("workingHours",Math.floor(daysHours));//向下取整  当月工时数
-                        workMap.put("custType","中国银行");
-                        workMap.put("allHours",workTime);
-                        workMap.put("addedHours",addedHours);
-                        map.put(strDate,workMap);
+                        if(workMap==null) {
+                            workMap.put("workingDays", Math.floor(days));//向下取整 当月天数
+                            workMap.put("workingHours", Math.floor(daysHours));//向下取整  当月工时数
+                            workMap.put("custType", "中国银行");
+                            workMap.put("allHours", workTime);
+                            workMap.put("addedHours", addedHours);
+                        }
+
+                            map.put(strDate, workMap);
+
                     }
                 }
                 return map;
@@ -389,13 +373,17 @@ public class WorkHourceImpl implements WorkHoursService{
                             }
 
                         }
-                        workMap.put("workingDays",Math.floor(days));//向下取整 当月天数
-                        workMap.put("workingHours",Math.floor(daysHours));//向下取整  当月工时数
+                    if(workMap==null) {
+                        workMap.put("workingDays", Math.floor(days));//向下取整 当月天数
+                        workMap.put("workingHours", Math.floor(daysHours));//向下取整  当月工时数
 //                        workMap.put("custType","中国银行");
-                        workMap.put("allHours",workTime);
-                        workMap.put("addedHours",addedHours);
-                        map.put(strDate,workMap);
+                        workMap.put("allHours", workTime);
+                        workMap.put("addedHours", addedHours);
                     }
+
+                        map.put(strDate, workMap);
+
+                }
 
                 return map;
             } catch (Exception e) {
