@@ -105,7 +105,7 @@ public class LeaveController {
      * @Param: [request, myfile]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
      **/
-    @RequestMapping("/importLeaveExcel")
+    @RequestMapping("/ntLeave/importExcel")
     @ResponseBody
     public ResponseData importProcess(HttpServletRequest request, @RequestParam("myFile") MultipartFile myfile) {
         //判断权限是否许可
