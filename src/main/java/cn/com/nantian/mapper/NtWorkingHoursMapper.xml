@@ -102,11 +102,12 @@
   </select>
 
   <select id="selectByPerId" resultMap="BaseResultMap"   >
-    select
+     select
     <include refid="Base_Column_List" />
     from nt_working_hours
     where PER_ID = #{perId,jdbcType=INTEGER}
     AND  WORK_DATE between #{normalHours,jdbcType=REAL} and #{overtimeHours,jdbcType=REAL}
+    order by WORK_DATE
   </select>
 
 

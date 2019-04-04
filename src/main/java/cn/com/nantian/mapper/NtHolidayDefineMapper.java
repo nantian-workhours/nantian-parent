@@ -33,10 +33,17 @@ public interface NtHolidayDefineMapper {
     int updateByPrimaryKey(NtHolidayDefine record);
 
     /**
-     *
+     *查询该日期是否是节假日
      * @param holidayDate
      * @return
      */
     int countByDay(Date holidayDate);
+
+    /**
+     * 查询该周末是否是工作日
+     * @param holidayDate
+     * @return
+     */
+   int  selectByDay(Date holidayDate);
 
 }
