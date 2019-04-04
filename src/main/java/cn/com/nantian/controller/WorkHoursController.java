@@ -161,19 +161,29 @@ public class WorkHoursController {
 
         //判断员工权限
         if(Integer.valueOf(jurisdiction) ==1 || Integer.valueOf(jurisdiction) ==0){//管理员权限,查询所有
-            if(startDate.before(endDate)){//开始的时间要早于结束的时间
-                Map<Object,Object> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
-                return ResponseData.ok().putDataValue("data",workingHoursList);
-            }else{
-                return ResponseData.notFound().putDataValue("code","Start later than finish");
-            }
-
+           if(startDate!=null && endDate!=null){
+                if( startDate.before(endDate)  ){//开始的时间要早于结束的时间
+                    Map<Object,Object> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
+                    return ResponseData.ok().putDataValue("data",workingHoursList);
+                }else{
+                    return ResponseData.notFound().putDataValue("code","Start later than finish");
+                }
+           }else{
+               return ResponseData.notFound().putDataValue("code","Start time and end time cannot be left blank ");
+           }
         }else{//普通员工权限,查询自己
-//            workHoursService.selectWorkHoursByPerId(perId,custType,startDate,endDate);
-
+            if(startDate!=null && endDate!=null){
+                if(startDate.before(endDate)){//开始的时间要早于结束的时间
+                    Map<Object,Object> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
+                    return ResponseData.ok().putDataValue("data",workingHoursList);
+                }else{
+                    return ResponseData.notFound().putDataValue("code","Start later than finish");
+                }
+            }else{
+                return ResponseData.notFound().putDataValue("code","Start time and end time cannot be left blank ");
+            }
         }
 
-        return ResponseData.ok().putDataValue("",null);
     }
 
 
