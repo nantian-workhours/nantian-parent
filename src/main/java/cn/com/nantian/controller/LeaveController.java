@@ -41,9 +41,9 @@ public class LeaveController {
     }
 
     /**
-     * @Description: 查询请假信息列表
+     * @Description: 查询请假信息列表 1
      * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:55
+     * @Date: 2019/3/29 15:55s
      * @Param: [leave]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
      **/
