@@ -36,5 +36,11 @@ public interface WorkHoursService {
      */
     Map<Object,Object>  findAllWorkHours(int  perId, String custType, Date startDate,Date endDate);
 
+    /**
+     * 修改工时
+     * @param workingHours
+     * @return
+     */
+    int  updateWorkHours(NtWorkingHours workingHours);
 
 }
