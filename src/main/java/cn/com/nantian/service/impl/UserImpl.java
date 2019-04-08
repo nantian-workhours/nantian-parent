@@ -57,17 +57,18 @@ public class UserImpl implements UserService{
         //设置员工的初始化密码
         personnel.setPassword(DigestUtils.md5DigestAsHex("nt0000".getBytes()));
         //设置用户的权限,超级管理员->0,管理员->1,普通用户->2
-        if("超级管理员".equals(personnel.getJurisdiction())){
-            personnel.setJurisdiction("1");
-        }else if ("管理员".equals(personnel.getJurisdiction())){
-            personnel.setJurisdiction("2");
-        }else if("员工".equals(personnel.getJurisdiction())){
-            personnel.setJurisdiction("3");
-        }else {
-            personnel.setJurisdiction("4");
-        }
+
+//        if("超级管理员".equals(personnel.getJurisdiction())){
+//            personnel.setJurisdiction("1");
+//        }else if ("管理员".equals(personnel.getJurisdiction())){
+//            personnel.setJurisdiction("2");
+//        }else if("员工".equals(personnel.getJurisdiction())){
+//            personnel.setJurisdiction("3");
+//        }else {
+//            personnel.setJurisdiction("4");
+//        }
         //修改状态和职位
-        updateFrag(personnel);
+//        updateFrag(personnel);
         return personnelMapper.insert(personnel);
     }
 
@@ -159,7 +160,7 @@ public class UserImpl implements UserService{
       //修改员工信息
       if(ntPersonnel != null){
           //修改状态和职位
-          updateFrag(personnel);
+            //  updateFrag(personnel);
             a = personnelMapper.updateByPrimaryKey(personnel);
             return "update success "+ a;
       }
