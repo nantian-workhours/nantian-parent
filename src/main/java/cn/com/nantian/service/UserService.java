@@ -78,7 +78,7 @@ public interface UserService {
      * @param password
      * @return
      */
-    int byIdNoUpdatePW(String idNo,String password);
+    int byIdNoUpdatePW(String idNo,String oldPassword,String password);
 
     /**
      * 根据员工姓名 员工信息

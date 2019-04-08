@@ -199,16 +199,22 @@ public class UserImpl implements UserService{
      * @return
      */
     @Override
-    public int byIdNoUpdatePW(String idNo, String password) {
+    public int byIdNoUpdatePW(String idNo,String oldPassword, String password) {
         int a=0;
         //查询员工信息
-
         NtPersonnel personnel = personnelMapper.selectByPrimaryIdNo(idNo);
+        //判断旧密码是否正确
+       String oldPW =  DigestUtils.md5DigestAsHex(oldPassword.getBytes());
+
         if (personnel != null) {
-            //将密码加密
-            personnel.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
-            //将修改密码后的信息更改到表中
-            a = personnelMapper.updateByPrimaryKey(personnel);
+            if(oldPW.equals(personnel.getPassword())){
+                //将密码加密
+                personnel.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
+                //将修改密码后的信息更改到表中
+                a = personnelMapper.updateByPrimaryKey(personnel);
+            }
+        }else{
+            return 0;
         }
         return a;
     }

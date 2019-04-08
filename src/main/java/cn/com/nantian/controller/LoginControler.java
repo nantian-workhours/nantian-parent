@@ -62,10 +62,10 @@ public class LoginControler {
      */
     @RequestMapping("updatepw")
     @ResponseBody
-    public ResponseData updatePassword(String idNo,String password) {
+    public ResponseData updatePassword(String idNo,String oldPassword,String password) {
         try {
             //根据身份证修改密码
-            int a = userService.byIdNoUpdatePW(idNo, password);
+            int a = userService.byIdNoUpdatePW(idNo,oldPassword, password);
             if(a> 0){
                 return ResponseData.ok().putDataValue("update pw success", a);
             }else{
