@@ -63,6 +63,7 @@ public class LeaveServiceImpl implements LeaveService {
      * @Param: [leaveList]
      * @Return: void
      **/
+    @Override
     public void setLeaveTypeName(List<NtLeave> leaveList) {
         if (ObjectUtils.isNotNull(leaveList)) {
             for (NtLeave leave : leaveList) {
@@ -90,6 +91,7 @@ public class LeaveServiceImpl implements LeaveService {
      * @Param: [leave]
      * @Return: void
      **/
+    @Override
     public void setLeaveTypeName(NtLeave leave) {
         if (ObjectUtils.isNotNull(leave)) {
             //设置请假类别名称
@@ -159,27 +161,35 @@ public class LeaveServiceImpl implements LeaveService {
      * @Param: [myfile]
      * @Return: java.util.Map<java.lang.String,java.lang.Object>
      **/
+    @Override
     public Map<String, Object> importExcel(MultipartFile myfile) {
         try {
             Map<String, Object> map = new HashMap<>();
             String msg = "";
-            int suct = 0; //初始化成功条数
-            int dift = 0; //初始化出错条数
+            //初始化成功条数
+            int suct = 0;
+            //初始化出错条数
+            int dift = 0;
             XSSFWorkbook xssfWorkbook = null;
             xssfWorkbook = new XSSFWorkbook(myfile.getInputStream());
             XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
-            int rows = sheet.getLastRowNum(); //指的行数，一共有多少行+
+            //指的行数，一共有多少行
+            int rows = sheet.getLastRowNum();
             for (int i = 2; i <= rows + 1; i++) {
-                XSSFRow row = sheet.getRow(i); //读取左上端单元格
-                if (row != null) { //行不为空 读取cell
-                    String deptName = getCellValue(row.getCell((short) 0)).toString();//部门名称
+                //读取左上端单元格
+                XSSFRow row = sheet.getRow(i);
+                //行不为空 读取cell
+                if (row != null) {
+                    //部门名称
+                    String deptName = getCellValue(row.getCell((short) 0)).toString();
                     Integer deptId=selectDeptId(deptName);
                     if(ObjectUtils.isNull(deptId)){
                         msg += "第" + i + "行 部门名称为空或不正确; ";
                         dift++;
                         continue;
                     }
-                    String userName = getCellValue(row.getCell((short) 1)).toString();//员工姓名
+                    //员工姓名
+                    String userName = getCellValue(row.getCell((short) 1)).toString();
                     if (StringUtils.isEmpty(userName)) {
                         msg += "第" + i + "行 员工姓名为空; ";
                         dift++;
@@ -191,31 +201,36 @@ public class LeaveServiceImpl implements LeaveService {
                         dift++;
                         continue;
                     }
-                    String leaveTypeName = getCellValue(row.getCell((short) 2)).toString();//请假类型
+                    //请假类型
+                    String leaveTypeName = getCellValue(row.getCell((short) 2)).toString();
                     if (StringUtils.isEmpty(leaveTypeName)) {
                         msg += "第" + i + "行 请假类型为空; ";
                         dift++;
                         continue;
                     }
-                    Float leaveDays = Float.valueOf(getCellValue(row.getCell((short) 3)).toString());//请假天数
+                    //请假天数
+                    Float leaveDays = Float.valueOf(getCellValue(row.getCell((short) 3)).toString());
                     if (ObjectUtils.isNull(leaveDays)) {
                         msg += "第" + i + "行 请假天数为空; ";
                         dift++;
                         continue;
                     }
-                    Date begDate = (Date) getCellValue(row.getCell((short) 4));//请假开始时间
+                    //请假开始时间
+                    Date begDate = (Date) getCellValue(row.getCell((short) 4));
                     if (ObjectUtils.isNull(begDate)) {
                         msg += "第" + i + "行 请假开始时间为空; ";
                         dift++;
                         continue;
                     }
-                    Date endDate = (Date) getCellValue(row.getCell((short) 5));//请假结时间束
+                    //请假结时间束
+                    Date endDate = (Date) getCellValue(row.getCell((short) 5));
                     if (ObjectUtils.isNull(endDate)) {
                         msg += "第" + i + "行 请假结时间束为空; ";
                         dift++;
                         continue;
                     }
-                    String leaveRemark = getCellValue(row.getCell((short) 6)).toString();//请假明细
+                    //请假明细
+                    String leaveRemark = getCellValue(row.getCell((short) 6)).toString();
                     //时间格式转化
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                     String begin = sdf.format(begDate);
@@ -230,7 +245,8 @@ public class LeaveServiceImpl implements LeaveService {
                     if (ObjectUtils.isNotNull(dicList)) {
                         for (NtDictionariesKey dick : dicList) {
                             if (dick.getDicValue().equals(leaveTypeName)) {
-                                ntLeave.setLeaveType(dick.getDicCode()); //设置请假类型
+                                //设置请假类型
+                                ntLeave.setLeaveType(dick.getDicCode());
                             }
                         }
                     }
@@ -249,10 +265,14 @@ public class LeaveServiceImpl implements LeaveService {
                     suct++;
                 }
             }
-            map.put("rows ", rows);//总行数
-            map.put("success num ", suct);//成功条数
-            map.put("failed num ", dift);//失败条数
-            map.put("error ", msg);//异常行数
+            //总行数
+            map.put("rows ", rows);
+            //成功条数
+            map.put("success num ", suct);
+            //失败条数
+            map.put("failed num ", dift);
+            //异常行数
+            map.put("error ", msg);
             return map;
         } catch (Exception e) {
             e.printStackTrace();
@@ -267,9 +287,11 @@ public class LeaveServiceImpl implements LeaveService {
      * @Param: [cell]
      * @Return: java.lang.Object
      **/
+    @Override
     public Object getCellValue(Cell cell) {
         Object value = "";
-        DecimalFormat df = new DecimalFormat("0");//格式化number String字符串
+        //格式化number String字符串
+        DecimalFormat df = new DecimalFormat("0");
         if (cell != null) {
             switch (cell.getCellType()) {
                 case Cell.CELL_TYPE_FORMULA:
