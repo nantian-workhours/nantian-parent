@@ -80,7 +80,7 @@ public class CustTypeController {
     }
 
     /**
-     * @Description: 新增客户类别
+     * @Description: 新增客户类别 1
      * @Param: [custType]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
      * @Auther: Fly
