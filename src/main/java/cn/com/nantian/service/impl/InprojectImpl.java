@@ -237,47 +237,45 @@ public class InprojectImpl implements InProjectService{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 根据客户类别,项目名称,员工姓名查询员工所在项目信息
+     * @param custType
+     * @param projectName
+     * @param perId
+     * @return
+     */
     @Override
-    public List<InProjectItem> selectPerInProject1(String custType, String projectName, String name) {
-        InProjectItem inProjectItem = new InProjectItem();
-        List<InProjectItem> inProjectItemList =null;
+    public List<InProjectItem> selectPerInProject2(String custType, String projectName, int perId) {
+
+        List<InProjectItem> inProjectItemList = new ArrayList<>();
+        List<InProjectItem> inProjectItemList1 =null;
         List<NtProjectInfo> projectInfoList=null;
-        List<NtPersonnel>   personnelList=null;
+
         List<NtPerInProject> perInProjectList=new ArrayList<>();
 
-        if (!name.isEmpty()){
-            //根据id
-            personnelList = personnelMapper.selectByName(name);
-            for (NtPersonnel personnel:personnelList) {
-                List<NtPerInProject>  perInProjectList1 = perInProjectMapper.selectByIdNo(personnel.getIdNo());
-                perInProjectList.addAll(perInProjectList1);
+        if (custType!=null||"".equals(custType) ){//客户类别不为空
+                //根据项目名称和客户类别查询项目编号
+                projectInfoList = projectInfoMapper.selectBycustAndProjectName(custType, projectName);
+                for (NtProjectInfo projectInfo:projectInfoList) {
+                    System.out.println(projectInfo.getProjectNumber());
+                    System.out.println(perId);
+                    //查询员工所在项目列表
+                    perInProjectList = perInProjectMapper.selectByPerIdAndProjectNum(perId,projectInfo.getProjectNumber());
+                    //InProjectItem赋值
+                    if( perInProjectList.size()>0 ){
+                        inProjectItemList1 = seletePerInpro(perInProjectList);
+                        if( inProjectItemList1.size()>0){
+                            inProjectItemList.addAll(inProjectItemList1);
+                        }else{
+                            continue;
+                        }
+                    }else{
+                        continue;
+                    }
             }
-            inProjectItemList = seletePerInpro(perInProjectList);
-
-        }else if(custType!=null || projectName!=null) {
-            projectInfoList = projectInfoMapper.selectBycustAndProjectName(custType, projectName);
-            //根据项目编号
-            for (NtProjectInfo projectInfo:projectInfoList) {
-                perInProjectList = perInProjectMapper.selectByProNum(projectInfo.getProjectNumber());
-                perInProjectList.addAll(perInProjectList);
-            }
-
-            inProjectItemList = seletePerInpro(perInProjectList);
+            return inProjectItemList;
         }else{
+            //查询所有
             perInProjectList = perInProjectMapper.selectByExample(null);
             inProjectItemList = seletePerInpro(perInProjectList);
         }

@@ -1,5 +1,6 @@
 package cn.com.nantian.mapper;
 
+import cn.com.nantian.pojo.InProjectItem;
 import cn.com.nantian.pojo.NtPerInProject;
 import cn.com.nantian.pojo.NtPerInProjectExample;
 import org.apache.ibatis.annotations.Param;
@@ -41,6 +42,9 @@ public interface NtPerInProjectMapper {
 
     List<NtPerInProject> selectByIdNo(String idNo);
 
+    List<NtPerInProject> selectByPerId(int perId);
+
     List<NtPerInProject> selectByProNum(int projectNumber);
 
+    List<NtPerInProject> selectByPerIdAndProjectNum(@Param("perId")int perId, @Param("projectNumber")int  projectNumber);
 }

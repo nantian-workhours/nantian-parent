@@ -33,11 +33,10 @@ import java.util.List;
      * 根据客户类别,项目名称,员工姓名查询员工所在项目信息
      * @param custType
      * @param projectName
-     * @param name
+     * @param perId
      * @return
      */
-    List<InProjectItem> selectPerInProject1(String custType, String projectName, String name);
-
+    List<InProjectItem> selectPerInProject2(String custType, String projectName, int perId);
 
     List<NtPersonnel> select2(String name);
 
@@ -47,4 +46,7 @@ import java.util.List;
      * @return
      */
     int updatePerInpro( NtPerInProject perInProject);
+
+
+
 }

@@ -110,6 +110,33 @@
     from nt_per_in_project
     where ID_NO = #{idNo,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectByPerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_per_in_project
+    where PER_ID = #{perId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByPerIdAndProjectNum" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_per_in_project
+    <where>
+      <if test="perId != null and perId !='' " >
+        AND PER_ID = #{perId,jdbcType=INTEGER}
+      </if>
+      <if test="projectNumber != null and projectNumber !='' " >
+        AND  PROJECT_NUMBER = #{projectNumber,jdbcType=INTEGER}
+      </if>
+    </where>
+
+
+  </select>
+
+
+
+
   <select id="selectByProNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
