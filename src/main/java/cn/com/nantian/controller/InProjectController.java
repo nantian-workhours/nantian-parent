@@ -85,22 +85,20 @@ public class InProjectController {
      * 根据客户类别,项目名称,员工姓名查询员工所在项目信息
      * @param custType
      * @param projectName
-     * @param name
+     * @param perId
      * @return
      */
     @RequestMapping("selectperinpro")
     @ResponseBody
-    public ResponseData selectPerInProject(String custType,String projectName, String name){
+    public ResponseData selectPerInProject(String custType,String projectName, Integer perId){
         try {
-//           List<InProjectItem> inProjectItemList =  inProjectService.selectPerInProject(custType,projectName,name);
-           List<InProjectItem> inProjectItemList =  inProjectService.selectPerInProject1(custType,projectName,name);
-               if(!inProjectItemList.isEmpty() || inProjectItemList.size()>0) {
-                   //查询成功
-                return ResponseData.ok().putDataValue("data",inProjectItemList);
-               }else {
-                   //查询失败
-                   return ResponseData.isfailed().putDataValue("data", "select failed");
-               }
+            if( perId != null || "".equals(perId) ) {
+                List<InProjectItem> inProjectItemList =  inProjectService.selectPerInProject2(custType,projectName,perId);
+                //查询成功
+                return ResponseData.ok().putDataValue("data", inProjectItemList);
+            }else{
+                return ResponseData.notFound().putDataValue("data","The user name cannot be empty");
+            }
         } catch (Exception e) {
             //被禁止
             return ResponseData.serverInternalError().putDataValue("",e.toString() );
