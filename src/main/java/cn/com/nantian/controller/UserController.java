@@ -160,7 +160,7 @@ public class UserController {
         try {
             NtPersonnel d= userService.findPersonnlByPerId(perId);
 
-            return ResponseData.ok().putDataValue("add number",d);
+            return ResponseData.ok().putDataValue("data",d);
         }catch (NullPointerException e) {
             //系统异常
             return ResponseData.serverInternalError();
