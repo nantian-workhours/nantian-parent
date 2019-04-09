@@ -31,5 +31,11 @@ public interface DictionariesService {
     public NtDictionariesKey selectDictionaries(String dicType, String dicCode);
 
 
+    /**
+     * 根据类别查询
+     * @param dicType
+     * @return
+     */
+    List<NtDictionariesKey> selectDictionariesByType(String dicType);
 
 }

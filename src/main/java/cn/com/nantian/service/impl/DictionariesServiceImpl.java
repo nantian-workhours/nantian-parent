@@ -45,5 +45,13 @@ public class DictionariesServiceImpl implements DictionariesService {
         dictionariesKey.setDicCode(dicCode);
         return dictionariesMapper.selectDictionaries(dictionariesKey);
     }
-
+    /**
+     * 根据类别查询
+     * @param dicType
+     * @return
+     */
+    @Override
+    public List<NtDictionariesKey> selectDictionariesByType(String dicType) {
+        return  dictionariesMapper.selectByType(dicType);
+    }
 }

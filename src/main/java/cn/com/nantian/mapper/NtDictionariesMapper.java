@@ -47,6 +47,8 @@ public interface NtDictionariesMapper {
 
     List<NtDictionariesKey> selectByExample(String dicType);
 
+    List<NtDictionariesKey> selectByType(String dicType);
+
     int updateByExampleSelective(@Param("record") NtDictionariesKey record, @Param("example") NtDictionariesExample example);
 
     int updateByExample(@Param("record") NtDictionariesKey record, @Param("example") NtDictionariesExample example);

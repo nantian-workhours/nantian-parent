@@ -76,6 +76,15 @@
     </if>
   </select>
 
+  <select id="selectByType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_dictionaries
+    <if test="_parameter != null" >
+    where DIC_TYPE = #{dic_type,jdbcType=INTEGER}
+    </if>
+  </select>
+
   <!-- 根据条件查询数据 start-->
   <select id="selectDictionariesList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtDictionariesKey" >
     select
