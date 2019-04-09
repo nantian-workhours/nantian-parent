@@ -86,4 +86,11 @@ public interface UserService {
      * @return
      */
     List<NtPersonnel> findByName(String name);
+
+    /**
+     * 重置密码
+     * @param idNo
+     * @return
+     */
+    int resetPassWord(String idNo);
 }

@@ -231,4 +231,25 @@ public class UserImpl implements UserService{
         List<NtPersonnel> personnelList = personnelMapper.selectByName(name);
          return personnelList;
     }
+
+
+    /**
+     * 重置密码
+     * @param idNo
+     * @return
+     */
+    @Override
+    public int resetPassWord(String idNo) {
+        int t =0;
+      NtPersonnel personnel =  personnelMapper.selectByPrimaryIdNo(idNo);
+        //将密码加密
+        personnel.setPassword(DigestUtils.md5DigestAsHex( "nt0000".getBytes()));
+        //修改表中
+        int a = personnelMapper.updateByPrimaryKey(personnel);
+        t +=a;
+        return t ;
+    }
+
+
+
 }

@@ -1,6 +1,7 @@
 package cn.com.nantian.controller;
 
 
+
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.UserService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+
 
 /**
  * 登录的controller
@@ -82,5 +84,26 @@ public class LoginControler {
             return ResponseData.forbidden().putDataValue("", e.toString());
         }
     }
+
+
+    /**
+     * 重置密码
+     * @param idNo
+     * @return
+     */
+    @RequestMapping(value = "/resetpw" )
+    @ResponseBody
+    public ResponseData resetPassWord(String idNo ){
+        try{
+            //修改密码
+           int a =  userService.resetPassWord(idNo);
+            return ResponseData.ok().putDataValue("data","seccuss " +a );
+        } catch (Exception e) {
+            //被禁止
+            return ResponseData.serverInternalError().putDataValue("",e.toString() );
+        }
+    }
+
+
 
 }
