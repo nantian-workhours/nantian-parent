@@ -12,6 +12,7 @@ import java.util.*;
 
 public class ParamUntil {
 
+    public  static String applyStatus=null; //审核状态
     public  static String sex=null; //性别
     public static String cust=null; //客户类别
     public static String dc=null;  //开发级别
@@ -26,6 +27,9 @@ public class ParamUntil {
     public static String _1;  //客户类别.中国银行
     public static String _2;  //客户类别.中国邮储
     public static String _3;  //客户类别.中国人寿
+    public static String R;  //审核中
+    public static String Y;  //通过
+    public static String N;  //退回
 
 
     static {
@@ -41,6 +45,7 @@ public class ParamUntil {
 
             System.out.println(in);
             //获取参数值
+            applyStatus=prop.getProperty("applyStatus");
             sex=prop.getProperty("sex");
             cust=prop.getProperty("cust");
             dc=prop.getProperty("dc");
@@ -55,6 +60,9 @@ public class ParamUntil {
             _1=prop.getProperty("_1");
             _2=prop.getProperty("_2");
             _3=prop.getProperty("_3");
+            R=prop.getProperty("R");
+            Y=prop.getProperty("Y");
+            N=prop.getProperty("N");
 
         } catch (IOException e) {
             e.printStackTrace();

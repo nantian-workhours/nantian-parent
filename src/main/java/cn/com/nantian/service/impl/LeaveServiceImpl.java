@@ -73,11 +73,11 @@ public class LeaveServiceImpl implements LeaveService {
                     leave.setLeaveTypeName(dictionariesKey.getDicValue());
                 }
                 //设置审批状态名称 R 审核中，Y 通过，N 退回
-                if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("R")) {
+                if (StringUtils.isNotEmpty(leave.getApplyStatus()) && ParamUntil.R.equals(leave.getApplyStatus())) {
                     leave.setApplyStatusName("审核中");
-                } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("Y")) {
+                } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && ParamUntil.Y.equals(leave.getApplyStatus())) {
                     leave.setApplyStatusName("通过");
-                } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("N")) {
+                } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && ParamUntil.N.equals(leave.getApplyStatus())) {
                     leave.setApplyStatusName("退回");
                 }
             }
@@ -100,12 +100,12 @@ public class LeaveServiceImpl implements LeaveService {
                 leave.setLeaveTypeName(dictionariesKey.getDicValue());
             }
             //设置审批状态名称 R 审核中，Y 通过，N 退回
-            if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("R")) {
+            if (StringUtils.isNotEmpty(leave.getApplyStatus()) && ParamUntil.R.equals(leave.getApplyStatus())) {
                 leave.setApplyStatusName("审核中");
             }
-            if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("Y")) {
+            if (StringUtils.isNotEmpty(leave.getApplyStatus()) && ParamUntil.Y.equals(leave.getApplyStatus())) {
                 leave.setApplyStatusName("通过");
-            } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && leave.getApplyStatus().equals("N")) {
+            } else if (StringUtils.isNotEmpty(leave.getApplyStatus()) && ParamUntil.N.equals(leave.getApplyStatus())) {
                 leave.setApplyStatusName("退回");
             }
         }
@@ -135,6 +135,7 @@ public class LeaveServiceImpl implements LeaveService {
 
     @Override
     public int insertSelective(NtLeave record) {
+        record.setApplyStatus(ParamUntil.R);
         return leaveMapper.insertSelective(record);
     }
 
@@ -260,7 +261,7 @@ public class LeaveServiceImpl implements LeaveService {
                     ntLeave.setEndDate(endDate);
                     ntLeave.setLeaveCount(leaveDays);
                     ntLeave.setLeaveRemark(leaveRemark);
-                    ntLeave.setApplyStatus("R");
+                    ntLeave.setApplyStatus(ParamUntil.R);
                     this.insertSelective(ntLeave);
                     suct++;
                 }
