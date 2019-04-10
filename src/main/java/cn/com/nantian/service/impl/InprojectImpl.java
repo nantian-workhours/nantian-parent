@@ -257,8 +257,8 @@ public class InprojectImpl implements InProjectService{
                 //根据项目名称和客户类别查询项目编号
                 projectInfoList = projectInfoMapper.selectBycustAndProjectName(custType, projectName);
                 for (NtProjectInfo projectInfo:projectInfoList) {
-                    System.out.println(projectInfo.getProjectNumber());
-                    System.out.println(perId);
+//                    System.out.println(projectInfo.getProjectNumber());
+//                    System.out.println(perId);
                     //查询员工所在项目列表
                     perInProjectList = perInProjectMapper.selectByPerIdAndProjectNum(perId,projectInfo.getProjectNumber());
                     //InProjectItem赋值
