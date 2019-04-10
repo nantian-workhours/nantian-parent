@@ -20,7 +20,7 @@ public class NtLeave {
     private Float leaveCount;
     /**请假说明*/
     private String leaveRemark;
-    /**审批状态 R 审核中，Y 通过，N 退回*/
+    /**审核状态 R 审核中，Y 通过，N 退回*/
     private String applyStatus;
     /**审批时间*/
     private Date approveDate;
