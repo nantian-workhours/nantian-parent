@@ -1,16 +1,20 @@
 package cn.com.nantian.controller;
 
 
-
+import cn.com.nantian.common.*;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.UserService;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -19,6 +23,8 @@ import javax.annotation.Resource;
 @Controller
 @RequestMapping("login")
 public class LoginControler {
+
+    MemCache memCache = MemCache.getInstance();
 
     @Resource
     private UserService userService;
@@ -31,12 +37,17 @@ public class LoginControler {
      */
     @RequestMapping("login")
     @ResponseBody
-    public ResponseData login(String name,String password){
+    public ResponseData login(HttpServletResponse response, String name, String password){
         try {
             //查询这个用户的信息
             NtPersonnel personnel = userService.findOne(name);
             //判断这个用户的密码是否正确
             if(DigestUtils.md5DigestAsHex(password.getBytes()).equals(personnel.getPassword())){
+                String uuid = StringUtils.createUUID().replace("-", "");
+                JsonParser jsonParser = new JsonParser();
+                JsonObject jsonObject  = jsonParser.parse(new Gson().toJson(personnel)).getAsJsonObject();
+                memCache.set(uuid, jsonObject.toString(), MemConstans.SYS_USER_TIME);
+                WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);
                 //正确返回权限
                 return ResponseData.ok().putDataValue( personnel.getName()+"login success ",personnel.getJurisdiction());
             }else{
