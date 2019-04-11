@@ -3,18 +3,19 @@ package cn.com.nantian.pojo;
 import java.io.Serializable;
 
 public class NtDepartment implements Serializable {
+    //部门id
     private Integer deptId;
-
+    //部门名称
     private String deptName;
-
+    //部门简称
     private String deptAbbreviation;
-
+    //部门负责人编号
     private Integer managerId;
-
+    //部门助理编号
     private Integer assistantId;
-
+    //服务类别
     private String serviceType;
-
+    //上级部门编号
     private Integer prioDeptId;
 
     public Integer getDeptId() {

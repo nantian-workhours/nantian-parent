@@ -26,11 +26,13 @@
 		<!--<intercept-url pattern="/**"  access="ROLE_FORBIDDEN"/>-->
 
 		<!-- 没有权限跳转页面-->
-		<access-denied-handler error-page="/WEB-INF/404.jsp" />
+		<!--<access-denied-handler error-page="/WEB-INF/404.jsp" />-->
+		<access-denied-handler error-page="/src/components/page/404.vue" />
 
 
 		<!-- login-page设置登录拦截页面       default-target-url:登录成功后设置的跳转页面   始终跳转这个页面   -->
-		<form-login  login-page="/index/index.html/#/login" default-target-url="/index/index.html" always-use-default-target="true"/>
+		<!--<form-login  login-page="/login.html" default-target-url="/public/index.html" always-use-default-target="true"/>-->
+		<form-login  login-page="https://floatspace.github.io/#/login" default-target-url="https://floatspace.github.io/#/dashboard" always-use-default-target="true"/>
 		<!-- 放过csrf -->
 		<csrf disabled="true"/>
 		<!-- 放开iframe -->
@@ -39,7 +41,8 @@
 			<frame-options policy="SAMEORIGIN"/>
 		</headers>
 		<!-- 登出/注销操作配置    配置登出成功的路径-->
-		<logout logout-success-url="/#/login"/>
+		<!--<logout logout-success-url="/login"/>-->
+		<logout logout-success-url="https://floatspace.github.io/#/login"/>
 	</http>
 
 
