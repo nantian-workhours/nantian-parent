@@ -2,7 +2,7 @@ package cn.com.nantian.pojo;
 
 import java.io.Serializable;
 
-public class NtDepartment implements Serializable {
+public class NtDepartment  {
     //部门id
     private Integer deptId;
     //部门名称
@@ -31,7 +31,7 @@ public class NtDepartment implements Serializable {
     }
 
     public void setDeptName(String deptName) {
-        this.deptName = deptName == null ? null : deptName.trim();
+        this.deptName = deptName;
     }
 
     public String getDeptAbbreviation() {
@@ -39,7 +39,7 @@ public class NtDepartment implements Serializable {
     }
 
     public void setDeptAbbreviation(String deptAbbreviation) {
-        this.deptAbbreviation = deptAbbreviation == null ? null : deptAbbreviation.trim();
+        this.deptAbbreviation = deptAbbreviation;
     }
 
     public Integer getManagerId() {
@@ -63,7 +63,7 @@ public class NtDepartment implements Serializable {
     }
 
     public void setServiceType(String serviceType) {
-        this.serviceType = serviceType == null ? null : serviceType.trim();
+        this.serviceType = serviceType;
     }
 
     public Integer getPrioDeptId() {
