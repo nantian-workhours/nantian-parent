@@ -34,7 +34,7 @@ public class DepartmentController  {
      * @param serviceType
      * @return
      */
-    @RequestMapping(value = "/add",produces = {"text/html;charset=UTF-8"})
+    @RequestMapping("/add")
     @ResponseBody
     public ResponseData  addDepartment(String deptName, String deptAbbreviation, int managerId,int assistantId,String serviceType){
         try {
