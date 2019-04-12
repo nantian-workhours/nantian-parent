@@ -1,4 +1,5 @@
 package cn.com.nantian.service.impl;
+import cn.com.nantian.common.RegExpressionUtil;
 import cn.com.nantian.mapper.NtPerAliasMapper;
 import cn.com.nantian.mapper.NtPersonnelMapper;
 import cn.com.nantian.mapper.PersonnelItemMapper;
@@ -119,6 +120,28 @@ public class UserImpl implements UserService{
             personnel = personnelMapper.selectByPrimaryIdNo(username);
         }
         return personnel;
+    }
+
+    /**
+     * 验证登录用户名
+     * @param name 登录用户名
+     * @return
+     */
+    @Override
+    public String checkLoginName(String name){
+        String msg="";
+        if (StringUtils.isEmpty(name)){
+            msg="登录用户名不能为空！";
+        }else if (!RegExpressionUtil.isMobile(name)){
+            msg="手机号码填写不正确！";
+        }else if (!RegExpressionUtil.isEmail(name)){
+            msg="邮箱填写不正确！";
+        }else if (!RegExpressionUtil.isIDNumber(name)){
+            msg="身份证号码填写不正确！";
+        }else {
+            msg="登录用户名错误！只能是手机号或邮箱或身份证号码！";
+        }
+        return msg;
     }
 
     /**

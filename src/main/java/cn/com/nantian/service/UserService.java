@@ -50,6 +50,13 @@ public interface UserService {
     NtPersonnel findOne(String username);
 
     /**
+     * 验证登录用户名
+     * @param name 登录用户名
+     * @return
+     */
+    public String checkLoginName(String name);
+
+    /**
      *根据员工编号获取员工信息
      * @param perId
      * @return

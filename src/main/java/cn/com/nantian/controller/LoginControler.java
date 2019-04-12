@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("login")
 public class LoginControler {
 
-    MemCache memCache = MemCache.getInstance();
+    //MemCache memCache = MemCache.getInstance();
 
     @Resource
     private UserService userService;
@@ -39,15 +39,28 @@ public class LoginControler {
     @ResponseBody
     public ResponseData login(HttpServletResponse response, String name, String password){
         try {
+            //效验登录用户名是否为空、格式
+            String msg=userService.checkLoginName(name);
+            if (StringUtils.isEmpty(msg)){
+                return ResponseData.isfailed().putDataValue("message",msg);
+            }
+            //效验登录密码是否为空
+            if (StringUtils.isEmpty(password)){
+                return ResponseData.isfailed().putDataValue("message","登录密码不能为空！");
+            }
             //查询这个用户的信息
             NtPersonnel personnel = userService.findOne(name);
+            //判断用户是否存在
+            if (ObjectUtils.isNull(personnel)){
+                return ResponseData.isfailed().putDataValue("message","登录用户不存在！");
+            }
             //判断这个用户的密码是否正确
             if(DigestUtils.md5DigestAsHex(password.getBytes()).equals(personnel.getPassword())){
                 String uuid = StringUtils.createUUID().replace("-", "");
                 JsonParser jsonParser = new JsonParser();
                 JsonObject jsonObject  = jsonParser.parse(new Gson().toJson(personnel)).getAsJsonObject();
-                memCache.set(uuid, jsonObject.toString(), MemConstans.SYS_USER_TIME);
-                WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);
+                //memCache.set(uuid, jsonObject.toString(), MemConstans.SYS_USER_TIME);
+               // WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);
                 //正确返回权限
                 return ResponseData.ok().putDataValue( personnel.getName()+"login success ",personnel.getJurisdiction());
             }else{
