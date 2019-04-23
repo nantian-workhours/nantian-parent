@@ -30,6 +30,9 @@ public class ParamUntil {
     public static String R;  //审核中
     public static String Y;  //通过
     public static String N;  //退回
+    public static String C;  //产品开发
+    public static String H;  //人员外包
+    public static String P;  //项目外包
 
 
     static {
@@ -63,6 +66,9 @@ public class ParamUntil {
             R=prop.getProperty("R");
             Y=prop.getProperty("Y");
             N=prop.getProperty("N");
+            C=prop.getProperty("C");
+            H=prop.getProperty("H");
+            P=prop.getProperty("P");
 
         } catch (IOException e) {
             e.printStackTrace();

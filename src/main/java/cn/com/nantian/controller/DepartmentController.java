@@ -125,7 +125,8 @@ public class DepartmentController  {
     public ResponseData findAll(){
         try {
             List<NtDepartment> departmentList =  departmentService.findAll();
-                return  ResponseData.ok().putDataValue("data",departmentList);
+            departmentService.setServiceTypeName(departmentList);
+            return  ResponseData.ok().putDataValue("data",departmentList);
         }catch (NullPointerException e) {
             //系统异常
             return ResponseData.serverInternalError();

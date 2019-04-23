@@ -38,5 +38,14 @@ public interface DepartmentService {
      */
     String selectDepart(int deptId);
 
+    /**
+      * @Description: 设置服务类别名称
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/23 16:42
+      * @Param:  [departmentList]
+      * @Return: java.util.List<java.lang.String>
+      **/
+    public void setServiceTypeName(List<NtDepartment> departmentList);
+
 
 }

@@ -1,5 +1,8 @@
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.ParamUntil;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.NtDepartmentMapper;
 import cn.com.nantian.mapper.NtPersonnelMapper;
 import cn.com.nantian.pojo.NtDepartment;
@@ -7,6 +10,8 @@ import cn.com.nantian.service.DepartmentService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -85,6 +90,40 @@ public class DepartmentImpl implements DepartmentService {
     public String selectDepart(int deptId) {
         NtDepartment department = departmentMapper.selectByPrimaryKey(deptId);
         return department.getDeptName();
+    }
+
+    /**
+     * @Description: 设置服务类别名称
+     * @Auther: Mr.Kong
+     * @Date: 2019/4/23 16:42
+     * @Param:
+     * @Return: java.util.List<java.lang.String>
+     **/
+    @Override
+    public void setServiceTypeName(List<NtDepartment> departmentList){
+        if(ObjectUtils.isNotNull(departmentList)){
+            for(NtDepartment ntDepartment:departmentList){
+                if(StringUtils.isNotEmpty(ntDepartment.getServiceType())){
+                    String[] strings=ntDepartment.getServiceType().split(",");
+                    List<String> stringList= Arrays.asList(strings);
+                    if (ObjectUtils.isNotNull(stringList)){
+                        List<String> serTypeNameList=new ArrayList<>();
+                        for (String name:stringList){
+                            if(name.equals("C")){
+                                serTypeNameList.add(ParamUntil.C);
+                            }
+                            if(name.equals("H")){
+                                serTypeNameList.add(ParamUntil.H);
+                            }
+                            if(name.equals("P")){
+                                serTypeNameList.add(ParamUntil.P);
+                            }
+                        }
+                        ntDepartment.setSerTypeNameList(serTypeNameList);
+                    }
+                }
+            }
+        }
     }
 }
 
