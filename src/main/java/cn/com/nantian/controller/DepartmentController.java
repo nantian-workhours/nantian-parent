@@ -1,23 +1,31 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtDepartment;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.DepartmentService;
 import cn.com.nantian.service.UserService;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.sql.SQLException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
 @RequestMapping("/department")
 public class DepartmentController  {
+
+    private static final Logger logger = LoggerFactory.getLogger(DepartmentController.class);
+
+
+    @InitBinder("department")
+    public void initBindNtLeave(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.setFieldDefaultPrefix("department.");
+    }
 
     @Resource
     private DepartmentService departmentService;
@@ -25,21 +33,23 @@ public class DepartmentController  {
     @Resource
     private UserService userService;
 
-    /**添加部门信息
-     *
-     * @param deptName
-     * @param deptAbbreviation
-     * @param managerId
-     * @param assistantId
-     * @param serviceType
-     * @return
-     */
+    /**
+      * @Description:  添加部门信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/26 10:04
+      * @Param:  [department]
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
     @RequestMapping("/add")
     @ResponseBody
-    public ResponseData  addDepartment(String deptName, String deptAbbreviation, int managerId,int assistantId,String serviceType){
+    public ResponseData  addDepartment(@ModelAttribute("department") NtDepartment department){
         try {
-            int id =   departmentService.addDepartment(deptName,deptAbbreviation,managerId,assistantId,serviceType);
-                return ResponseData.ok().putDataValue(" Add success num ",id);
+            String msg=departmentService.checkParameter(department);
+            if (StringUtils.isNotEmpty(msg)){
+                return ResponseData.isfailed().putDataValue("errorMessage",msg);
+            }
+            int id =   departmentService.addDepartment(department);
+            return ResponseData.ok().putDataValue(" Add success num ",id);
         }catch (NullPointerException e) {
             //系统异常
             return ResponseData.serverInternalError();
@@ -105,8 +115,12 @@ public class DepartmentController  {
 
         @RequestMapping("/update")
         @ResponseBody
-        public ResponseData updateDepartment(@RequestBody NtDepartment department) {
+        public ResponseData updateDepartment(@ModelAttribute("department") NtDepartment department) {
             try {
+                String msg=departmentService.checkParameter(department);
+                if (StringUtils.isNotEmpty(msg)){
+                    return ResponseData.isfailed().putDataValue("errorMessage",msg);
+                }
                 int d = departmentService.updateDepartment(department);
                 return ResponseData.ok().putDataValue("update number",d);
             }catch (NullPointerException e) {

@@ -7,10 +7,23 @@ import java.util.List;
 
 public interface DepartmentService {
 
-    //添加 部门信息
-//    int addDepartment(NtDepartment department);
+    /**
+      * @Description:  添加 部门信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/26 9:55
+      * @Param:  [department]
+      * @Return: int
+      **/
+    int addDepartment(NtDepartment department);
 
-    int addDepartment(String deptName, String deptAbbreviation, int managerId,int assistantId,String serviceType);
+    /**
+     * @Description: 检查传入放入参数是否为空
+     * @Auther: Mr.Kong
+     * @Date: 2019/4/26 10:01
+     * @Param:  [department]
+     * @Return: java.lang.String
+     **/
+    public String checkParameter(NtDepartment department);
 
 
     /**删除部门信息

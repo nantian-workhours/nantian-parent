@@ -85,7 +85,7 @@
     FROM nt_department
     LEFT JOIN nt_personnel a ON nt_department.MANAGER_ID=a.PER_ID
     LEFT JOIN nt_personnel b ON nt_department.ASSISTANT_ID=b.PER_ID
-    order by nt_department.DEPT_ID
+    order by nt_department.DEPT_ID desc
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -103,18 +103,14 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
+
   <insert id="insert" parameterType="cn.com.nantian.pojo.NtDepartment" >
-    insert into nt_department (DEPT_ID, DEPT_NAME, DEPT_ABBREVIATION, 
-      MANAGER_ID, ASSISTANT_ID, SERVICE_TYPE, 
-      PRIO_DEPT_ID)
+    insert into nt_department
+    (<include refid="Base_Column_List" />)
     values (#{deptId,jdbcType=INTEGER}, #{deptName,jdbcType=VARCHAR}, #{deptAbbreviation,jdbcType=VARCHAR}, 
       #{managerId,jdbcType=INTEGER}, #{assistantId,jdbcType=INTEGER}, #{serviceType,jdbcType=VARCHAR}, 
       #{prioDeptId,jdbcType=INTEGER})
   </insert>
-
-
-
-
 
   <select id="seletByMaxKey"   resultType="java.lang.Integer" >
     select MAX(DEPT_ID) from nt_department

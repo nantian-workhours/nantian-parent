@@ -54,31 +54,42 @@ public class DepartmentImpl implements DepartmentService {
     public int  deleteone(int deptId) {
         return departmentMapper.deleteByPrimaryKey(deptId);
     }
-    /**
-     * 添加部门信息
-     * @param deptName
-     * @param deptAbbreviation
-     * @param managerId
-     * @param assistantId
-     * @param serviceType
-     * @return
-     */
-    public int  addDepartment(String deptName, String deptAbbreviation, int managerId,int assistantId,String serviceType) {
-        //查询数据库中最大的id
-       int key =  departmentMapper.seletByMaxKey();
-        key++;
 
-        NtDepartment department = new NtDepartment();
-        //根据id查询部门负责人
-        department.setDeptId(key);
-        department.setDeptName(deptName);
-        department.setDeptAbbreviation(deptAbbreviation);
-        department.setAssistantId(assistantId);
-        department.setManagerId(managerId);
-        department.setServiceType(serviceType);
-        department.setPrioDeptId(0);
+    /**
+      * @Description:  添加部门信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/26 9:54
+      * @Param:  [department]
+      * @Return: int
+      **/
+    @Override
+    public int  addDepartment(NtDepartment department) {
         int id = departmentMapper.insert(department);
         return id;
+    }
+
+    /**
+      * @Description: 检查传入放入参数是否为空
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/26 10:01
+      * @Param:  [department]
+      * @Return: java.lang.String
+      **/
+    @Override
+    public String checkParameter(NtDepartment department){
+        String msg="";
+        if (StringUtils.isEmpty(department.getDeptName())){
+            msg="部门名称 不能为空！";
+        }else if (StringUtils.isEmpty(department.getDeptAbbreviation())){
+            msg="部门简称 不能为空！";
+        }else if (ObjectUtils.isNull(department.getManagerId())){
+            msg="门负责人 不能为空！";
+        }else if (ObjectUtils.isNull(department.getAssistantId())){
+            msg="部门助理 不能为空！";
+        }else if (StringUtils.isEmpty(department.getServiceType())){
+            msg="服务类别 不能为空！";
+        }
+        return msg;
     }
 
     /**
