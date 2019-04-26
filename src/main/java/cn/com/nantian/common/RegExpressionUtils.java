@@ -3,10 +3,13 @@ package cn.com.nantian.common;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+
 /**
- * 正则表达式工具类
- */
-public class RegExpressionUtil {
+  * @Description:  正则表达式工具类
+  * @author: Mr.Kong
+  * @date: 2019/4/26 14:12
+  **/
+public class RegExpressionUtils {
 
     /**
      * 判断是否为邮箱

@@ -1,5 +1,6 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.Item1;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.PersonnelItem;
@@ -7,20 +8,33 @@ import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.DepartmentService;
 import cn.com.nantian.service.PerAliasService;
 import cn.com.nantian.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//员工录入信息
+/**
+ * @Description:  员工录入信息
+ * @author: Mr.Kong
+ * @date: 2019/4/26 14:12
+ **/
 @Controller
 @RequestMapping("/content")
-public class UserController {
+public class UserController extends BaseController{
+
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
+    @InitBinder("personnel")
+    public void initBindNtPersonnel(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.setFieldDefaultPrefix("personnel.");
+    }
 
     @Resource
     private UserService userService;
@@ -38,23 +52,17 @@ public class UserController {
      */
     @RequestMapping("/adduser")
     @ResponseBody
-    public ResponseData addUser(@RequestBody NtPersonnel personnel){
-
+    public ResponseData addUser(@ModelAttribute("personnel") NtPersonnel personnel){
         try {
-            int d= userService.addUser(personnel);
-            if (d == 5) {
-                return ResponseData.operationFailure().putDataValue("提示","该员工已添加");
+            String msg=userService.checkUserParameter(personnel);
+            if(StringUtils.isNotEmpty(msg)){
+                return ResponseData.isfailed().putDataValue("errorMessage",msg);
             }
+            int d= userService.addUser(personnel);
             return ResponseData.ok().putDataValue("add number",d);
-        }catch (NullPointerException e) {
-            //系统异常
-            return ResponseData.serverInternalError();
-        }catch (IllegalArgumentException e) {
-            //没有权限
-            return ResponseData.unauthorized();
         } catch (Exception e) {
-            //被禁止
-            return ResponseData.forbidden();
+            logger.error("UserController.addUser", e);
+            return ResponseData.isfailed();
         }
     }
 

@@ -12,6 +12,14 @@ public interface UserService {
      * @param personnel
      */
     public int addUser(NtPersonnel personnel);
+    /**
+     * @Description: 检查传入的参数是否为空 格式是否正确 是否已存在
+     * @Auther: Mr.Kong
+     * @Date: 2019/4/26 14:22
+     * @Param:  [personnel]
+     * @Return: java.lang.String
+     **/
+    public String checkUserParameter(NtPersonnel personnel);
 
     /**根据id查询员工姓名
      */

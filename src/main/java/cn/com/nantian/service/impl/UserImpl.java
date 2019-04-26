@@ -1,5 +1,6 @@
 package cn.com.nantian.service.impl;
-import cn.com.nantian.common.RegExpressionUtil;
+import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.RegExpressionUtils;
 import cn.com.nantian.mapper.NtPerAliasMapper;
 import cn.com.nantian.mapper.NtPersonnelMapper;
 import cn.com.nantian.mapper.PersonnelItemMapper;
@@ -47,30 +48,101 @@ public class UserImpl implements UserService{
      */
     @Override
     public int addUser(NtPersonnel personnel) {
-
-        //根据身份证号判断该员工是否已经添加
-        NtPersonnel oldPersonnel = personnelMapper.selectByPrimaryIdNo(personnel.getIdNo());
-        if(!StringUtils.isEmpty(oldPersonnel) ) {
-            if (oldPersonnel.getIdNo().equals(personnel.getIdNo())) {
-                return 5;
-            }
-        }
         //设置员工的初始化密码
         personnel.setPassword(DigestUtils.md5DigestAsHex("nt0000".getBytes()));
         //设置用户的权限,超级管理员->0,管理员->1,普通用户->2
-
-//        if("超级管理员".equals(personnel.getJurisdiction())){
-//            personnel.setJurisdiction("1");
-//        }else if ("管理员".equals(personnel.getJurisdiction())){
-//            personnel.setJurisdiction("2");
-//        }else if("员工".equals(personnel.getJurisdiction())){
-//            personnel.setJurisdiction("3");
-//        }else {
-//            personnel.setJurisdiction("4");
-//        }
-        //修改状态和职位
-//        updateFrag(personnel);
         return personnelMapper.insert(personnel);
+    }
+
+
+    /**
+      * @Description: 检查传入的参数是否为空 格式是否正确 是否已存在
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/26 14:22
+      * @Param:  [personnel]
+      * @Return: java.lang.String
+      **/
+    @Override
+    public String checkUserParameter(NtPersonnel personnel){
+        String msg="";
+        if (StringUtils.isEmpty(personnel.getName())){
+            return msg="姓名 不能为空！";
+        }
+        //身份证号效验
+        if (StringUtils.isEmpty(personnel.getIdNo())){
+            return msg="身份证号 不能为空！";
+        }else if (!RegExpressionUtils.isIDNumber(personnel.getIdNo())){
+            return msg="身份证号 填写错误！";
+        }else {
+            NtPersonnel personnlByIdno = this.findPersonnlByIdno(personnel.getIdNo());
+            if (!ObjectUtils.isNull(personnlByIdno)){
+                return msg="身份证号 已存在！";
+            }
+        }
+        /*
+        if (ObjectUtils.isNull(personnel.getBirthday())){
+            msg="生日 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getEthnic())){
+            msg="民族 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getNativePlace())){
+            msg="籍贯 不能为空！";
+        }*/
+
+        if (StringUtils.isEmpty(personnel.getCompanyEmail())){
+            msg="公司邮箱 不能为空！";
+        }else if (!RegExpressionUtils.isEmail(personnel.getCompanyEmail())){
+            msg="公司邮箱 格式填写错误！";
+        }
+        //个人邮箱效验
+        /*if (StringUtils.isEmpty(personnel.getPersonEmail())){
+            return msg="个人邮箱 不能为空！";
+        }else if (!RegExpressionUtils.isEmail(personnel.getPersonEmail())){
+            return msg="个人邮箱 填写错误！";
+        }else {
+            NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getPersonEmail());
+            if (!ObjectUtils.isNull(ntPersonnel)){
+                return msg="个人邮箱 已存在！";
+            }
+        }*/
+
+        //手机号效验
+        if (StringUtils.isEmpty(personnel.getMobileNo())){
+            return msg="手机号 不能为空！";
+        }else if (!RegExpressionUtils.isMobile(personnel.getMobileNo())){
+            return msg="手机号 填写错误！";
+        }else {
+            NtPersonnel ntPersonnel = personnelMapper.selectByPrimaryMobileNo(personnel.getMobileNo());
+            if (!ObjectUtils.isNull(ntPersonnel)){
+                return msg="手机号 已存在！";
+            }
+        }
+
+        /*if (StringUtils.isEmpty(personnel.getEducation())){
+            return msg="学历 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getUniversity())){
+            return msg="毕业院校 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getMajor())){
+            return msg="专业 不能为空！";
+        }else if (ObjectUtils.isNull(personnel.getGraduationDate())){
+            return msg="毕业日期 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getPosition())){
+            return msg="职位 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getPost())){
+            return msg="岗位 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getStatus())){
+            return msg="在职状态 不能为空！";
+        }else if (ObjectUtils.isNull(personnel.getEntryDate())){
+            return msg="入司日期 不能为空！";
+        }else if (ObjectUtils.isNull(personnel.getLeaveDate())){
+            return msg="离职日期 不能为空！";
+        }else if (ObjectUtils.isNull(personnel.getDeptId())){
+            return msg="所属部门 不能为空！";
+        }*/
+
+        if (ObjectUtils.isNull(personnel.getJurisdiction())){
+            return msg="系统权限 不能为空！";
+        }
+        return msg;
     }
 
     /**
@@ -79,6 +151,7 @@ public class UserImpl implements UserService{
      * @param name
      * @return
      */
+    @Override
     public List<PersonnelItem> findPersonnelBydeptIdAndName(int deptId , String name){
         List<PersonnelItem>  personnelList = personnelItemMapper.selectPersonnel(deptId,name);
 
@@ -91,6 +164,7 @@ public class UserImpl implements UserService{
       * @Param: [deptId, name]
       * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
       **/
+    @Override
     public List<NtPersonnel> findPerByDeptIdAndName(int deptId , String name){
         List<NtPersonnel>  personnelList = personnelMapper.findPersonnelBydeptIdAndName(deptId,name);
         return personnelList;
@@ -99,6 +173,7 @@ public class UserImpl implements UserService{
      *根据身份证号查询员工信息
      * @return
      */
+    @Override
     public NtPersonnel findPersonnlByIdno(String idNo){
        return  personnelMapper.selectByPrimaryIdNo(idNo);
     }
@@ -132,11 +207,11 @@ public class UserImpl implements UserService{
         String msg="";
         if (StringUtils.isEmpty(name)){
             msg="登录用户名不能为空！";
-        }else if (!RegExpressionUtil.isMobile(name)){
+        }else if (!RegExpressionUtils.isMobile(name)){
             msg="手机号码填写不正确！";
-        }else if (!RegExpressionUtil.isEmail(name)){
+        }else if (!RegExpressionUtils.isEmail(name)){
             msg="邮箱填写不正确！";
-        }else if (!RegExpressionUtil.isIDNumber(name)){
+        }else if (!RegExpressionUtils.isIDNumber(name)){
             msg="身份证号码填写不正确！";
         }else {
             msg="登录用户名错误！只能是手机号或邮箱或身份证号码！";
