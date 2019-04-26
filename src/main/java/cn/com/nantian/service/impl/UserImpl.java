@@ -96,14 +96,16 @@ public class UserImpl implements UserService{
         //个人邮箱效验
         /*if (StringUtils.isEmpty(personnel.getPersonEmail())){
             return msg="个人邮箱 不能为空！";
-        }else if (!RegExpressionUtils.isEmail(personnel.getPersonEmail())){
+        }*/
+
+        if (!StringUtils.isEmpty(personnel.getPersonEmail()) && !RegExpressionUtils.isEmail(personnel.getPersonEmail())){
             return msg="个人邮箱 填写错误！";
         }else {
             NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getPersonEmail());
             if (!ObjectUtils.isNull(ntPersonnel)){
                 return msg="个人邮箱 已存在！";
             }
-        }*/
+        }
 
         //手机号效验
         if (StringUtils.isEmpty(personnel.getMobileNo())){
