@@ -94,26 +94,17 @@ public class UserController extends BaseController{
 
     /**
      * 根据部门deptId和员工name查询员工信息
-     * @param item1
+     * @param personnel
      * @return
      */
     @RequestMapping(value = "/findbyidandname")
     @ResponseBody
-    public ResponseData selectDepart (@RequestBody Item1 item1){
-        List<PersonnelItem> personnelList = null;
-
+    public ResponseData queryPersonnelList(@ModelAttribute("personnel") NtPersonnel personnel){
         try {
-            //查询该部门员工的信息
-            personnelList = userService.findPersonnelBydeptIdAndName(item1.getDeptId(),item1.getName());
+            List<NtPersonnel> personnelList=userService.queryPersonnelList(personnel);
             return ResponseData.ok().putDataValue("select list ",personnelList);
-        }catch (NullPointerException e) {
-            //系统异常
-            return ResponseData.serverInternalError();
-        }catch (IllegalArgumentException e) {
-            //没有权限
-            return ResponseData.unauthorized();
         } catch (Exception e) {
-            //被禁止
+            logger.error("UserController.queryPersonnelList", e);
             return ResponseData.forbidden();
         }
 

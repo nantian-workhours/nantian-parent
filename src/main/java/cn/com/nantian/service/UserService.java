@@ -5,6 +5,16 @@ import java.util.List;
 
 public interface UserService {
 
+
+    /**
+     * @Description: 查询用户列表
+     * @auther: Mr.Kong
+     * @date: 2019/4/26 15:59
+     * @param:  [personnel] 查询条件
+     * @return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+     */
+    List<NtPersonnel> queryPersonnelList(NtPersonnel personnel);
+
     /**
      * 添加员工信息
      * NT_PERSONNEL

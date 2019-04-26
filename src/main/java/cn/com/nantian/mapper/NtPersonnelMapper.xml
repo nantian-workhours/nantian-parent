@@ -85,8 +85,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    PER_ID, DEPT_ID, SEX, NAME, MOBILE_NO, ID_NO, BIRTHDAY, ETHNIC, EDUCATION, UNIVERSITY, 
-    MAJOR, GRADUATION_DATE, ENTRY_DATE, LEAVE_DATE, STATUS, POSITION, COMPANY_EMAIL, 
+    nt_personnel.PER_ID, nt_personnel.DEPT_ID, SEX, nt_personnel.NAME, MOBILE_NO, nt_personnel.ID_NO, BIRTHDAY, ETHNIC, EDUCATION, UNIVERSITY,
+    MAJOR, GRADUATION_DATE, ENTRY_DATE, LEAVE_DATE, STATUS, nt_personnel.POSITION, COMPANY_EMAIL,
     PERSON_EMAIL, POST, PASSWORD, NATIVE_PLACE, MARRIAGE_STATUS, JURISDICTION
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPersonnelExample" >
@@ -139,15 +139,34 @@
     where PER_ID = #{perId,jdbcType=INTEGER}
   </select>
   
-    <select id="findPersonnelBydeptIdAndName"  resultMap="BaseResultMap" >
+  <select id="findPersonnelBydeptIdAndName"  resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from nt_personnel
     where DEPT_ID = #{deptId,jdbcType=INTEGER}
-    AND NAME = #{name,jdbcType=VARCHAR}
+    AND `NAME` = #{name,jdbcType=VARCHAR}
   </select>
-  
-  
+
+  <select id="queryPersonnelList" parameterType="cn.com.nantian.pojo.NtPersonnel" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />,
+    m.DEPT_NAME deptName,
+    n.IN_PROJECT_NAME inProjectName,
+    t.CUST_TYPE custType
+    from nt_personnel
+    LEFT JOIN nt_department m  ON m.DEPT_ID = nt_personnel.DEPT_ID
+    LEFT JOIN nt_per_alias n  ON n.PER_ID = nt_personnel.PER_ID
+    LEFT JOIN NT_PROJECT_INFO t ON t.PROJECT_NUMBER=n.PROJECT_NUMBER
+    <where>
+      <if test="deptId !=null and deptId >0">
+        and nt_personnel.DEPT_ID=#{deptId}
+      </if>
+      <if test="name !=null and name !=''">
+        and nt_personnel.NAME like CONCAT('%',#{name},'%')
+      </if>
+    </where>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />

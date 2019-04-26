@@ -10,6 +10,7 @@ import cn.com.nantian.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -25,6 +26,22 @@ public class UserImpl implements UserService{
 
     @Resource
     private NtPerAliasMapper perAliasMapper;
+
+
+    /**
+     * @Description: 查询用户列表
+     * @auther: Mr.Kong
+     * @date: 2019/4/26 15:59
+     * @param:  [personnel] 查询条件
+     * @return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+     */
+    @Override
+    public List<NtPersonnel> queryPersonnelList(NtPersonnel personnel){
+        return personnelMapper.queryPersonnelList(personnel);
+    }
+
+
+
     /**根据id查询员工姓名NT_PERSONNEL
      */
     @Override
