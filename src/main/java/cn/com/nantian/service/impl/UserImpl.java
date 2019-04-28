@@ -203,14 +203,15 @@ public class UserImpl implements UserService{
      */
     @Override
     public NtPersonnel findOne(String username) {
-
         NtPersonnel personnel=null;
-        //判断这个字符串是手机号,身份证号,还是公司邮箱号
-        if(username.endsWith("@nantian.com.cn")){//根据邮箱查询用户
+        //根据邮箱查询用户
+        if(RegExpressionUtils.isEmail(username)){
             personnel = personnelMapper.selectByEmial(username);
-         }else if(username.length()==11){//根据手机号获取
+         }else if(RegExpressionUtils.isMobile(username)){
+            //根据手机号获取
             personnel = personnelMapper.selectByPrimaryMobileNo(username);
-        }else if(username.length()==18){//根据身份证号查询
+        }else if(RegExpressionUtils.isIDNumber(username)){
+            //根据身份证号查询
             personnel = personnelMapper.selectByPrimaryIdNo(username);
         }
         return personnel;
@@ -225,13 +226,13 @@ public class UserImpl implements UserService{
     public String checkLoginName(String name){
         String msg="";
         if (StringUtils.isEmpty(name)){
-            msg="登录用户名不能为空！";
+            msg="登录用户名 不能为空！";
         }else if (!RegExpressionUtils.isMobile(name)){
-            msg="手机号码填写不正确！";
+            msg="手机号码 填写不正确！";
         }else if (!RegExpressionUtils.isEmail(name)){
-            msg="邮箱填写不正确！";
+            msg="邮箱 填写不正确！";
         }else if (!RegExpressionUtils.isIDNumber(name)){
-            msg="身份证号码填写不正确！";
+            msg="身份证号码 填写不正确！";
         }else {
             msg="登录用户名错误！只能是手机号或邮箱或身份证号码！";
         }
