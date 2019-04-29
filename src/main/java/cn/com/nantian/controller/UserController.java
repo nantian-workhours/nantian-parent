@@ -217,6 +217,27 @@ public class UserController extends BaseController {
             return ResponseData.forbidden().putDataValue("系统异常", e.toString());
         }
     }
+
+
+    /**
+      * @Description: 查询用户信息列表
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/29 14:17
+      * @Param:  [personnel]
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping(value = "/personnel/list")
+    @ResponseBody
+    public ResponseData queryPersonnelListDate(@ModelAttribute("personnel") NtPersonnel personnel) {
+        try {
+            List<NtPersonnel> personnelList = userService.queryPersonnelListDate(personnel);
+            personnelList=userService.setPersonnelDate(personnelList);
+            return ResponseData.ok().putDataValue("select list ", personnelList);
+        } catch (Exception e) {
+            logger.error("UserController.queryPersonnelListDate", e);
+            return ResponseData.forbidden();
+        }
+    }
 }
 
 

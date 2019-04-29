@@ -164,7 +164,35 @@
       <if test="name !=null and name !=''">
         and nt_personnel.NAME like CONCAT('%',#{name},'%')
       </if>
+      <if test="position !=null and position !=''">
+        and nt_personnel.POSITION =#{position}
+      </if>
     </where>
+    order by nt_personnel.PER_ID desc
+  </select>
+
+  <select id="queryPersonnelListDate" parameterType="cn.com.nantian.pojo.NtPersonnel" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />,
+    m.DEPT_NAME deptName,
+    n.IN_PROJECT_NAME inProjectName,
+    t.CUST_TYPE custType
+    from nt_personnel
+    LEFT JOIN nt_department m  ON m.DEPT_ID = nt_personnel.DEPT_ID
+    LEFT JOIN nt_per_alias n  ON n.PER_ID = nt_personnel.PER_ID
+    LEFT JOIN NT_PROJECT_INFO t ON t.PROJECT_NUMBER=n.PROJECT_NUMBER
+    <where>
+      <if test="deptId !=null and deptId >0">
+        and nt_personnel.DEPT_ID=#{deptId}
+      </if>
+      <if test="name !=null and name !=''">
+        and nt_personnel.NAME like CONCAT('%',#{name},'%')
+      </if>
+      <if test="position !=null and position !=''">
+        and nt_personnel.POSITION =#{position}
+      </if>
+    </where>
+    order by nt_personnel.PER_ID desc
   </select>
 
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

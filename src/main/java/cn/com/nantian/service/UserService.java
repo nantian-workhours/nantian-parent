@@ -7,6 +7,25 @@ public interface UserService {
 
 
     /**
+      * @Description: 处理用户列表数据
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/29 14:32
+      * @Param:  [personnelList]
+      * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+      **/
+    public List<NtPersonnel> setPersonnelDate(List<NtPersonnel> personnelList);
+
+    /**
+     * @Description:  查询用户列表
+     * @Auther: Mr.Kong
+     * @Date: 2019/4/29 14:16
+     * @Param:  [personnel]
+     * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+     **/
+    List<NtPersonnel> queryPersonnelListDate(NtPersonnel personnel);
+
+
+    /**
      * @Description: 查询用户列表
      * @auther: Mr.Kong
      * @date: 2019/4/26 15:59

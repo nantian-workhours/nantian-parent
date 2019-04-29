@@ -90,4 +90,13 @@ public interface NtPersonnelMapper {
       */
     List<NtPersonnel> queryPersonnelList(NtPersonnel personnel);
 
+    /**
+      * @Description:  查询用户列表
+      * @Auther: Mr.Kong
+      * @Date: 2019/4/29 14:16
+      * @Param:  [personnel]
+      * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+      **/
+    List<NtPersonnel> queryPersonnelListDate(NtPersonnel personnel);
+
 }
