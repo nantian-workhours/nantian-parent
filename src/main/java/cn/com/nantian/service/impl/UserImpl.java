@@ -96,10 +96,18 @@ public class UserImpl implements UserService{
                 return msg="身份证号 已存在！";
             }
         }
-        /*
-        if (ObjectUtils.isNull(personnel.getBirthday())){
+
+        if (StringUtils.isEmpty(personnel.getSex())){
+            return msg="性别 不能为空！";
+        }
+
+
+        /*if (ObjectUtils.isNull(personnel.getBirthday())){
             msg="生日 不能为空！";
-        }else if (StringUtils.isEmpty(personnel.getEthnic())){
+        }*/
+
+
+        /*if (StringUtils.isEmpty(personnel.getEthnic())){
             msg="民族 不能为空！";
         }else if (StringUtils.isEmpty(personnel.getNativePlace())){
             msg="籍贯 不能为空！";
