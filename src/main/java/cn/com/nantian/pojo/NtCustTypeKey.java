@@ -3,6 +3,7 @@ package cn.com.nantian.pojo;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -21,9 +22,9 @@ public class NtCustTypeKey implements Serializable {
     /**客户类别名称*/
     private String custTypeName;
     /**工作类别名称*/
-    private String workTypeName;
+    private List<String> workTypeNameList;
     /**工作级别名称*/
-    private String workLeaveName;
+    private List<String> workLeaveNameList;
 
     /**
       * @Description: 重写equals方法

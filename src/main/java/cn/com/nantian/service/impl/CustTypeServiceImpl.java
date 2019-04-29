@@ -1,6 +1,8 @@
 package cn.com.nantian.service.impl;
 
 import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.ParamUntil;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.NtCustTypeMapper;
 import cn.com.nantian.pojo.NtCustTypeKey;
 import cn.com.nantian.pojo.NtDictionariesKey;
@@ -9,6 +11,8 @@ import cn.com.nantian.service.DictionariesService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -32,6 +36,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Auther: Fly
      * @Date: 2019/3/20 15:04
      **/
+    @Override
     public List<NtCustTypeKey> selectCustTypeList(NtCustTypeKey custTypeKey){
         return custTypeMapper.selectCustTypeList(custTypeKey);
     }
@@ -43,24 +48,43 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Auther: Fly
      * @Date: 2019/3/20 15:17
      **/
+    @Override
     public void setCustTypeName(List<NtCustTypeKey> custTypeKeyList){
-        if(custTypeKeyList!=null && custTypeKeyList.size()>0){
+        if(ObjectUtils.isNotNull(custTypeKeyList)){
             for(NtCustTypeKey custTypeKey:custTypeKeyList){
                 //客户类别
-                String custType="cust";
-                NtDictionariesKey dictionariesKey1=dictionariesService.selectDictionaries(custType,custTypeKey.getCustType());
+                NtDictionariesKey dictionariesKey1=dictionariesService.selectDictionaries(ParamUntil.cust,custTypeKey.getCustType());
                 custTypeKey.setCustTypeName(dictionariesKey1.getDicValue());
                 //工作类别
-                String workType="wt";
-                NtDictionariesKey dictionariesKey2=dictionariesService.selectDictionaries(workType,custTypeKey.getWorkType());
-                custTypeKey.setWorkTypeName(dictionariesKey2.getDicValue());
+                String workTypes=custTypeKey.getWorkType();
+                String[] workTypesArray=workTypes.split(",");
+                List<String> workTypesList= Arrays.asList(workTypesArray);
+                List<String> workTypeNameList=new ArrayList<>();
+                for (String str:workTypesList){
+                    NtDictionariesKey dictionariesKey2=dictionariesService.selectDictionaries(ParamUntil.wt,str);
+                    if (ObjectUtils.isNotNull(dictionariesKey2)){
+                        workTypeNameList.add(dictionariesKey2.getDicValue());
+                    }
+                }
+                custTypeKey.setWorkTypeNameList(workTypeNameList);
                 //技术等级
-                String workLeave="dc";
-                NtDictionariesKey dictionariesKey3=dictionariesService.selectDictionaries(workLeave,custTypeKey.getWorkLeave());
-                custTypeKey.setWorkLeaveName(dictionariesKey3.getDicValue());
+                String workLeaves=custTypeKey.getWorkLeave();
+                String[] workLeavesArray=workLeaves.split(",");
+                List<String> workLeavesList= Arrays.asList(workLeavesArray);
+                List<String> workLeaveNameList=new ArrayList<>();
+                for (String str:workLeavesList){
+                    NtDictionariesKey dictionariesKey3=dictionariesService.selectDictionaries(ParamUntil.dc,str);
+                    if (ObjectUtils.isNotNull(dictionariesKey3)){
+                        workLeaveNameList.add(dictionariesKey3.getDicValue());
+                    }
+                }
+                custTypeKey.setWorkLeaveNameList(workLeaveNameList);
             }
         }
     }
+
+
+
     /**
       * @Description: 设置客户类别、工作类别、技术等级 名称
       * @Param: [custTypeKey]
@@ -68,19 +92,35 @@ public class CustTypeServiceImpl implements CustTypeService {
       * @Auther: Fly
       * @Date: 2019/3/20 17:17
       **/
+    @Override
     public void setCustTypeName(NtCustTypeKey custTypeKey){
         if(custTypeKey!=null){
             //工作类别
-            String workType="wt";
-            NtDictionariesKey dictionariesKey2=dictionariesService.selectDictionaries(workType,custTypeKey.getWorkType());
-            custTypeKey.setWorkTypeName(dictionariesKey2.getDicValue());
+            String workTypes=custTypeKey.getWorkType();
+            String[] workTypesArray=workTypes.split(",");
+            List<String> workTypesList= Arrays.asList(workTypesArray);
+            List<String> workTypeNameList=new ArrayList<>();
+            for (String str:workTypesList){
+                NtDictionariesKey dictionariesKey2=dictionariesService.selectDictionaries(ParamUntil.wt,str);
+                if (ObjectUtils.isNotNull(dictionariesKey2)){
+                    workTypeNameList.add(dictionariesKey2.getDicValue());
+                }
+            }
+            custTypeKey.setWorkTypeNameList(workTypeNameList);
             //技术等级
-            String workLeave="dc";
-            NtDictionariesKey dictionariesKey3=dictionariesService.selectDictionaries(workLeave,custTypeKey.getWorkLeave());
-            custTypeKey.setWorkLeaveName(dictionariesKey3.getDicValue());
+            String workLeaves=custTypeKey.getWorkLeave();
+            String[] workLeavesArray=workLeaves.split(",");
+            List<String> workLeavesList= Arrays.asList(workLeavesArray);
+            List<String> workLeaveNameList=new ArrayList<>();
+            for (String str:workLeavesList){
+                NtDictionariesKey dictionariesKey3=dictionariesService.selectDictionaries(ParamUntil.dc,str);
+                if (ObjectUtils.isNotNull(dictionariesKey3)){
+                    workLeaveNameList.add(dictionariesKey3.getDicValue());
+                }
+            }
+            custTypeKey.setWorkLeaveNameList(workLeaveNameList);
             //客户类别
-            String custType="cust";
-            NtDictionariesKey dictionariesKey1=dictionariesService.selectDictionaries(custType,custTypeKey.getCustType());
+            NtDictionariesKey dictionariesKey1=dictionariesService.selectDictionaries(ParamUntil.cust,custTypeKey.getCustType());
             custTypeKey.setCustTypeName(dictionariesKey1.getDicValue());
         }
     }
@@ -92,6 +132,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Auther: Fly
      * @Date: 2019/3/20 15:55
      **/
+    @Override
     public int deleteCustType(NtCustTypeKey custTypeKey){
         return custTypeMapper.deleteByPrimaryKey(custTypeKey);
     }
@@ -103,6 +144,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Auther: Fly
      * @Date: 2019/3/20 16:48
      **/
+    @Override
     public int addCustType(NtCustTypeKey custTypeKey){
         return custTypeMapper.insert(custTypeKey);
     }
@@ -114,6 +156,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Auther: Fly
      * @Date: 2019/3/20 17:03
      **/
+    @Override
     public int updateCustType(NtCustTypeKey custTypeKey){
         return custTypeMapper.updateCustType(custTypeKey);
     }
@@ -125,6 +168,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Auther: Fly
      * @Date: 2019/3/20 17:12
      **/
+    @Override
     public NtCustTypeKey selectCustType(NtCustTypeKey custTypeKey){
         return custTypeMapper.selectCustType(custTypeKey);
     }
@@ -136,6 +180,7 @@ public class CustTypeServiceImpl implements CustTypeService {
       * @Param: [ntCustTypeKey]
       * @Return: boolean
       **/
+    @Override
     public boolean checkWhetherRepeat(NtCustTypeKey ntCustTypeKey){
         List<NtCustTypeKey> ntCustTypeKeyList=this.selectCustTypeList(null);
         boolean repeat=false;
@@ -157,16 +202,17 @@ public class CustTypeServiceImpl implements CustTypeService {
       * @Param: [ntCustType]
       * @Return: java.lang.String
       **/
+    @Override
     public String checkAttribute(NtCustTypeKey ntCustType){
         if (ObjectUtils.isNotNull(ntCustType)){
-            if(ObjectUtils.isNull(ntCustType.getCustType())){
-                return "ntProjectInfo.custType 属性值不能为空！";
+            if(StringUtils.isEmpty(ntCustType.getCustType())){
+                return "客户类别名称 不能为空！";
             }
-            if(ObjectUtils.isNull(ntCustType.getWorkType())){
-                return "ntProjectInfo.workType 属性值不能为空！";
+            if(StringUtils.isEmpty(ntCustType.getWorkType())){
+                return "工作类别 不能为空！";
             }
-            if(ObjectUtils.isNull(ntCustType.getWorkLeave())){
-                return "ntProjectInfo.workLeave 属性值不能为空！";
+            if(StringUtils.isEmpty(ntCustType.getWorkLeave())){
+                return "技术等级 不能为空！";
             }
         }
         return "";
