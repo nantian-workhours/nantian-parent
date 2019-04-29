@@ -48,6 +48,7 @@ public class UserImpl implements UserService {
                 NtPersonnel personnel1 = new NtPersonnel();
                 personnel1.setPerId(personnel.getPerId());
                 personnel1.setName(personnel.getName());
+                personnel1.setPosition(personnel.getPosition());
                 ntPersonnelList.add(personnel1);
             }
         }
