@@ -48,7 +48,7 @@ public class UserController extends BaseController {
     @ResponseBody
     public ResponseData addUser(@ModelAttribute("personnel") NtPersonnel personnel) {
         try {
-            String msg = userService.checkUserParameter(personnel);
+            String msg = userService.checkAddUserParameter(personnel);
             if (StringUtils.isNotEmpty(msg)) {
                 return ResponseData.isfailed().putDataValue("errorMessage", msg);
             }
@@ -178,19 +178,24 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 修改员工信息
-     *
-     * @param personnel
-     * @return
-     */
-    @RequestMapping(value = "/updatebyidno")
+      * @Description: 修改员工信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/5 15:18
+      * @Param:  [personnel]
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping(value = "/update/user")
     @ResponseBody
-    public ResponseData updateByIdNo(@RequestBody NtPersonnel personnel) {
+    public ResponseData updateUser(@ModelAttribute("personnel") NtPersonnel personnel) {
         try {
-            String d = userService.updateByIdNo(personnel);
-            return ResponseData.ok().putDataValue("status", d);
+            String msg=userService.checkUpdateUserParameter(personnel);
+            if (StringUtils.isNotEmpty(msg)) {
+                return ResponseData.isfailed().putDataValue("errorMessage", msg);
+            }
+            int d = userService.updateByIdNo(personnel);
+            return ResponseData.ok().putDataValue("status", "update success"+d);
         } catch (Exception e) {
-            logger.error("UserController.updateByIdNo", e);
+            logger.error("UserController.updateUser", e);
             return ResponseData.forbidden().putDataValue("系统异常", e.toString());
         }
     }

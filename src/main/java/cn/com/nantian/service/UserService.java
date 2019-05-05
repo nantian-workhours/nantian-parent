@@ -42,13 +42,23 @@ public interface UserService {
      */
     public int addUser(NtPersonnel personnel);
     /**
-     * @Description: 检查传入的参数是否为空 格式是否正确 是否已存在
+     * @Description: 新建 检查传入的参数是否为空 格式是否正确 是否已存在
      * @Auther: Mr.Kong
      * @Date: 2019/4/26 14:22
      * @Param:  [personnel]
      * @Return: java.lang.String
      **/
-    public String checkUserParameter(NtPersonnel personnel);
+    public String checkAddUserParameter(NtPersonnel personnel);
+    /**
+      * @Description: 更新 检查传入的参数是否为空 格式是否正确 是否已存在
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/5 15:23
+      * @Param:  [personnel]
+      * @Return: java.lang.String
+      **/
+    public String checkUpdateUserParameter(NtPersonnel personnel);
+
+
 
     /**根据id查询员工姓名
      */
@@ -113,7 +123,7 @@ public interface UserService {
      * @param personnel
      * @return
      */
-    String updateByIdNo(NtPersonnel personnel);
+    int updateByIdNo(NtPersonnel personnel);
 
 
     /**

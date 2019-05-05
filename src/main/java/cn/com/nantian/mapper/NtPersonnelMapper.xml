@@ -116,7 +116,7 @@
     select
     <include refid="Base_Column_List" />
     from nt_personnel
-    where NAME = #{name,jdbcType=VARCHAR}
+    where nt_personnel.NAME like CONCAT('%',#{name},'%')
   </select>
 
   <select id="selectByEmial" resultMap="BaseResultMap" parameterType="java.lang.String" >
@@ -504,7 +504,7 @@
         SEX = #{sex,jdbcType=CHAR},
       </if>
       <if test="name != null" >
-        NAME = #{name,jdbcType=VARCHAR},
+        `NAME` = #{name,jdbcType=VARCHAR},
       </if>
       <if test="mobileNo != null" >
         MOBILE_NO = #{mobileNo,jdbcType=VARCHAR},
@@ -540,7 +540,7 @@
         STATUS = #{status,jdbcType=CHAR},
       </if>
       <if test="position != null" >
-        POSITION = #{position,jdbcType=CHAR},
+        `POSITION` = #{position,jdbcType=CHAR},
       </if>
       <if test="companyEmail != null" >
         COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR},
@@ -570,7 +570,7 @@
     update nt_personnel
     set DEPT_ID = #{deptId,jdbcType=INTEGER},
       SEX = #{sex,jdbcType=CHAR},
-      NAME = #{name,jdbcType=VARCHAR},
+      `NAME` = #{name,jdbcType=VARCHAR},
       MOBILE_NO = #{mobileNo,jdbcType=VARCHAR},
       ID_NO = #{idNo,jdbcType=VARCHAR},
       BIRTHDAY = #{birthday,jdbcType=DATE},
@@ -582,7 +582,7 @@
       ENTRY_DATE = #{entryDate,jdbcType=DATE},
       LEAVE_DATE = #{leaveDate,jdbcType=DATE},
       STATUS = #{status,jdbcType=CHAR},
-      POSITION = #{position,jdbcType=CHAR},
+      `POSITION` = #{position,jdbcType=CHAR},
       COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR},
       PERSON_EMAIL = #{personEmail,jdbcType=VARCHAR},
       POST = #{post,jdbcType=CHAR},

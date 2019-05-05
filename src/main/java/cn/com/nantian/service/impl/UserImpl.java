@@ -121,7 +121,7 @@ public class UserImpl implements UserService {
      * @Return: java.lang.String
      **/
     @Override
-    public String checkUserParameter(NtPersonnel personnel) {
+    public String checkAddUserParameter(NtPersonnel personnel) {
         String msg = "";
         if (StringUtils.isEmpty(personnel.getName())) {
             return msg = "姓名 不能为空！";
@@ -207,6 +207,107 @@ public class UserImpl implements UserService {
             return msg="所属部门 不能为空！";
         }*/
 
+        if (ObjectUtils.isNull(personnel.getJurisdiction())) {
+            return msg = "系统权限 不能为空！";
+        }
+        return msg;
+    }
+
+    /**
+     * @Description: 更新 检查传入的参数是否为空 格式是否正确 是否已存在
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/5 15:23
+     * @Param:  [personnel]
+     * @Return: java.lang.String
+     **/
+    @Override
+    public String checkUpdateUserParameter(NtPersonnel personnel) {
+        String msg = "";
+        if (ObjectUtils.isNull(personnel.getPerId())){
+            return msg = "员工编号 不能为空！";
+        }
+        NtPersonnel personnel2=this.findPersonnlByPerId(personnel.getPerId());
+        if (StringUtils.isEmpty(personnel.getName())) {
+            return msg = "姓名 不能为空！";
+        }
+        //身份证号效验
+        if (StringUtils.isEmpty(personnel.getIdNo())) {
+            return msg = "身份证号 不能为空！";
+        } else if (!RegExpressionUtils.isIDNumber(personnel.getIdNo())) {
+            return msg = "身份证号 填写错误！";
+        } else {
+            NtPersonnel personnlByIdno = this.findPersonnlByIdno(personnel.getIdNo());
+            if (ObjectUtils.isNotNull(personnlByIdno)){
+                if (!personnlByIdno.getPerId().equals(personnel2.getPerId())){
+                    return msg = "身份证号 已存在！";
+                }
+            }
+        }
+        if (StringUtils.isEmpty(personnel.getSex())) {
+            return msg = "性别 不能为空！";
+        }
+        /*if (ObjectUtils.isNull(personnel.getBirthday())){
+            msg="生日 不能为空！";
+        }*/
+        /*if (StringUtils.isEmpty(personnel.getEthnic())){
+            msg="民族 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getNativePlace())){
+            msg="籍贯 不能为空！";
+        }*/
+        if (StringUtils.isEmpty(personnel.getCompanyEmail())) {
+            msg = "公司邮箱 不能为空！";
+        } else if (!RegExpressionUtils.isEmail(personnel.getCompanyEmail())) {
+            msg = "公司邮箱 格式填写错误！";
+        }
+        //个人邮箱效验
+        /*if (StringUtils.isEmpty(personnel.getPersonEmail())){
+            return msg="个人邮箱 不能为空！";
+        }*/
+        if (!StringUtils.isEmpty(personnel.getPersonEmail()) && !RegExpressionUtils.isEmail(personnel.getPersonEmail())) {
+            return msg = "个人邮箱 填写错误！";
+        } else {
+            NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getPersonEmail());
+            if (ObjectUtils.isNotNull(ntPersonnel)){
+                if (!ntPersonnel.getPerId().equals(personnel2.getPerId())){
+                    return msg = "个人邮箱 已存在！";
+                }
+            }
+        }
+        //手机号效验
+        if (StringUtils.isEmpty(personnel.getMobileNo())) {
+            return msg = "手机号 不能为空！";
+        } else if (!RegExpressionUtils.isMobile(personnel.getMobileNo())) {
+            return msg = "手机号 填写错误！";
+        } else {
+            NtPersonnel ntPersonnel = personnelMapper.selectByPrimaryMobileNo(personnel.getMobileNo());
+            if (ObjectUtils.isNotNull(ntPersonnel)){
+                if (!ntPersonnel.getPerId().equals(personnel2.getPerId())){
+                    return msg = "手机号 已存在！";
+                }
+            }
+
+        }
+        /*if (StringUtils.isEmpty(personnel.getEducation())){
+            return msg="学历 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getUniversity())){
+            return msg="毕业院校 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getMajor())){
+            return msg="专业 不能为空！";
+        }else if (ObjectUtils.isNull(personnel.getGraduationDate())){
+            return msg="毕业日期 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getPosition())){
+            return msg="职位 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getPost())){
+            return msg="岗位 不能为空！";
+        }else if (StringUtils.isEmpty(personnel.getStatus())){
+            return msg="在职状态 不能为空！";
+        }else if (ObjectUtils.isNull(personnel.getEntryDate())){
+            return msg="入司日期 不能为空！";
+        }else if (ObjectUtils.isNull(personnel.getLeaveDate())){
+            return msg="离职日期 不能为空！";
+        }else if (ObjectUtils.isNull(personnel.getDeptId())){
+            return msg="所属部门 不能为空！";
+        }*/
         if (ObjectUtils.isNull(personnel.getJurisdiction())) {
             return msg = "系统权限 不能为空！";
         }
@@ -328,19 +429,8 @@ public class UserImpl implements UserService {
      * @return
      */
     @Override
-    public String updateByIdNo(NtPersonnel personnel) {
-        int a = 0;
-        //查询数据库中是否有该员工信息
-        NtPersonnel ntPersonnel = personnelMapper.selectByPrimaryIdNo(personnel.getIdNo());
-
-        //修改员工信息
-        if (ntPersonnel != null) {
-            //修改状态和职位
-            //  updateFrag(personnel);
-            a = personnelMapper.updateByPrimaryKey(personnel);
-            return "update success " + a;
-        }
-        return "No such employee";
+    public int updateByIdNo(NtPersonnel personnel) {
+       return personnelMapper.updateByPrimaryKeySelective(personnel);
     }
 
 
