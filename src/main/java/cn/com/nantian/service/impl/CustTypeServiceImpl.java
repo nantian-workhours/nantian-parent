@@ -123,7 +123,9 @@ public class CustTypeServiceImpl implements CustTypeService {
             custTypeKey.setWorkLevelNameList(workLevelNameList);
             //客户类别
             NtDictionariesKey dictionariesKey1=dictionariesService.selectDictionaries(ParamUntil.cust,custTypeKey.getCustType());
-            custTypeKey.setCustTypeName(dictionariesKey1.getDicValue());
+            if (ObjectUtils.isNotNull(dictionariesKey1)){
+                custTypeKey.setCustTypeName(dictionariesKey1.getDicValue());
+            }
         }
     }
 
