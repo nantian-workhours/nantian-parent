@@ -54,7 +54,9 @@ public class CustTypeServiceImpl implements CustTypeService {
             for(NtCustTypeKey custTypeKey:custTypeKeyList){
                 //客户类别
                 NtDictionariesKey dictionariesKey1=dictionariesService.selectDictionaries(ParamUntil.cust,custTypeKey.getCustType());
-                custTypeKey.setCustTypeName(dictionariesKey1.getDicValue());
+                if (ObjectUtils.isNotNull(dictionariesKey1)){
+                    custTypeKey.setCustTypeName(dictionariesKey1.getDicValue());
+                }
                 //工作类别
                 String workTypes=custTypeKey.getWorkType();
                 String[] workTypesArray=workTypes.split(",");
@@ -68,17 +70,17 @@ public class CustTypeServiceImpl implements CustTypeService {
                 }
                 custTypeKey.setWorkTypeNameList(workTypeNameList);
                 //技术等级
-                String workLeaves=custTypeKey.getWorkLeave();
-                String[] workLeavesArray=workLeaves.split(",");
-                List<String> workLeavesList= Arrays.asList(workLeavesArray);
-                List<String> workLeaveNameList=new ArrayList<>();
-                for (String str:workLeavesList){
+                String workLevels=custTypeKey.getWorkLevel();
+                String[] workLevelsArray=workLevels.split(",");
+                List<String> workLevelsList= Arrays.asList(workLevelsArray);
+                List<String> workLevelNameList=new ArrayList<>();
+                for (String str:workLevelsList){
                     NtDictionariesKey dictionariesKey3=dictionariesService.selectDictionaries(ParamUntil.dc,str);
                     if (ObjectUtils.isNotNull(dictionariesKey3)){
-                        workLeaveNameList.add(dictionariesKey3.getDicValue());
+                        workLevelNameList.add(dictionariesKey3.getDicValue());
                     }
                 }
-                custTypeKey.setWorkLeaveNameList(workLeaveNameList);
+                custTypeKey.setWorkLevelNameList(workLevelNameList);
             }
         }
     }
@@ -108,17 +110,17 @@ public class CustTypeServiceImpl implements CustTypeService {
             }
             custTypeKey.setWorkTypeNameList(workTypeNameList);
             //技术等级
-            String workLeaves=custTypeKey.getWorkLeave();
-            String[] workLeavesArray=workLeaves.split(",");
-            List<String> workLeavesList= Arrays.asList(workLeavesArray);
-            List<String> workLeaveNameList=new ArrayList<>();
-            for (String str:workLeavesList){
+            String workLevels=custTypeKey.getWorkLevel();
+            String[] workLevelsArray=workLevels.split(",");
+            List<String> workLevelsList= Arrays.asList(workLevelsArray);
+            List<String> workLevelNameList=new ArrayList<>();
+            for (String str:workLevelsList){
                 NtDictionariesKey dictionariesKey3=dictionariesService.selectDictionaries(ParamUntil.dc,str);
                 if (ObjectUtils.isNotNull(dictionariesKey3)){
-                    workLeaveNameList.add(dictionariesKey3.getDicValue());
+                    workLevelNameList.add(dictionariesKey3.getDicValue());
                 }
             }
-            custTypeKey.setWorkLeaveNameList(workLeaveNameList);
+            custTypeKey.setWorkLevelNameList(workLevelNameList);
             //客户类别
             NtDictionariesKey dictionariesKey1=dictionariesService.selectDictionaries(ParamUntil.cust,custTypeKey.getCustType());
             custTypeKey.setCustTypeName(dictionariesKey1.getDicValue());
@@ -211,7 +213,7 @@ public class CustTypeServiceImpl implements CustTypeService {
             if(StringUtils.isEmpty(ntCustType.getWorkType())){
                 return "工作类别 不能为空！";
             }
-            if(StringUtils.isEmpty(ntCustType.getWorkLeave())){
+            if(StringUtils.isEmpty(ntCustType.getWorkLevel())){
                 return "技术等级 不能为空！";
             }
         }

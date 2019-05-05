@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtCustTypeKey" >
     <id column="CUST_TYPE" property="custType" jdbcType="VARCHAR" />
     <id column="WORK_TYPE" property="workType" jdbcType="CHAR" />
-    <id column="WORK_LEAVE" property="workLeave" jdbcType="CHAR" />
+    <id column="WORK_LEVEL" property="workLevel" jdbcType="CHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -65,7 +65,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    CUST_TYPE, WORK_TYPE, WORK_LEAVE
+    CUST_TYPE, WORK_TYPE, WORK_LEVEL
   </sql>
   <!-- 查询客户类型集合 start-->
   <select id="selectCustTypeList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
@@ -86,7 +86,7 @@
     from nt_cust_type
     WHERE CUST_TYPE=#{custType}
     AND WORK_TYPE=#{workType}
-    AND WORK_LEAVE=#{workLeave}
+    AND WORK_LEVEL=#{workLevel}
   </select>
   <!-- 查询客户类型 end-->
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustTypeExample" >
@@ -107,7 +107,7 @@
     delete from nt_cust_type
     where CUST_TYPE = #{custType,jdbcType=VARCHAR}
     and WORK_TYPE = #{workType,jdbcType=CHAR}
-    and WORK_LEAVE = #{workLeave,jdbcType=CHAR}
+    and WORK_LEVEL = #{workLevel,jdbcType=CHAR}
   </delete>
   <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtCustTypeExample" >
     delete from nt_cust_type
@@ -116,9 +116,9 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
-    insert into nt_cust_type (CUST_TYPE, WORK_TYPE, WORK_LEAVE
+    insert into nt_cust_type (CUST_TYPE, WORK_TYPE, WORK_LEVEL
     )
-    values (#{custType,jdbcType=VARCHAR}, #{workType,jdbcType=CHAR}, #{workLeave,jdbcType=CHAR}
+    values (#{custType,jdbcType=VARCHAR}, #{workType,jdbcType=CHAR}, #{workLevel,jdbcType=CHAR}
     )
   </insert>
   <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
@@ -130,8 +130,8 @@
       <if test="workType != null" >
         WORK_TYPE,
       </if>
-      <if test="workLeave != null" >
-        WORK_LEAVE,
+      <if test="workLevel != null" >
+        WORK_LEVEL,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -141,8 +141,8 @@
       <if test="workType != null" >
         #{workType,jdbcType=CHAR},
       </if>
-      <if test="workLeave != null" >
-        #{workLeave,jdbcType=CHAR},
+      <if test="workLevel != null" >
+        #{workLevel,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -161,8 +161,8 @@
       <if test="record.workType != null" >
         WORK_TYPE = #{record.workType,jdbcType=CHAR},
       </if>
-      <if test="record.workLeave != null" >
-        WORK_LEAVE = #{record.workLeave,jdbcType=CHAR},
+      <if test="record.workLevel != null" >
+        WORK_LEVEL = #{record.workLevel,jdbcType=CHAR},
       </if>
     </set>
     <if test="_parameter != null" >
@@ -173,7 +173,7 @@
     update nt_cust_type
     set CUST_TYPE = #{record.custType,jdbcType=VARCHAR},
     WORK_TYPE = #{record.workType,jdbcType=CHAR},
-    WORK_LEAVE = #{record.workLeave,jdbcType=CHAR}
+    WORK_LEVEL = #{record.workLevel,jdbcType=CHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -187,8 +187,8 @@
       <if test="workType != null" >
         WORK_TYPE = #{workType},
       </if>
-      <if test="workLeave != null" >
-        WORK_LEAVE = #{workLeave},
+      <if test="workLevel != null" >
+        WORK_LEVEL = #{workLevel},
       </if>
     </set>
   </update>

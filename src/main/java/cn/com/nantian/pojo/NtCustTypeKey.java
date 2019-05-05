@@ -16,7 +16,7 @@ public class NtCustTypeKey implements Serializable {
     /**工作类别*/
     private String workType;
     /**工作级别*/
-    private String workLeave;
+    private String workLevel;
 
     //============================
     /**客户类别名称*/
@@ -24,7 +24,7 @@ public class NtCustTypeKey implements Serializable {
     /**工作类别名称*/
     private List<String> workTypeNameList;
     /**工作级别名称*/
-    private List<String> workLeaveNameList;
+    private List<String> workLevelNameList;
 
     /**
       * @Description: 重写equals方法
@@ -34,12 +34,16 @@ public class NtCustTypeKey implements Serializable {
       * @Return: boolean
       **/
     public boolean equals(Object o) {
-        if (this == o) return true;  //先判断o是否为本对象，如果是就肯定是同一对象了，this 指向当前的对象
-        if (o == null || getClass() != o.getClass()) return false; //再判断o是否为null，和o.类对象和本类对象是否一致
+        if (this == o) {
+            return true;  //先判断o是否为本对象，如果是就肯定是同一对象了，this 指向当前的对象
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false; //再判断o是否为null，和o.类对象和本类对象是否一致
+        }
         NtCustTypeKey ntCustTypeKey = (NtCustTypeKey) o;  //再把o对象强制转化为Transport类对象
         return Objects.equals(custType, ntCustTypeKey.custType)
                 && Objects.equals(workType, ntCustTypeKey.workType)
-                && Objects.equals(workLeave, ntCustTypeKey.workLeave);  //查看两个对象属性值是否相等,返回结果
+                && Objects.equals(workLevel, ntCustTypeKey.workLevel);  //查看两个对象属性值是否相等,返回结果
     }
 
 }

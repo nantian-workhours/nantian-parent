@@ -205,7 +205,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
                 //设置工作类型
                 custTypeKey.setWorkType(workType);
                 //设置技术等级
-                custTypeKey.setWorkLeave(leave);
+                custTypeKey.setWorkLevel(leave);
                 custTypeMapper.insert(custTypeKey);
             } catch (Exception e) {
                 e.printStackTrace();
