@@ -126,6 +126,14 @@
     where COMPANY_EMAIL = #{companyEmail,jdbcType=VARCHAR}
   </select>
 
+  <select id="selectByPersonEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_personnel
+    where PERSON_EMAIL = #{personEmail,jdbcType=VARCHAR}
+  </select>
+
+
   <select id="selectByPrimaryMobileNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

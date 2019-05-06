@@ -59,6 +59,15 @@ public interface NtPersonnelMapper {
      */
     NtPersonnel selectByEmial(String companyEmail);
 
+    /**
+      * @Description: 根据 个人邮箱 获取员工信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/6 16:29
+      * @Param:  [personEmail] 个人邮箱
+      * @Return: cn.com.nantian.pojo.NtPersonnel
+      **/
+    NtPersonnel selectByPersonEmail (String personEmail);
+
 
     /**
      * 根据手机号获取员工信息

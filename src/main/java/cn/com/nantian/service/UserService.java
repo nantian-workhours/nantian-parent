@@ -1,6 +1,8 @@
 package cn.com.nantian.service;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.PersonnelItem;
+
+import java.text.ParseException;
 import java.util.List;
 
 public interface UserService {
@@ -47,7 +49,7 @@ public interface UserService {
      *
      * @param personnel
      */
-    public int addUser(NtPersonnel personnel);
+    public int addUser(NtPersonnel personnel) throws Exception;
     /**
      * @Description: 新建 检查传入的参数是否为空 格式是否正确 是否已存在
      * @Auther: Mr.Kong
@@ -130,7 +132,7 @@ public interface UserService {
      * @param personnel
      * @return
      */
-    int updateByIdNo(NtPersonnel personnel);
+    int updateByIdNo(NtPersonnel personnel) throws ParseException;
 
 
     /**

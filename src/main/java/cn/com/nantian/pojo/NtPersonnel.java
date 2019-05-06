@@ -55,6 +55,15 @@ public class NtPersonnel {
     private String jurisdiction;
     //===============================
 
+    /**生日*/
+    private String birthdayStr;
+    /**毕业日期*/
+    private String graduationDateStr;
+    /**入司日期*/
+    private String entryDateStr;
+    /**离职日期*/
+    private String leaveDateStr;
+
     /**部门负责人编号*/
     private Long managerId;
     /**部门助理编号*/

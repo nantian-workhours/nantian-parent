@@ -1,5 +1,6 @@
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.DateUtils;
 import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.common.RegExpressionUtils;
@@ -16,6 +17,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 /**
@@ -113,13 +115,25 @@ public class UserImpl implements UserService {
      * @param personnel
      */
     @Override
-    public int addUser(NtPersonnel personnel) {
+    public int addUser(NtPersonnel personnel) throws Exception{
+        //日期转换
+        if (ObjectUtils.isNotNull(personnel.getBirthdayStr())){
+            personnel.setBirthday(DateUtils.parseToDate(personnel.getBirthdayStr(),"yyyy-MM-dd"));
+        }
+        if (ObjectUtils.isNotNull(personnel.getGraduationDateStr())){
+            personnel.setGraduationDate(DateUtils.parseToDate(personnel.getGraduationDateStr(),"yyyy-MM-dd"));
+        }
+        if (ObjectUtils.isNotNull(personnel.getEntryDateStr())){
+            personnel.setEntryDate(DateUtils.parseToDate(personnel.getEntryDateStr(),"yyyy-MM-dd"));
+        }
+        if (ObjectUtils.isNotNull(personnel.getLeaveDateStr())){
+            personnel.setLeaveDate(DateUtils.parseToDate(personnel.getLeaveDateStr(),"yyyy-MM-dd"));
+        }
         //设置员工的初始化密码
         personnel.setPassword(DigestUtils.md5DigestAsHex("nt0000".getBytes()));
         //设置用户的权限,超级管理员->0,管理员->1,普通用户->2
         return personnelMapper.insert(personnel);
     }
-
 
     /**
      * @Description: 检查传入的参数是否为空 格式是否正确 是否已存在
@@ -145,42 +159,42 @@ public class UserImpl implements UserService {
                 return msg = "身份证号 已存在！";
             }
         }
-
         if (StringUtils.isEmpty(personnel.getSex())) {
             return msg = "性别 不能为空！";
         }
-
-
-        /*if (ObjectUtils.isNull(personnel.getBirthday())){
-            msg="生日 不能为空！";
-        }*/
-
-
+        //日期效验
+        if (!ObjectUtils.isNull(personnel.getBirthdayStr())){
+            if (!DateUtils.checkDateReg(personnel.getBirthdayStr())){
+                return msg="生日 日期格式不正确！";
+            }
+        }
         /*if (StringUtils.isEmpty(personnel.getEthnic())){
             msg="民族 不能为空！";
         }else if (StringUtils.isEmpty(personnel.getNativePlace())){
             msg="籍贯 不能为空！";
         }*/
-
         if (StringUtils.isEmpty(personnel.getCompanyEmail())) {
             msg = "公司邮箱 不能为空！";
         } else if (!RegExpressionUtils.isEmail(personnel.getCompanyEmail())) {
             msg = "公司邮箱 格式填写错误！";
+        }else {
+            NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getCompanyEmail());
+            if (!ObjectUtils.isNull(ntPersonnel)) {
+                return msg = "公司邮箱 已存在！";
+            }
         }
         //个人邮箱效验
         /*if (StringUtils.isEmpty(personnel.getPersonEmail())){
             return msg="个人邮箱 不能为空！";
         }*/
-
         if (!StringUtils.isEmpty(personnel.getPersonEmail()) && !RegExpressionUtils.isEmail(personnel.getPersonEmail())) {
             return msg = "个人邮箱 填写错误！";
-        } else {
-            NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getPersonEmail());
+        }else {
+            NtPersonnel ntPersonnel = personnelMapper.selectByPersonEmail(personnel.getPersonEmail());
             if (!ObjectUtils.isNull(ntPersonnel)) {
                 return msg = "个人邮箱 已存在！";
             }
         }
-
         //手机号效验
         if (StringUtils.isEmpty(personnel.getMobileNo())) {
             return msg = "手机号 不能为空！";
@@ -192,6 +206,22 @@ public class UserImpl implements UserService {
                 return msg = "手机号 已存在！";
             }
         }
+        //日期效验
+        if (!ObjectUtils.isNull(personnel.getGraduationDateStr())){
+            if (!DateUtils.checkDateReg(personnel.getGraduationDateStr())){
+                return msg="毕业日期 日期格式不正确！";
+            }
+        }
+        if (!ObjectUtils.isNull(personnel.getEntryDateStr())){
+            if (!DateUtils.checkDateReg(personnel.getEntryDateStr())){
+                return msg="入司日期 日期格式不正确！";
+            }
+        }
+        if (!ObjectUtils.isNull(personnel.getLeaveDateStr())){
+            if (!DateUtils.checkDateReg(personnel.getLeaveDateStr())){
+                return msg="离职日期 日期格式不正确！";
+            }
+        }
 
         /*if (StringUtils.isEmpty(personnel.getEducation())){
             return msg="学历 不能为空！";
@@ -199,7 +229,7 @@ public class UserImpl implements UserService {
             return msg="毕业院校 不能为空！";
         }else if (StringUtils.isEmpty(personnel.getMajor())){
             return msg="专业 不能为空！";
-        }else if (ObjectUtils.isNull(personnel.getGraduationDate())){
+        }if (ObjectUtils.isNull(personnel.getGraduationDate())){
             return msg="毕业日期 不能为空！";
         }else if (StringUtils.isEmpty(personnel.getPosition())){
             return msg="职位 不能为空！";
@@ -214,7 +244,6 @@ public class UserImpl implements UserService {
         }else if (ObjectUtils.isNull(personnel.getDeptId())){
             return msg="所属部门 不能为空！";
         }*/
-
         if (ObjectUtils.isNull(personnel.getJurisdiction())) {
             return msg = "系统权限 不能为空！";
         }
@@ -254,9 +283,12 @@ public class UserImpl implements UserService {
         if (StringUtils.isEmpty(personnel.getSex())) {
             return msg = "性别 不能为空！";
         }
-        /*if (ObjectUtils.isNull(personnel.getBirthday())){
-            msg="生日 不能为空！";
-        }*/
+        //日期效验
+        if (!ObjectUtils.isNull(personnel.getBirthdayStr())){
+            if (!DateUtils.checkDateReg(personnel.getBirthdayStr())){
+                return msg="生日 日期格式不正确！";
+            }
+        }
         /*if (StringUtils.isEmpty(personnel.getEthnic())){
             msg="民族 不能为空！";
         }else if (StringUtils.isEmpty(personnel.getNativePlace())){
@@ -266,6 +298,13 @@ public class UserImpl implements UserService {
             msg = "公司邮箱 不能为空！";
         } else if (!RegExpressionUtils.isEmail(personnel.getCompanyEmail())) {
             msg = "公司邮箱 格式填写错误！";
+        }else {
+            NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getCompanyEmail());
+            if (ObjectUtils.isNotNull(ntPersonnel)){
+                if (!ntPersonnel.getPerId().equals(personnel2.getPerId())){
+                    return msg = "公司邮箱 已存在！";
+                }
+            }
         }
         //个人邮箱效验
         /*if (StringUtils.isEmpty(personnel.getPersonEmail())){
@@ -273,8 +312,8 @@ public class UserImpl implements UserService {
         }*/
         if (!StringUtils.isEmpty(personnel.getPersonEmail()) && !RegExpressionUtils.isEmail(personnel.getPersonEmail())) {
             return msg = "个人邮箱 填写错误！";
-        } else {
-            NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getPersonEmail());
+        }else {
+            NtPersonnel ntPersonnel = personnelMapper.selectByPersonEmail(personnel.getPersonEmail());
             if (ObjectUtils.isNotNull(ntPersonnel)){
                 if (!ntPersonnel.getPerId().equals(personnel2.getPerId())){
                     return msg = "个人邮箱 已存在！";
@@ -295,6 +334,24 @@ public class UserImpl implements UserService {
             }
 
         }
+
+        //日期效验
+        if (!ObjectUtils.isNull(personnel.getGraduationDateStr())){
+            if (!DateUtils.checkDateReg(personnel.getGraduationDateStr())){
+                return msg="毕业日期 日期格式不正确！";
+            }
+        }
+        if (!ObjectUtils.isNull(personnel.getEntryDateStr())){
+            if (!DateUtils.checkDateReg(personnel.getEntryDateStr())){
+                return msg="入司日期 日期格式不正确！";
+            }
+        }
+        if (!ObjectUtils.isNull(personnel.getLeaveDateStr())){
+            if (!DateUtils.checkDateReg(personnel.getLeaveDateStr())){
+                return msg="离职日期 日期格式不正确！";
+            }
+        }
+
         /*if (StringUtils.isEmpty(personnel.getEducation())){
             return msg="学历 不能为空！";
         }else if (StringUtils.isEmpty(personnel.getUniversity())){
@@ -437,7 +494,20 @@ public class UserImpl implements UserService {
      * @return
      */
     @Override
-    public int updateByIdNo(NtPersonnel personnel) {
+    public int updateByIdNo (NtPersonnel personnel) throws ParseException {
+        //日期转换
+        if (ObjectUtils.isNotNull(personnel.getBirthdayStr())){
+            personnel.setBirthday(DateUtils.parseToDate(personnel.getBirthdayStr(),"yyyy-MM-dd"));
+        }
+        if (ObjectUtils.isNotNull(personnel.getGraduationDateStr())){
+            personnel.setGraduationDate(DateUtils.parseToDate(personnel.getGraduationDateStr(),"yyyy-MM-dd"));
+        }
+        if (ObjectUtils.isNotNull(personnel.getEntryDateStr())){
+            personnel.setEntryDate(DateUtils.parseToDate(personnel.getEntryDateStr(),"yyyy-MM-dd"));
+        }
+        if (ObjectUtils.isNotNull(personnel.getLeaveDateStr())){
+            personnel.setLeaveDate(DateUtils.parseToDate(personnel.getLeaveDateStr(),"yyyy-MM-dd"));
+        }
        return personnelMapper.updateByPrimaryKeySelective(personnel);
     }
 
