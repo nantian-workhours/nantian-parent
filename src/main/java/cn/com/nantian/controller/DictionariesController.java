@@ -3,11 +3,17 @@ package cn.com.nantian.controller;
 import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.DictionariesService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -17,10 +23,33 @@ import java.util.List;
 @Controller
 @RequestMapping("/dictionaries")
 public class DictionariesController {
-
-
+    private static final Logger logger = LoggerFactory.getLogger(DictionariesController.class);
+    @InitBinder("dictionaries")
+    public void initBindDictionaries(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.setFieldDefaultPrefix("dictionaries.");
+    }
     @Resource
     private DictionariesService dictionariesService;
+
+
+    /**
+      * @Description: 查询字典列表数据
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/6 10:40
+      * @Param:  [dictionaries]
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping(value = "/list" )
+    @ResponseBody
+    public ResponseData queryDictionariesList(@ModelAttribute("dictionaries")NtDictionariesKey dictionaries){
+        try{
+            List<NtDictionariesKey> dictionariesList = dictionariesService.selectDictionariesList(dictionaries);
+            return ResponseData.ok().putDataValue("data",dictionariesList);
+        } catch (Exception e) {
+            logger.error("DictionariesController.queryDictionariesList",e);
+            return ResponseData.serverInternalError().putDataValue("",e.toString() );
+        }
+    }
 
 
     /**
