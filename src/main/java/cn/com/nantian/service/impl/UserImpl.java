@@ -49,6 +49,8 @@ public class UserImpl implements UserService {
                 personnel1.setPerId(personnel.getPerId());
                 personnel1.setName(personnel.getName());
                 personnel1.setPosition(personnel.getPosition());
+                personnel1.setManagerId(personnel.getManagerId());
+                personnel1.setAssistantId(personnel.getAssistantId());
                 ntPersonnelList.add(personnel1);
             }
         }

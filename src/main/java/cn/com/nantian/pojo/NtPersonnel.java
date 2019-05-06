@@ -53,5 +53,10 @@ public class NtPersonnel {
     private String marriageStatus;
     /**权限*/
     private String jurisdiction;
+    //===============================
+    /**部门负责人编号*/
+    private Long managerId;
+    /**部门助理编号*/
+    private Long assistantId;
 
   }
