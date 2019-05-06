@@ -33,6 +33,7 @@ public class ParamUntil {
     public static String C;  //产品开发
     public static String H;  //人员外包
     public static String P;  //项目外包
+    public static String WORK_STATES;  //在职状态
 
 
     static {
@@ -69,6 +70,7 @@ public class ParamUntil {
             C=prop.getProperty("C");
             H=prop.getProperty("H");
             P=prop.getProperty("P");
+            WORK_STATES=prop.getProperty("WORK_STATES");
 
         } catch (IOException e) {
             e.printStackTrace();

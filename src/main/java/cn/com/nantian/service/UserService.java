@@ -5,7 +5,14 @@ import java.util.List;
 
 public interface UserService {
 
-
+    /**
+     * @Description: 处理员工工作状态数据
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/6 14:57
+     * @Param:  [personnelList]
+     * @Return: void
+     **/
+    public void setWorkStates(List<NtPersonnel> personnelList);
     /**
       * @Description: 处理用户列表数据
       * @Auther: Mr.Kong

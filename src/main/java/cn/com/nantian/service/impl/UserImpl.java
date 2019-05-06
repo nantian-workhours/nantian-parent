@@ -1,12 +1,15 @@
 package cn.com.nantian.service.impl;
 
 import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.common.RegExpressionUtils;
 import cn.com.nantian.mapper.NtPerAliasMapper;
 import cn.com.nantian.mapper.NtPersonnelMapper;
 import cn.com.nantian.mapper.PersonnelItemMapper;
+import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.PersonnelItem;
+import cn.com.nantian.service.DictionariesService;
 import cn.com.nantian.service.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -31,6 +34,9 @@ public class UserImpl implements UserService {
 
     @Resource
     private NtPerAliasMapper perAliasMapper;
+
+    @Resource
+    private DictionariesService dictionariesService;
 
 
     /**
@@ -433,6 +439,25 @@ public class UserImpl implements UserService {
     @Override
     public int updateByIdNo(NtPersonnel personnel) {
        return personnelMapper.updateByPrimaryKeySelective(personnel);
+    }
+
+
+    /**
+      * @Description: 处理员工工作状态数据
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/6 14:57
+      * @Param:  [personnelList]
+      * @Return: void
+      **/
+    public void setWorkStates(List<NtPersonnel> personnelList){
+        if (ObjectUtils.isNotNull(personnelList)){
+            for (NtPersonnel personnel:personnelList){
+                NtDictionariesKey dictionariesKey=dictionariesService.selectDictionaries(ParamUntil.WORK_STATES,personnel.getStatus());
+                if (ObjectUtils.isNotNull(dictionariesKey)){
+                    personnel.setWorkStatus(dictionariesKey.getDicValue());
+                }
+            }
+        }
     }
 
 

@@ -89,7 +89,8 @@ public class UserController extends BaseController {
     public ResponseData queryPersonnelList(@ModelAttribute("personnel") NtPersonnel personnel) {
         try {
             List<NtPersonnel> personnelList = userService.queryPersonnelList(personnel);
-            return ResponseData.ok().putDataValue("select list ", personnelList);
+            userService.setWorkStates(personnelList);
+            return ResponseData.ok().putDataValue("data", personnelList);
         } catch (Exception e) {
             logger.error("UserController.queryPersonnelList", e);
             return ResponseData.forbidden();

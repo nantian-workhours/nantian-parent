@@ -54,9 +54,18 @@ public class NtPersonnel {
     /**权限*/
     private String jurisdiction;
     //===============================
+
     /**部门负责人编号*/
     private Long managerId;
     /**部门助理编号*/
     private Long assistantId;
+    /**部门名称*/
+    private String deptName;
+    /**员工别名*/
+    private String inProjectName;
+    /**客户类别名称*/
+    private String custType;
+    /**状态说明（在职 或 离职）*/
+    private String workStatus;
 
   }

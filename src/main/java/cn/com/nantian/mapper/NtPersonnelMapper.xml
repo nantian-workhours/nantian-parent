@@ -151,6 +151,8 @@
     select
     <include refid="Base_Column_List" />,
     m.DEPT_NAME deptName,
+    m.MANAGER_ID managerId,
+    m.ASSISTANT_ID assistantId,
     n.IN_PROJECT_NAME inProjectName,
     t.CUST_TYPE custType
     from nt_personnel
