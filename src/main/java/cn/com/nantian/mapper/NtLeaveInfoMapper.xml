@@ -5,8 +5,8 @@
     <result column="PRICE_ID" property="priceId" jdbcType="INTEGER" />
     <result column="CUST_TYPE" property="custType" jdbcType="CHAR" />
     <result column="WORK_TYPE" property="workType" jdbcType="VARCHAR" />
-    <result column="WORK_LEAVE" property="workLeave" jdbcType="VARCHAR" />
-    <result column="LEAVE_PRICE" property="leavePrice" jdbcType="DOUBLE" />
+    <result column="WORK_LEAVE" property="workLevel" jdbcType="VARCHAR" />
+    <result column="LEAVE_PRICE" property="levelPrice" jdbcType="DOUBLE" />
     <result column="PROJECT_BEGDATE" property="projectBegdate" jdbcType="DATE" />
     <result column="PROJECT_ENDDATE" property="projectEnddate" jdbcType="DATE" />
     <result column="PROJECT_NUMBER" property="projectNumber" jdbcType="INTEGER" />
@@ -95,6 +95,7 @@
         and <![CDATA[ PROJECT_ENDDATE<=#{e.projectEnddate}]]>
       </if>
     </where>
+    order by PRICE_ID desc
   </select>
   <select id="selectLeaveInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
@@ -112,8 +113,8 @@
     insert into nt_leave_info (CUST_TYPE, WORK_TYPE, WORK_LEAVE,
     LEAVE_PRICE, PROJECT_BEGDATE, PROJECT_ENDDATE,
     PROJECT_NUMBER)
-    values (#{custType,jdbcType=CHAR}, #{workType,jdbcType=VARCHAR}, #{workLeave,jdbcType=VARCHAR},
-    #{leavePrice,jdbcType=DOUBLE}, #{projectBegdate,jdbcType=DATE}, #{projectEnddate,jdbcType=DATE},
+    values (#{custType,jdbcType=CHAR}, #{workType,jdbcType=VARCHAR}, #{workLevel,jdbcType=VARCHAR},
+    #{levelPrice,jdbcType=DOUBLE}, #{projectBegdate,jdbcType=DATE}, #{projectEnddate,jdbcType=DATE},
     #{projectNumber,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtLeaveInfo" >
@@ -125,10 +126,10 @@
       <if test="workType != null" >
         WORK_TYPE,
       </if>
-      <if test="workLeave != null" >
+      <if test="workLevel != null" >
         WORK_LEAVE,
       </if>
-      <if test="leavePrice != null" >
+      <if test="levelPrice != null" >
         LEAVE_PRICE,
       </if>
       <if test="projectBegdate != null" >
@@ -148,11 +149,11 @@
       <if test="workType != null" >
         #{workType,jdbcType=VARCHAR},
       </if>
-      <if test="workLeave != null" >
-        #{workLeave,jdbcType=VARCHAR},
+      <if test="workLevel != null" >
+        #{workLevel,jdbcType=VARCHAR},
       </if>
-      <if test="leavePrice != null" >
-        #{leavePrice,jdbcType=DOUBLE},
+      <if test="levelPrice != null" >
+        #{levelPrice,jdbcType=DOUBLE},
       </if>
       <if test="projectBegdate != null" >
         #{projectBegdate,jdbcType=DATE},
@@ -180,11 +181,11 @@
       <if test="workType != null" >
         WORK_TYPE = #{workType,jdbcType=VARCHAR},
       </if>
-      <if test="workLeave != null" >
-        WORK_LEAVE = #{workLeave,jdbcType=VARCHAR},
+      <if test="workLevel != null" >
+        WORK_LEAVE = #{workLevel,jdbcType=VARCHAR},
       </if>
-      <if test="leavePrice != null" >
-        LEAVE_PRICE = #{leavePrice,jdbcType=DOUBLE},
+      <if test="levelPrice != null" >
+        LEAVE_PRICE = #{levelPrice,jdbcType=DOUBLE},
       </if>
       <if test="projectBegdate != null" >
         PROJECT_BEGDATE = #{projectBegdate,jdbcType=DATE},
@@ -196,18 +197,17 @@
         PROJECT_NUMBER = #{projectNumber,jdbcType=INTEGER},
       </if>
     </set>
+    where PRICE_ID = #{priceId,jdbcType=INTEGER}
   </update>
   <update id="updateByExample" parameterType="map" >
     update nt_leave_info
     set CUST_TYPE = #{record.custType,jdbcType=CHAR},
     WORK_TYPE = #{record.workType,jdbcType=VARCHAR},
-    WORK_LEAVE = #{record.workLeave,jdbcType=VARCHAR},
-    LEAVE_PRICE = #{record.leavePrice,jdbcType=DOUBLE},
+    WORK_LEAVE = #{record.workLevel,jdbcType=VARCHAR},
+    LEAVE_PRICE = #{record.levelPrice,jdbcType=DOUBLE},
     PROJECT_BEGDATE = #{record.projectBegdate,jdbcType=DATE},
     PROJECT_ENDDATE = #{record.projectEnddate,jdbcType=DATE},
     PROJECT_NUMBER = #{record.projectNumber,jdbcType=INTEGER}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
+    where PRICE_ID = #{priceId,jdbcType=INTEGER}
   </update>
 </mapper>

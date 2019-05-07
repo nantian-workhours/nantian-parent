@@ -1,5 +1,7 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtLeaveInfo;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.PriceLeaveService;
@@ -62,12 +64,12 @@ public class PriceLeaveController {
      **/
     @RequestMapping("/priceLeave/delete")
     @ResponseBody
-    public ResponseData deleteNtLeaveInfo(@RequestParam("priceId") int priceId) {
+    public ResponseData delete(@RequestParam("priceId") int priceId) {
         try {
             int num = priceLeaveService.deleteLeaveInfo(priceId);
             return ResponseData.ok().putDataValue("delete number", num);
         } catch (Exception e) {
-            logger.error("PriceLeaveController.deleteNtLeaveInfo", e);
+            logger.error("PriceLeaveController.delete", e);
             return ResponseData.forbidden();
         }
     }
@@ -81,17 +83,23 @@ public class PriceLeaveController {
      **/
     @RequestMapping("/priceLeave/add")
     @ResponseBody
-    public ResponseData addNtLeaveInfo(@ModelAttribute("ntLeaveInfo") NtLeaveInfo ntLeaveInfo) {
+    public ResponseData add(@ModelAttribute("ntLeaveInfo") NtLeaveInfo ntLeaveInfo) {
         try {
+            //效验传入的参数是否为空
+            String result = priceLeaveService.checkAttribute(ntLeaveInfo);
+            if (StringUtils.isNotEmpty(result)) {
+                return ResponseData.isfailed().putDataValue("error", result);
+            }
+            //效验是否已存在重复数据
             boolean isWhether= priceLeaveService.checkWhetherRepeat(ntLeaveInfo);
             if(!isWhether){//无
                 int id = priceLeaveService.addLeaveInfo(ntLeaveInfo);
                 return ResponseData.ok().putDataValue(" Add success num ", id);
             }else {//有
-                return ResponseData.ok().putDataValue(" Add fail num ", "数据已存在，不能新增！");
+                return ResponseData.ok().putDataValue("error", "数据已存在 请修改!");
             }
         } catch (Exception e) {
-            logger.error("PriceLeaveController.addNtLeaveInfo", e);
+            logger.error("PriceLeaveController.add", e);
             return ResponseData.forbidden();
         }
     }
@@ -105,12 +113,26 @@ public class PriceLeaveController {
      **/
     @RequestMapping("/priceLeave/update")
     @ResponseBody
-    public ResponseData updateNtLeaveInfo(@ModelAttribute("ntLeaveInfo") NtLeaveInfo ntLeaveInfo) {
+    public ResponseData update(@ModelAttribute("ntLeaveInfo") NtLeaveInfo ntLeaveInfo) {
         try {
-            int d = priceLeaveService.updateLeaveInfo(ntLeaveInfo);
-            return ResponseData.ok().putDataValue("update number", d);
+            //效验传入的参数是否为空
+            String result = priceLeaveService.checkAttribute(ntLeaveInfo);
+            if (ObjectUtils.isNull(ntLeaveInfo.getPriceId())){
+                result="主键ID 不能为空";
+            }
+            if (StringUtils.isNotEmpty(result)) {
+                return ResponseData.isfailed().putDataValue("error", result);
+            }
+            //效验是否已存在重复数据
+            boolean isWhether= priceLeaveService.checkUpdateWhetherRepeat(ntLeaveInfo);
+            if(isWhether){//有
+                return ResponseData.ok().putDataValue("error", "数据已存在 请修改！");
+            }else {//无
+                int d = priceLeaveService.updateLeaveInfo(ntLeaveInfo);
+                return ResponseData.ok().putDataValue("update number", d);
+            }
         } catch (Exception e) {
-            logger.error("PriceLeaveController.updateNtLeaveInfo", e);
+            logger.error("PriceLeaveController.update", e);
             return ResponseData.forbidden();
         }
     }
@@ -124,7 +146,7 @@ public class PriceLeaveController {
      **/
     @RequestMapping("/priceLeave/findDetail")
     @ResponseBody
-    public ResponseData findDetailNtLeaveInfo(@RequestParam("priceId") int priceId) {
+    public ResponseData findDetail(@RequestParam("priceId") int priceId) {
         try {
             //查询客户类型集合
             NtLeaveInfo ntLeaveInfo = priceLeaveService.selectLeaveInfo(priceId);
@@ -133,7 +155,7 @@ public class PriceLeaveController {
             //返回数据
             return ResponseData.ok().putDataValue("data", ntLeaveInfo);
         } catch (Exception e) {
-            logger.error("PriceLeaveController.findDetailNtLeaveInfo", e);
+            logger.error("PriceLeaveController.findDetail", e);
             return ResponseData.forbidden();
         }
     }

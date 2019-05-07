@@ -1,6 +1,9 @@
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.DateUtils;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.NtLeaveInfoMapper;
+import cn.com.nantian.pojo.NtCustType;
 import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtLeaveInfo;
 import cn.com.nantian.service.DictionariesService;
@@ -53,8 +56,8 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
                 NtDictionariesKey dictionariesKey2= dictionariesService.selectDictionaries("wt",ntLeaveInfo.getWorkType());
                 ntLeaveInfo.setWorkTypeName(dictionariesKey2.getDicValue());
                 // 技术等级名称
-                NtDictionariesKey dictionariesKey3= dictionariesService.selectDictionaries("dc",ntLeaveInfo.getWorkLeave());
-                ntLeaveInfo.setWorkLeaveName(dictionariesKey3.getDicValue());
+                NtDictionariesKey dictionariesKey3= dictionariesService.selectDictionaries("dc",ntLeaveInfo.getWorkLevel());
+                ntLeaveInfo.setWorkLevelName(dictionariesKey3.getDicValue());
             }
         }
 
@@ -70,8 +73,8 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
     public void setLeaveInfoName(NtLeaveInfo ntLeaveInfo) {
         if(ntLeaveInfo!=null){
             // 技术等级名称
-            NtDictionariesKey dictionariesKey3= dictionariesService.selectDictionaries("dc",ntLeaveInfo.getWorkLeave());
-            ntLeaveInfo.setWorkLeaveName(dictionariesKey3.getDicValue());
+            NtDictionariesKey dictionariesKey3= dictionariesService.selectDictionaries("dc",ntLeaveInfo.getWorkLevel());
+            ntLeaveInfo.setWorkLevelName(dictionariesKey3.getDicValue());
             //设置客户类别
             NtDictionariesKey dictionariesKey1= dictionariesService.selectDictionaries("cust",ntLeaveInfo.getCustType());
             ntLeaveInfo.setCustTypeName(dictionariesKey1.getDicValue());
@@ -99,7 +102,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Date: 2019/3/21 16:55
       **/
     @Override
-    public int addLeaveInfo(NtLeaveInfo ntLeaveInfo) {
+    public int addLeaveInfo(NtLeaveInfo ntLeaveInfo) throws Exception{
         return ntLeaveInfoMapper.insertSelective(ntLeaveInfo);
     }
     /**
@@ -110,7 +113,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Date: 2019/3/21 17:03
       **/
     @Override
-    public int updateLeaveInfo(NtLeaveInfo ntLeaveInfo) {
+    public int updateLeaveInfo(NtLeaveInfo ntLeaveInfo) throws Exception{
         return ntLeaveInfoMapper.updateByExampleSelective(ntLeaveInfo);
     }
     /**
@@ -126,20 +129,20 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
     }
 
     /**
-     * @Description: 检查是否有重复数据
+     * @Description: 新增时 检查是否有重复数据
      * @Param: [ntLeaveInfo]
      * @Return: boolean true 有 , false 无
      * @Auther: Fly
      * @Date: 2019/3/22 9:52
      **/
-    public boolean checkWhetherRepeat(NtLeaveInfo ntLeaveInfo){
+    public boolean checkWhetherRepeat(NtLeaveInfo ntLeaveInfo) throws Exception{
         boolean whether=false;
         if(ObjectUtils.isNotNull(ntLeaveInfo)){
             List<NtLeaveInfo> leaveInfoList=ntLeaveInfoMapper.selectLeaveInfoList(null);
             if(ObjectUtils.isNotNull(leaveInfoList)){
-                for (NtLeaveInfo ntLeaveInfo1:leaveInfoList){
-                    boolean isok= ClassCompareUtil.compareObject(ntLeaveInfo,ntLeaveInfo1);
-                    if(isok==true){
+                for (NtLeaveInfo ntLeaveInfo2:leaveInfoList){
+                    System.out.println(ntLeaveInfo2.equals(ntLeaveInfo));
+                    if(ntLeaveInfo2.equals(ntLeaveInfo)){
                         whether=true;
                         break;
                     }
@@ -148,4 +151,77 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
         }
         return whether;
     }
+
+    /**
+      * @Description: 更新时 检查是否有重复数据
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/7 15:10
+      * @Param:  [ntLeaveInfo]
+      * @Return: boolean
+      **/
+    @Override
+    public boolean checkUpdateWhetherRepeat(NtLeaveInfo ntLeaveInfo) throws Exception{
+        boolean whether=false;
+        if(ObjectUtils.isNotNull(ntLeaveInfo)){
+            List<NtLeaveInfo> leaveInfoList=ntLeaveInfoMapper.selectLeaveInfoList(null);
+            if(ObjectUtils.isNotNull(leaveInfoList)){
+                for (NtLeaveInfo ntLeaveInfo2:leaveInfoList){
+                    if(ntLeaveInfo2.getPriceId()!=ntLeaveInfo.getPriceId() && ntLeaveInfo2.equals(ntLeaveInfo)){
+                        whether=true;
+                        break;
+                    }
+                }
+            }
+        }
+        return whether;
+    }
+
+
+    /**
+      * @Description: 检查传入属性值是否为空
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/7 15:04
+      * @Param:  [leaveInfo]
+      * @Return: java.lang.String
+      **/
+    @Override
+    public String checkAttribute(NtLeaveInfo ntLeaveInfo) throws Exception{
+        if (ObjectUtils.isNotNull(ntLeaveInfo)) {
+            if (StringUtils.isEmpty(ntLeaveInfo.getCustType())) {
+                return "客户类别 不能为空！";
+            }
+            if (StringUtils.isEmpty(ntLeaveInfo.getWorkType())) {
+                return "工作类别 不能为空！";
+            }
+            if (StringUtils.isEmpty(ntLeaveInfo.getWorkLevel())) {
+                return "技术等级 不能为空！";
+            }
+            if (StringUtils.isEmpty(ntLeaveInfo.getLevelPriceStr())) {
+                return "等级单价 不能为空！";
+            }else if (!ObjectUtils.isPriceNumber(ntLeaveInfo.getLevelPriceStr())){
+                return "等级单价 格式不正确！";
+            }else {
+                ntLeaveInfo.setLevelPrice(Double.valueOf(ntLeaveInfo.getLevelPriceStr()));
+            }
+            if (StringUtils.isEmpty(ntLeaveInfo.getProjectBegdateStr())) {
+                return "开始日期 不能为空！";
+            }else if (!DateUtils.checkDateReg(ntLeaveInfo.getProjectBegdateStr())){
+                return "开始日期 格式不正确！";
+            }else {
+                ntLeaveInfo.setProjectBegdate(DateUtils.parseToDate(ntLeaveInfo.getProjectBegdateStr(),"yyyy-MM-dd"));
+            }
+            if (StringUtils.isEmpty(ntLeaveInfo.getProjectEnddateStr())) {
+                return "结束日期 不能为空！";
+            }else if (!DateUtils.checkDateReg(ntLeaveInfo.getProjectEnddateStr())){
+                return "结束日期 格式不正确！";
+            }else {
+                ntLeaveInfo.setProjectEnddate(DateUtils.parseToDate(ntLeaveInfo.getProjectEnddateStr(),"yyyy-MM-dd"));
+            }
+            if (ObjectUtils.isNull(ntLeaveInfo.getProjectNumber())) {
+                return "项目名称 不能为空！";
+            }
+        }
+        return "";
+    }
+
 }
