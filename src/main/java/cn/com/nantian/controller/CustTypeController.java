@@ -9,10 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -70,9 +67,9 @@ public class CustTypeController {
      **/
     @RequestMapping("/delete")
     @ResponseBody
-    public ResponseData deleteCustType(@ModelAttribute("ntCustType") NtCustType ntCustType) {
+    public ResponseData deleteCustType(@RequestParam("custId") int custId) {
         try {
-            int num = custTypeService.deleteCustType(ntCustType);
+            int num = custTypeService.deleteCustType(custId);
             return ResponseData.ok().putDataValue("delete number", num);
         } catch (Exception e) {
             logger.error("CustTypeController.deleteCustType", e);
@@ -120,8 +117,8 @@ public class CustTypeController {
     public ResponseData updateCustType(@ModelAttribute("ntCustType") NtCustType ntCustType) {
         try {
             String result = custTypeService.checkAttribute(ntCustType);
-            if (ObjectUtils.isNull(ntCustType.getCustId())){
-                result="主键ID 不能为空";
+            if (ObjectUtils.isNull(ntCustType.getCustId())) {
+                result = "主键ID 不能为空";
             }
             if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
                 return ResponseData.isfailed().putDataValue("error", result);
@@ -148,10 +145,10 @@ public class CustTypeController {
      **/
     @RequestMapping("/findDetail")
     @ResponseBody
-    public ResponseData findDetail(@ModelAttribute("ntCustType") NtCustType ntCustType) {
+    public ResponseData findDetail(@RequestParam("custId") int custId) {
         try {
             //查询客户类型集合
-            NtCustType custTypeKey = custTypeService.selectCustType(ntCustType);
+            NtCustType custTypeKey = custTypeService.selectCustType(custId);
             //设置客户类别、工作类别、技术等级 名称
             custTypeService.setCustTypeName(custTypeKey);
             //返回数据

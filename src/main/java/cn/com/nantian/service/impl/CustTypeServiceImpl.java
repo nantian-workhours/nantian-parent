@@ -136,8 +136,8 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Date: 2019/3/20 15:55
      **/
     @Override
-    public int deleteCustType(NtCustType custType) {
-        return custTypeMapper.deleteByPrimaryKey(custType);
+    public int deleteCustType(int custId) {
+        return custTypeMapper.deleteByPrimaryKey(custId);
     }
 
     /**
@@ -172,8 +172,8 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Date: 2019/3/20 17:12
      **/
     @Override
-    public NtCustType selectCustType(NtCustType custType) {
-        return custTypeMapper.selectCustType(custType);
+    public NtCustType selectCustType(int custId) {
+        return custTypeMapper.selectCustType(custId);
     }
 
     /**

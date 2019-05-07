@@ -46,7 +46,7 @@ public interface CustTypeService {
      * @Auther: Fly
      * @Date: 2019/3/20 15:55
      **/
-    public int deleteCustType(NtCustType custType);
+    public int deleteCustType(int custType);
 
     /**
      * @Description: 新增客户类别
@@ -73,7 +73,7 @@ public interface CustTypeService {
      * @Auther: Fly
      * @Date: 2019/3/20 17:12
      **/
-    NtCustType selectCustType(NtCustType custType);
+    NtCustType selectCustType(int custId);
 
     /**
      * @Description: 检查客户类别属性值是否为空

@@ -30,13 +30,13 @@ public interface NtCustTypeMapper {
      * @Auther: Fly
      * @Date: 2019/3/20 17:12
      **/
-    NtCustType selectCustType(NtCustType custType);
+    NtCustType selectCustType(int custId);
 
     int countByExample(NtCustTypeExample example);
 
     int deleteByExample(NtCustTypeExample example);
 
-    int deleteByPrimaryKey(NtCustType key);
+    int deleteByPrimaryKey(int custId);
 
     int insert(NtCustType record);
 
