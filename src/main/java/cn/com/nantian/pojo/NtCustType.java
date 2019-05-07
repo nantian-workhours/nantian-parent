@@ -10,12 +10,14 @@ import java.util.Objects;
  * 客户类型实体1
  */
 @Data
-public class NtCustTypeKey implements Serializable {
+public class NtCustType implements Serializable {
+    /**主键id*/
+    private Integer custId;
     /**客户类别*/
     private String custType;
     /**工作类别*/
     private String workType;
-    /**工作级别*/
+    /**技术等级*/
     private String workLevel;
 
     //============================
@@ -40,10 +42,10 @@ public class NtCustTypeKey implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false; //再判断o是否为null，和o.类对象和本类对象是否一致
         }
-        NtCustTypeKey ntCustTypeKey = (NtCustTypeKey) o;  //再把o对象强制转化为Transport类对象
-        return Objects.equals(custType, ntCustTypeKey.custType)
-                && Objects.equals(workType, ntCustTypeKey.workType)
-                && Objects.equals(workLevel, ntCustTypeKey.workLevel);  //查看两个对象属性值是否相等,返回结果
+        NtCustType ntCustType = (NtCustType) o;  //再把o对象强制转化为Transport类对象
+        return Objects.equals(custType, ntCustType.custType)
+                && Objects.equals(workType, ntCustType.workType)
+                && Objects.equals(workLevel, ntCustType.workLevel);  //查看两个对象属性值是否相等,返回结果
     }
 
 }

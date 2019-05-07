@@ -6,7 +6,7 @@ import cn.com.nantian.mapper.NtCustTypeMapper;
 import cn.com.nantian.mapper.NtDictionariesMapper;
 import cn.com.nantian.mapper.NtPerInProjectMapper;
 import cn.com.nantian.mapper.NtProjectInfoMapper;
-import cn.com.nantian.pojo.NtCustTypeKey;
+import cn.com.nantian.pojo.NtCustType;
 import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtPerInProject;
 import cn.com.nantian.pojo.NtProjectInfo;
@@ -167,46 +167,39 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
       **/
     public String checkAttribute(NtProjectInfo ntProjectInfo){
         if (ObjectUtils.isNotNull(ntProjectInfo)){
-            if(ObjectUtils.isNull(ntProjectInfo.getPeopleNumber())){
-                return "ntProjectInfo.projectNumber 属性值不能为空！";
-            }
             if(ObjectUtils.isNull(ntProjectInfo.getProjectName())){
-                return "ntProjectInfo.projectName 属性值不能为空！";
+                return "项目名称 不能为空！";
             }
             if(ObjectUtils.isNull(ntProjectInfo.getCustType())){
-                return "ntProjectInfo.custType 属性值不能为空！";
+                return "客户类别 不能为空！";
             }
             if(ObjectUtils.isNull(ntProjectInfo.getDeptId())){
-                return "ntProjectInfo.deptId 属性值不能为空！";
+                return "部门编号 不能为空！";
             }
             if(ObjectUtils.isNull(ntProjectInfo.getChargeId())){
-                return "ntProjectInfo.chargeId 属性值不能为空！";
+                return "在场负责人 不能为空！";
             }
             if(ObjectUtils.isNull(ntProjectInfo.getAddress())){
-                return "ntProjectInfo.address 属性值不能为空！";
+                return "办公地址 不能为空！";
             }
         }
         return "";
     }
 
-
-
     //添加项目类别信息
     @Override
     public void addCustType(String projectName, Map<String ,String> type, String leave) {
-
-        NtCustTypeKey custTypeKey = new NtCustTypeKey();
+        NtCustType custType = new NtCustType();
         //遍历map中的工作类别
-
         for (String workType : type.values()) {
             try {
                 //设置客户类别名称
-                custTypeKey.setWorkType(projectName);
+                custType.setWorkType(projectName);
                 //设置工作类型
-                custTypeKey.setWorkType(workType);
+                custType.setWorkType(workType);
                 //设置技术等级
-                custTypeKey.setWorkLevel(leave);
-                custTypeMapper.insert(custTypeKey);
+                custType.setWorkLevel(leave);
+                custTypeMapper.insert(custType);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -1,7 +1,7 @@
 package cn.com.nantian.mapper;
 
 import cn.com.nantian.pojo.NtCustTypeExample;
-import cn.com.nantian.pojo.NtCustTypeKey;
+import cn.com.nantian.pojo.NtCustType;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -9,44 +9,42 @@ import java.util.List;
 public interface NtCustTypeMapper {
     /**
      * @Description: 查询客户类型集合
-     * @Param: [custTypeKey]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtCustTypeKey>
+     * @Param: [custType]
+     * @Return: java.util.List<cn.com.nantian.pojo.NtCustType>
      * @Auther: Fly
      * @Date: 2019/3/20 15:04
      **/
-    List<NtCustTypeKey> selectCustTypeList(NtCustTypeKey custTypeKey);
+    List<NtCustType> selectCustTypeList(NtCustType custType);
     /**
      * @Description: 更新客户类别
-     * @Param: [custTypeKey]
+     * @Param: [custType]
      * @Return: int
      * @Auther: Fly
      * @Date: 2019/3/20 17:03
      **/
-    int updateCustType(NtCustTypeKey custTypeKey);
+    int updateCustType(NtCustType custType);
     /**
      * @Description: 查询客户类型
-     * @Param: [custTypeKey]
-     * @Return: cn.com.nantian.pojo.NtCustTypeKey
+     * @Param: [custType]
+     * @Return: cn.com.nantian.pojo.NtCustType
      * @Auther: Fly
      * @Date: 2019/3/20 17:12
      **/
-    NtCustTypeKey selectCustType(NtCustTypeKey custTypeKey);
+    NtCustType selectCustType(NtCustType custType);
 
     int countByExample(NtCustTypeExample example);
 
     int deleteByExample(NtCustTypeExample example);
 
-    int deleteByPrimaryKey(NtCustTypeKey key);
+    int deleteByPrimaryKey(NtCustType key);
 
-    //int addCustType(NtCustTypeKey key);
+    int insert(NtCustType record);
 
-    int insert(NtCustTypeKey record);
+    int insertSelective(NtCustType record);
 
-    int insertSelective(NtCustTypeKey record);
+    List<NtCustType> selectByExample(NtCustTypeExample example);
 
-    List<NtCustTypeKey> selectByExample(NtCustTypeExample example);
+    int updateByExampleSelective(@Param("record") NtCustType record, @Param("example") NtCustTypeExample example);
 
-    int updateByExampleSelective(@Param("record") NtCustTypeKey record, @Param("example") NtCustTypeExample example);
-
-    int updateByExample(@Param("record") NtCustTypeKey record, @Param("example") NtCustTypeExample example);
+    int updateByExample(@Param("record") NtCustType record, @Param("example") NtCustTypeExample example);
 }

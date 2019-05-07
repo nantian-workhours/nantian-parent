@@ -153,7 +153,7 @@
     insert into nt_project_info (PROJECT_NUMBER, PROJECT_NAME, CUST_TYPE, 
       DEPT_ID, CHARGE_ID,ADDRESS)
     values (#{projectNumber,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{custType,jdbcType=CHAR}, 
-      #{deptId,jdbcType=INTEGER}, #{chargeId,jdbcType=INTEGER},#{adress,jdbcType=VARCHAR})
+      #{deptId,jdbcType=INTEGER}, #{chargeId,jdbcType=INTEGER},#{address,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtProjectInfo" >
     insert into nt_project_info

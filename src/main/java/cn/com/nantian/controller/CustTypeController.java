@@ -1,7 +1,8 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.StringUtils;
-import cn.com.nantian.pojo.NtCustTypeKey;
+import cn.com.nantian.pojo.NtCustType;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.CustTypeService;
 import org.slf4j.Logger;
@@ -46,10 +47,10 @@ public class CustTypeController {
      **/
     @RequestMapping("/findAll")
     @ResponseBody
-    public ResponseData findAll(@ModelAttribute("ntCustType") NtCustTypeKey ntCustType) {
+    public ResponseData findAll(@ModelAttribute("ntCustType") NtCustType ntCustType) {
         try {
             //查询客户类型集合
-            List<NtCustTypeKey> customerList = custTypeService.selectCustTypeList(ntCustType);
+            List<NtCustType> customerList = custTypeService.selectCustTypeList(ntCustType);
             //设置客户类别、工作类别、技术等级 名称
             custTypeService.setCustTypeName(customerList);
             //返回数据
@@ -69,7 +70,7 @@ public class CustTypeController {
      **/
     @RequestMapping("/delete")
     @ResponseBody
-    public ResponseData deleteCustType(@ModelAttribute("ntCustType") NtCustTypeKey ntCustType) {
+    public ResponseData deleteCustType(@ModelAttribute("ntCustType") NtCustType ntCustType) {
         try {
             int num = custTypeService.deleteCustType(ntCustType);
             return ResponseData.ok().putDataValue("delete number", num);
@@ -88,21 +89,21 @@ public class CustTypeController {
      **/
     @RequestMapping("/add")
     @ResponseBody
-    public ResponseData addCustomer(@ModelAttribute("ntCustType") NtCustTypeKey ntCustType) {
+    public ResponseData addCustType(@ModelAttribute("ntCustType") NtCustType ntCustType) {
         try {
             String result = custTypeService.checkAttribute(ntCustType);
             if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
-                return ResponseData.isfailed().putDataValue("202", result);
+                return ResponseData.isfailed().putDataValue("error", result);
             }
             boolean repeat = custTypeService.checkWhetherRepeat(ntCustType);
             if (repeat) {//判断是否存在重复数据
-                return ResponseData.isfailed().putDataValue("202", "数据已存在，请修改！");
+                return ResponseData.isfailed().putDataValue("error", "数据已存在，请修改！");
             } else {
                 int id = custTypeService.addCustType(ntCustType);
-                return ResponseData.ok().putDataValue(" Add success num ", id);
+                return ResponseData.ok().putDataValue("success", id);
             }
         } catch (Exception e) {
-            logger.error("CustTypeController.addCustomer", e);
+            logger.error("CustTypeController.addCustType", e);
             return ResponseData.forbidden();
         }
     }
@@ -116,18 +117,21 @@ public class CustTypeController {
      **/
     @RequestMapping("/update")
     @ResponseBody
-    public ResponseData updateCustType(@ModelAttribute("ntCustType") NtCustTypeKey ntCustType) {
+    public ResponseData updateCustType(@ModelAttribute("ntCustType") NtCustType ntCustType) {
         try {
             String result = custTypeService.checkAttribute(ntCustType);
-            if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
-                return ResponseData.isfailed().putDataValue("202", result);
+            if (ObjectUtils.isNull(ntCustType.getCustId())){
+                result="主键ID 不能为空";
             }
-            boolean repeat = custTypeService.checkWhetherRepeat(ntCustType);
+            if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
+                return ResponseData.isfailed().putDataValue("error", result);
+            }
+            boolean repeat = custTypeService.checkUpdateWhetherRepeat(ntCustType);
             if (repeat) {//判断是否存在重复数据
-                return ResponseData.isfailed().putDataValue("202", "数据已存在，请修改！");
+                return ResponseData.isfailed().putDataValue("error", "数据已存在，请修改！");
             } else {
                 int d = custTypeService.updateCustType(ntCustType);
-                return ResponseData.ok().putDataValue("update number", d);
+                return ResponseData.ok().putDataValue("success", d);
             }
         } catch (Exception e) {
             logger.error("CustTypeController.updateCustType", e);
@@ -144,10 +148,10 @@ public class CustTypeController {
      **/
     @RequestMapping("/findDetail")
     @ResponseBody
-    public ResponseData findDetail(@ModelAttribute("ntCustType") NtCustTypeKey ntCustType) {
+    public ResponseData findDetail(@ModelAttribute("ntCustType") NtCustType ntCustType) {
         try {
             //查询客户类型集合
-            NtCustTypeKey custTypeKey = custTypeService.selectCustType(ntCustType);
+            NtCustType custTypeKey = custTypeService.selectCustType(ntCustType);
             //设置客户类别、工作类别、技术等级 名称
             custTypeService.setCustTypeName(custTypeKey);
             //返回数据

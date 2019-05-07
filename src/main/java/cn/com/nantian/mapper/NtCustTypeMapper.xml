@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.nantian.mapper.NtCustTypeMapper" >
-  <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtCustTypeKey" >
+  <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtCustType" >
+    <id column="CUST_ID" property="custId"   jdbcType="INTEGER"  />
     <id column="CUST_TYPE" property="custType" jdbcType="VARCHAR" />
     <id column="WORK_TYPE" property="workType" jdbcType="CHAR" />
     <id column="WORK_LEVEL" property="workLevel" jdbcType="CHAR" />
@@ -65,10 +66,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    CUST_TYPE, WORK_TYPE, WORK_LEVEL
+    CUST_ID,CUST_TYPE, WORK_TYPE, WORK_LEVEL
   </sql>
   <!-- 查询客户类型集合 start-->
-  <select id="selectCustTypeList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
+  <select id="selectCustTypeList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustType" >
     select
     <include refid="Base_Column_List" />
     from nt_cust_type
@@ -77,16 +78,15 @@
         nt_cust_type.CUST_TYPE=#{custType}
       </if>
     </where>
+    order by CUST_ID desc
   </select>
   <!-- 查询客户类型集合 end-->
   <!-- 查询客户类型 start-->
-  <select id="selectCustType" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
+  <select id="selectCustType" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustType" >
     select
     <include refid="Base_Column_List" />
     from nt_cust_type
-    WHERE CUST_TYPE=#{custType}
-    AND WORK_TYPE=#{workType}
-    AND WORK_LEVEL=#{workLevel}
+    WHERE CUST_ID=#{custId}
   </select>
   <!-- 查询客户类型 end-->
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtCustTypeExample" >
@@ -103,11 +103,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
+  <delete id="deleteByPrimaryKey" parameterType="cn.com.nantian.pojo.NtCustType" >
     delete from nt_cust_type
-    where CUST_TYPE = #{custType,jdbcType=VARCHAR}
-    and WORK_TYPE = #{workType,jdbcType=CHAR}
-    and WORK_LEVEL = #{workLevel,jdbcType=CHAR}
+    where CUST_ID = #{custId}
   </delete>
   <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtCustTypeExample" >
     delete from nt_cust_type
@@ -115,15 +113,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
-    insert into nt_cust_type (CUST_TYPE, WORK_TYPE, WORK_LEVEL
+  <insert id="insert" parameterType="cn.com.nantian.pojo.NtCustType" >
+    insert into nt_cust_type (
+    <include refid="Base_Column_List" />
     )
-    values (#{custType,jdbcType=VARCHAR}, #{workType,jdbcType=CHAR}, #{workLevel,jdbcType=CHAR}
+    values (#{custId,jdbcType=INTEGER},#{custType,jdbcType=VARCHAR}, #{workType,jdbcType=VARCHAR}, #{workLevel,jdbcType=VARCHAR}
     )
   </insert>
-  <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
+  <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtCustType" >
     insert into nt_cust_type
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="custId != null">
+        CUST_ID,
+      </if>
       <if test="custType != null" >
         CUST_TYPE,
       </if>
@@ -135,14 +137,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="custId != null">
+        #{custId,jdbcType=INTEGER},
+      </if>
       <if test="custType != null" >
         #{custType,jdbcType=VARCHAR},
       </if>
       <if test="workType != null" >
-        #{workType,jdbcType=CHAR},
+        #{workType,jdbcType=VARCHAR},
       </if>
       <if test="workLevel != null" >
-        #{workLevel,jdbcType=CHAR},
+        #{workLevel,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -165,20 +170,16 @@
         WORK_LEVEL = #{record.workLevel,jdbcType=CHAR},
       </if>
     </set>
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
+    where CUST_ID = #{custId,jdbcType=INTEGER}
   </update>
   <update id="updateByExample" parameterType="map" >
     update nt_cust_type
     set CUST_TYPE = #{record.custType,jdbcType=VARCHAR},
-    WORK_TYPE = #{record.workType,jdbcType=CHAR},
-    WORK_LEVEL = #{record.workLevel,jdbcType=CHAR}
-    <if test="_parameter != null" >
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
+    WORK_TYPE = #{record.workType,jdbcType=VARCHAR},
+    WORK_LEVEL = #{record.workLevel,jdbcType=VARCHAR}
+    where CUST_ID = #{custId,jdbcType=INTEGER}
   </update>
-  <update id="updateCustType" parameterType="cn.com.nantian.pojo.NtCustTypeKey" >
+  <update id="updateCustType" parameterType="cn.com.nantian.pojo.NtCustType" >
     update nt_cust_type
     <set>
       <if test="custType != null" >
@@ -191,5 +192,6 @@
         WORK_LEVEL = #{workLevel},
       </if>
     </set>
+    where CUST_ID = #{custId,jdbcType=INTEGER}
   </update>
 </mapper>
