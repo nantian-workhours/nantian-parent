@@ -29,7 +29,7 @@ public interface PriceLeaveService {
      * @Auther: Fly
      * @Date: 2019/3/21 14:51
      **/
-    List<NtLeaveInfo> selectLeaveInfoList(NtLeaveInfo ntLeaveInfo);
+    List<NtLeaveInfo> selectLeaveInfoList(NtLeaveInfo ntLeaveInfo) throws Exception;
 
     /**
      * @Description: 设置客户类别、工作类别、技术等级名称

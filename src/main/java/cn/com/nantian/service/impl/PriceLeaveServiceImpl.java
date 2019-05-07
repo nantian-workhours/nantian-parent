@@ -1,18 +1,17 @@
 package cn.com.nantian.service.impl;
 
-import cn.com.nantian.common.DateUtils;
-import cn.com.nantian.common.StringUtils;
+import cn.com.nantian.common.*;
 import cn.com.nantian.mapper.NtLeaveInfoMapper;
 import cn.com.nantian.pojo.NtCustType;
 import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtLeaveInfo;
 import cn.com.nantian.service.DictionariesService;
 import cn.com.nantian.service.PriceLeaveService;
-import cn.com.nantian.common.ClassCompareUtil;
-import cn.com.nantian.common.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -35,7 +34,13 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Date: 2019/3/21 14:57
       **/
     @Override
-    public List<NtLeaveInfo> selectLeaveInfoList(NtLeaveInfo ntLeaveInfo) {
+    public List<NtLeaveInfo> selectLeaveInfoList(NtLeaveInfo ntLeaveInfo) throws Exception{
+        if (StringUtils.isNotEmpty(ntLeaveInfo.getProjectBegdateStr()) && DateUtils.checkDateReg(ntLeaveInfo.getProjectBegdateStr())) {
+            ntLeaveInfo.setProjectBegdate(DateUtils.parseToDate(ntLeaveInfo.getProjectBegdateStr(),"yyyy-MM-dd"));
+        }
+        if (StringUtils.isNotEmpty(ntLeaveInfo.getProjectEnddateStr()) && DateUtils.checkDateReg(ntLeaveInfo.getProjectEnddateStr())) {
+            ntLeaveInfo.setProjectEnddate(DateUtils.parseToDate(ntLeaveInfo.getProjectEnddateStr(),"yyyy-MM-dd"));
+        }
         return ntLeaveInfoMapper.selectLeaveInfoList(ntLeaveInfo);
     }
     /**
@@ -53,8 +58,18 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
                 NtDictionariesKey dictionariesKey1= dictionariesService.selectDictionaries("cust",ntLeaveInfo.getCustType());
                 ntLeaveInfo.setCustTypeName(dictionariesKey1.getDicValue());
                 // 工作类别
-                NtDictionariesKey dictionariesKey2= dictionariesService.selectDictionaries("wt",ntLeaveInfo.getWorkType());
-                ntLeaveInfo.setWorkTypeName(dictionariesKey2.getDicValue());
+                String workTypes = ntLeaveInfo.getWorkType();
+                String[] workTypesArray = workTypes.split(",");
+                List<String> workTypesList = Arrays.asList(workTypesArray);
+                List<String> workTypeNameList = new ArrayList<>();
+                for (String str : workTypesList) {
+                    NtDictionariesKey dictionariesKey2 = dictionariesService.selectDictionaries(ParamUntil.wt, str);
+                    if (ObjectUtils.isNotNull(dictionariesKey2)) {
+                        workTypeNameList.add(dictionariesKey2.getDicValue());
+                    }
+                }
+                ntLeaveInfo.setWorkTypeNameList(workTypeNameList);
+
                 // 技术等级名称
                 NtDictionariesKey dictionariesKey3= dictionariesService.selectDictionaries("dc",ntLeaveInfo.getWorkLevel());
                 ntLeaveInfo.setWorkLevelName(dictionariesKey3.getDicValue());
@@ -79,8 +94,17 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
             NtDictionariesKey dictionariesKey1= dictionariesService.selectDictionaries("cust",ntLeaveInfo.getCustType());
             ntLeaveInfo.setCustTypeName(dictionariesKey1.getDicValue());
             // 工作类别
-            NtDictionariesKey dictionariesKey2= dictionariesService.selectDictionaries("wt",ntLeaveInfo.getWorkType());
-            ntLeaveInfo.setWorkTypeName(dictionariesKey2.getDicValue());
+            String workTypes = ntLeaveInfo.getWorkType();
+            String[] workTypesArray = workTypes.split(",");
+            List<String> workTypesList = Arrays.asList(workTypesArray);
+            List<String> workTypeNameList = new ArrayList<>();
+            for (String str : workTypesList) {
+                NtDictionariesKey dictionariesKey2 = dictionariesService.selectDictionaries(ParamUntil.wt, str);
+                if (ObjectUtils.isNotNull(dictionariesKey2)) {
+                    workTypeNameList.add(dictionariesKey2.getDicValue());
+                }
+            }
+            ntLeaveInfo.setWorkTypeNameList(workTypeNameList);
         }
     }
     /**

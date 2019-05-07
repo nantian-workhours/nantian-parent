@@ -86,7 +86,7 @@
         and CUST_TYPE=#{custType}
       </if>
       <if test="workType !=null and workType !=''">
-        and WORK_TYPE=#{workType}
+        and WORK_TYPE like CONCAT('%',#{workType},'%')
       </if>
       <if test="projectBegdate !=null and projectBegdate !=''">
         and <![CDATA[ PROJECT_BEGDATE>=#{e.projectBegdate}]]>

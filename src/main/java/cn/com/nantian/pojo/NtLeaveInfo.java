@@ -3,6 +3,7 @@ package cn.com.nantian.pojo;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 @Data
 public class NtLeaveInfo {
@@ -35,7 +36,7 @@ public class NtLeaveInfo {
     /**客户类别名称*/
     private String custTypeName;
     /**工作类别名称*/
-    private String workTypeName;
+    private List<String> workTypeNameList;
     /**技术等级名称*/
     private String workLevelName;
 
