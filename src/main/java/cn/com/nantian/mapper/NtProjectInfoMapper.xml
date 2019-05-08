@@ -87,7 +87,7 @@
         and nt_project_info.CUST_TYPE = #{custType}
       </if>
       <if test="projectName !=null and projectName !=''">
-        and nt_project_info.PROJECT_NAME =#{projectName}
+        and nt_project_info.PROJECT_NAME like CONCAT('%',#{projectName},'%')
       </if>
     </where>
     order by nt_project_info.PROJECT_NUMBER DESC
