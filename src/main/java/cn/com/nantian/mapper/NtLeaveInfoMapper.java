@@ -11,7 +11,7 @@ public interface NtLeaveInfoMapper {
      * @Description: 查询单价级别列表
      * @Param: [ntLeaveInfo] 查询条件
      * @Return: java.util.List<cn.com.nantian.pojo.NtLeaveInfo>
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/21 14:51
      **/
     List<NtLeaveInfo> selectLeaveInfoList(NtLeaveInfo ntLeaveInfo);
@@ -19,7 +19,7 @@ public interface NtLeaveInfoMapper {
      * @Description: 删除单价级别信息
      * @Param: [priceId]
      * @Return: int
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/21 16:49
      **/
     int deleteByPrimaryKey(int priceId);
@@ -27,7 +27,7 @@ public interface NtLeaveInfoMapper {
      * @Description: 查询 单价级别信息
      * @Param: [ntLeaveInfo]
      * @Return: cn.com.nantian.pojo.NtLeaveInfo
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/21 17:08
      **/
     NtLeaveInfo selectLeaveInfo(int priceId);

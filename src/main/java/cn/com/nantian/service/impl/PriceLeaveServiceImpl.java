@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @Description: 单价级别信息管理
- * @Author：Fly
+ * @Author：Mr.Kong
  * @Date: 2019/3/21 11:15
  * @Version：1.0
  */
@@ -30,7 +30,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Description: 查询单价级别列表
       * @Param: [ntLeaveInfo] 查询条件
       * @Return: java.util.List<cn.com.nantian.pojo.NtLeaveInfo>
-      * @Auther: Fly
+      * @Auther: Mr.Kong
       * @Date: 2019/3/21 14:57
       **/
     @Override
@@ -47,7 +47,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Description: 设置客户类别、工作类别、技术等级名称
       * @Param: [ntLeaveInfoList]
       * @Return: void
-      * @Auther: Fly
+      * @Auther: Mr.Kong
       * @Date: 2019/3/21 15:32
       **/
     @Override
@@ -81,7 +81,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Description: 设置客户类别、工作类别、技术等级名称
       * @Param: [ntLeaveInfo]
       * @Return: void
-      * @Auther: Fly
+      * @Auther: Mr.Kong
       * @Date: 2019/3/21 16:07
       **/
     @Override
@@ -111,7 +111,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Description: 删除单价级别信息
       * @Param: [ntLeaveInfo] 条件
       * @Return: int
-      * @Auther: Fly
+      * @Auther: Mr.Kong
       * @Date: 2019/3/21 16:51
       **/
     @Override
@@ -122,7 +122,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Description: 新增单价级别信息
       * @Param: [ntLeaveInfo]
       * @Return: int
-      * @Auther: Fly
+      * @Auther: Mr.Kong
       * @Date: 2019/3/21 16:55
       **/
     @Override
@@ -133,7 +133,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Description: 更新单价级别信息
       * @Param: [ntLeaveInfo]
       * @Return: int
-      * @Auther: Fly
+      * @Auther: Mr.Kong
       * @Date: 2019/3/21 17:03
       **/
     @Override
@@ -144,7 +144,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @Description: 查询 单价级别信息
       * @Param: [ntLeaveInfo]
       * @Return: cn.com.nantian.pojo.NtLeaveInfo
-      * @Auther: Fly
+      * @Auther: Mr.Kong
       * @Date: 2019/3/21 17:10
       **/
     @Override
@@ -156,7 +156,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
      * @Description: 新增时 检查是否有重复数据
      * @Param: [ntLeaveInfo]
      * @Return: boolean true 有 , false 无
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/22 9:52
      **/
     public boolean checkWhetherRepeat(NtLeaveInfo ntLeaveInfo) throws Exception{

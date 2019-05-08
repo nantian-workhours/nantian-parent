@@ -12,7 +12,7 @@ public interface NtDictionariesMapper {
      * @Description: 根据条件查询字典数据
      * @Param: [dictionariesKey]
      * @Return: java.util.List<cn.com.nantian.pojo.NtDictionariesKey>
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/19 16:46
      **/
     List<NtDictionariesKey> selectDictionariesList(NtDictionariesKey dictionariesKey);
@@ -21,7 +21,7 @@ public interface NtDictionariesMapper {
      * @Description: 根据条件查询字典数据
      * @Param: [dictionariesKey]
      * @Return: cn.com.nantian.pojo.NtDictionariesKey
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 15:25
      **/
     NtDictionariesKey selectDictionaries(NtDictionariesKey dictionariesKey);

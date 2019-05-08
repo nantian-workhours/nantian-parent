@@ -36,7 +36,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
      * @Description: 查询客户信息列表
      * @Param: [example]
      * @Return: java.util.List<cn.com.nantian.pojo.NtProjectInfo>
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/19 10:37
      **/
     public List<NtProjectInfo> selectNtProjectInfoList(NtProjectInfo ntProjectInfo){
@@ -58,7 +58,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
      * @Description: 设置客户类型名称 项目人数
      * @Param: [NtProjectInfoList]
      * @Return: void
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/19 16:55
      **/
     public void setNtProjectInfoTypeName(List<NtProjectInfo> NtProjectInfoList){
@@ -110,7 +110,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
      * @Description: 根据项目编号删除一条数据
      * @Param: [projectNumber]
      * @Return: int
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 10:38
      **/
     public int deleteNtProjectInfo(int projectNumber){
@@ -120,7 +120,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
      * @Description: 新增客户信息
      * @Param: [NtProjectInfo]
      * @Return: int
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 13:51
      **/
     public int addNtProjectInfo(NtProjectInfo NtProjectInfo) {
@@ -131,7 +131,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
      * @Description: 更新客户信息
      * @Param: [NtProjectInfo]
      * @Return: int
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 14:29
      **/
     public int updateNtProjectInfo(NtProjectInfo NtProjectInfo){

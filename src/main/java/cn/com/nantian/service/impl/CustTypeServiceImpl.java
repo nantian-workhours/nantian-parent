@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @Description:
- * @Author：Fly
+ * @Author：Mr.Kong
  * @Date: 2019/3/20 15:06
  * @Version：1.0
  */
@@ -33,7 +33,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Description: 查询客户类型集合
      * @Param: [custType]
      * @Return: java.util.List<cn.com.nantian.pojo.NtCustType>
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 15:04
      **/
     @Override
@@ -45,7 +45,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Description: 设置客户类别、工作类别、技术等级 名称
      * @Param: [custTypeList]
      * @Return: void
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 15:17
      **/
     @Override
@@ -90,7 +90,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Description: 设置客户类别、工作类别、技术等级 名称
      * @Param: [custType]
      * @Return: void
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 17:17
      **/
     @Override
@@ -132,7 +132,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Description: 删除客户类别
      * @Param: [custType] 删除条件
      * @Return: int
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 15:55
      **/
     @Override
@@ -144,7 +144,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Description: 新增客户类别
      * @Param: [custType]
      * @Return: int
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 16:48
      **/
     @Override
@@ -156,7 +156,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Description: 更新客户类别
      * @Param: [custType]
      * @Return: int
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 17:03
      **/
     @Override
@@ -168,7 +168,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @Description: 查询客户类型
      * @Param: [custType]
      * @Return: cn.com.nantian.pojo.NtCustType
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 17:12
      **/
     @Override

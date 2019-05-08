@@ -11,7 +11,7 @@ public interface NtCustTypeMapper {
      * @Description: 查询客户类型集合
      * @Param: [custType]
      * @Return: java.util.List<cn.com.nantian.pojo.NtCustType>
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 15:04
      **/
     List<NtCustType> selectCustTypeList(NtCustType custType);
@@ -19,7 +19,7 @@ public interface NtCustTypeMapper {
      * @Description: 更新客户类别
      * @Param: [custType]
      * @Return: int
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 17:03
      **/
     int updateCustType(NtCustType custType);
@@ -27,7 +27,7 @@ public interface NtCustTypeMapper {
      * @Description: 查询客户类型
      * @Param: [custType]
      * @Return: cn.com.nantian.pojo.NtCustType
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 17:12
      **/
     NtCustType selectCustType(int custId);

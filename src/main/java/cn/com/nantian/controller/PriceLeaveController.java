@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @Description: 单价级别信息管理
- * @Author：Fly
+ * @Author：Mr.Kong
  * @Date: 2019/3/21 11:05
  * @Version：1.0
  */
@@ -36,7 +36,7 @@ public class PriceLeaveController {
      * @Description: 查询单价级别信息列表
      * @Param: [ntLeaveInfo] 单价级别实体
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/21 11:14
      **/
     @RequestMapping("/priceLeave/findAll")
@@ -59,7 +59,7 @@ public class PriceLeaveController {
      * @Description: 删除一条单价级别信息数据
      * @Param: [ntLeaveInfo] 条件
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/21 16:41
      **/
     @RequestMapping("/priceLeave/delete")
@@ -78,7 +78,7 @@ public class PriceLeaveController {
      * @Description: 新增单价级别信息
      * @Param: [ntLeaveInfo]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/21 16:56
      **/
     @RequestMapping("/priceLeave/add")
@@ -108,7 +108,7 @@ public class PriceLeaveController {
      * @Description: 更新单价级别信息
      * @Param: [ntLeaveInfo] 条件
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/21 16:58
      **/
     @RequestMapping("/priceLeave/update")
@@ -141,7 +141,7 @@ public class PriceLeaveController {
      * @Description: 查询单价级别信息详情
      * @Param: [priceId]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/22 9:46
      **/
     @RequestMapping("/priceLeave/findDetail")

@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @Description: 客户类别管理
- * @Author： Fly
+ * @Author： Mr.Kong
  * @Date: 2019/3/20 14:46
  * @Version： 1.0
  */
@@ -39,7 +39,7 @@ public class CustTypeController {
      * @Description: 查询客户信息列表
      * @Param: [customer] 客户实体
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/19 14:21
      **/
     @RequestMapping("/findAll")
@@ -62,7 +62,7 @@ public class CustTypeController {
      * @Description: 根据项目编号删除一条数据
      * @Param: [projectNumber]  项目编号
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 11:21
      **/
     @RequestMapping("/delete")
@@ -81,7 +81,7 @@ public class CustTypeController {
      * @Description: 新增客户类别 1
      * @Param: [custType]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 16:50
      **/
     @RequestMapping("/add")
@@ -109,7 +109,7 @@ public class CustTypeController {
      * @Description: 更新客户信息
      * @Param: [customer]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 14:30
      **/
     @RequestMapping("/update")
@@ -140,7 +140,7 @@ public class CustTypeController {
      * @Description: 查询客户类别详情
      * @Param: [custType]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 17:19
      **/
     @RequestMapping("/findDetail")

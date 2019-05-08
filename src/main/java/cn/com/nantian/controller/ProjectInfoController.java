@@ -36,7 +36,7 @@ public class ProjectInfoController {
      * @Description: 查询客户信息列表
      * @Param: [NtProjectInfo] 客户实体
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/19 14:21
      **/
     @RequestMapping("/findAll")
@@ -57,7 +57,7 @@ public class ProjectInfoController {
      * @Description: 根据项目编号删除一条数据
      * @Param: [projectNumber]  项目编号
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 11:21
      **/
     @RequestMapping("/delete")
@@ -76,7 +76,7 @@ public class ProjectInfoController {
      * @Description: 新增客户信息内容
      * @Param: [NtProjectInfo]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 13:55
      **/
     @RequestMapping("/add")
@@ -104,7 +104,7 @@ public class ProjectInfoController {
      * @Description: 更新客户信息
      * @Param: [NtProjectInfo]
      * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 14:30
      **/
     @RequestMapping("/update")

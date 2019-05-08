@@ -13,7 +13,7 @@ public interface NtPerInProjectMapper {
      * @Description: 查询员工项目集合
      * @Param: [perInProject]
      * @Return: java.util.List<cn.com.nantian.pojo.NtPerInProject>
-     * @Auther: Fly
+     * @Auther: Mr.Kong
      * @Date: 2019/3/20 10:16
      **/
     List<NtPerInProject> selectPerInProjectList(NtPerInProject perInProject);
