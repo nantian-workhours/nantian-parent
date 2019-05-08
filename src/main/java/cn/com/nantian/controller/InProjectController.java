@@ -6,36 +6,48 @@ import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.NtProjectInfo;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.InProjectService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.*;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * Created by ydz on 2019/3/18
- */
-
-
+  * @Description: 员工所在项目管理
+  * @Auther: Mr.Kong
+  * @Date: 2019/5/8 16:46
+  **/
 @Controller
-@RequestMapping("inproject")
+@RequestMapping("/user/project")
 public class InProjectController {
+    private static final Logger logger = LoggerFactory.getLogger(InProjectController.class);
+
+    @InitBinder("ntPerInProject")
+    public void initBindNtPerInProject(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.setFieldDefaultPrefix("ntPerInProject.");
+    }
 
     @Resource
     private InProjectService inProjectService;
 
     /**
-     * 添加员工所在项目信息
-     * @param perInProject
-     * @return
-     */
-    @RequestMapping("add")
+      * @Description: 添加员工所在项目信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/8 16:50
+      * @Param:  [ntPerInProject]
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping("/add")
     @ResponseBody
-    public ResponseData addPerInProject(@RequestBody NtPerInProject perInProject){
+    public ResponseData addPerInProject(@ModelAttribute("ntPerInProject") NtPerInProject ntPerInProject){
             int a = 0;
         try {
-            a = inProjectService.addPerInProject(perInProject);
+            //效验传入参数值
+            a = inProjectService.addPerInProject(ntPerInProject);
             if(a > 0){
                 //添加成功
                 return ResponseData.ok().putDataValue("status","add success " + a);
@@ -50,7 +62,7 @@ public class InProjectController {
                 return ResponseData.isfailed().putDataValue("status","add failed");
             }
         } catch (Exception e) {
-            //被禁止
+            logger.error("CustTypeController.addPerInProject", e);
             return ResponseData.serverInternalError();
         }
     }
@@ -59,7 +71,7 @@ public class InProjectController {
      *查询所有项目信息
      * @return
      */
-    @RequestMapping("selectall")
+    @RequestMapping("/selectall")
     @ResponseBody
     public ResponseData selectAllProjectInfo(){
         List<NtProjectInfo> projectInfoList=null;
@@ -88,7 +100,7 @@ public class InProjectController {
      * @param perId
      * @return
      */
-    @RequestMapping("selectperinpro")
+    @RequestMapping("/selectperinpro")
     @ResponseBody
     public ResponseData selectPerInProject(String custType,String projectName, Integer perId){
         try {
@@ -108,7 +120,7 @@ public class InProjectController {
 
 
 
-    @RequestMapping("select")
+    @RequestMapping("/select")
     @ResponseBody
     public ResponseData select2(String name) {
         try {

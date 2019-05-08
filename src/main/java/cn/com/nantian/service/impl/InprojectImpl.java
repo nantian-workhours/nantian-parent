@@ -1,7 +1,9 @@
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.ParamUntil;
 
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.*;
 import cn.com.nantian.pojo.*;
 import cn.com.nantian.service.InProjectService;
@@ -19,18 +21,25 @@ import java.util.List;
 
 @Service
 public class InprojectImpl implements InProjectService{
-
-
     @Resource
     private NtPerInProjectMapper perInProjectMapper;
-
     @Resource
     private NtProjectInfoMapper projectInfoMapper;
-
     @Resource
     private NtPersonnelMapper personnelMapper;
     @Resource
     private NtDictionariesMapper dictionariesMapper;
+    public String checkAttribute(NtPerInProject ntPerInProject) {
+        if (ObjectUtils.isNotNull(ntPerInProject)) {
+            if (ObjectUtils.isNull(ntPerInProject.getPerId())) {
+                return "员工编号 不能为空！";
+            }
+            if (StringUtils.isEmpty(ntPerInProject.getIdNo())) {
+                return "身份证号 不能为空！";
+            }
+        }
+        return "";
+    }
 
     /**
      * 添加员工所在项目信息

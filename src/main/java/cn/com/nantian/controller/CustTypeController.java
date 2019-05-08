@@ -26,14 +26,13 @@ import java.util.List;
 public class CustTypeController {
     private static final Logger logger = LoggerFactory.getLogger(CustTypeController.class);
 
-    @Resource
-    private CustTypeService custTypeService;
-
-
     @InitBinder("ntCustType")
     public void initBindNtCustType(HttpServletRequest request, ServletRequestDataBinder binder) {
         binder.setFieldDefaultPrefix("ntCustType.");
     }
+
+    @Resource
+    private CustTypeService custTypeService;
 
     /**
      * @Description: 查询客户信息列表
