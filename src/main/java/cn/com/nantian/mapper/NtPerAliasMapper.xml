@@ -67,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    PER_ID, PROJECT_NUMBER, IN_PROJECT_NAME, IN_COMPANY_NAME, ID_NO
+    nt_per_alias.PER_ID, nt_per_alias.PROJECT_NUMBER, nt_per_alias.IN_PROJECT_NAME, nt_per_alias.IN_COMPANY_NAME, nt_per_alias.ID_NO
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerAliasExample" >
     select
@@ -83,15 +83,12 @@
       order by ${orderByClause}
     </if>
   </select>
-
-
   <select id="selectByPerId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select
     <include refid="Base_Column_List" />
     from nt_per_alias
     where PER_ID = #{perId,jdbcType=INTEGER}
   </select>
-
   <select id="selectByNumList" resultMap="BaseResultMap"  >
     select
     <include refid="Base_Column_List" />
@@ -100,7 +97,6 @@
           #{projectNumber,jdbcType=INTEGER}
         </foreach>
   </select>
-
   <select id="selectByAliasList" resultMap="BaseResultMap"  >
     select
     <include refid="Base_Column_List" />
@@ -111,7 +107,6 @@
         </foreach>
     </if>
   </select>
-
   <select id="selectByInProNameAndPronum" resultMap="BaseResultMap"  >
     select
     <include refid="Base_Column_List" />
@@ -120,34 +115,22 @@
        PROJECT_NUMBER = #{projectNumber,jdbcType=INTEGER}
        AND IN_PROJECT_NAME = #{inProjectName,jdbcType=VARCHAR}
   </select>
-
-
-
-
-
   <select id="selectByName" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from nt_per_alias
     where IN_COMPANY_NAME = #{inCompanyName,jdbcType=VARCHAR}
   </select>
-
   <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtPerAliasExample" >
     delete from nt_per_alias
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-
-  <delete id="deleteByIdNoAndOtherName"   parameterType="java.lang.String">
+  <delete id="deleteByIdNo"   parameterType="java.lang.String">
     delete from nt_per_alias
-    where IN_PROJECT_NAME = #{inProjectName,jdbcType=VARCHAR}
-    AND ID_NO = #{idNo,jdbcType=VARCHAR}
+    where ID_NO = #{idNo,jdbcType=VARCHAR}
   </delete>
-
-
-
-
   <insert id="insert" parameterType="cn.com.nantian.pojo.NtPerAlias" >
     insert into nt_per_alias (PER_ID, PROJECT_NUMBER, IN_PROJECT_NAME, 
       IN_COMPANY_NAME, ID_NO)
@@ -191,19 +174,41 @@
       </if>
     </trim>
   </insert>
+  <!--查询别名信息列表 start-->
+  <select id="queryNtPerAliasList" parameterType="cn.com.nantian.pojo.NtPerAlias" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />,
+    p.PROJECT_NAME projectName
+    FROM
+    nt_per_alias
+    LEFT JOIN nt_project_info p ON p.PROJECT_NUMBER=nt_per_alias.PROJECT_NUMBER
+    <where>
+      <if test="custType !=null and custType!=''">
+        and p.CUST_TYPE =#{custType}
+      </if>
+      <if test="perId !=null and perId!=''">
+        and nt_per_alias.PER_ID =#{perId}
+      </if>
+      <if test="idNo !=null and idNo !=''">
+        and nt_per_alias.ID_NO like CONCAT('%',#{idNo},'%')
+      </if>
+      <if test="inCompanyName !=null and inCompanyName !=''">
+        and nt_per_alias.IN_COMPANY_NAME like CONCAT('%',#{inCompanyName},'%')
+      </if>
+    </where>
+  </select>
+  <!--查询客户信息列表 end-->
   <select id="countByExample" parameterType="cn.com.nantian.pojo.NtPerAliasExample" resultType="java.lang.Integer" >
     select count(*) from nt_per_alias
     <if test="_parameter != null" >
       <include refid="Example_Where_Clause" />
     </if>
   </select>
-
   <select id="selectByPerIdAndName"   resultType="java.lang.Integer" >
     select count(*) from nt_per_alias
     WHERE PER_ID = #{perId,jdbcType=INTEGER}
     AND IN_PROJECT_NAME = #{inProjectName,jdbcType=VARCHAR}
   </select>
-
   <select id="selectByNameOrIdNo" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
@@ -217,15 +222,12 @@
       </if>
     </where>
   </select>
-
   <select id="selectByProjectNum" resultMap="BaseResultMap" parameterType="java.lang.Integer">
     select
     <include refid="Base_Column_List" />
     from nt_per_alias
    WHERE   PROJECT_NUMBER = #{record.projectNumber,jdbcType=INTEGER}
   </select>
-
-
   <update id="updateByExampleSelective" parameterType="map" >
     update nt_per_alias
     <set >
@@ -260,7 +262,6 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-
   <update id="updateByIdNoAndProjectNum" parameterType="java.lang.String">
     update nt_per_alias
     set
@@ -268,8 +269,11 @@
     WHERE  PROJECT_NUMBER = #{projectNumber,jdbcType=VARCHAR},
     AND    ID_NO = #{idNo,jdbcType=VARCHAR}
   </update>
-
-
-
-
+  <update id="updateNtPerAlias" parameterType="cn.com.nantian.pojo.NtPerAlias">
+    update nt_per_alias
+    set
+      PROJECT_NUMBER = #{projectNumber,jdbcType=INTEGER},
+      IN_PROJECT_NAME = #{inProjectName,jdbcType=VARCHAR}
+    WHERE ID_NO = #{idNo,jdbcType=VARCHAR}
+  </update>
 </mapper>

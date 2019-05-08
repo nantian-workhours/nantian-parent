@@ -1,21 +1,16 @@
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.RegExpressionUtils;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.NtPerAliasMapper;
 import cn.com.nantian.mapper.NtPersonnelMapper;
-import cn.com.nantian.mapper.NtProjectInfoMapper;
 import cn.com.nantian.pojo.NtPerAlias;
-
-import cn.com.nantian.pojo.NtPerAliasExample;
 import cn.com.nantian.pojo.NtPersonnel;
-import cn.com.nantian.pojo.NtProjectInfo;
-import cn.com.nantian.pojo.entity.ProList;
 import cn.com.nantian.service.ProjectNameService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -27,105 +22,122 @@ public class ProjectNameImpl implements ProjectNameService {
     private NtPerAliasMapper perAliasMapper;
     @Resource
     private NtPersonnelMapper personnelMapper;
-    @Resource
-    private NtProjectInfoMapper projectInfoMapper;
+
+
+    /**
+     * @Description: 更新员工别名
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 15:53
+     * @Param: [ntPerAlias]
+     * @Return: int
+     **/
+    @Override
+    public int updateNtPerAlias(NtPerAlias ntPerAlias) {
+        return perAliasMapper.updateNtPerAlias(ntPerAlias);
+    }
+
+    /**
+     * @Description: 查询员工项目别名列表数据
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 14:27
+     * @Param: [ntPerAlias]
+     * @Return: java.util.List<cn.com.nantian.pojo.NtPerAlias>
+     **/
+    @Override
+    public List<NtPerAlias> queryNtPerAliasList(NtPerAlias ntPerAlias) {
+        return perAliasMapper.queryNtPerAliasList(ntPerAlias);
+    }
 
     /**
      * 添加别名内容
+     *
      * @param perAlias
      * @return
      */
     @Override
     public int addProjectName(NtPerAlias perAlias) {
-
-        //判断员工表中是否有该员工,根据身份证号
-       NtPersonnel personnel =  personnelMapper.selectByPrimaryIdNo(perAlias.getIdNo());
-        if(personnel != null ){
-            int a=0;
-            //判断是否已经添加这个别名
-            int t = perAliasMapper.selectByPerIdAndName(personnel.getPerId(),perAlias.getInProjectName());
-            if(t==0){
-                //设置员工编号
-                perAlias.setPerId(personnel.getPerId());
-                //将信息插入到别名表中
-                a = perAliasMapper.insert(perAlias);
-                }
-            return  a;
-        }else{
-                return 0;
-            }
-
+        return perAliasMapper.insert(perAlias);
     }
 
-    /**
-     * 查询别名信息
-     * @param inCompanyName
-     * @param idNo
-     * @param custType
-     * @return
-     */
-    @Override
-    public List<NtPerAlias> selectAllName(String inCompanyName, String idNo, String custType) {
-        //根据客户类别查询出项目编号
-        List<NtProjectInfo> projectInfoList = projectInfoMapper.selectByCustType(custType);
-        List<Integer> list =new ArrayList<Integer>();
-        if(projectInfoList==null || inCompanyName!= null || idNo != null){
-            //根据身份证号/姓名查询查询用户别名信息
-            List<NtPerAlias> perAliases = perAliasMapper.selectByNameOrIdNo(inCompanyName, idNo);
-            return  perAliases;
-        }else if(projectInfoList !=null ){
-          //根据项目编号列表查询
-           for (NtProjectInfo projectInfo: projectInfoList) {
-               list.add(projectInfo.getProjectNumber());
-           }
-           //判断查询的客户列表是否为空 ,为空返回null
-           if(list.size() > 0){
-            ProList aliasList =new ProList();
-           aliasList.setProjectNumberArr(list);
-           //根据客户类别查询
-            List<NtPerAlias> perAliases = perAliasMapper.selectByAliasList(aliasList);
-            return perAliases;
-           }else{
-               return  null;
-           }
-        }else {
-            return null;
-        }
-    }
 
     /**
      * 根据员工身份证号,别名,客户名称删除员工别名信息
-     * @param idNo
-     * @param inProjectName
      *
-     * @return
+     * @param idNo
+     * @return int
      */
     @Override
-    public int deleteOtherName(String idNo, String inProjectName) {
-        return perAliasMapper.deleteByIdNoAndOtherName(idNo,inProjectName);
+    public int deleteByIdNo(String idNo) {
+        return perAliasMapper.deleteByIdNo(idNo);
     }
 
     /**
-     * 修改别名信息
-     * @param perAlias
-     * @return
-     */
+     * @Description: 效验传入的参数值是否为空
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 11:00
+     * @Param: [ntPerAlias]
+     * @Return: java.lang.String
+     **/
     @Override
-    public int updateOtherName(NtPerAlias perAlias) {
-        int t = 0;
-        //查询客户类别名称
-        NtProjectInfo projectInfo = projectInfoMapper.selectByPrimaryKey(perAlias.getProjectNumber());
+    public String checkAttribute(NtPerAlias ntPerAlias) {
+        if (ObjectUtils.isNotNull(ntPerAlias)) {
+            if (ObjectUtils.isNull(ntPerAlias.getProjectNumber())) {
+                return "项目编号 不能为空！";
+            }
+            if (StringUtils.isEmpty(ntPerAlias.getIdNo())) {
+                return "身份证号 不能为空！";
+            } else if (!RegExpressionUtils.isIDNumber(ntPerAlias.getIdNo())) {
+                return "身份证号 格式不正确！";
+            } else {
+                NtPersonnel ntPersonnel = personnelMapper.selectByPrimaryIdNo(ntPerAlias.getIdNo());
+                if (ObjectUtils.isNull(ntPersonnel)) {
+                    return "身份证号 不存在！";
+                } else {
+                    ntPerAlias.setPerId(ntPersonnel.getPerId());
+                }
+            }
+            if (ObjectUtils.isNull(ntPerAlias.getInProjectName())) {
+                return "别名 不能为空！";
+            }
+        }
+        return null;
+    }
 
-        //根据客户类别和身份证号修改
-        NtPerAliasExample example = new NtPerAliasExample();
-        NtPerAliasExample.Criteria criteria = example.createCriteria();
-        //创建条件身份证号,姓名,项目编号
-        criteria.andIdNoEqualTo(perAlias.getIdNo());
-        criteria.andProjectNumberEqualTo(projectInfo.getProjectNumber());
-        criteria.andInCompanyNameEqualTo(perAlias.getInCompanyName());
-        criteria.andPerIdEqualTo(perAlias.getPerId());
-        t = perAliasMapper.updateByExample(perAlias,example);
-        return  t;
+    /**
+     * @Description: 创建时 效验数据是否已存在
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 14:28
+     * @Param: [ntPerAlias]
+     * @Return: boolean true 存在 ,false 不存在
+     **/
+    @Override
+    public boolean checkWhetherRepeat(NtPerAlias ntPerAlias) {
+        NtPerAlias perAlias = new NtPerAlias();
+        perAlias.setPerId(ntPerAlias.getPerId());
+        List<NtPerAlias> ntPerAliasList = this.queryNtPerAliasList(perAlias);
+        boolean repeat = false;
+        if (ObjectUtils.isNotNull(ntPerAliasList)) {
+            repeat = true;
+        }
+        return repeat;
+    }
+
+    /**
+     * @Description: 更新时 效验数据是否已存在
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 16:01
+     * @Param: [ntPerAlias]
+     * @Return: boolean
+     **/
+    public boolean checkUpdateWhetherRepeat(NtPerAlias ntPerAlias) {
+        NtPerAlias perAlias = new NtPerAlias();
+        perAlias.setPerId(ntPerAlias.getPerId());
+        List<NtPerAlias> ntPerAliasList = this.queryNtPerAliasList(perAlias);
+        boolean repeat = false;
+        if (ObjectUtils.isNotNull(ntPerAliasList) && ntPerAliasList.size() > 1) {
+            repeat = true;
+        }
+        return repeat;
     }
 }
 

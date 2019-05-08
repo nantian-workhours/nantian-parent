@@ -10,6 +10,24 @@ import org.apache.ibatis.annotations.Param;
 public interface NtPerAliasMapper {
 
     /**
+      * @Description: 更新员工别名
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/8 15:53
+      * @Param:  [ntPerAlias]
+      * @Return: int
+      **/
+    int updateNtPerAlias(NtPerAlias ntPerAlias);
+
+    /**
+      * @Description: 查询员工项目别名列表数据
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/8 14:24
+      * @Param:  []
+      * @Return: java.util.List<cn.com.nantian.pojo.NtPerAlias>
+      **/
+    List<NtPerAlias> queryNtPerAliasList(NtPerAlias ntPerAlias);
+
+    /**
      * 根据员工编号查询别名表信息
      * @param perId
      * @return
@@ -24,12 +42,11 @@ public interface NtPerAliasMapper {
 
 
     /**
-     * 根据身份证号和别名删除别名信息
+     * 根据身份证号删除别名信息
      * @param idNo
-     * @param inProjectName
-     * @return
+     * @return int
      */
-     int deleteByIdNoAndOtherName(@Param("idNo")String idNo,@Param("inProjectName")String inProjectName);
+     int deleteByIdNo(String idNo);
 
     /**
      * 根据身份证号和别名去查询条数

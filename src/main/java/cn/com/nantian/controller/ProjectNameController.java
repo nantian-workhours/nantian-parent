@@ -1,122 +1,132 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtPerAlias;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.ProjectNameService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-
 
 
 /**
  * 别名管理(项目组中的名字)
  */
 @Controller
-@RequestMapping("/othername")
+@RequestMapping("/other/name")
 public class ProjectNameController {
+    private static final Logger logger = LoggerFactory.getLogger(ProjectNameController.class);
 
+    @InitBinder("ntPerAlias")
+    public void initBindNtPerAlias(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.setFieldDefaultPrefix("ntPerAlias.");
+    }
 
     @Resource
     private ProjectNameService projectNameService;
 
-
     /**
-     * 添加项目别名
-     * @param perAlias
-     * @return
-     */
+     * @Description: 添加项目别名
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 11:01
+     * @Param: [ntPerAlias]
+     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     **/
     @RequestMapping("/add")
     @ResponseBody
-    public ResponseData addProjectName(@RequestBody NtPerAlias perAlias) {
+    public ResponseData addProjectName(@ModelAttribute("ntPerAlias") NtPerAlias ntPerAlias) {
         try {
-            int a = projectNameService.addProjectName(perAlias);
-            if (a == 1) {
-                return ResponseData.ok().putDataValue("status", "add success " + a);
+            //效验传入的参数是否为空
+            String result = projectNameService.checkAttribute(ntPerAlias);
+            if (StringUtils.isNotEmpty(result)) {
+                return ResponseData.isfailed().putDataValue("error", result);
+            }
+            //效验是否已存在
+            boolean repeat = projectNameService.checkWhetherRepeat(ntPerAlias);
+            if (repeat) {
+                return ResponseData.isfailed().putDataValue("error", "数据已存在 请修改！");
             } else {
-                return ResponseData.isfailed().putDataValue("status", "add failed");
+                int a = projectNameService.addProjectName(ntPerAlias);
+                return ResponseData.ok().putDataValue("success", a);
             }
         } catch (Exception e) {
-            //被禁止
+            logger.error("ProjectNameController.addProjectName", e);
             return ResponseData.serverInternalError();
         }
-
-    }
-        /**
-         * 根据员工姓名/身份证号/客户类型查询
-         */
-        @RequestMapping("/selectall")
-        @ResponseBody
-        public ResponseData selectAllName(String inCompanyName ,String idNo,String custType){
-            List<NtPerAlias> perAliasList=null;
-            try {
-                //根据姓名,身份证号  或者客户类型查询信息
-                perAliasList = projectNameService.selectAllName(inCompanyName,idNo,custType);
-                if(perAliasList != null ){
-                    return ResponseData.ok().putDataValue("data",perAliasList);
-                }else{
-                    return ResponseData.isfailed().putDataValue("data","select failed");
-                }
-            } catch (Exception e) {
-                //被禁止
-                return ResponseData.serverInternalError() ;
-            }
     }
 
     /**
-     * 根据员工身份证号,别名删除员工别名信息
-     * @param idNo
-     * @param inProjectName
-     *
-     * @return
-     */
-    @RequestMapping("/deleteothname")
+     * @Description: 查询员工别名列表
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 16:20
+     * @Param: [ntPerAlias]
+     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     **/
+    @RequestMapping("/findAll")
     @ResponseBody
-    public ResponseData deleteOtherName(String idNo,String inProjectName){
+    public ResponseData queryNtPerAliasList(@ModelAttribute("ntPerAlias") NtPerAlias ntPerAlias) {
         try {
-
-            //删除别名信息 ,只删别名表 ,不删员工表
-            int a = projectNameService.deleteOtherName(idNo,inProjectName);
-            if(a>0){
-                return ResponseData.ok().putDataValue("status","delete success  "+ a);
-            }else{
-                return ResponseData.isfailed().putDataValue("status","delete failed");
-            }
+            //根据姓名,身份证号  或者客户类型查询信息
+            List<NtPerAlias> perAliasList = projectNameService.queryNtPerAliasList(ntPerAlias);
+            return ResponseData.ok().putDataValue("data", perAliasList);
         } catch (Exception e) {
-            //被禁止
-            return ResponseData.serverInternalError() ;
+            logger.error("ProjectNameController.queryNtPerAliasList", e);
+            return ResponseData.serverInternalError();
         }
-
     }
 
     /**
-     * 修改别名信息
-     * @param perAlias
-     * @return
-     */
-    @RequestMapping("/updateothname")
+     * @Description: 根据员工身份证号, 别名删除员工别名信息
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 16:20
+     * @Param: [idNo]
+     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     **/
+    @RequestMapping("/delete")
     @ResponseBody
-    public ResponseData updateOtherName(@RequestBody NtPerAlias perAlias){
+    public ResponseData deleteOtherName(@RequestParam("idNo") String idNo) {
         try {
-
-            //修改别名信息 ,只修改别名表 ,不修改员工表
-            int a = projectNameService.updateOtherName(perAlias);
-
-            if(a>0){
-                return ResponseData.ok().putDataValue("status","update success  "+ a);
-            }else{
-                return ResponseData.isfailed().putDataValue("status","update failed");
-            }
+            int a = projectNameService.deleteByIdNo(idNo);
+            return ResponseData.ok().putDataValue("success", a);
         } catch (Exception e) {
-            //被禁止
-            return ResponseData.serverInternalError() ;
+            logger.error("ProjectNameController.deleteOtherName", e);
+            return ResponseData.serverInternalError();
         }
-
     }
 
-
+    /**
+     * @Description: 修改别名信息
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 16:20
+     * @Param: [ntPerAlias]
+     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     **/
+    @RequestMapping("/update")
+    @ResponseBody
+    public ResponseData updateOtherName(@ModelAttribute("ntPerAlias") NtPerAlias ntPerAlias) {
+        try {
+            //效验传入的参数是否为空
+            String result = projectNameService.checkAttribute(ntPerAlias);
+            if (StringUtils.isNotEmpty(result)) {
+                return ResponseData.isfailed().putDataValue("error", result);
+            }
+            //效验是否已存在
+            boolean repeat = projectNameService.checkUpdateWhetherRepeat(ntPerAlias);
+            if (repeat) {
+                return ResponseData.isfailed().putDataValue("error", "数据已存在 请修改！");
+            } else {
+                int a = projectNameService.updateNtPerAlias(ntPerAlias);
+                return ResponseData.ok().putDataValue("success", a);
+            }
+        } catch (Exception e) {
+            logger.error("ProjectNameController.updateOtherName", e);
+            return ResponseData.serverInternalError();
+        }
+    }
 }

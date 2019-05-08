@@ -473,7 +473,7 @@ public class UserImpl implements UserService {
         int a = 0;
         if (!inProjectName.isEmpty() && !inProjectName.isEmpty()) {
             //如果不为空直接删除别名表的用户信息
-            a = perAliasMapper.deleteByIdNoAndOtherName(idNo, inProjectName);
+            a = perAliasMapper.deleteByIdNo(idNo);
             return "delete otherName " + a;
         } else if (!idNo.isEmpty()) {
             //如果为空直接删除这个用户的信息

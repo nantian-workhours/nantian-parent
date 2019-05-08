@@ -1,5 +1,6 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtProjectInfo;
 import cn.com.nantian.pojo.entity.ResponseData;
@@ -14,7 +15,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-//客户管理
+/**
+ * @Description: 客户管理
+ * @Auther: Mr.Kong
+ **/
 @Controller
 @RequestMapping("/ntProjectInfo")
 public class ProjectInfoController {
@@ -47,7 +51,6 @@ public class ProjectInfoController {
             return ResponseData.forbidden();
         }
     }
-
 
 
     /**
@@ -109,6 +112,9 @@ public class ProjectInfoController {
     public ResponseData updateNtProjectInfo(@ModelAttribute("ntProjectInfo") NtProjectInfo ntProjectInfo) {
         try {
             String result = projectInfoService.checkAttribute(ntProjectInfo);
+            if (ObjectUtils.isNull(ntProjectInfo.getProjectNumber())) {
+                result = "项目编号 不能为空！";
+            }
             if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
                 return ResponseData.isfailed().putDataValue("error", result);
             }
@@ -127,17 +133,17 @@ public class ProjectInfoController {
 
 
     /**
-      * @Description: 根据项目编号查询详情
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/27 14:28
-      * @Param: [projectNumber] 项目编号
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
-      **/
+     * @Description: 根据项目编号查询详情
+     * @Auther: Mr.Kong
+     * @Date: 2019/3/27 14:28
+     * @Param: [projectNumber] 项目编号
+     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     **/
     @RequestMapping("/findOne")
     @ResponseBody
     public ResponseData selectNtProjectInfoOne(@RequestParam("projectNumber") int projectNumber) {
         try {
-            NtProjectInfo ntProjectInfo=projectInfoService.selectByPrimaryKey(projectNumber);
+            NtProjectInfo ntProjectInfo = projectInfoService.selectByPrimaryKey(projectNumber);
             projectInfoService.setNtProjectInfoTypeName(ntProjectInfo);
             return ResponseData.ok().putDataValue("data", ntProjectInfo);
         } catch (Exception e) {

@@ -46,7 +46,7 @@ public class RegExpressionUtils {
     /**
      * 验证身份证号码
      * @param IDNumber 身份证号码
-     * @return
+     * @return true 正确  false 错误
      */
     public static boolean isIDNumber(String IDNumber) {
         if (IDNumber == null || "".equals(IDNumber)) {
