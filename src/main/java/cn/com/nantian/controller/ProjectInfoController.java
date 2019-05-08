@@ -82,11 +82,11 @@ public class ProjectInfoController {
         try {
             String result = projectInfoService.checkAttribute(ntProjectInfo);
             if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
-                return ResponseData.isfailed().putDataValue("202", result);
+                return ResponseData.isfailed().putDataValue("error", result);
             }
             boolean repeat = projectInfoService.checkWhetherRepeat(ntProjectInfo);
             if (repeat) {//判断是否存在重复数据
-                return ResponseData.isfailed().putDataValue("202", "数据已存在，请修改！");
+                return ResponseData.isfailed().putDataValue("error", "数据已存在，请修改！");
             } else {
                 int id = projectInfoService.addNtProjectInfo(ntProjectInfo);
                 return ResponseData.ok().putDataValue(" Add success num ", id);
@@ -110,11 +110,11 @@ public class ProjectInfoController {
         try {
             String result = projectInfoService.checkAttribute(ntProjectInfo);
             if (StringUtils.isNotEmpty(result)) {//判断属性值是否为空
-                return ResponseData.isfailed().putDataValue("202", result);
+                return ResponseData.isfailed().putDataValue("error", result);
             }
-            boolean repeat = projectInfoService.checkWhetherRepeat(ntProjectInfo);
+            boolean repeat = projectInfoService.checkUpdateWhetherRepeat(ntProjectInfo);
             if (repeat) {//判断是否存在重复数据
-                return ResponseData.isfailed().putDataValue("202", "数据已存在，请修改！");
+                return ResponseData.isfailed().putDataValue("error", "数据已存在，请修改！");
             } else {
                 int d = projectInfoService.updateNtProjectInfo(ntProjectInfo);
                 return ResponseData.ok().putDataValue("update number", d);

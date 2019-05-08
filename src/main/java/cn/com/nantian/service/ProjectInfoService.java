@@ -87,6 +87,15 @@ public interface ProjectInfoService {
      **/
     public boolean checkWhetherRepeat(NtProjectInfo ntProjectInfo);
 
+    /**
+     * @Description: 更新时 检查传入的对象所有属性值，在表中是否已存在
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/8 10:18
+     * @Param:  [ntProjectInfo]
+     * @Return: boolean
+     **/
+    public boolean checkUpdateWhetherRepeat(NtProjectInfo ntProjectInfo);
+
     //添加类别信息
     public  void addCustType(String projectName, Map<String ,String> type, String leave);
 

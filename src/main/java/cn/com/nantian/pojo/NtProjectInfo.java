@@ -43,8 +43,7 @@ public class NtProjectInfo {
         if (this == o) return true;  //先判断o是否为本对象，如果是就肯定是同一对象了，this 指向当前的对象
         if (o == null || getClass() != o.getClass()) return false; //再判断o是否为null，和o.类对象和本类对象是否一致
         NtProjectInfo proInfo = (NtProjectInfo) o;  //再把o对象强制转化为Transport类对象
-        return Objects.equals(projectNumber, proInfo.projectNumber)
-                && Objects.equals(projectName, proInfo.projectName)
+        return Objects.equals(projectName, proInfo.projectName)
                 && Objects.equals(custType, proInfo.custType)
                 && Objects.equals(deptId, proInfo.deptId)
                 && Objects.equals(chargeId, proInfo.chargeId)

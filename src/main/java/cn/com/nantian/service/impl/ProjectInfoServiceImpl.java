@@ -139,7 +139,7 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     }
 
     /**
-      * @Description: 检查传入的对象所有属性值，在表中是否已存在
+      * @Description: 新增时 检查传入的对象所有属性值，在表中是否已存在
       * @Auther: Mr.Kong
       * @Date: 2019/3/26 10:51
       * @Param: [ntProjectInfoList, ntProjectInfo]
@@ -151,6 +151,28 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
         if(ObjectUtils.isNotNull(ntProjectInfoList) && ObjectUtils.isNotNull(ntProjectInfo)){
             for (NtProjectInfo projectInfo:ntProjectInfoList) {
                 if(projectInfo.equals(ntProjectInfo)){
+                    repeat=true;
+                    break;
+                }
+            }
+        }
+        return repeat;
+    }
+
+    /**
+      * @Description: 更新时 检查传入的对象所有属性值，在表中是否已存在
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/8 10:18
+      * @Param:  [ntProjectInfo]
+      * @Return: boolean
+      **/
+    @Override
+    public boolean checkUpdateWhetherRepeat(NtProjectInfo ntProjectInfo){
+        List<NtProjectInfo> ntProjectInfoList=this.selectNtProjectInfoList(null);
+        boolean repeat=false;
+        if(ObjectUtils.isNotNull(ntProjectInfoList) && ObjectUtils.isNotNull(ntProjectInfo)){
+            for (NtProjectInfo projectInfo:ntProjectInfoList) {
+                if(projectInfo.getProjectNumber()!=ntProjectInfo.getProjectNumber() && projectInfo.equals(ntProjectInfo)){
                     repeat=true;
                     break;
                 }
@@ -170,17 +192,17 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
             if(ObjectUtils.isNull(ntProjectInfo.getProjectName())){
                 return "项目名称 不能为空！";
             }
-            if(ObjectUtils.isNull(ntProjectInfo.getCustType())){
-                return "客户类别 不能为空！";
-            }
-            if(ObjectUtils.isNull(ntProjectInfo.getDeptId())){
-                return "部门编号 不能为空！";
+            if(ObjectUtils.isNull(ntProjectInfo.getAddress())){
+                return "办公地址 不能为空！";
             }
             if(ObjectUtils.isNull(ntProjectInfo.getChargeId())){
                 return "在场负责人 不能为空！";
             }
-            if(ObjectUtils.isNull(ntProjectInfo.getAddress())){
-                return "办公地址 不能为空！";
+            if(ObjectUtils.isNull(ntProjectInfo.getCustType())){
+                return "客户类别 不能为空！";
+            }
+            if(ObjectUtils.isNull(ntProjectInfo.getDeptId())){
+                return "部门 不能为空！";
             }
         }
         return "";
