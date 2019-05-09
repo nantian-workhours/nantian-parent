@@ -70,8 +70,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    PRICE_ID,CUST_TYPE, WORK_TYPE, WORK_LEAVE, LEAVE_PRICE, PROJECT_BEGDATE, PROJECT_ENDDATE,
-    PROJECT_NUMBER
+    nt_leave_info.PRICE_ID,nt_leave_info.CUST_TYPE, nt_leave_info.WORK_TYPE, nt_leave_info.WORK_LEAVE, nt_leave_info.LEAVE_PRICE, nt_leave_info.PROJECT_BEGDATE, nt_leave_info.PROJECT_ENDDATE,
+    nt_leave_info.PROJECT_NUMBER
   </sql>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     DELETE from nt_leave_info
@@ -79,8 +79,10 @@
   </delete>
   <select id="selectLeaveInfoList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtLeaveInfo" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    p.PROJECT_NAME projectName
     from nt_leave_info
+    LEFT JOIN nt_project_info p ON p.PROJECT_NUMBER = nt_leave_info.PROJECT_NUMBER
     <where>
       <if test="custType !=null and custType !=''">
         and CUST_TYPE=#{custType}

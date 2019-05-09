@@ -32,7 +32,8 @@ public class NtLeaveInfo {
     /**结束日期*/
     private String projectEnddateStr;
 
-
+    /**项目名称*/
+    private String projectName;
     /**客户类别名称*/
     private String custTypeName;
     /**工作类别名称*/
