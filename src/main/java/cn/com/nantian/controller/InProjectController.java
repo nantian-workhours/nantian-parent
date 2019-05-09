@@ -1,9 +1,7 @@
 package cn.com.nantian.controller;
 
-import cn.com.nantian.pojo.InProjectItem;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtPerInProject;
-import cn.com.nantian.pojo.NtPersonnel;
-import cn.com.nantian.pojo.NtProjectInfo;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.InProjectService;
 import org.slf4j.Logger;
@@ -44,95 +42,63 @@ public class InProjectController {
     @RequestMapping("/add")
     @ResponseBody
     public ResponseData addPerInProject(@ModelAttribute("ntPerInProject") NtPerInProject ntPerInProject){
-            int a = 0;
         try {
             //效验传入参数值
-            a = inProjectService.addPerInProject(ntPerInProject);
-            if(a > 0){
-                //添加成功
-                return ResponseData.ok().putDataValue("status","add success " + a);
-            }else  if(a == -1){
-                //该员工在这个项目组中新建的时间是否比结束时间早
-                return ResponseData.customerError().putDataValue("status","The employee hasn't finished the project yet");
-            }else  if(a == -2){
-                //开始时间比接受时间早
-                return ResponseData.customerError().putDataValue("status","The end time is earlier than the start time");
-            }else {
-                //查询失败
-                return ResponseData.isfailed().putDataValue("status","add failed");
+            String result=inProjectService.checkAttribute(ntPerInProject);
+            if (StringUtils.isNotEmpty(result)){
+                return ResponseData.isfailed().putDataValue("error",result);
+            }
+            //效验数据是否已存在
+            boolean repeat=inProjectService.checkWhetherRepeat(ntPerInProject);
+            if (repeat){
+                return ResponseData.isfailed().putDataValue("error","数据已存在 请修改！");
+            }else{
+                int a = inProjectService.addPerInProject(ntPerInProject);
+                return ResponseData.ok().putDataValue("添加成功",a);
             }
         } catch (Exception e) {
-            logger.error("CustTypeController.addPerInProject", e);
+            logger.error("InProjectController.addPerInProject", e);
             return ResponseData.serverInternalError();
         }
     }
 
     /**
-     *查询所有项目信息
-     * @return
-     */
-    @RequestMapping("/selectall")
+      * @Description: 查询员工所在项目列表数据
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/9 14:31
+      * @Param:  [ntPerInProject]
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping("/findAll")
     @ResponseBody
-    public ResponseData selectAllProjectInfo(){
-        List<NtProjectInfo> projectInfoList=null;
-
+    public ResponseData findAll(@ModelAttribute("ntPerInProject") NtPerInProject ntPerInProject){
         try {
-            projectInfoList = inProjectService.selectAllProject();
-            if(!projectInfoList.isEmpty() || projectInfoList.size()>0){
-                //查询成功
-                return ResponseData.ok().putDataValue("data",projectInfoList);
-            }else{
-                //查询失败
-                return ResponseData.isfailed().putDataValue("data","select failed");
-            }
-
+            List<NtPerInProject> ntPerInProjectList = inProjectService.queryNtPerInProjectList(ntPerInProject);
+            return ResponseData.ok().putDataValue("data",ntPerInProjectList);
         } catch (Exception e) {
-            //被禁止
+            logger.error("InProjectController.findAll", e);
             return ResponseData.serverInternalError() ;
         }
     }
 
-
     /**
-     * 根据客户类别,项目名称,员工姓名查询员工所在项目信息
-     * @param custType
-     * @param projectName
-     * @param perId
-     * @return
-     */
-    @RequestMapping("/selectperinpro")
+      * @Description: 查询员工所在项目详情信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/9 15:49
+      * @Param:  [id]
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping("/findInfo")
     @ResponseBody
-    public ResponseData selectPerInProject(String custType,String projectName, Integer perId){
+    public ResponseData findInfo(@RequestParam("id") int id){
         try {
-            if( perId != null || "".equals(perId) ) {
-                List<InProjectItem> inProjectItemList =  inProjectService.selectPerInProject2(custType,projectName,perId);
-                //查询成功
-                return ResponseData.ok().putDataValue("data", inProjectItemList);
-            }else{
-                return ResponseData.notFound().putDataValue("data","The user name cannot be empty");
-            }
+            NtPerInProject ntPerInProject = inProjectService.queryPerInProjectInfo(id);
+            return ResponseData.ok().putDataValue("data",ntPerInProject);
         } catch (Exception e) {
-            //被禁止
-            return ResponseData.serverInternalError().putDataValue("",e.toString() );
+            logger.error("InProjectController.findInfo", e);
+            return ResponseData.serverInternalError() ;
         }
     }
-
-
-
-
-    @RequestMapping("/select")
-    @ResponseBody
-    public ResponseData select2(String name) {
-        try {
-            List<NtPersonnel> personnelList = inProjectService.select2(name);
-            return ResponseData.ok().putDataValue("", personnelList);
-        } catch (Exception e) {
-            return ResponseData.ok().putDataValue("", e.toString());
-        }
-
-
-    }
-
 
     /**
      * 修改员工所在项目

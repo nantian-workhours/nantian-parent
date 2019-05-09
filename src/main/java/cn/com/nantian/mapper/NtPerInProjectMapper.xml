@@ -2,13 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.com.nantian.mapper.NtPerInProjectMapper" >
   <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtPerInProject" >
+    <result column="ID" property="id" jdbcType="INTEGER" />
     <result column="PER_ID" property="perId" jdbcType="INTEGER" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
     <result column="PROJECT_NUMBER" property="projectNumber" jdbcType="INTEGER" />
-    <result column="IN_PROJECT_LEAVE" property="inProjectLeave" jdbcType="VARCHAR" />
+    <result column="CUST_TYPE" property="custType" jdbcType="VARCHAR" />
+    <result column="WORK_TYPE" property="workType" jdbcType="CHAR" />
+    <result column="WORK_LEVEL" property="workLevel" jdbcType="VARCHAR" />
     <result column="PROJECT_BEGDATE" property="projectBegdate" jdbcType="DATE" />
     <result column="PROJECT_ENDDATE" property="projectEnddate" jdbcType="DATE" />
-    <result column="WORK_TYPE" property="workType" jdbcType="CHAR" />
-    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="DATE" />
+    <result column="STATUS" property="status" jdbcType="INTEGER" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -69,9 +73,65 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    PER_ID, PROJECT_NUMBER, IN_PROJECT_LEAVE, PROJECT_BEGDATE, PROJECT_ENDDATE, WORK_TYPE, 
-    ID_NO
+    nt_per_in_project.ID, nt_per_in_project.PER_ID, nt_per_in_project.ID_NO, nt_per_in_project.PROJECT_NUMBER, nt_per_in_project.CUST_TYPE,
+     nt_per_in_project.WORK_TYPE, nt_per_in_project.WORK_LEVEL, nt_per_in_project.PROJECT_BEGDATE, nt_per_in_project.PROJECT_ENDDATE, nt_per_in_project.CREATE_TIME,nt_per_in_project.`STATUS`
   </sql>
+
+  <select id="queryNtPerInProjectList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProject" >
+    select
+    <include refid="Base_Column_List" />,
+    m.DIC_VALUE custTypeName,
+    n.DIC_VALUE workLevelName,
+    a.DIC_VALUE workTypeName,
+    t.PROJECT_NAME projectName,
+    p.`NAME` userName,
+    d.DEPT_NAME deptName
+    from nt_per_in_project
+    LEFT JOIN nt_dictionaries m ON m.DIC_CODE=nt_per_in_project.CUST_TYPE
+    LEFT JOIN nt_dictionaries n ON n.DIC_CODE = nt_per_in_project.WORK_LEVEL
+    LEFT JOIN nt_dictionaries a ON a.DIC_CODE = nt_per_in_project.WORK_TYPE
+    LEFT JOIN nt_project_info t ON t.PROJECT_NUMBER=nt_per_in_project.PROJECT_NUMBER
+    LEFT JOIN nt_personnel p ON p.PER_ID=nt_per_in_project.PER_ID
+    LEFT JOIN nt_department d ON d.DEPT_ID=p.DEPT_ID
+    <where>
+      m.DIC_TYPE='cust' and n.DIC_TYPE='dc' and a.DIC_TYPE='wt'
+      <if test="userName !=null and userName !=''">
+        and p.NAME like CONCAT('%',#{userName},'%')
+      </if>
+      <if test="projectNumber !=null and projectNumber!=''">
+        and nt_per_in_project.PROJECT_NUMBER=#{projectNumber}
+      </if>
+      <if test="custType !=null and custType !=''">
+        and nt_per_in_project.CUST_TYPE=#{custType}
+      </if>
+      <if test="Id !=null and Id !=''">
+        and nt_per_in_project.ID=#{Id}
+      </if>
+    </where>
+    order by nt_per_in_project.ID desc
+  </select>
+
+  <select id="queryPerInProjectInfo" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />,
+    m.DIC_VALUE custTypeName,
+    n.DIC_VALUE workLevelName,
+    a.DIC_VALUE workTypeName,
+    t.PROJECT_NAME projectName,
+    p.`NAME` userName,
+    d.DEPT_NAME deptName
+    from nt_per_in_project
+    LEFT JOIN nt_dictionaries m ON m.DIC_CODE=nt_per_in_project.CUST_TYPE
+    LEFT JOIN nt_dictionaries n ON n.DIC_CODE = nt_per_in_project.WORK_LEVEL
+    LEFT JOIN nt_dictionaries a ON a.DIC_CODE = nt_per_in_project.WORK_TYPE
+    LEFT JOIN nt_project_info t ON t.PROJECT_NUMBER=nt_per_in_project.PROJECT_NUMBER
+    LEFT JOIN nt_personnel p ON p.PER_ID=nt_per_in_project.PER_ID
+    LEFT JOIN nt_department d ON d.DEPT_ID=p.DEPT_ID
+    where m.DIC_TYPE='cust' and n.DIC_TYPE='dc' and a.DIC_TYPE='wt'
+    and nt_per_in_project.ID=#{Id}
+  </select>
+
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProjectExample" >
     select
     <if test="distinct" >
@@ -130,20 +190,13 @@
         AND  PROJECT_NUMBER = #{projectNumber,jdbcType=INTEGER}
       </if>
     </where>
-
-
   </select>
-
-
-
-
   <select id="selectByProNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from nt_per_in_project
     where PROJECT_NUMBER = #{projectNumber,jdbcType=INTEGER}
   </select>
-
   <select id="selectByIdNoAndproNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
@@ -165,12 +218,11 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.com.nantian.pojo.NtPerInProject" >
-    insert into nt_per_in_project (PER_ID, PROJECT_NUMBER, IN_PROJECT_LEAVE, 
-      PROJECT_BEGDATE, PROJECT_ENDDATE, WORK_TYPE, 
-      ID_NO)
-    values (#{perId,jdbcType=INTEGER}, #{projectNumber,jdbcType=INTEGER}, #{inProjectLeave,jdbcType=VARCHAR}, 
-      #{projectBegdate,jdbcType=DATE}, #{projectEnddate,jdbcType=DATE}, #{workType,jdbcType=CHAR}, 
-      #{idNo,jdbcType=VARCHAR})
+    insert into nt_per_in_project
+    (<include refid="Base_Column_List" />)
+    values
+    (#{Id,jdbcType=INTEGER},#{perId,jdbcType=INTEGER},#{idNo,jdbcType=VARCHAR},#{projectNumber,jdbcType=INTEGER},#{custType,jdbcType=VARCHAR} ,#{workType,jdbcType=VARCHAR},
+     #{workLevel,jdbcType=VARCHAR},#{projectBegdate,jdbcType=DATE}, #{projectEnddate,jdbcType=DATE}, #{createTime,jdbcType=DATE}, #{status,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtPerInProject" >
     insert into nt_per_in_project
@@ -181,8 +233,8 @@
       <if test="projectNumber != null" >
         PROJECT_NUMBER,
       </if>
-      <if test="inProjectLeave != null" >
-        IN_PROJECT_LEAVE,
+      <if test="workLevel != null" >
+        WORK_LEVEL,
       </if>
       <if test="projectBegdate != null" >
         PROJECT_BEGDATE,
@@ -204,8 +256,8 @@
       <if test="projectNumber != null" >
         #{projectNumber,jdbcType=INTEGER},
       </if>
-      <if test="inProjectLeave != null" >
-        #{inProjectLeave,jdbcType=VARCHAR},
+      <if test="workLevel != null" >
+        #{workLevel,jdbcType=VARCHAR},
       </if>
       <if test="projectBegdate != null" >
         #{projectBegdate,jdbcType=DATE},
@@ -236,8 +288,8 @@
       <if test="record.projectNumber != null" >
         PROJECT_NUMBER = #{record.projectNumber,jdbcType=INTEGER},
       </if>
-      <if test="record.inProjectLeave != null" >
-        IN_PROJECT_LEAVE = #{record.inProjectLeave,jdbcType=VARCHAR},
+      <if test="record.workLevel != null" >
+        WORK_LEVEL = #{record.workLevel,jdbcType=VARCHAR},
       </if>
       <if test="record.projectBegdate != null" >
         PROJECT_BEGDATE = #{record.projectBegdate,jdbcType=DATE},
@@ -260,7 +312,7 @@
     update nt_per_in_project
     set PER_ID = #{record.perId,jdbcType=INTEGER},
       PROJECT_NUMBER = #{record.projectNumber,jdbcType=INTEGER},
-      IN_PROJECT_LEAVE = #{record.inProjectLeave,jdbcType=VARCHAR},
+      WORK_LEVEL = #{record.workLevel,jdbcType=VARCHAR},
       PROJECT_BEGDATE = #{record.projectBegdate,jdbcType=DATE},
       PROJECT_ENDDATE = #{record.projectEnddate,jdbcType=DATE},
       WORK_TYPE = #{record.workType,jdbcType=CHAR},

@@ -1,6 +1,5 @@
 package cn.com.nantian.mapper;
 
-import cn.com.nantian.pojo.InProjectItem;
 import cn.com.nantian.pojo.NtPerInProject;
 import cn.com.nantian.pojo.NtPerInProjectExample;
 import org.apache.ibatis.annotations.Param;
@@ -8,6 +7,9 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface NtPerInProjectMapper {
+
+
+    List<NtPerInProject> queryNtPerInProjectList(NtPerInProject perInProject);
 
     /**
      * @Description: 查询员工项目集合
@@ -17,6 +19,8 @@ public interface NtPerInProjectMapper {
      * @Date: 2019/3/20 10:16
      **/
     List<NtPerInProject> selectPerInProjectList(NtPerInProject perInProject);
+
+    NtPerInProject queryPerInProjectInfo(int id);
     int countByExample(NtPerInProjectExample example);
 
     int deleteByExample(NtPerInProjectExample example);
