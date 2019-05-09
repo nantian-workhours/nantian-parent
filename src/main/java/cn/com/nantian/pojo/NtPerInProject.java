@@ -52,6 +52,9 @@ public class NtPerInProject {
     private String userName;
     /**部门名称*/
     private String deptName;
+    /**在场状态*/
+    private String workStatus;
+
 
 
     public boolean equals(Object o) {

@@ -1,7 +1,6 @@
 package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtPerInProject;
-import cn.com.nantian.pojo.NtProjectInfo;
 
 import java.util.List;
 /**
@@ -29,9 +28,41 @@ public interface InProjectService {
       **/
     boolean checkWhetherRepeat(NtPerInProject ntPerInProject);
 
+    /**
+     * @Description: 更新时 效验数据是否已存在
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/9 15:58
+     * @Param: [ntPerInProject]
+     * @Return: boolean
+     **/
+    boolean checkUpdateWhetherRepeat(NtPerInProject ntPerInProject);
+
+    /**
+      * @Description: 查询员工所在项目列表数据
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/9 16:33
+      * @Param:  [perInProject]
+      * @Return: java.util.List<cn.com.nantian.pojo.NtPerInProject>
+      **/
     List<NtPerInProject> queryNtPerInProjectList(NtPerInProject perInProject);
 
+    /**
+      * @Description: 查询员工所在项目详情信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/9 16:34
+      * @Param:  [id]
+      * @Return: cn.com.nantian.pojo.NtPerInProject
+      **/
     NtPerInProject queryPerInProjectInfo(int id);
+
+    /**
+      * @Description: 更新员工所在项目信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/9 16:35
+      * @Param:  [ntPerInProject]
+      * @Return: int
+      **/
+    int updateNtPerInProject(NtPerInProject ntPerInProject);
 
     /**
      * 添加员工所在项目信息
@@ -39,13 +70,13 @@ public interface InProjectService {
      * @return
      */
     int addPerInProject(NtPerInProject perInProject);
+
     /**
-     * 查询所有的客户信息
-     * @return
-     */
-    List<NtProjectInfo> selectAllProject();
-    int updatePerInpro( NtPerInProject perInProject);
-
-
-
+     * @Description: 设置在场状态
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/9 16:47
+     * @Param:  [ntPerInProjectList]
+     * @Return: void
+     **/
+    public void setWorkStatus(List<NtPerInProject> ntPerInProjectList);
 }

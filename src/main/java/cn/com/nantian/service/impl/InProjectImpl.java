@@ -1,22 +1,27 @@
 package cn.com.nantian.service.impl;
-import cn.com.nantian.common.*;
 
-import cn.com.nantian.mapper.*;
+import cn.com.nantian.common.*;
+import cn.com.nantian.mapper.NtDictionariesMapper;
+import cn.com.nantian.mapper.NtPerInProjectMapper;
+import cn.com.nantian.mapper.NtPersonnelMapper;
+import cn.com.nantian.mapper.NtProjectInfoMapper;
 import cn.com.nantian.pojo.*;
 import cn.com.nantian.service.InProjectService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.awt.*;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
-  * @Description: 员工所在项目管理
-  * @Auther: Mr.Kong
-  * @Date: 2019/5/9 10:46
-  **/
+ * @Description: 员工所在项目管理
+ * @Auther: Mr.Kong
+ * @Date: 2019/5/9 10:46
+ **/
 @Service
-public class InProjectImpl implements InProjectService{
+public class InProjectImpl implements InProjectService {
     @Resource
     private NtPerInProjectMapper perInProjectMapper;
     @Resource
@@ -27,19 +32,19 @@ public class InProjectImpl implements InProjectService{
     private NtDictionariesMapper dictionariesMapper;
 
     /**
-      * @Description: 创建时 效验传入的参数值
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/9 11:07
-      * @Param:  [ntPerInProject]
-      * @Return: java.lang.String
-      **/
-    public String checkAttribute(NtPerInProject ntPerInProject) throws Exception{
+     * @Description: 创建时 效验传入的参数值
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/9 11:07
+     * @Param: [ntPerInProject]
+     * @Return: java.lang.String
+     **/
+    public String checkAttribute(NtPerInProject ntPerInProject) throws Exception {
         if (ObjectUtils.isNull(ntPerInProject.getPerId())) {
             return "员工编号 不能为空！";
         }
         if (StringUtils.isEmpty(ntPerInProject.getIdNo())) {
             return "身份证号 不能为空！";
-        }else if (!RegExpressionUtils.isIDNumber(ntPerInProject.getIdNo())){
+        } else if (!RegExpressionUtils.isIDNumber(ntPerInProject.getIdNo())) {
             return "身份证号 格式不正确！";
         }
         if (StringUtils.isEmpty(ntPerInProject.getCustType())) {
@@ -68,8 +73,8 @@ public class InProjectImpl implements InProjectService{
                 ntPerInProject.setProjectEnddate(DateUtils.parseToDate(ntPerInProject.getProjectEnddateStr(), "yyyy-MM-dd"));
             }
         }
-        if (ObjectUtils.isNotNull(ntPerInProject.getProjectBegdate()) && ObjectUtils.isNotNull(ntPerInProject.getProjectEnddate())){
-            if (ntPerInProject.getProjectBegdate().getTime()>=ntPerInProject.getProjectEnddate().getTime()){
+        if (ObjectUtils.isNotNull(ntPerInProject.getProjectBegdate()) && ObjectUtils.isNotNull(ntPerInProject.getProjectEnddate())) {
+            if (ntPerInProject.getProjectBegdate().getTime() >= ntPerInProject.getProjectEnddate().getTime()) {
                 return "结束日期必须大于开始日期！";
             }
         }
@@ -80,7 +85,7 @@ public class InProjectImpl implements InProjectService{
      * @Description: 创建时 效验数据是否已存在
      * @Auther: Mr.Kong
      * @Date: 2019/5/9 14:28
-     * @Param:  [ntPerInProject]
+     * @Param: [ntPerInProject]
      * @Return: boolean
      **/
     public boolean checkWhetherRepeat(NtPerInProject ntPerInProject) {
@@ -97,16 +102,34 @@ public class InProjectImpl implements InProjectService{
         return repeat;
     }
 
-
-
-
-
+    /**
+     * @Description: 更新时 效验数据是否已存在
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/9 15:58
+     * @Param: [ntPerInProject]
+     * @Return: boolean
+     **/
+    public boolean checkUpdateWhetherRepeat(NtPerInProject ntPerInProject) {
+        List<NtPerInProject> ntPerInProjectList = this.queryNtPerInProjectList(null);
+        boolean repeat = false;
+        if (ObjectUtils.isNotNull(ntPerInProjectList) && ObjectUtils.isNotNull(ntPerInProject)) {
+            for (NtPerInProject perInProject : ntPerInProjectList) {
+                if (perInProject.getPerId() != ntPerInProject.getPerId() && perInProject.equals(ntPerInProject)) {
+                    repeat = true;
+                    break;
+                }
+            }
+        }
+        return repeat;
+    }
 
     /**
-     * 添加员工所在项目信息
-     * @param perInProject
-     * @return
-     */
+     * @Description: 添加员工所在项目信息
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/9 15:59
+     * @Param: [perInProject]
+     * @Return: int
+     **/
     @Override
     public int addPerInProject(NtPerInProject perInProject) {
         perInProject.setCreateTime(new Date());
@@ -114,80 +137,108 @@ public class InProjectImpl implements InProjectService{
         return perInProjectMapper.insert(perInProject);
     }
 
+    /**
+     * @Description: 查询员工所在项目列表数据
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/9 16:33
+     * @Param:  [perInProject]
+     * @Return: java.util.List<cn.com.nantian.pojo.NtPerInProject>
+     **/
     @Override
-    public List<NtPerInProject> queryNtPerInProjectList(NtPerInProject perInProject){
+    public List<NtPerInProject> queryNtPerInProjectList(NtPerInProject perInProject) {
         return perInProjectMapper.queryNtPerInProjectList(perInProject);
     }
 
+    /**
+      * @Description: 查询员工所在项目详情信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/9 16:34
+      * @Param:  [id]
+      * @Return: cn.com.nantian.pojo.NtPerInProject
+      **/
     @Override
     public NtPerInProject queryPerInProjectInfo(int id) {
         return perInProjectMapper.queryPerInProjectInfo(id);
     }
 
     /**
-     * 查询所有的客户信息
-     * @return
-     */
+     * @Description: 更新员工所在项目信息
+     * @Auther: Mr.Kong
+     * @Date: 2019/5/9 16:35
+     * @Param:  [ntPerInProject]
+     * @Return: int
+     **/
     @Override
-    public List<NtProjectInfo> selectAllProject() {
-        List<NtProjectInfo> projectInfoList = projectInfoMapper.selectByExample(null);
-        return projectInfoList ;
+    public int updateNtPerInProject(NtPerInProject ntPerInProject) {
+        return perInProjectMapper.updateNtPerInProject(ntPerInProject);
+    }
+
+    /**
+      * @Description: 设置在场状态
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/9 16:47
+      * @Param:  [ntPerInProjectList]
+      * @Return: void
+      **/
+    public void setWorkStatus(List<NtPerInProject> ntPerInProjectList){
+        if (ObjectUtils.isNotNull(ntPerInProjectList)){
+            for (NtPerInProject perInProject:ntPerInProjectList){
+                //在职状态
+                if (ObjectUtils.isNotNull(perInProject.getProjectBegdate()) && ObjectUtils.isNotNull(perInProject.getProjectEnddate())){
+                    if(perInProject.getProjectEnddate().after(new Date())){
+                        perInProject.setWorkStatus("在场");
+                    }else if(perInProject.getProjectEnddate().before(new Date())){
+                        perInProject.setWorkStatus("离场");
+                    }else {
+                        perInProject.setWorkStatus("至今");
+                    }
+                }else {
+                    perInProject.setWorkStatus("待定");
+                }
+            }
+        }
     }
 
     /**
      * 获取员工的部门名称,项目名称,项目等级,工作类型.客户类型,在场状态
+     *
      * @param idNo
      * @param projectNumber
      * @param inProjectLeave
      * @param workType
      * @return
      */
-    private Map<String ,String> getDictionaries(String idNo, int projectNumber, String inProjectLeave, String workType, Date projectEndDate){
+    private Map<String, String> getDictionaries(String idNo, int projectNumber, String inProjectLeave, String workType, Date projectEndDate) {
         //初始化map
-        Map<String,String > map =new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         //根据身份证号查询姓名和部门
 
-       NtPersonnel personnel =  personnelMapper.selectByPrimaryIdNo(idNo);
-        NtDictionariesKey deptNameAll = dictionariesMapper.selectByTypeAndCode(ParamUntil.dept,personnel.getDeptId().toString());
-       //查询客户类别和项目名称
+        NtPersonnel personnel = personnelMapper.selectByPrimaryIdNo(idNo);
+        NtDictionariesKey deptNameAll = dictionariesMapper.selectByTypeAndCode(ParamUntil.dept, personnel.getDeptId().toString());
+        //查询客户类别和项目名称
         NtProjectInfo projectInfo = projectInfoMapper.selectByPrimaryKey(projectNumber);
         //获取客户类别
-        NtDictionariesKey custTypeAll = dictionariesMapper.selectByTypeAndCode(ParamUntil.cust,projectInfo.getCustType());
+        NtDictionariesKey custTypeAll = dictionariesMapper.selectByTypeAndCode(ParamUntil.cust, projectInfo.getCustType());
         //获取工作类别
-        NtDictionariesKey workTypeAll = dictionariesMapper.selectByTypeAndCode(ParamUntil.wt,workType);
+        NtDictionariesKey workTypeAll = dictionariesMapper.selectByTypeAndCode(ParamUntil.wt, workType);
         //获取技术等级
-        NtDictionariesKey inProjectLeaveAll = dictionariesMapper.selectByTypeAndCode(ParamUntil.tc,inProjectLeave);
+        NtDictionariesKey inProjectLeaveAll = dictionariesMapper.selectByTypeAndCode(ParamUntil.tc, inProjectLeave);
         //将内容添加到map中
-        map.put("deptName",deptNameAll.getDicValue());
-        map.put("name",personnel.getName());
-        map.put("custType",custTypeAll.getDicValue());
-        map.put("projectName",projectInfo.getProjectName());
-        map.put("workType",workTypeAll.getDicValue());
-        map.put("inProjectLeave",inProjectLeaveAll.getDicValue());
+        map.put("deptName", deptNameAll.getDicValue());
+        map.put("name", personnel.getName());
+        map.put("custType", custTypeAll.getDicValue());
+        map.put("projectName", projectInfo.getProjectName());
+        map.put("workType", workTypeAll.getDicValue());
+        map.put("inProjectLeave", inProjectLeaveAll.getDicValue());
         //判断在职状态
-        if(projectEndDate.after(new Date())){
-             map.put("status","在场");
+        if (projectEndDate.after(new Date())) {
+            map.put("status", "在场");
         } else if (projectEndDate == null) {
             map.put("status", "至今");
         } else {
             map.put("status", "离场");
         }
-        return  map;
+        return map;
     }
 
-    /**
-     * 修改员工所在项目
-     * @param perInProject
-     * @return
-     */
-    @Override
-    public int updatePerInpro(NtPerInProject perInProject) {
-
-        NtPerInProjectExample example = new NtPerInProjectExample();
-        NtPerInProjectExample.Criteria criteria = example.createCriteria();
-        criteria.andProjectNumberEqualTo(perInProject.getProjectNumber());
-        criteria.andIdNoEqualTo(perInProject.getIdNo());
-        //根据项目编号和身份证号修改
-        return perInProjectMapper.updateByExampleSelective(perInProject,example);
-    }
 }

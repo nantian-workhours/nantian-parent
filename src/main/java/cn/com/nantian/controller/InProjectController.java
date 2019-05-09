@@ -1,5 +1,6 @@
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtPerInProject;
 import cn.com.nantian.pojo.entity.ResponseData;
@@ -74,6 +75,7 @@ public class InProjectController {
     public ResponseData findAll(@ModelAttribute("ntPerInProject") NtPerInProject ntPerInProject){
         try {
             List<NtPerInProject> ntPerInProjectList = inProjectService.queryNtPerInProjectList(ntPerInProject);
+            inProjectService.setWorkStatus(ntPerInProjectList);
             return ResponseData.ok().putDataValue("data",ntPerInProjectList);
         } catch (Exception e) {
             logger.error("InProjectController.findAll", e);
@@ -101,28 +103,36 @@ public class InProjectController {
     }
 
     /**
-     * 修改员工所在项目
-     * @param perInProject
-     * @return
-     */
+      * @Description: 更新员工所在项目信息
+      * @Auther: Mr.Kong
+      * @Date: 2019/5/9 16:34
+      * @Param:  [ntPerInProject]
+      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      **/
     @RequestMapping("/update")
     @ResponseBody
-    public ResponseData updatePerInpro(@RequestBody NtPerInProject perInProject){
-        int a =0;
+    public ResponseData updatePerInProject(@ModelAttribute("ntPerInProject") NtPerInProject ntPerInProject){
         try {
-
-            a = inProjectService.updatePerInpro(perInProject);
-            if(a>0){
-                return ResponseData.ok().putDataValue("data", "update success " + a);
+            //效验传入参数值
+            String result=inProjectService.checkAttribute(ntPerInProject);
+            if (ObjectUtils.isNull(ntPerInProject.getId())){
+                result="主键id 不能为空！";
+            }
+            if (StringUtils.isNotEmpty(result)){
+                return ResponseData.isfailed().putDataValue("error",result);
+            }
+            //效验数据是否已存在
+            boolean repeat=inProjectService.checkUpdateWhetherRepeat(ntPerInProject);
+            if (repeat){
+                return ResponseData.isfailed().putDataValue("error","数据已存在 请修改！");
             }else{
-                return ResponseData.isfailed().putDataValue("data", "update failed");
+                int a = inProjectService.updateNtPerInProject(ntPerInProject);
+                return ResponseData.ok().putDataValue("修改成功",a);
             }
         } catch (Exception e) {
-            //被禁止
+            logger.error("InProjectController.updatePerInProject", e);
             return ResponseData.serverInternalError().putDataValue("", e.toString());
         }
-
-
     }
 }
 

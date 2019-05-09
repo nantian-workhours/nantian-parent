@@ -21,6 +21,9 @@ public interface NtPerInProjectMapper {
     List<NtPerInProject> selectPerInProjectList(NtPerInProject perInProject);
 
     NtPerInProject queryPerInProjectInfo(int id);
+
+    int updateNtPerInProject(NtPerInProject ntPerInProject);
+
     int countByExample(NtPerInProjectExample example);
 
     int deleteByExample(NtPerInProjectExample example);
