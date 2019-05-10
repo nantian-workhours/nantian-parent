@@ -30,6 +30,10 @@ public class NtHoliday {
     private String beginDateStr;
     /**结束日期*/
     private String endDateStr;
+    /**类型名称*/
+    private String holidayTypeName;
+
+
 
 
     public boolean equals(Object o) {

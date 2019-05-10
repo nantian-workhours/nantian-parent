@@ -14,8 +14,20 @@
   </sql>
   <select id="queryHolidayList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtHoliday" >
     select
-    <include refid="Base_Column_List" />
+    <include refid="Base_Column_List" />,
+    d.DIC_VALUE holidayTypeName
     from nt_holiday
+    LEFT JOIN nt_dictionaries d ON d.DIC_CODE=nt_holiday.HOLIDAY_TYPE
+    <where>
+      d.DIC_TYPE='holiday'
+      <if test="holidayName!=null and holidayName!=''">
+        and nt_holiday.HOLIDAY_NAME like CONCAT('%',#{holidayName},'%')
+      </if>
+      <if test="beginDate!=null and beginDate!=''">
+        and <![CDATA[ DATE_FORMAT(nt_holiday.BEGIN_DATE, '%Y') = DATE_FORMAT(#{beginDate}, '%Y') ]]>
+    </if>
+    order by HOLIDAY_ID desc
+    </where>
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select

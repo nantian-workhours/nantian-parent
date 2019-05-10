@@ -6,7 +6,7 @@
  * @Version： 1.0
  */
 package cn.com.nantian.controller;
-
+import cn.com.nantian.common.DateUtils;
 import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtHoliday;
@@ -17,7 +17,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -35,7 +34,6 @@ public class NtHolidayController extends BaseController{
 
     @Resource
     private NtHolidayService holidayService;
-
 
     @RequestMapping("/add")
     @ResponseBody
@@ -62,6 +60,9 @@ public class NtHolidayController extends BaseController{
     @ResponseBody
     public ResponseData findAll(@ModelAttribute("ntHoliday") NtHoliday ntHoliday){
         try {
+            if (ObjectUtils.isNotNull(ntHoliday.getBeginDateStr())){
+                ntHoliday.setBeginDate(DateUtils.parseToDate(ntHoliday.getBeginDateStr(),"yyyy"));
+            }
             List<NtHoliday> holidayList = holidayService.queryHolidayList(ntHoliday);
             return ResponseData.ok().putDataValue("data",holidayList);
         } catch (Exception e) {
