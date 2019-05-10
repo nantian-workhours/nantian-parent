@@ -2,21 +2,21 @@ package cn.com.nantian.service.impl;
 
 
 import cn.com.nantian.common.ParamUntil;
-import cn.com.nantian.common.WDWUtil;
 import cn.com.nantian.mapper.*;
-
-import cn.com.nantian.pojo.*;
+import cn.com.nantian.pojo.NtPerAlias;
+import cn.com.nantian.pojo.NtProjectInfo;
+import cn.com.nantian.pojo.NtWorkingHours;
+import cn.com.nantian.pojo.NtWorkingHoursTmp;
 import cn.com.nantian.pojo.entity.ProList;
 import cn.com.nantian.service.WorkHoursService;
-
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
-
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -24,8 +24,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import javax.xml.crypto.Data;
-
 import java.sql.Time;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -49,7 +47,7 @@ public class WorkHourceImpl implements WorkHoursService{
     @Resource
     private NtWorkingHoursTmpMapper workingHoursTmpMapper;
     @Resource
-    private NtHolidayDefineMapper holidayDefineMapper;
+    private NtHolidayMapper holidayMapper;
     @Resource
     private  NtPersonnelMapper personnelMapper;
 
@@ -116,7 +114,7 @@ public class WorkHourceImpl implements WorkHoursService{
 
                             SimpleDateFormat simDf = new SimpleDateFormat("HH:mm");
                             //判断这一天是不是非工作日加班(例如:五一,周六,周天),如果是节假日加班就直接判断为节假日加班
-                           int t = holidayDefineMapper.countByDay(workingHours.getWorkDate());//判断这一天那是不是节假日
+                           int t = holidayMapper.countByDay(workingHours.getWorkDate());//判断这一天那是不是节假日
                             boolean flag = isWeekend(workingHours.getWorkDate());
                             if(t>0 || flag){//这一整天是节假日加班,
                                 String strStartTime = null;
@@ -310,7 +308,7 @@ public class WorkHourceImpl implements WorkHoursService{
 
                                 SimpleDateFormat simDf = new SimpleDateFormat("HH:mm");
                                 //判断这一天是不是非工作日加班(例如:五一,周六,周天),如果是节假日加班就直接判断为节假日加班
-                                int t = holidayDefineMapper.countByDay(workingHours.getWorkDate());//判断这一天那是不是节假日
+                                int t = holidayMapper.countByDay(workingHours.getWorkDate());//判断这一天那是不是节假日
                                 boolean flag = isWeekend(workingHours.getWorkDate());
                                 if(t>0 || flag){//这一整天是节假日加班,
                                     String strStartTime = null;
@@ -496,7 +494,7 @@ public class WorkHourceImpl implements WorkHoursService{
                 cal.add(Calendar.DAY_OF_MONTH, +1);
                 flag = cal.getTime();
                 //查询数据库中是否有该周六日,若有就是正常工作日(状态为2)
-                int t = holidayDefineMapper.selectByDay(flag);
+                int t = holidayMapper.selectByDay(flag);
                 if(t == 0){
                     continue;
                 }
@@ -506,7 +504,7 @@ public class WorkHourceImpl implements WorkHoursService{
                 //从数据库查找该日期是否在节假日中
                 /**这里为数据库操作*/
 
-                int count = holidayDefineMapper.countByDay(flag);//查询数据库中的节假日信息(状态为1)
+                int count = holidayMapper.countByDay(flag);//查询数据库中的节假日信息(状态为1)
                 /**传入该日期flag,使用sql语句判断flag是否between节假日开始日期and节假日结束日期*/
                 /**count为从数据库查出的行数*/
                 if (count > 0) {
@@ -541,7 +539,7 @@ public class WorkHourceImpl implements WorkHoursService{
         cal.setTime(bDate);
         if (cal.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY || cal.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY) {
             //根据这个星期天去查询日期,如果类型为2 , 则这个周天就是正常工作日(例如:五一规定国家调休的周天为正常工作日)
-            int r = holidayDefineMapper.selectByDay(cal.getTime());
+            int r = holidayMapper.selectByDay(cal.getTime());
             if(r > 0){
                 return false;
             }else{
