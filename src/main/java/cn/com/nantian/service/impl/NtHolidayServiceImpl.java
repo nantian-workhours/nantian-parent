@@ -26,6 +26,13 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     @Resource
     private NtHolidayMapper holidayMapper;
 
+    /**
+     * @Description: 更新时 效验是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:54
+     * @param: [ntHoliday]
+     * @return: boolean
+     **/
     public boolean checkUpdateWhetherRepeat(NtHoliday ntHoliday) {
         List<NtHoliday> ntHolidayList = this.queryHolidayList(null);
         boolean repeat = false;
@@ -40,6 +47,13 @@ public class NtHolidayServiceImpl implements NtHolidayService {
         return repeat;
     }
 
+    /**
+     * @Description: 创建时 效验是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:54
+     * @param: [ntHoliday]
+     * @return: boolean
+     **/
     public boolean checkWhetherRepeat(NtHoliday ntHoliday) {
         List<NtHoliday> ntHolidayList = this.queryHolidayList(ntHoliday);
         boolean repeat = false;
@@ -54,8 +68,14 @@ public class NtHolidayServiceImpl implements NtHolidayService {
         return repeat;
     }
 
-
-    public String checkAttribute(NtHoliday ntHoliday) throws Exception{
+    /**
+     * @Description: 效验传入的参数值
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:54
+     * @param: [ntHoliday]
+     * @return: java.lang.String
+     **/
+    public String checkAttribute(NtHoliday ntHoliday) throws Exception {
         if (StringUtils.isEmpty(ntHoliday.getHolidayName())) {
             return "名称 不能为空！";
         }
@@ -64,17 +84,17 @@ public class NtHolidayServiceImpl implements NtHolidayService {
         }
         if (StringUtils.isEmpty(ntHoliday.getBeginDateStr())) {
             return "开始日期 不能为空！";
-        }else if (!DateUtils.checkDateReg(ntHoliday.getBeginDateStr())){
+        } else if (!DateUtils.checkDateReg(ntHoliday.getBeginDateStr())) {
             return "开始日期 格式不正确！";
-        }else {
-            ntHoliday.setBeginDate(DateUtils.parseToDate(ntHoliday.getBeginDateStr(),"yyyy-MM-dd"));
+        } else {
+            ntHoliday.setBeginDate(DateUtils.parseToDate(ntHoliday.getBeginDateStr(), "yyyy-MM-dd"));
         }
         if (StringUtils.isEmpty(ntHoliday.getEndDateStr())) {
             return "结束日期 不能为空！";
-        }else if (!DateUtils.checkDateReg(ntHoliday.getEndDateStr())){
+        } else if (!DateUtils.checkDateReg(ntHoliday.getEndDateStr())) {
             return "开始日期 格式不正确！";
-        }else {
-            ntHoliday.setEndDate(DateUtils.parseToDate(ntHoliday.getEndDateStr(),"yyyy-MM-dd"));
+        } else {
+            ntHoliday.setEndDate(DateUtils.parseToDate(ntHoliday.getEndDateStr(), "yyyy-MM-dd"));
         }
         if (ObjectUtils.isNotNull(ntHoliday.getBeginDate()) && ObjectUtils.isNotNull(ntHoliday.getEndDate())) {
             if (ntHoliday.getBeginDate().getTime() >= ntHoliday.getEndDate().getTime()) {
@@ -94,32 +114,73 @@ public class NtHolidayServiceImpl implements NtHolidayService {
         return holidayMapper.selectByDay(holidayDate);
     }
 
-
+    /**
+     * @Description: 查询节假日信息列表
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:55
+     * @param: [record]
+     * @return: java.util.List<cn.com.nantian.pojo.NtHoliday>
+     **/
     @Override
     public List<NtHoliday> queryHolidayList(NtHoliday record) {
         return holidayMapper.queryHolidayList(record);
     }
 
+    /**
+     * @Description: 根据主键ID 删除
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:55
+     * @param: [holidayId]
+     * @return: int
+     **/
     @Override
     public int deleteByPrimaryKey(Integer holidayId) {
         return holidayMapper.deleteByPrimaryKey(holidayId);
     }
 
+    /**
+     * @Description: 新增
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:57
+     * @param: [record]
+     * @return: int
+     **/
     @Override
     public int insert(NtHoliday record) {
-        return holidayMapper.insertSelective(record);
+        return holidayMapper.insert(record);
     }
 
+    /**
+     * @Description: 新增
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:57
+     * @param: [record]
+     * @return: int
+     **/
     @Override
     public int insertSelective(NtHoliday record) {
         return holidayMapper.insertSelective(record);
     }
 
+    /**
+     * @Description: 根据主键ID 查询单条数据详情
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:58
+     * @param: [holidayId]
+     * @return: cn.com.nantian.pojo.NtHoliday
+     **/
     @Override
     public NtHoliday selectByPrimaryKey(Integer holidayId) {
         return holidayMapper.selectByPrimaryKey(holidayId);
     }
 
+    /**
+     * @Description: 更新
+     * @auther: Mr.Kong
+     * @date: 2019/5/10 16:59
+     * @param: [record]
+     * @return: int
+     **/
     @Override
     public int updateByPrimaryKeySelective(NtHoliday record) {
         return holidayMapper.updateByPrimaryKeySelective(record);

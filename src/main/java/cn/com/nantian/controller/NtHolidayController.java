@@ -35,6 +35,13 @@ public class NtHolidayController extends BaseController{
     @Resource
     private NtHolidayService holidayService;
 
+    /**
+      * @Description: 添加节假日信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/10 16:53
+      * @param:  [ntHoliday]
+      * @return: cn.com.nantian.pojo.entity.ResponseData
+      **/
     @RequestMapping("/add")
     @ResponseBody
     public ResponseData addNtHoliday(@ModelAttribute("ntHoliday") NtHoliday ntHoliday) {
@@ -47,7 +54,7 @@ public class NtHolidayController extends BaseController{
             if (repeat) {//判断是否存在重复数据
                 return ResponseData.isfailed().putDataValue("error", "数据已存在，请修改！");
             } else {
-                int id = holidayService.insert(ntHoliday);
+                int id = holidayService.insertSelective(ntHoliday);
                 return ResponseData.ok().putDataValue("success", id);
             }
         } catch (Exception e) {
@@ -56,6 +63,13 @@ public class NtHolidayController extends BaseController{
         }
     }
 
+    /**
+      * @Description: 查询所有节假日信息列表
+      * @auther: Mr.Kong
+      * @date: 2019/5/10 16:53
+      * @param:  [ntHoliday]
+      * @return: cn.com.nantian.pojo.entity.ResponseData
+      **/
     @RequestMapping("/findAll")
     @ResponseBody
     public ResponseData findAll(@ModelAttribute("ntHoliday") NtHoliday ntHoliday){
@@ -71,7 +85,14 @@ public class NtHolidayController extends BaseController{
         }
     }
 
-    @RequestMapping("/findInfo")
+    /**
+      * @Description: 查询节假日信息详情
+      * @auther: Mr.Kong
+      * @date: 2019/5/10 16:53
+      * @param:  [holidayId]
+      * @return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping("/findDetail")
     @ResponseBody
     public ResponseData findInfo(@RequestParam("holidayId") int holidayId){
         try {
@@ -84,6 +105,13 @@ public class NtHolidayController extends BaseController{
     }
 
 
+    /**
+      * @Description: 删除节假日信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/10 16:54
+      * @param:  [holidayId]
+      * @return: cn.com.nantian.pojo.entity.ResponseData
+      **/
     @RequestMapping("/delete")
     @ResponseBody
     public ResponseData delete(@RequestParam("holidayId") int holidayId) {
@@ -96,6 +124,13 @@ public class NtHolidayController extends BaseController{
         }
     }
 
+    /**
+      * @Description: 修改节假日信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/10 16:54
+      * @param:  [ntHoliday]
+      * @return: cn.com.nantian.pojo.entity.ResponseData
+      **/
     @RequestMapping("/update")
     @ResponseBody
     public ResponseData updateNtHoliday(@ModelAttribute("ntHoliday") NtHoliday ntHoliday){
