@@ -64,19 +64,19 @@ public class ProjectInfoServiceImpl implements ProjectInfoService {
     public void setNtProjectInfoTypeName(List<NtProjectInfo> NtProjectInfoList){
         String custType="cust";
         if(NtProjectInfoList!=null && NtProjectInfoList.size()>0){
-            for(NtProjectInfo NtProjectInfo:NtProjectInfoList){
+            for(NtProjectInfo ntProjectInfo:NtProjectInfoList){
                 //设置项目人数
                 NtPerInProject perInProject=new NtPerInProject();
-                perInProject.setProjectNumber(NtProjectInfo.getProjectNumber());
+                perInProject.setProjectNumber(ntProjectInfo.getProjectNumber());
                 List<NtPerInProject> perInProjectList=perInProjectMapper.selectPerInProjectList(perInProject);
-                NtProjectInfo.setPeopleNumber(perInProjectList.size());
+                ntProjectInfo.setPeopleNumber(perInProjectList.size());
                 //设置客户类型
                 NtDictionariesKey dictionariesKey=new NtDictionariesKey();
                 dictionariesKey.setDicType(custType);
-                dictionariesKey.setDicCode(NtProjectInfo.getCustType());
+                dictionariesKey.setDicCode(ntProjectInfo.getCustType());
                 List<NtDictionariesKey> dictionariesKeyList=dictionariesMapper.selectDictionariesList(dictionariesKey);
                 if(dictionariesKeyList!=null && dictionariesKeyList.size()>0){
-                    NtProjectInfo.setCustTypeName(dictionariesKeyList.get(0).getDicValue());
+                    ntProjectInfo.setCustTypeName(dictionariesKeyList.get(0).getDicValue());
                 }
             }
         }

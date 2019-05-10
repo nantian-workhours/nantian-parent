@@ -151,9 +151,9 @@
   <select id="selectPerInProjectList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProject" >
     select
     <include refid="Base_Column_List" />
-    from nt_per_in_project t
-    WHERE t.PROJECT_NUMBER=#{projectNumber}
-    AND (t.PROJECT_ENDDATE>= NOW() or  t.PROJECT_ENDDATE is null )
+    from nt_per_in_project
+    WHERE nt_per_in_project.PROJECT_NUMBER=#{projectNumber}
+    AND (nt_per_in_project.PROJECT_ENDDATE>= NOW() or  nt_per_in_project.PROJECT_ENDDATE is null )
   </select>
   <!-- 查询项目人数 end-->
 
