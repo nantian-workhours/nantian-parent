@@ -8,9 +8,11 @@
 package cn.com.nantian.service.impl;
 
 
+import cn.com.nantian.common.DateUtils;
+import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.NtHolidayMapper;
 import cn.com.nantian.pojo.NtHoliday;
-import cn.com.nantian.pojo.NtHolidayExample;
 import cn.com.nantian.service.NtHolidayService;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,63 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     @Resource
     private NtHolidayMapper holidayMapper;
 
+    public boolean checkUpdateWhetherRepeat(NtHoliday ntHoliday) {
+        List<NtHoliday> ntHolidayList = this.queryHolidayList(null);
+        boolean repeat = false;
+        if (ObjectUtils.isNotNull(ntHolidayList) && ObjectUtils.isNotNull(ntHoliday)) {
+            for (NtHoliday holiday : ntHolidayList) {
+                if (holiday.getHolidayId() != ntHoliday.getHolidayId() && holiday.equals(ntHoliday)) {
+                    repeat = true;
+                    break;
+                }
+            }
+        }
+        return repeat;
+    }
+
+    public boolean checkWhetherRepeat(NtHoliday ntHoliday) {
+        List<NtHoliday> ntHolidayList = this.queryHolidayList(ntHoliday);
+        boolean repeat = false;
+        if (ObjectUtils.isNotNull(ntHolidayList) && ObjectUtils.isNotNull(ntHoliday)) {
+            for (NtHoliday holiday : ntHolidayList) {
+                if (holiday.equals(ntHoliday)) {
+                    repeat = true;
+                    break;
+                }
+            }
+        }
+        return repeat;
+    }
+
+
+    public String checkAttribute(NtHoliday ntHoliday) throws Exception{
+        if (StringUtils.isEmpty(ntHoliday.getHolidayName())) {
+            return "名称 不能为空！";
+        }
+        if (StringUtils.isEmpty(ntHoliday.getHolidayType())) {
+            return "类型 不能为空！";
+        }
+        if (StringUtils.isEmpty(ntHoliday.getBeginDateStr())) {
+            return "开始日期 不能为空！";
+        }else if (!DateUtils.checkDateReg(ntHoliday.getBeginDateStr())){
+            return "开始日期 格式不正确！";
+        }else {
+            ntHoliday.setBeginDate(DateUtils.parseToDate(ntHoliday.getBeginDateStr(),"yyyy-MM-dd"));
+        }
+        if (StringUtils.isEmpty(ntHoliday.getEndDateStr())) {
+            return "结束日期 不能为空！";
+        }else if (!DateUtils.checkDateReg(ntHoliday.getEndDateStr())){
+            return "开始日期 格式不正确！";
+        }else {
+            ntHoliday.setEndDate(DateUtils.parseToDate(ntHoliday.getEndDateStr(),"yyyy-MM-dd"));
+        }
+        if (ObjectUtils.isNotNull(ntHoliday.getBeginDate()) && ObjectUtils.isNotNull(ntHoliday.getEndDate())) {
+            if (ntHoliday.getBeginDate().getTime() >= ntHoliday.getEndDate().getTime()) {
+                return "结束日期必须大于开始日期！";
+            }
+        }
+        return "";
+    }
 
     @Override
     public int countByDay(Date holidayDate) {
@@ -35,14 +94,10 @@ public class NtHolidayServiceImpl implements NtHolidayService {
         return holidayMapper.selectByDay(holidayDate);
     }
 
-    @Override
-    public int countByExample(NtHolidayExample example) {
-        return holidayMapper.countByExample(example);
-    }
 
     @Override
-    public int deleteByExample(NtHolidayExample example) {
-        return holidayMapper.deleteByExample(example);
+    public List<NtHoliday> queryHolidayList(NtHoliday record) {
+        return holidayMapper.queryHolidayList(record);
     }
 
     @Override
@@ -52,7 +107,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     @Override
     public int insert(NtHoliday record) {
-        return holidayMapper.insert(record);
+        return holidayMapper.insertSelective(record);
     }
 
     @Override
@@ -61,23 +116,8 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     @Override
-    public List<NtHoliday> selectByExample(NtHolidayExample example) {
-        return holidayMapper.selectByExample(example);
-    }
-
-    @Override
     public NtHoliday selectByPrimaryKey(Integer holidayId) {
         return holidayMapper.selectByPrimaryKey(holidayId);
-    }
-
-    @Override
-    public int updateByExampleSelective(NtHoliday record, NtHolidayExample example) {
-        return holidayMapper.updateByExampleSelective(record,example);
-    }
-
-    @Override
-    public int updateByExample(NtHoliday record, NtHolidayExample example) {
-        return holidayMapper.updateByExample(record,example);
     }
 
     @Override

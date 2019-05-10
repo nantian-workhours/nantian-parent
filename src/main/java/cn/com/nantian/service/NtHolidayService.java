@@ -8,8 +8,6 @@
 package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtHoliday;
-import cn.com.nantian.pojo.NtHolidayExample;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -17,27 +15,11 @@ import java.util.List;
 
 public interface NtHolidayService {
 
-    int countByExample(NtHolidayExample example);
+    boolean checkUpdateWhetherRepeat(NtHoliday ntHoliday);
 
-    int deleteByExample(NtHolidayExample example);
+    boolean checkWhetherRepeat(NtHoliday ntHoliday);
 
-    int deleteByPrimaryKey(Integer holidayId);
-
-    int insert(NtHoliday record);
-
-    int insertSelective(NtHoliday record);
-
-    List<NtHoliday> selectByExample(NtHolidayExample example);
-
-    NtHoliday selectByPrimaryKey(Integer holidayId);
-
-    int updateByExampleSelective(@Param("record") NtHoliday record, @Param("example") NtHolidayExample example);
-
-    int updateByExample(@Param("record") NtHoliday record, @Param("example") NtHolidayExample example);
-
-    int updateByPrimaryKeySelective(NtHoliday record);
-
-    int updateByPrimaryKey(NtHoliday record);
+    String checkAttribute(NtHoliday ntHoliday) throws Exception;
 
     /**
      *查询该日期是否是节假日
@@ -52,4 +34,18 @@ public interface NtHolidayService {
      * @return
      */
     int  selectByDay(Date holidayDate);
+
+    List<NtHoliday> queryHolidayList(NtHoliday record);
+
+    int deleteByPrimaryKey(Integer holidayId);
+
+    int insert(NtHoliday record);
+
+    int insertSelective(NtHoliday record);
+
+    NtHoliday selectByPrimaryKey(Integer holidayId);
+
+    int updateByPrimaryKeySelective(NtHoliday record);
+
+    int updateByPrimaryKey(NtHoliday record);
 }
