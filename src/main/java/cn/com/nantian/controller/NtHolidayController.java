@@ -74,7 +74,7 @@ public class NtHolidayController extends BaseController{
     @ResponseBody
     public ResponseData findAll(@ModelAttribute("ntHoliday") NtHoliday ntHoliday){
         try {
-            if (ObjectUtils.isNotNull(ntHoliday.getBeginDateStr())){
+            if (ObjectUtils.isNotNull(ntHoliday.getBeginDateStr()) &&  DateUtils.checkDateReg(ntHoliday.getBeginDateStr())){
                 ntHoliday.setBeginDate(DateUtils.parseToDate(ntHoliday.getBeginDateStr(),"yyyy"));
             }
             List<NtHoliday> holidayList = holidayService.queryHolidayList(ntHoliday);
