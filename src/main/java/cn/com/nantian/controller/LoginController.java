@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -79,50 +78,4 @@ public class LoginController {
             return ResponseData.forbidden().putDataValue("", e.toString());
         }
     }
-
-
-    /**
-     * 根据身份证号修改用户密码
-     *
-     * @param idNo
-     * @param password
-     * @return
-     */
-    @RequestMapping("/update/password")
-    @ResponseBody
-    public ResponseData updatePassword(String idNo, String oldPassword, String password) {
-        try {
-            //根据身份证修改密码
-            int a = userService.byIdNoUpdatePW(idNo, oldPassword, password);
-            if (a > 0) {
-                return ResponseData.ok().putDataValue("update pw success", a);
-            } else {
-                return ResponseData.isfailed().putDataValue("update failed", a);
-            }
-        } catch (Exception e) {
-            logger.error("LoginController.updatePassword", e);
-            return ResponseData.forbidden().putDataValue("", e.toString());
-        }
-    }
-
-    /**
-     * @Description: 重置密码
-     * @auther: Mr.Kong
-     * @date: 2019/5/13 10:43
-     * @param: [perId]
-     * @return: cn.com.nantian.pojo.entity.ResponseData
-     **/
-    @RequestMapping(value = "/reset/password")
-    @ResponseBody
-    public ResponseData resetPassWord(@RequestParam("perId") int perId) {
-        try {
-            int a = userService.resetPassWord(perId);
-            return ResponseData.ok().putDataValue("重置密码成功", a);
-        } catch (Exception e) {
-            logger.error("LoginController.updatePassWord", e);
-            return ResponseData.serverInternalError().putDataValue("系统异常", e.toString());
-        }
-    }
-
-
 }
