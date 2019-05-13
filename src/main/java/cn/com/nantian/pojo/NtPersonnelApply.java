@@ -7,32 +7,35 @@ package cn.com.nantian.pojo;
 import lombok.Data;
 import java.util.Date;
 
-
 @Data
 public class NtPersonnelApply {
+    /**任务号*/
     private Integer applySeq;
-
+    /**员工编号*/
     private Integer perId;
-
+    /**申请日期*/
     private Date applyDate;
-
+    /**申请类型*/
     private String applyType;
-
+    /**申请值*/
     private String applyValue;
-
+    /**考勤日期*/
     private Date workDate;
-
+    /**处理状态*/
     private String applyStatus;
-
+    /**错误描述*/
     private String errDescribe;
-
+    /**审批日期*/
     private Date approveDate;
-
+    /**审批人编号*/
     private Integer managerId;
-
+    /**附件路径*/
     private String filePath;
-
+    /**附件名称*/
     private String fileName;
-
+    /**审批意见*/
     private String approveOpn;
+
+
+
 }
