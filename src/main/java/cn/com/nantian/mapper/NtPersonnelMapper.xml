@@ -233,14 +233,14 @@
 
   <insert id="insert" parameterType="cn.com.nantian.pojo.NtPersonnel" >
     insert into nt_personnel (PER_ID, DEPT_ID, SEX, 
-      NAME, MOBILE_NO, ID_NO, 
+      `NAME`, MOBILE_NO, ID_NO,
       BIRTHDAY, ETHNIC, EDUCATION, 
       UNIVERSITY, MAJOR, GRADUATION_DATE, 
       ENTRY_DATE, LEAVE_DATE, STATUS, 
-      POSITION, COMPANY_EMAIL, PERSON_EMAIL, 
+      `POSITION`, COMPANY_EMAIL, PERSON_EMAIL,
       POST, PASSWORD, NATIVE_PLACE, 
       MARRIAGE_STATUS, JURISDICTION)
-    values (#{perId,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{sex,jdbcType=CHAR}, 
+      values (#{perId,jdbcType=INTEGER}, #{deptId,jdbcType=INTEGER}, #{sex,jdbcType=CHAR},
       #{name,jdbcType=VARCHAR}, #{mobileNo,jdbcType=VARCHAR}, #{idNo,jdbcType=VARCHAR}, 
       #{birthday,jdbcType=DATE}, #{ethnic,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, 
       #{university,jdbcType=VARCHAR}, #{major,jdbcType=VARCHAR}, #{graduationDate,jdbcType=DATE}, 
@@ -449,7 +449,7 @@
         STATUS = #{record.status,jdbcType=CHAR},
       </if>
       <if test="record.position != null" >
-        POSITION = #{record.position,jdbcType=CHAR},
+        `POSITION` = #{record.position,jdbcType=CHAR},
       </if>
       <if test="record.companyEmail != null" >
         COMPANY_EMAIL = #{record.companyEmail,jdbcType=VARCHAR},
@@ -482,7 +482,7 @@
     set PER_ID = #{record.perId,jdbcType=INTEGER},
       DEPT_ID = #{record.deptId,jdbcType=INTEGER},
       SEX = #{record.sex,jdbcType=CHAR},
-      NAME = #{record.name,jdbcType=VARCHAR},
+      `NAME` = #{record.name,jdbcType=VARCHAR},
       MOBILE_NO = #{record.mobileNo,jdbcType=VARCHAR},
       ID_NO = #{record.idNo,jdbcType=VARCHAR},
       BIRTHDAY = #{record.birthday,jdbcType=DATE},
@@ -494,7 +494,7 @@
       ENTRY_DATE = #{record.entryDate,jdbcType=DATE},
       LEAVE_DATE = #{record.leaveDate,jdbcType=DATE},
       STATUS = #{record.status,jdbcType=CHAR},
-      POSITION = #{record.position,jdbcType=CHAR},
+      `POSITION` = #{record.position,jdbcType=CHAR},
       COMPANY_EMAIL = #{record.companyEmail,jdbcType=VARCHAR},
       PERSON_EMAIL = #{record.personEmail,jdbcType=VARCHAR},
       POST = #{record.post,jdbcType=CHAR},
@@ -602,6 +602,12 @@
       NATIVE_PLACE = #{nativePlace,jdbcType=VARCHAR},
       MARRIAGE_STATUS = #{marriageStatus,jdbcType=CHAR},
       JURISDICTION = #{jurisdiction,jdbcType=CHAR}
+    where PER_ID = #{perId,jdbcType=INTEGER}
+  </update>
+  <update id="updatePassWord" parameterType="cn.com.nantian.pojo.NtPersonnel" >
+    update nt_personnel
+    set
+      PASSWORD = #{password,jdbcType=VARCHAR}
     where PER_ID = #{perId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -615,5 +615,19 @@ public class UserImpl implements UserService {
         return t;
     }
 
-
+    /**
+      * @Description: 重置密码
+      * @auther: Mr.Kong
+      * @date: 2019/5/13 10:54
+      * @param:  [perId]
+      * @return: int
+      **/
+    @Override
+    public int resetPassWord(int perId) {
+        NtPersonnel personnel=new NtPersonnel();
+        personnel.setPerId(perId);
+        String password="nt0000";
+        personnel.setPassword(DigestUtils.md5DigestAsHex(password.getBytes()));
+        return personnelMapper.updatePassWord(personnel);
+    }
 }

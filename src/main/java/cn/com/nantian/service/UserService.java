@@ -156,4 +156,13 @@ public interface UserService {
      * @return
      */
     int resetPassWord(String idNo);
+
+    /**
+      * @Description: 重置密码
+      * @auther: Mr.Kong
+      * @date: 2019/5/13 10:54
+      * @param:  [perId]
+      * @return: int
+      **/
+    int resetPassWord(int perId);
 }

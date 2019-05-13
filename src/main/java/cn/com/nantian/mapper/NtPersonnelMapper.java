@@ -108,4 +108,7 @@ public interface NtPersonnelMapper {
       **/
     List<NtPersonnel> queryPersonnelListDate(NtPersonnel personnel);
 
+
+    int updatePassWord(NtPersonnel personnel);
+
 }
