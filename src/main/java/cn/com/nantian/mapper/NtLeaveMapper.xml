@@ -38,6 +38,7 @@
         and <![CDATA[ nt_leave.BEG_DATE>=#{begDate}]]>
       </if>
     </where>
+    order by nt_leave.LEAVE_ID desc
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select

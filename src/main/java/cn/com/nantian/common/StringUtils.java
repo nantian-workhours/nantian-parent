@@ -707,4 +707,14 @@ public class StringUtils {
             return "";
         }
     }
+
+    public static boolean isDay(String date){
+        String reg="^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*$";
+        Pattern pattern = Pattern.compile(reg);
+        Matcher m = pattern.matcher(date);
+        if (!m.matches()){
+            return false;
+        }
+        return true;
+    }
 }

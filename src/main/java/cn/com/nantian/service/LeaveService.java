@@ -8,6 +8,22 @@ import java.util.List;
 import java.util.Map;
 
 public interface LeaveService {
+    /**
+     * @Description: 更新时 效验传入的参数值
+     * @auther: Mr.Kong
+     * @date: 2019/5/13 16:07
+     * @param:  [ntLeave]
+     * @return: java.lang.String
+     **/
+    public String checkUpdateAttribute(NtLeave ntLeave) throws Exception;
+    /**
+     * @Description: 创建时 效验传入的参数值
+     * @auther: Mr.Kong
+     * @date: 2019/5/13 16:07
+     * @param:  [ntLeave]
+     * @return: java.lang.String
+     **/
+    String checkAttribute(NtLeave ntLeave) throws Exception;
 
     /**
      * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)

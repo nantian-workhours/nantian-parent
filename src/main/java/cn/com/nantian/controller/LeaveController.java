@@ -7,7 +7,9 @@
  */
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.DateUtils;
 import cn.com.nantian.common.ParamUntil;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtLeave;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.LeaveService;
@@ -49,9 +51,12 @@ public class LeaveController {
      **/
     @RequestMapping("/ntLeave/findAll")
     @ResponseBody
-    public ResponseData findAll(@ModelAttribute("ntLeave") NtLeave leave) {
+    public ResponseData findAll(@ModelAttribute("ntLeave") NtLeave ntLeave) {
         try {
-            List<NtLeave> leaveList = leaveService.selectLeaveList(leave);
+            if (StringUtils.isNotEmpty(ntLeave.getBegDateStr()) && DateUtils.checkDateReg(ntLeave.getBegDateStr())){
+                ntLeave.setBegDate(DateUtils.parseToDate(ntLeave.getBegDateStr(), "yyyy-MM-dd"));
+            }
+            List<NtLeave> leaveList = leaveService.selectLeaveList(ntLeave);
             leaveService.setLeaveTypeName(leaveList);
             return ResponseData.ok().putDataValue("data", leaveList);
         } catch (Exception e) {
@@ -71,6 +76,11 @@ public class LeaveController {
     @ResponseBody
     public ResponseData insert(@ModelAttribute("ntLeave") NtLeave leave) {
         try {
+            //效验传入参数值
+            String result=leaveService.checkAttribute(leave);
+            if (StringUtils.isNotEmpty(result)){
+                return ResponseData.isfailed().putDataValue("error",result);
+            }
             int id = leaveService.insertSelective(leave);
             return ResponseData.ok().putDataValue(" Add success num ", id);
         } catch (Exception e) {
@@ -90,8 +100,13 @@ public class LeaveController {
     @ResponseBody
     public ResponseData update(@ModelAttribute("ntLeave") NtLeave leave) {
         try {
+            //效验传入参数值
+            String result=leaveService.checkUpdateAttribute(leave);
+            if (StringUtils.isNotEmpty(result)){
+                return ResponseData.isfailed().putDataValue("error",result);
+            }
             int d = leaveService.updateLeaveStatus(leave);
-            return ResponseData.ok().putDataValue("update number", d);
+            return ResponseData.ok().putDataValue("审核成功", d);
         } catch (Exception e) {
             logger.error("LeaveController.update", e);
             return ResponseData.forbidden();

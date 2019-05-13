@@ -3,6 +3,11 @@ package cn.com.nantian.pojo;
 import lombok.Data;
 
 import java.util.Date;
+/**
+  * @Description: 请假信息实体
+  * @auther: Mr.Kong
+  * @date: 2019/5/13 16:09
+  **/
 
 @Data
 public class NtLeave {
@@ -18,7 +23,7 @@ public class NtLeave {
     private String leaveType;
     /**请假天数*/
     private Float leaveCount;
-    /**请假说明*/
+    /**请假内容*/
     private String leaveRemark;
     /**审核状态 R 审核中，Y 通过，N 退回*/
     private String applyStatus;
@@ -30,10 +35,16 @@ public class NtLeave {
     private String approveOpn;
 
     //============================
+    /**请假天数*/
+    private String leaveCountStr;
+    /**请假开始日期*/
+    private String begDateStr;
+    /**请假结束日期*/
+    private String endDateStr;
     /**员工姓名*/
     private String userName;
     /**部门id*/
-    private String deptId;
+    private Integer deptId;
     /**部门名称*/
     private String deptName;
     /**请假类型名称*/

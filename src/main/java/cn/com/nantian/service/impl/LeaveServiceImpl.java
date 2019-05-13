@@ -7,11 +7,15 @@
  */
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.DateUtils;
 import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.NtLeaveMapper;
-import cn.com.nantian.pojo.*;
+import cn.com.nantian.pojo.NtDepartment;
+import cn.com.nantian.pojo.NtDictionariesKey;
+import cn.com.nantian.pojo.NtLeave;
+import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.service.DepartmentService;
 import cn.com.nantian.service.DictionariesService;
 import cn.com.nantian.service.LeaveService;
@@ -45,6 +49,70 @@ public class LeaveServiceImpl implements LeaveService {
     private UserService userService;
 
     /**
+      * @Description: 创建时 效验传入的参数值
+      * @auther: Mr.Kong
+      * @date: 2019/5/13 16:07
+      * @param:  [ntLeave]
+      * @return: java.lang.String
+      **/
+    public String checkAttribute(NtLeave ntLeave) throws Exception{
+        if (ObjectUtils.isNull(ntLeave.getDeptId())) {
+            return "部门编号 不能为空！";
+        }
+        if (ObjectUtils.isNull(ntLeave.getPerId())) {
+            return "员工编号 不能为空！";
+        }
+        if (StringUtils.isEmpty(ntLeave.getBegDateStr())) {
+            return "开始日期 不能为空！";
+        }else if (!DateUtils.checkDateReg(ntLeave.getBegDateStr())){
+            return "开始日期 格式不正确！";
+        }else {
+            ntLeave.setBegDate(DateUtils.parseToDate(ntLeave.getBegDateStr(), "yyyy-MM-dd"));
+        }
+        if (StringUtils.isEmpty(ntLeave.getEndDateStr())) {
+            return "结束日期 不能为空！";
+        }else if (!DateUtils.checkDateReg(ntLeave.getEndDateStr())){
+            return "结束日期 格式不正确！";
+        }else {
+            ntLeave.setEndDate(DateUtils.parseToDate(ntLeave.getEndDateStr(), "yyyy-MM-dd"));
+        }
+        if (ObjectUtils.isNull(ntLeave.getLeaveCountStr())) {
+            return "请假天数 不能为空！";
+        }else if (!StringUtils.isNumber(ntLeave.getLeaveCountStr())){
+            return "请假天数 格式不正确！";
+        }else {
+            ntLeave.setLeaveCount(Float.parseFloat(ntLeave.getLeaveCountStr()));
+        }
+        if (StringUtils.isEmpty(ntLeave.getLeaveType())) {
+            return "请假类型 不能为空！";
+        }
+        if (StringUtils.isEmpty(ntLeave.getLeaveRemark())) {
+            return "请假内容 不能为空！";
+        }
+        return "";
+    }
+
+    /**
+      * @Description: 更新时 效验传入的参数值
+      * @auther: Mr.Kong
+      * @date: 2019/5/13 16:07
+      * @param:  [ntLeave]
+      * @return: java.lang.String
+      **/
+    public String checkUpdateAttribute(NtLeave ntLeave) throws Exception{
+        if (ObjectUtils.isNull(ntLeave.getLeaveId())) {
+            return "主键id 不能为空！";
+        }
+        if (StringUtils.isEmpty(ntLeave.getApplyStatus())) {
+            return "审批状态 不能为空！";
+        }
+        /*if (StringUtils.isEmpty(ntLeave.getApproveOpn())) {
+            return "审批意见 不能为空！";
+        }*/
+        return "";
+    }
+
+    /**
      * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
      * @Auther: Mr.Kong
      * @Date: 2019/3/29 15:52
@@ -53,6 +121,8 @@ public class LeaveServiceImpl implements LeaveService {
      **/
     @Override
     public int updateLeaveStatus(NtLeave leave) {
+        leave.setManagerId(1);//审批人id
+        leave.setApproveDate(new Date());//审批时间
         return leaveMapper.updateLeaveStatus(leave);
     }
 
