@@ -1,13 +1,15 @@
 /**
  * @Description: 员工考勤异常处理申请管理
- * @auther: Mr.Kong
- * @date: 2019/5/13 16:46
- **/
-package cn.com.nantian.mapper;
+ * @ClassName: NtPersonnelApplyService
+ * @author： Mr.Kong
+ * @date: 2019/5/13 16:48
+ * @Version： 1.0
+ */
+package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtPersonnelApply;
 
-public interface NtPersonnelApplyMapper {
+public interface NtPersonnelApplyService {
     int deleteByPrimaryKey(Integer applySeq);
 
     int insert(NtPersonnelApply record);
