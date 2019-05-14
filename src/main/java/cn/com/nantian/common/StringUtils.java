@@ -708,8 +708,15 @@ public class StringUtils {
         }
     }
 
+    /**
+      * @Description: 输入天数效验
+      * @auther: Mr.Kong
+      * @date: 2019/5/14 9:48
+      * @param:  [date]
+      * @return: boolean
+      **/
     public static boolean isDay(String date){
-        String reg="^[1-9]\\d*\\.\\d*|0\\.\\d*[1-9]\\d*$";
+        String reg="^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){1})?$";
         Pattern pattern = Pattern.compile(reg);
         Matcher m = pattern.matcher(date);
         if (!m.matches()){
