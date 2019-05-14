@@ -7,7 +7,14 @@ package cn.com.nantian.mapper;
 
 import cn.com.nantian.pojo.NtPersonnelApply;
 
+import java.util.List;
+
 public interface NtPersonnelApplyMapper {
+
+    int updateApplyStatus(NtPersonnelApply personnelApply);
+
+    List<NtPersonnelApply> queryPersonApplyList(NtPersonnelApply personnelApply);
+
     int deleteByPrimaryKey(Integer applySeq);
 
     int insert(NtPersonnelApply record);

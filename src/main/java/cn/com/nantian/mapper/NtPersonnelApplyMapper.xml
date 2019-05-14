@@ -17,7 +17,7 @@
     <result column="APPROVE_OPN" property="approveOpn" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    APPLY_SEQ, PER_ID, APPLY_DATE, APPLY_TYPE, APPLY_VALUE, WORK_DATE, APPLY_STATUS, 
+    APPLY_SEQ, nt_personnel_apply.PER_ID, APPLY_DATE, APPLY_TYPE, APPLY_VALUE, WORK_DATE, APPLY_STATUS,
     ERR_DESCRIBE, APPROVE_DATE, MANAGER_ID, FILE_PATH, FILE_NAME, APPROVE_OPN
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -25,6 +25,27 @@
     <include refid="Base_Column_List" />
     from nt_personnel_apply
     where APPLY_SEQ = #{applySeq,jdbcType=INTEGER}
+  </select>
+  <select id="queryPersonApplyList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
+    select
+    <include refid="Base_Column_List" />,
+    d.DIC_VALUE applyTypeName,
+    di.DIC_VALUE applyStatusName,
+    p.`NAME` userName
+    from nt_personnel_apply
+    LEFT JOIN nt_dictionaries d ON d.DIC_CODE = nt_personnel_apply.APPLY_TYPE
+    LEFT JOIN nt_dictionaries di ON di.DIC_CODE = nt_personnel_apply.APPLY_STATUS
+    LEFT JOIN nt_personnel p ON p.PER_ID=nt_personnel_apply.PER_ID
+    <where>
+      d.DIC_TYPE = 'dis' AND di.DIC_TYPE = 'applyStatus'
+      <if test="userName !=null and userName !=''">
+        and p.NAME like CONCAT('%',#{userName},'%')
+      </if>
+      <if test="applyDate !=null and applyDate !=''">
+        and <![CDATA[ nt_personnel_apply.APPLY_DATE = #{applyDate}]]>
+      </if>
+    </where>
+    order by nt_personnel_apply.APPLY_SEQ desc
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from nt_personnel_apply
@@ -51,9 +72,7 @@
       <if test="perId != null" >
         PER_ID,
       </if>
-      <if test="applyDate != null" >
         APPLY_DATE,
-      </if>
       <if test="applyType != null" >
         APPLY_TYPE,
       </if>
@@ -92,9 +111,7 @@
       <if test="perId != null" >
         #{perId,jdbcType=INTEGER},
       </if>
-      <if test="applyDate != null" >
-        #{applyDate,jdbcType=TIMESTAMP},
-      </if>
+      now(),
       <if test="applyType != null" >
         #{applyType,jdbcType=CHAR},
       </if>
@@ -182,6 +199,15 @@
       MANAGER_ID = #{managerId,jdbcType=INTEGER},
       FILE_PATH = #{filePath,jdbcType=VARCHAR},
       FILE_NAME = #{fileName,jdbcType=VARCHAR},
+      APPROVE_OPN = #{approveOpn,jdbcType=VARCHAR}
+    where APPLY_SEQ = #{applySeq,jdbcType=INTEGER}
+  </update>
+  <update id="updateApplyStatus" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
+    update nt_personnel_apply
+    set
+      APPLY_STATUS = #{applyStatus,jdbcType=CHAR},
+      APPROVE_DATE = now(),
+      MANAGER_ID = #{managerId,jdbcType=INTEGER},
       APPROVE_OPN = #{approveOpn,jdbcType=VARCHAR}
     where APPLY_SEQ = #{applySeq,jdbcType=INTEGER}
   </update>

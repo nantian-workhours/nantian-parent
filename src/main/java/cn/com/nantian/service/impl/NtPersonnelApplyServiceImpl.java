@@ -7,17 +7,69 @@
  */
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.DateUtils;
+import cn.com.nantian.common.ObjectUtils;
+import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.mapper.NtPersonnelApplyMapper;
 import cn.com.nantian.pojo.NtPersonnelApply;
 import cn.com.nantian.service.NtPersonnelApplyService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
+
 @Service
-public class NtPersonnelApplyServiceImpl  implements NtPersonnelApplyService {
+public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
 
     @Resource
     private NtPersonnelApplyMapper personnelApplyMapper;
+
+    /**
+     * @Description: 查询员工异议申请信息列表
+     * @auther: Mr.Kong
+     * @date: 2019/5/14 15:15
+     * @param: [personnelApply]
+     * @return: java.util.List<cn.com.nantian.pojo.NtPersonnelApply>
+     **/
+    @Override
+    public List<NtPersonnelApply> queryPersonApplyList(NtPersonnelApply personnelApply) {
+        return personnelApplyMapper.queryPersonApplyList(personnelApply);
+    }
+
+    /**
+     * @Description: 创建时 效验传入的参数值
+     * @auther: Mr.Kong
+     * @date: 2019/5/14 14:08
+     * @param: [personnelApply]
+     * @return: java.lang.String
+     **/
+    public String checkAttribute(NtPersonnelApply personnelApply) throws Exception {
+        if (StringUtils.isEmpty(personnelApply.getWorkDateStr())) {
+            return "异议日期 不能为空！";
+        } else if (!DateUtils.checkDateReg(personnelApply.getWorkDateStr())) {
+            return "异议日期 格式不正确！";
+        } else {
+            personnelApply.setWorkDate(DateUtils.parseToDate(personnelApply.getWorkDateStr(), "yyyy-MM-dd"));
+        }
+
+        if (StringUtils.isEmpty(personnelApply.getApplyType())) {
+            return "申请类型 不能为空！";
+        }
+        if (StringUtils.isEmpty(personnelApply.getApplyValue())) {
+            return "申请值 不能为空！";
+        }
+        if (ObjectUtils.isNull(personnelApply.getErrDescribe())) {
+            return "申请理由 不能为空！";
+        }
+        if (StringUtils.isEmpty(personnelApply.getFileName())) {
+            return "附件名称 不能为空！";
+        }
+        if (StringUtils.isEmpty(personnelApply.getFilePath())) {
+            return "附件路径 不能为空！";
+        }
+        personnelApply.setApplyStatus("R");//审核中
+        return "";
+    }
 
     @Override
     public int deleteByPrimaryKey(Integer applySeq) {
@@ -34,6 +86,13 @@ public class NtPersonnelApplyServiceImpl  implements NtPersonnelApplyService {
         return personnelApplyMapper.insertSelective(record);
     }
 
+    /**
+     * @Description: 查询员工异议申请信息详情
+     * @auther: Mr.Kong
+     * @date: 2019/5/14 15:48
+     * @param: [applySeq]
+     * @return: cn.com.nantian.pojo.NtPersonnelApply
+     **/
     @Override
     public NtPersonnelApply selectByPrimaryKey(Integer applySeq) {
         return personnelApplyMapper.selectByPrimaryKey(applySeq);
@@ -47,5 +106,18 @@ public class NtPersonnelApplyServiceImpl  implements NtPersonnelApplyService {
     @Override
     public int updateByPrimaryKey(NtPersonnelApply record) {
         return personnelApplyMapper.updateByPrimaryKey(record);
+    }
+
+    /**
+     * @Description: 更新处理状态
+     * @auther: Mr.Kong
+     * @date: 2019/5/14 15:46
+     * @param: [personnelApply]
+     * @return: int
+     **/
+    @Override
+    public int updateApplyStatus(NtPersonnelApply personnelApply) {
+        personnelApply.setManagerId(1);//审批人编号
+        return personnelApplyMapper.updateApplyStatus(personnelApply);
     }
 }

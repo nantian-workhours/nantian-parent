@@ -35,7 +35,16 @@ public class NtPersonnelApply {
     private String fileName;
     /**审批意见*/
     private String approveOpn;
-
-
+    //========================================
+    /**申请日期*/
+    private String applyDateStr;
+    /**考勤日期*/
+    private String workDateStr;
+    /**员工姓名*/
+    private String userName;
+    /**申请类型名称*/
+    private String applyTypeName;
+    /**申请状态名称*/
+    private String applyStatusName;
 
 }
