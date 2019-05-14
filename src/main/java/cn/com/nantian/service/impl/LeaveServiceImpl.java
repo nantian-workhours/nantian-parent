@@ -1,8 +1,8 @@
 /**
- * @Description: 请假信息管理
+ * @description: 请假信息管理
  * @ClassName: LeaveServiceImpl
  * @Author： Mr.Kong
- * @Date: 2019/3/29 15:03
+ * @date: 2019/3/29 15:03
  * @Version： 1.0
  */
 package cn.com.nantian.service.impl;
@@ -49,7 +49,7 @@ public class LeaveServiceImpl implements LeaveService {
     private UserService userService;
 
     /**
-      * @Description: 创建时 效验传入的参数值
+      * @description: 创建时 效验传入的参数值
       * @auther: Mr.Kong
       * @date: 2019/5/13 16:07
       * @param:  [ntLeave]
@@ -93,7 +93,7 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     /**
-      * @Description: 更新时 效验传入的参数值
+      * @description: 更新时 效验传入的参数值
       * @auther: Mr.Kong
       * @date: 2019/5/13 16:07
       * @param:  [ntLeave]
@@ -113,11 +113,11 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     /**
-     * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:52
+     * @description: 更新审批状态(R 审核中, Y 通过, N 退回)
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:52
      * @Param: [leave]
-     * @Return: int
+     * @return: int
      **/
     @Override
     public int updateLeaveStatus(NtLeave leave) {
@@ -127,11 +127,11 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     /**
-     * @Description: 设置请假类别名称、审批状态名称
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:32
+     * @description: 设置请假类别名称、审批状态名称
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:32
      * @Param: [leaveList]
-     * @Return: void
+     * @return: void
      **/
     @Override
     public void setLeaveTypeName(List<NtLeave> leaveList) {
@@ -155,11 +155,11 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     /**
-     * @Description: 设置请假类别名称、审批状态名称
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:33
+     * @description: 设置请假类别名称、审批状态名称
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:33
      * @Param: [leave]
-     * @Return: void
+     * @return: void
      **/
     @Override
     public void setLeaveTypeName(NtLeave leave) {
@@ -182,11 +182,11 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     /**
-     * @Description: 查询请假信息列表
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:25
+     * @description: 查询请假信息列表
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:25
      * @Param: [leave]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtLeave>
+     * @return: List<NtLeave>
      **/
     @Override
     public List<NtLeave> selectLeaveList(NtLeave leave) {
@@ -226,11 +226,11 @@ public class LeaveServiceImpl implements LeaveService {
 
 
     /**
-     * @Description: 导入请假信息
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/1 17:07
+     * @description: 导入请假信息
+     * @auther: Mr.Kong
+     * @date: 2019/4/1 17:07
      * @Param: [myfile]
-     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @return: Map<String,Object>
      **/
     @Override
     public Map<String, Object> importExcel(MultipartFile myfile) {
@@ -352,11 +352,11 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     /**
-     * @Description: 获得xsscell内容
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/1 17:07
+     * @description: 获得xsscell内容
+     * @auther: Mr.Kong
+     * @date: 2019/4/1 17:07
      * @Param: [cell]
-     * @Return: java.lang.Object
+     * @return: java.lang.Object
      **/
     @Override
     public Object getCellValue(Cell cell) {
@@ -388,11 +388,11 @@ public class LeaveServiceImpl implements LeaveService {
     }
 
     /**
-      * @Description: 查询部门id
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/3 14:31
+      * @description: 查询部门id
+      * @auther: Mr.Kong
+      * @date: 2019/4/3 14:31
       * @Param: [deptName] 部门名称
-      * @Return: int  部门id
+      * @return: int  部门id
       **/
     public Integer selectDeptId(String deptName){
         Integer deptId=null;

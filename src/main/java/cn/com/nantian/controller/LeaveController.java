@@ -1,8 +1,8 @@
 /**
- * @Description: 请假信息管理
+ * @description: 请假信息管理
  * @ClassName: LeaveController
  * @Author： Mr.Kong
- * @Date: 2019/3/29 15:02
+ * @date: 2019/3/29 15:02
  * @Version： 1.0
  */
 package cn.com.nantian.controller;
@@ -43,11 +43,11 @@ public class LeaveController {
     }
 
     /**
-     * @Description: 查询请假信息列表 1
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:55s
+     * @description: 查询请假信息列表 1
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:55s
      * @Param: [leave]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/ntLeave/findAll")
     @ResponseBody
@@ -66,11 +66,11 @@ public class LeaveController {
     }
 
     /**
-     * @Description: 请假申请录入
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:45
+     * @description: 请假申请录入
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:45
      * @Param: [leave]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/ntLeave/add")
     @ResponseBody
@@ -90,11 +90,11 @@ public class LeaveController {
     }
 
     /**
-     * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:50
+     * @description: 更新审批状态(R 审核中, Y 通过, N 退回)
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:50
      * @Param: [leave]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/ntLeave/update")
     @ResponseBody
@@ -114,11 +114,11 @@ public class LeaveController {
     }
 
     /**
-     * @Description: 导入请假信息
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/1 17:08
+     * @description: 导入请假信息
+     * @auther: Mr.Kong
+     * @date: 2019/4/1 17:08
      * @Param: [request, myfile]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/ntLeave/importExcel")
     @ResponseBody
@@ -151,11 +151,11 @@ public class LeaveController {
     }
 
     /**
-     * @Description: 将MultipartFile转化为file并保存到服务器上的某地
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/1 17:09
+     * @description: 将MultipartFile转化为file并保存到服务器上的某地
+     * @auther: Mr.Kong
+     * @date: 2019/4/1 17:09
      * @Param: [stream, path, savefile]
-     * @Return: void
+     * @return: void
      **/
     public void SaveFileFromInputStream(InputStream stream, String path, String savefile) {
 

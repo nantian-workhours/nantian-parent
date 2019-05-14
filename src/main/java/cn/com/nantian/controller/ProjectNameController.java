@@ -32,11 +32,11 @@ public class ProjectNameController {
     private ProjectNameService projectNameService;
 
     /**
-     * @Description: 添加项目别名
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 11:01
+     * @description: 添加项目别名
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 11:01
      * @Param: [ntPerAlias]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/add")
     @ResponseBody
@@ -62,11 +62,11 @@ public class ProjectNameController {
     }
 
     /**
-     * @Description: 查询员工别名列表
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 16:20
+     * @description: 查询员工别名列表
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 16:20
      * @Param: [ntPerAlias]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/findAll")
     @ResponseBody
@@ -82,11 +82,11 @@ public class ProjectNameController {
     }
 
     /**
-     * @Description: 根据员工身份证号, 别名删除员工别名信息
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 16:20
+     * @description: 根据员工身份证号, 别名删除员工别名信息
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 16:20
      * @Param: [idNo]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/delete")
     @ResponseBody
@@ -101,11 +101,11 @@ public class ProjectNameController {
     }
 
     /**
-     * @Description: 修改别名信息
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 16:20
+     * @description: 修改别名信息
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 16:20
      * @Param: [ntPerAlias]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/update")
     @ResponseBody

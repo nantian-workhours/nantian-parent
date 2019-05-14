@@ -25,11 +25,11 @@ public class ProjectNameImpl implements ProjectNameService {
 
 
     /**
-     * @Description: 更新员工别名
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 15:53
+     * @description: 更新员工别名
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 15:53
      * @Param: [ntPerAlias]
-     * @Return: int
+     * @return: int
      **/
     @Override
     public int updateNtPerAlias(NtPerAlias ntPerAlias) {
@@ -37,11 +37,11 @@ public class ProjectNameImpl implements ProjectNameService {
     }
 
     /**
-     * @Description: 查询员工项目别名列表数据
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 14:27
+     * @description: 查询员工项目别名列表数据
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 14:27
      * @Param: [ntPerAlias]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtPerAlias>
+     * @return: List<NtPerAlias>
      **/
     @Override
     public List<NtPerAlias> queryNtPerAliasList(NtPerAlias ntPerAlias) {
@@ -72,11 +72,11 @@ public class ProjectNameImpl implements ProjectNameService {
     }
 
     /**
-     * @Description: 效验传入的参数值是否为空
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 11:00
+     * @description: 效验传入的参数值是否为空
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 11:00
      * @Param: [ntPerAlias]
-     * @Return: java.lang.String
+     * @return: java.lang.String
      **/
     @Override
     public String checkAttribute(NtPerAlias ntPerAlias) {
@@ -104,11 +104,11 @@ public class ProjectNameImpl implements ProjectNameService {
     }
 
     /**
-     * @Description: 创建时 效验数据是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 14:28
+     * @description: 创建时 效验数据是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 14:28
      * @Param: [ntPerAlias]
-     * @Return: boolean true 存在 ,false 不存在
+     * @return: boolean true 存在 ,false 不存在
      **/
     @Override
     public boolean checkWhetherRepeat(NtPerAlias ntPerAlias) {
@@ -123,11 +123,11 @@ public class ProjectNameImpl implements ProjectNameService {
     }
 
     /**
-     * @Description: 更新时 效验数据是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 16:01
+     * @description: 更新时 效验数据是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 16:01
      * @Param: [ntPerAlias]
-     * @Return: boolean
+     * @return: boolean
      **/
     public boolean checkUpdateWhetherRepeat(NtPerAlias ntPerAlias) {
         NtPerAlias perAlias = new NtPerAlias();

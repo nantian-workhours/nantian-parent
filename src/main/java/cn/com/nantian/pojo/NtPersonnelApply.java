@@ -1,5 +1,5 @@
 /**
-  * @Description: 员工考勤异常处理申请实体
+  * @description: 员工考勤异常处理申请实体
   * @auther: Mr.Kong
   * @date: 2019/5/13 16:46
   **/

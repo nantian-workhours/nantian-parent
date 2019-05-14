@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @Description: 员工录入信息
+ * @description: 员工录入信息
  * @author: Mr.Kong
  * @date: 2019/4/26 14:12
  **/
@@ -179,11 +179,11 @@ public class UserController extends BaseController {
     }
 
     /**
-      * @Description: 修改员工信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/5 15:18
+      * @description: 修改员工信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/5 15:18
       * @Param:  [personnel]
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping(value = "/update/user")
     @ResponseBody
@@ -226,11 +226,11 @@ public class UserController extends BaseController {
 
 
     /**
-      * @Description: 查询用户信息列表
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/29 14:17
+      * @description: 查询用户信息列表
+      * @auther: Mr.Kong
+      * @date: 2019/4/29 14:17
       * @Param:  [personnel]
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping(value = "/personnel/list")
     @ResponseBody
@@ -270,11 +270,11 @@ public class UserController extends BaseController {
     }
 
     /**
-     * @Description: 重置密码
+     * @description: 重置密码
      * @auther: Mr.Kong
      * @date: 2019/5/13 10:43
      * @param: [perId]
-     * @return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping(value = "/reset/password")
     @ResponseBody

@@ -6,20 +6,20 @@ import java.util.List;
 
 public interface NtLeaveMapper {
     /**
-     * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:52
+     * @description: 更新审批状态(R 审核中, Y 通过, N 退回)
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:52
      * @Param: [leave]
-     * @Return: int
+     * @return: int
      **/
     int updateLeaveStatus(NtLeave leave);
 
     /**
-     * @Description: 查询请假信息列表
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:52
+     * @description: 查询请假信息列表
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:52
      * @Param: [leave]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtLeave>
+     * @return: List<NtLeave>
      **/
     List<NtLeave> selectLeaveList(NtLeave leave);
 

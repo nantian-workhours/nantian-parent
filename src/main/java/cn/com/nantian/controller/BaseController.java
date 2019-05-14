@@ -1,5 +1,5 @@
 /**
- * @Description:
+ * @description:
  * @ClassName: BaseController
  * @author： Mr.Kong
  * @date: 2019/4/26 14:48

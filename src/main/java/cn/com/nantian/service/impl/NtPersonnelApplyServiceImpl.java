@@ -1,5 +1,5 @@
 /**
- * @Description: 员工考勤异常处理申请管理
+ * @description: 员工考勤异常处理申请管理
  * @ClassName: NtPersonnelApplyServiceImpl
  * @author： Mr.Kong
  * @date: 2019/5/13 16:49
@@ -25,11 +25,11 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
     private NtPersonnelApplyMapper personnelApplyMapper;
 
     /**
-     * @Description: 查询员工异议申请信息列表
+     * @description: 查询员工异议申请信息列表
      * @auther: Mr.Kong
      * @date: 2019/5/14 15:15
      * @param: [personnelApply]
-     * @return: java.util.List<cn.com.nantian.pojo.NtPersonnelApply>
+     * @return: List<NtPersonnelApply>
      **/
     @Override
     public List<NtPersonnelApply> queryPersonApplyList(NtPersonnelApply personnelApply) {
@@ -37,7 +37,7 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
     }
 
     /**
-     * @Description: 创建时 效验传入的参数值
+     * @description: 创建时 效验传入的参数值
      * @auther: Mr.Kong
      * @date: 2019/5/14 14:08
      * @param: [personnelApply]
@@ -87,11 +87,11 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
     }
 
     /**
-     * @Description: 查询员工异议申请信息详情
+     * @description: 查询员工异议申请信息详情
      * @auther: Mr.Kong
      * @date: 2019/5/14 15:48
      * @param: [applySeq]
-     * @return: cn.com.nantian.pojo.NtPersonnelApply
+     * @return: NtPersonnelApply
      **/
     @Override
     public NtPersonnelApply selectByPrimaryKey(Integer applySeq) {
@@ -109,7 +109,7 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
     }
 
     /**
-     * @Description: 更新处理状态
+     * @description: 更新处理状态
      * @auther: Mr.Kong
      * @date: 2019/5/14 15:46
      * @param: [personnelApply]

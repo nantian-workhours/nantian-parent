@@ -8,20 +8,20 @@ import java.util.List;
 public interface DepartmentService {
 
     /**
-      * @Description:  添加 部门信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/26 9:55
+      * @description:  添加 部门信息
+      * @auther: Mr.Kong
+      * @date: 2019/4/26 9:55
       * @Param:  [department]
-      * @Return: int
+      * @return: int
       **/
     int addDepartment(NtDepartment department);
 
     /**
-     * @Description: 检查传入放入参数是否为空
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/26 10:01
+     * @description: 检查传入放入参数是否为空
+     * @auther: Mr.Kong
+     * @date: 2019/4/26 10:01
      * @Param:  [department]
-     * @Return: java.lang.String
+     * @return: java.lang.String
      **/
     public String checkParameter(NtDepartment department);
 
@@ -52,11 +52,11 @@ public interface DepartmentService {
     String selectDepart(int deptId);
 
     /**
-      * @Description: 设置服务类别名称
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/23 16:42
+      * @description: 设置服务类别名称
+      * @auther: Mr.Kong
+      * @date: 2019/4/23 16:42
       * @Param:  [departmentList]
-      * @Return: java.util.List<java.lang.String>
+      * @return: java.util.List<java.lang.String>
       **/
     public void setServiceTypeName(List<NtDepartment> departmentList);
 

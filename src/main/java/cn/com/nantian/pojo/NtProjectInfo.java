@@ -33,11 +33,11 @@ public class NtProjectInfo {
     private Integer peopleNumber;
 
     /**
-     * @Description: 重写equals方法
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/26 14:12
+     * @description: 重写equals方法
+     * @auther: Mr.Kong
+     * @date: 2019/3/26 14:12
      * @Param: [o]
-     * @Return: boolean
+     * @return: boolean
      **/
     public boolean equals(Object o) {
         if (this == o) return true;  //先判断o是否为本对象，如果是就肯定是同一对象了，this 指向当前的对象

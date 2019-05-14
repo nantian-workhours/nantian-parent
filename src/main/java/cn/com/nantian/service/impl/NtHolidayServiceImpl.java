@@ -1,5 +1,5 @@
 /**
- * @Description: 节假日信息管理
+ * @description: 节假日信息管理
  * @ClassName: NtHolidayServiceImpl
  * @author： Mr.Kong
  * @date: 2019/5/10 14:02
@@ -27,7 +27,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     private NtHolidayMapper holidayMapper;
 
     /**
-     * @Description: 更新时 效验是否已存在
+     * @description: 更新时 效验是否已存在
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:54
      * @param: [ntHoliday]
@@ -48,7 +48,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     /**
-     * @Description: 创建时 效验是否已存在
+     * @description: 创建时 效验是否已存在
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:54
      * @param: [ntHoliday]
@@ -69,7 +69,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     /**
-     * @Description: 效验传入的参数值
+     * @description: 效验传入的参数值
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:54
      * @param: [ntHoliday]
@@ -115,11 +115,11 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     /**
-     * @Description: 查询节假日信息列表
+     * @description: 查询节假日信息列表
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:55
      * @param: [record]
-     * @return: java.util.List<cn.com.nantian.pojo.NtHoliday>
+     * @return: List<NtHoliday>
      **/
     @Override
     public List<NtHoliday> queryHolidayList(NtHoliday record) {
@@ -127,7 +127,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     /**
-     * @Description: 根据主键ID 删除
+     * @description: 根据主键ID 删除
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:55
      * @param: [holidayId]
@@ -139,7 +139,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     /**
-     * @Description: 新增
+     * @description: 新增
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:57
      * @param: [record]
@@ -151,7 +151,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     /**
-     * @Description: 新增
+     * @description: 新增
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:57
      * @param: [record]
@@ -163,11 +163,11 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     /**
-     * @Description: 根据主键ID 查询单条数据详情
+     * @description: 根据主键ID 查询单条数据详情
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:58
      * @param: [holidayId]
-     * @return: cn.com.nantian.pojo.NtHoliday
+     * @return: NtHoliday
      **/
     @Override
     public NtHoliday selectByPrimaryKey(Integer holidayId) {
@@ -175,7 +175,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
     }
 
     /**
-     * @Description: 更新
+     * @description: 更新
      * @auther: Mr.Kong
      * @date: 2019/5/10 16:59
      * @param: [record]

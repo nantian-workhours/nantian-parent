@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 
 /**
-  * @Description:  正则表达式工具类
+  * @description:  正则表达式工具类
   * @author: Mr.Kong
   * @date: 2019/4/26 14:12
   **/

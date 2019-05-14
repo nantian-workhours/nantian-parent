@@ -11,9 +11,9 @@ import java.util.Map;
 
 
 /**
- * @Description:
+ * @description:
  * @Author：Mr.Kong
- * @Date: 2019/3/22 10:14
+ * @date: 2019/3/22 10:14
  * @Version：1.0
  */
 public class ClassCompareUtil {

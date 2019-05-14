@@ -8,27 +8,27 @@ import java.util.List;
 
 public interface NtCustTypeMapper {
     /**
-     * @Description: 查询客户类型集合
+     * @description: 查询客户类型集合
      * @Param: [custType]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtCustType>
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 15:04
+     * @return: List<NtCustType>
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 15:04
      **/
     List<NtCustType> selectCustTypeList(NtCustType custType);
     /**
-     * @Description: 更新客户类别
+     * @description: 更新客户类别
      * @Param: [custType]
-     * @Return: int
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 17:03
+     * @return: int
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 17:03
      **/
     int updateCustType(NtCustType custType);
     /**
-     * @Description: 查询客户类型
+     * @description: 查询客户类型
      * @Param: [custType]
-     * @Return: cn.com.nantian.pojo.NtCustType
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 17:12
+     * @return: NtCustType
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 17:12
      **/
     NtCustType selectCustType(int custId);
 

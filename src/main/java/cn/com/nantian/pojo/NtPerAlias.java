@@ -5,9 +5,9 @@ import lombok.Data;
 import java.util.Objects;
 
 /**
-  * @Description:  别名实体
-  * @Auther: Mr.Kong
-  * @Date: 2019/5/8 10:53
+  * @description:  别名实体
+  * @auther: Mr.Kong
+  * @date: 2019/5/8 10:53
   **/
 @Data
 public class NtPerAlias {

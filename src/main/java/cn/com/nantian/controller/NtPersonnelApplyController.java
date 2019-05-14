@@ -1,5 +1,5 @@
 /**
- * @Description: 员工考勤异常处理申请管理
+ * @description: 员工考勤异常处理申请管理
  * @ClassName: NtPersonnelApplyController
  * @author： Mr.Kong
  * @date: 2019/5/13 16:48
@@ -36,11 +36,11 @@ public class NtPersonnelApplyController extends BaseController {
     private NtPersonnelApplyService personnelApplyService;
 
     /**
-     * @Description: 创建员工异议申请
+     * @description: 创建员工异议申请
      * @auther: Mr.Kong
      * @date: 2019/5/14 15:14
      * @param: [personnelApply]
-     * @return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/add")
     @ResponseBody
@@ -60,11 +60,11 @@ public class NtPersonnelApplyController extends BaseController {
     }
 
     /**
-     * @Description: 查询员工异议申请信息列表
+     * @description: 查询员工异议申请信息列表
      * @auther: Mr.Kong
      * @date: 2019/5/14 15:15
      * @param: [ntPersonnelApply]
-     * @return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/findAll")
     @ResponseBody
@@ -82,11 +82,11 @@ public class NtPersonnelApplyController extends BaseController {
     }
 
     /**
-     * @Description: 查询员工异议申请信息详情
+     * @description: 查询员工异议申请信息详情
      * @auther: Mr.Kong
      * @date: 2019/5/14 15:47
      * @param: [applySeq]
-     * @return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/findDetail")
     @ResponseBody
@@ -101,11 +101,11 @@ public class NtPersonnelApplyController extends BaseController {
     }
 
     /**
-     * @Description: 更新处理状态
+     * @description: 更新处理状态
      * @auther: Mr.Kong
      * @date: 2019/5/14 15:46
      * @param: [ntPersonnelApply]
-     * @return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/update")
     @ResponseBody

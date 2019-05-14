@@ -1,5 +1,5 @@
 /**
- * @Description:
+ * @description:
  * @ClassName: PageEntity
  * @author： Mr.Kong
  * @date: 2019/4/26 14:49

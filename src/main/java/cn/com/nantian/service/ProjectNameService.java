@@ -11,20 +11,20 @@ import java.util.List;
 public interface ProjectNameService {
 
     /**
-     * @Description: 更新员工别名
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 15:53
+     * @description: 更新员工别名
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 15:53
      * @Param:  [ntPerAlias]
-     * @Return: int
+     * @return: int
      **/
     int updateNtPerAlias(NtPerAlias ntPerAlias);
 
     /**
-     * @Description: 查询员工项目别名列表数据
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 14:24
+     * @description: 查询员工项目别名列表数据
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 14:24
      * @Param:  []
-     * @Return: java.util.List<cn.com.nantian.pojo.NtPerAlias>
+     * @return: List<NtPerAlias>
      **/
     List<NtPerAlias> queryNtPerAliasList(NtPerAlias ntPerAlias);
 
@@ -43,27 +43,27 @@ public interface ProjectNameService {
     int deleteByIdNo(String idNo);
 
     /**
-     * @Description: 效验传入的参数值是否为空
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 11:00
+     * @description: 效验传入的参数值是否为空
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 11:00
      * @Param:  [ntPerAlias]
-     * @Return: java.lang.String
+     * @return: java.lang.String
      **/
     public String checkAttribute(NtPerAlias ntPerAlias);
     /**
-     * @Description: 效验数据是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 14:28
+     * @description: 效验数据是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 14:28
      * @Param:  [ntPerAlias]
-     * @Return: boolean
+     * @return: boolean
      **/
     public boolean checkWhetherRepeat(NtPerAlias ntPerAlias);
     /**
-     * @Description: 更新时 效验数据是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/8 16:01
+     * @description: 更新时 效验数据是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/8 16:01
      * @Param:  [ntPerAlias]
-     * @Return: boolean
+     * @return: boolean
      **/
     public boolean checkUpdateWhetherRepeat(NtPerAlias ntPerAlias);
 }

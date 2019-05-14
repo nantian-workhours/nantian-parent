@@ -709,7 +709,7 @@ public class StringUtils {
     }
 
     /**
-      * @Description: 输入天数效验
+      * @description: 输入天数效验
       * @auther: Mr.Kong
       * @date: 2019/5/14 9:48
       * @param:  [date]

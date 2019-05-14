@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
-  * @Description: 员工所在项目管理
-  * @Auther: Mr.Kong
-  * @Date: 2019/5/8 16:46
+  * @description: 员工所在项目管理
+  * @auther: Mr.Kong
+  * @date: 2019/5/8 16:46
   **/
 @Controller
 @RequestMapping("/user/project")
@@ -34,11 +34,11 @@ public class InProjectController {
     private InProjectService inProjectService;
 
     /**
-      * @Description: 添加员工所在项目信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/8 16:50
+      * @description: 添加员工所在项目信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/8 16:50
       * @Param:  [ntPerInProject]
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/add")
     @ResponseBody
@@ -64,11 +64,11 @@ public class InProjectController {
     }
 
     /**
-      * @Description: 查询员工所在项目列表数据
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/9 14:31
+      * @description: 查询员工所在项目列表数据
+      * @auther: Mr.Kong
+      * @date: 2019/5/9 14:31
       * @Param:  [ntPerInProject]
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/findAll")
     @ResponseBody
@@ -84,11 +84,11 @@ public class InProjectController {
     }
 
     /**
-      * @Description: 查询员工所在项目详情信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/9 15:49
+      * @description: 查询员工所在项目详情信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/9 15:49
       * @Param:  [id]
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/findInfo")
     @ResponseBody
@@ -103,11 +103,11 @@ public class InProjectController {
     }
 
     /**
-      * @Description: 更新员工所在项目信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/9 16:34
+      * @description: 更新员工所在项目信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/9 16:34
       * @Param:  [ntPerInProject]
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/update")
     @ResponseBody

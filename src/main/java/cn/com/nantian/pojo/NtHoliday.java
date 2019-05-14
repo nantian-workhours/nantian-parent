@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
-  * @Description: 节假日信息实体
+  * @description: 节假日信息实体
   * @auther: Mr.Kong
   * @date: 2019/5/10 13:58
   **/

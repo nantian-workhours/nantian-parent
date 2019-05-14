@@ -16,9 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Description: 员工所在项目管理
- * @Auther: Mr.Kong
- * @Date: 2019/5/9 10:46
+ * @description: 员工所在项目管理
+ * @auther: Mr.Kong
+ * @date: 2019/5/9 10:46
  **/
 @Service
 public class InProjectImpl implements InProjectService {
@@ -32,11 +32,11 @@ public class InProjectImpl implements InProjectService {
     private NtDictionariesMapper dictionariesMapper;
 
     /**
-     * @Description: 创建时 效验传入的参数值
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/9 11:07
+     * @description: 创建时 效验传入的参数值
+     * @auther: Mr.Kong
+     * @date: 2019/5/9 11:07
      * @Param: [ntPerInProject]
-     * @Return: java.lang.String
+     * @return: java.lang.String
      **/
     public String checkAttribute(NtPerInProject ntPerInProject) throws Exception {
         if (ObjectUtils.isNull(ntPerInProject.getPerId())) {
@@ -82,11 +82,11 @@ public class InProjectImpl implements InProjectService {
     }
 
     /**
-     * @Description: 创建时 效验数据是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/9 14:28
+     * @description: 创建时 效验数据是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/9 14:28
      * @Param: [ntPerInProject]
-     * @Return: boolean
+     * @return: boolean
      **/
     public boolean checkWhetherRepeat(NtPerInProject ntPerInProject) {
         List<NtPerInProject> ntPerInProjectList = this.queryNtPerInProjectList(null);
@@ -103,11 +103,11 @@ public class InProjectImpl implements InProjectService {
     }
 
     /**
-     * @Description: 更新时 效验数据是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/9 15:58
+     * @description: 更新时 效验数据是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/9 15:58
      * @Param: [ntPerInProject]
-     * @Return: boolean
+     * @return: boolean
      **/
     public boolean checkUpdateWhetherRepeat(NtPerInProject ntPerInProject) {
         List<NtPerInProject> ntPerInProjectList = this.queryNtPerInProjectList(null);
@@ -124,11 +124,11 @@ public class InProjectImpl implements InProjectService {
     }
 
     /**
-     * @Description: 添加员工所在项目信息
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/9 15:59
+     * @description: 添加员工所在项目信息
+     * @auther: Mr.Kong
+     * @date: 2019/5/9 15:59
      * @Param: [perInProject]
-     * @Return: int
+     * @return: int
      **/
     @Override
     public int addPerInProject(NtPerInProject perInProject) {
@@ -138,11 +138,11 @@ public class InProjectImpl implements InProjectService {
     }
 
     /**
-     * @Description: 查询员工所在项目列表数据
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/9 16:33
+     * @description: 查询员工所在项目列表数据
+     * @auther: Mr.Kong
+     * @date: 2019/5/9 16:33
      * @Param:  [perInProject]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtPerInProject>
+     * @return: List<NtPerInProject>
      **/
     @Override
     public List<NtPerInProject> queryNtPerInProjectList(NtPerInProject perInProject) {
@@ -150,11 +150,11 @@ public class InProjectImpl implements InProjectService {
     }
 
     /**
-      * @Description: 查询员工所在项目详情信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/9 16:34
+      * @description: 查询员工所在项目详情信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/9 16:34
       * @Param:  [id]
-      * @Return: cn.com.nantian.pojo.NtPerInProject
+      * @return: NtPerInProject
       **/
     @Override
     public NtPerInProject queryPerInProjectInfo(int id) {
@@ -162,11 +162,11 @@ public class InProjectImpl implements InProjectService {
     }
 
     /**
-     * @Description: 更新员工所在项目信息
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/9 16:35
+     * @description: 更新员工所在项目信息
+     * @auther: Mr.Kong
+     * @date: 2019/5/9 16:35
      * @Param:  [ntPerInProject]
-     * @Return: int
+     * @return: int
      **/
     @Override
     public int updateNtPerInProject(NtPerInProject ntPerInProject) {
@@ -174,11 +174,11 @@ public class InProjectImpl implements InProjectService {
     }
 
     /**
-      * @Description: 设置在场状态
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/9 16:47
+      * @description: 设置在场状态
+      * @auther: Mr.Kong
+      * @date: 2019/5/9 16:47
       * @Param:  [ntPerInProjectList]
-      * @Return: void
+      * @return: void
       **/
     public void setWorkStatus(List<NtPerInProject> ntPerInProjectList){
         if (ObjectUtils.isNotNull(ntPerInProjectList)){

@@ -16,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @Description: 客户类别管理
+ * @description: 客户类别管理
  * @Author： Mr.Kong
- * @Date: 2019/3/20 14:46
+ * @date: 2019/3/20 14:46
  * @Version： 1.0
  */
 @Controller
@@ -35,11 +35,11 @@ public class CustTypeController {
     private CustTypeService custTypeService;
 
     /**
-     * @Description: 查询客户信息列表
+     * @description: 查询客户信息列表
      * @Param: [customer] 客户实体
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/19 14:21
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/19 14:21
      **/
     @RequestMapping("/findAll")
     @ResponseBody
@@ -58,11 +58,11 @@ public class CustTypeController {
     }
 
     /**
-     * @Description: 根据项目编号删除一条数据
+     * @description: 根据项目编号删除一条数据
      * @Param: [projectNumber]  项目编号
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 11:21
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 11:21
      **/
     @RequestMapping("/delete")
     @ResponseBody
@@ -77,11 +77,11 @@ public class CustTypeController {
     }
 
     /**
-     * @Description: 新增客户类别 1
+     * @description: 新增客户类别 1
      * @Param: [custType]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 16:50
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 16:50
      **/
     @RequestMapping("/add")
     @ResponseBody
@@ -105,11 +105,11 @@ public class CustTypeController {
     }
 
     /**
-     * @Description: 更新客户信息
+     * @description: 更新客户信息
      * @Param: [customer]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 14:30
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 14:30
      **/
     @RequestMapping("/update")
     @ResponseBody
@@ -136,11 +136,11 @@ public class CustTypeController {
     }
 
     /**
-     * @Description: 查询客户类别详情
+     * @description: 查询客户类别详情
      * @Param: [custType]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 17:19
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 17:19
      **/
     @RequestMapping("/findDetail")
     @ResponseBody

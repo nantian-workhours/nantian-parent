@@ -4,7 +4,7 @@ import lombok.Data;
 
 import java.util.Date;
 /**
-  * @Description: 请假信息实体
+  * @description: 请假信息实体
   * @auther: Mr.Kong
   * @date: 2019/5/13 16:09
   **/

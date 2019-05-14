@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
-  * @Description: 员工所在项目实体
-  * @Auther: Mr.Kong
-  * @Date: 2019/5/8 16:47 
+  * @description: 员工所在项目实体
+  * @auther: Mr.Kong
+  * @date: 2019/5/8 16:47
   **/
 
 @Data

@@ -9,7 +9,7 @@ import java.util.Map;
 
 public interface LeaveService {
     /**
-     * @Description: 更新时 效验传入的参数值
+     * @description: 更新时 效验传入的参数值
      * @auther: Mr.Kong
      * @date: 2019/5/13 16:07
      * @param:  [ntLeave]
@@ -17,7 +17,7 @@ public interface LeaveService {
      **/
     public String checkUpdateAttribute(NtLeave ntLeave) throws Exception;
     /**
-     * @Description: 创建时 效验传入的参数值
+     * @description: 创建时 效验传入的参数值
      * @auther: Mr.Kong
      * @date: 2019/5/13 16:07
      * @param:  [ntLeave]
@@ -26,38 +26,38 @@ public interface LeaveService {
     String checkAttribute(NtLeave ntLeave) throws Exception;
 
     /**
-     * @Description: 更新审批状态(R 审核中, Y 通过, N 退回)
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:52
+     * @description: 更新审批状态(R 审核中, Y 通过, N 退回)
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:52
      * @Param: [leave]
-     * @Return: int
+     * @return: int
      **/
     int updateLeaveStatus(NtLeave leave);
 
     /**
-     * @Description: 设置请假类别名称、审批状态名称
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:32
+     * @description: 设置请假类别名称、审批状态名称
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:32
      * @Param: [leaveList]
-     * @Return: void
+     * @return: void
      **/
     public void setLeaveTypeName(List<NtLeave> leaveList);
 
     /**
-     * @Description: 设置请假类别名称、审批状态名称
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:33
+     * @description: 设置请假类别名称、审批状态名称
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:33
      * @Param: [leave]
-     * @Return: void
+     * @return: void
      **/
     public void setLeaveTypeName(NtLeave leave);
 
     /**
-     * @Description: 查询请假信息列表
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 15:25
+     * @description: 查询请假信息列表
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 15:25
      * @Param: [leave]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtLeave>
+     * @return: List<NtLeave>
      **/
     List<NtLeave> selectLeaveList(NtLeave leave);
 
@@ -74,19 +74,19 @@ public interface LeaveService {
     int updateByPrimaryKey(NtLeave record);
 
     /**
-     * @Description: 导入请假信息
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/1 17:07
+     * @description: 导入请假信息
+     * @auther: Mr.Kong
+     * @date: 2019/4/1 17:07
      * @Param: [myfile]
-     * @Return: java.util.Map<java.lang.String,java.lang.Object>
+     * @return: Map<String,Object>
      **/
     Map<String ,Object>  importExcel(MultipartFile myfile);
     /**
-     * @Description: 获得xsscell内容
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/1 17:07
+     * @description: 获得xsscell内容
+     * @auther: Mr.Kong
+     * @date: 2019/4/1 17:07
      * @Param: [cell]
-     * @Return: java.lang.Object
+     * @return: java.lang.Object
      **/
     Object getCellValue(Cell cell);
 }

@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @Description:
+ * @description:
  * @Author：Mr.Kong
- * @Date: 2019/3/22 10:32
+ * @date: 2019/3/22 10:32
  * @Version：1.0
  */
 public class ObjectUtils {
@@ -135,11 +135,11 @@ public class ObjectUtils {
     }
 
     /**
-      * @Description: 效验传入的参数是否是价格(Double)格式
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/7 15:48
+      * @description: 效验传入的参数是否是价格(Double)格式
+      * @auther: Mr.Kong
+      * @date: 2019/5/7 15:48
       * @Param:  [str]
-      * @Return: boolean
+      * @return: boolean
       **/
     public static boolean isPriceNumber(String str) {
         java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){0,2})?$"); // 判断小数点后2位的数字的正则表达式

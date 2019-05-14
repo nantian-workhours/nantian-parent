@@ -12,11 +12,11 @@ public interface NtPerInProjectMapper {
     List<NtPerInProject> queryNtPerInProjectList(NtPerInProject perInProject);
 
     /**
-     * @Description: 查询员工项目集合
+     * @description: 查询员工项目集合
      * @Param: [perInProject]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtPerInProject>
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 10:16
+     * @return: List<NtPerInProject>
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 10:16
      **/
     List<NtPerInProject> selectPerInProjectList(NtPerInProject perInProject);
 

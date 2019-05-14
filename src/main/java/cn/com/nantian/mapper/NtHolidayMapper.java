@@ -1,5 +1,5 @@
 /**
- * @Description: 节假日信息管理
+ * @description: 节假日信息管理
  * @auther: Mr.Kong
  * @date: 2019/5/10 13:58
  **/

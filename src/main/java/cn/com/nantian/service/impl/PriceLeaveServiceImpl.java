@@ -15,9 +15,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Description: 单价级别信息管理
+ * @description: 单价级别信息管理
  * @Author：Mr.Kong
- * @Date: 2019/3/21 11:15
+ * @date: 2019/3/21 11:15
  * @Version：1.0
  */
 @Service
@@ -27,11 +27,11 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
     @Resource
     private DictionariesService dictionariesService;
     /**
-      * @Description: 查询单价级别列表
+      * @description: 查询单价级别列表
       * @Param: [ntLeaveInfo] 查询条件
-      * @Return: java.util.List<cn.com.nantian.pojo.NtLeaveInfo>
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/21 14:57
+      * @return: List<NtLeaveInfo>
+      * @auther: Mr.Kong
+      * @date: 2019/3/21 14:57
       **/
     @Override
     public List<NtLeaveInfo> selectLeaveInfoList(NtLeaveInfo ntLeaveInfo) throws Exception{
@@ -44,11 +44,11 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
         return ntLeaveInfoMapper.selectLeaveInfoList(ntLeaveInfo);
     }
     /**
-      * @Description: 设置客户类别、工作类别、技术等级名称
+      * @description: 设置客户类别、工作类别、技术等级名称
       * @Param: [ntLeaveInfoList]
-      * @Return: void
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/21 15:32
+      * @return: void
+      * @auther: Mr.Kong
+      * @date: 2019/3/21 15:32
       **/
     @Override
     public void setLeaveInfoName(List<NtLeaveInfo> ntLeaveInfoList) {
@@ -78,11 +78,11 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
 
     }
     /**
-      * @Description: 设置客户类别、工作类别、技术等级名称
+      * @description: 设置客户类别、工作类别、技术等级名称
       * @Param: [ntLeaveInfo]
-      * @Return: void
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/21 16:07
+      * @return: void
+      * @auther: Mr.Kong
+      * @date: 2019/3/21 16:07
       **/
     @Override
     public void setLeaveInfoName(NtLeaveInfo ntLeaveInfo) {
@@ -108,44 +108,44 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
         }
     }
     /**
-      * @Description: 删除单价级别信息
+      * @description: 删除单价级别信息
       * @Param: [ntLeaveInfo] 条件
-      * @Return: int
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/21 16:51
+      * @return: int
+      * @auther: Mr.Kong
+      * @date: 2019/3/21 16:51
       **/
     @Override
     public int deleteLeaveInfo(int priceId) {
         return ntLeaveInfoMapper.deleteByPrimaryKey(priceId);
     }
     /**
-      * @Description: 新增单价级别信息
+      * @description: 新增单价级别信息
       * @Param: [ntLeaveInfo]
-      * @Return: int
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/21 16:55
+      * @return: int
+      * @auther: Mr.Kong
+      * @date: 2019/3/21 16:55
       **/
     @Override
     public int addLeaveInfo(NtLeaveInfo ntLeaveInfo) throws Exception{
         return ntLeaveInfoMapper.insertSelective(ntLeaveInfo);
     }
     /**
-      * @Description: 更新单价级别信息
+      * @description: 更新单价级别信息
       * @Param: [ntLeaveInfo]
-      * @Return: int
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/21 17:03
+      * @return: int
+      * @auther: Mr.Kong
+      * @date: 2019/3/21 17:03
       **/
     @Override
     public int updateLeaveInfo(NtLeaveInfo ntLeaveInfo) throws Exception{
         return ntLeaveInfoMapper.updateByExampleSelective(ntLeaveInfo);
     }
     /**
-      * @Description: 查询 单价级别信息
+      * @description: 查询 单价级别信息
       * @Param: [ntLeaveInfo]
-      * @Return: cn.com.nantian.pojo.NtLeaveInfo
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/21 17:10
+      * @return: NtLeaveInfo
+      * @auther: Mr.Kong
+      * @date: 2019/3/21 17:10
       **/
     @Override
     public NtLeaveInfo selectLeaveInfo(int priceId) {
@@ -153,11 +153,11 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
     }
 
     /**
-     * @Description: 新增时 检查是否有重复数据
+     * @description: 新增时 检查是否有重复数据
      * @Param: [ntLeaveInfo]
-     * @Return: boolean true 有 , false 无
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/22 9:52
+     * @return: boolean true 有 , false 无
+     * @auther: Mr.Kong
+     * @date: 2019/3/22 9:52
      **/
     public boolean checkWhetherRepeat(NtLeaveInfo ntLeaveInfo) throws Exception{
         boolean whether=false;
@@ -177,11 +177,11 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
     }
 
     /**
-      * @Description: 更新时 检查是否有重复数据
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/7 15:10
+      * @description: 更新时 检查是否有重复数据
+      * @auther: Mr.Kong
+      * @date: 2019/5/7 15:10
       * @Param:  [ntLeaveInfo]
-      * @Return: boolean
+      * @return: boolean
       **/
     @Override
     public boolean checkUpdateWhetherRepeat(NtLeaveInfo ntLeaveInfo) throws Exception{
@@ -202,11 +202,11 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
 
 
     /**
-      * @Description: 检查传入属性值是否为空
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/7 15:04
+      * @description: 检查传入属性值是否为空
+      * @auther: Mr.Kong
+      * @date: 2019/5/7 15:04
       * @Param:  [leaveInfo]
-      * @Return: java.lang.String
+      * @return: java.lang.String
       **/
     @Override
     public String checkAttribute(NtLeaveInfo ntLeaveInfo) throws Exception{

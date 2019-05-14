@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
- * @Description: 客户管理
- * @Auther: Mr.Kong
+ * @description: 客户管理
+ * @auther: Mr.Kong
  **/
 @Controller
 @RequestMapping("/ntProjectInfo")
@@ -33,11 +33,11 @@ public class ProjectInfoController {
     }
 
     /**
-     * @Description: 查询客户信息列表
+     * @description: 查询客户信息列表
      * @Param: [NtProjectInfo] 客户实体
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/19 14:21
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/19 14:21
      **/
     @RequestMapping("/findAll")
     @ResponseBody
@@ -54,11 +54,11 @@ public class ProjectInfoController {
 
 
     /**
-     * @Description: 根据项目编号删除一条数据
+     * @description: 根据项目编号删除一条数据
      * @Param: [projectNumber]  项目编号
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 11:21
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 11:21
      **/
     @RequestMapping("/delete")
     @ResponseBody
@@ -73,11 +73,11 @@ public class ProjectInfoController {
     }
 
     /**
-     * @Description: 新增客户信息内容
+     * @description: 新增客户信息内容
      * @Param: [NtProjectInfo]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 13:55
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 13:55
      **/
     @RequestMapping("/add")
     @ResponseBody
@@ -101,11 +101,11 @@ public class ProjectInfoController {
     }
 
     /**
-     * @Description: 更新客户信息
+     * @description: 更新客户信息
      * @Param: [NtProjectInfo]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 14:30
+     * @return: ResponseData
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 14:30
      **/
     @RequestMapping("/update")
     @ResponseBody
@@ -133,11 +133,11 @@ public class ProjectInfoController {
 
 
     /**
-     * @Description: 根据项目编号查询详情
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/27 14:28
+     * @description: 根据项目编号查询详情
+     * @auther: Mr.Kong
+     * @date: 2019/3/27 14:28
      * @Param: [projectNumber] 项目编号
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/findOne")
     @ResponseBody

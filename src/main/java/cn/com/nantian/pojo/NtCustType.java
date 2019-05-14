@@ -29,11 +29,11 @@ public class NtCustType implements Serializable {
     private List<String> workLevelNameList;
 
     /**
-      * @Description: 重写equals方法
-      * @Auther: Mr.Kong
-      * @Date: 2019/3/26 14:31
+      * @description: 重写equals方法
+      * @auther: Mr.Kong
+      * @date: 2019/3/26 14:31
       * @Param: [o]
-      * @Return: boolean
+      * @return: boolean
       **/
     public boolean equals(Object o) {
         if (this == o) {

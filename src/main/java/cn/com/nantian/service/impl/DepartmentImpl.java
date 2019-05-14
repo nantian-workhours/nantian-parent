@@ -56,11 +56,11 @@ public class DepartmentImpl implements DepartmentService {
     }
 
     /**
-      * @Description:  添加部门信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/26 9:54
+      * @description:  添加部门信息
+      * @auther: Mr.Kong
+      * @date: 2019/4/26 9:54
       * @Param:  [department]
-      * @Return: int
+      * @return: int
       **/
     @Override
     public int  addDepartment(NtDepartment department) {
@@ -69,11 +69,11 @@ public class DepartmentImpl implements DepartmentService {
     }
 
     /**
-      * @Description: 检查传入放入参数是否为空
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/26 10:01
+      * @description: 检查传入放入参数是否为空
+      * @auther: Mr.Kong
+      * @date: 2019/4/26 10:01
       * @Param:  [department]
-      * @Return: java.lang.String
+      * @return: java.lang.String
       **/
     @Override
     public String checkParameter(NtDepartment department){
@@ -104,11 +104,11 @@ public class DepartmentImpl implements DepartmentService {
     }
 
     /**
-     * @Description: 设置服务类别名称
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/23 16:42
+     * @description: 设置服务类别名称
+     * @auther: Mr.Kong
+     * @date: 2019/4/23 16:42
      * @Param:
-     * @Return: java.util.List<java.lang.String>
+     * @return: java.util.List<java.lang.String>
      **/
     @Override
     public void setServiceTypeName(List<NtDepartment> departmentList){

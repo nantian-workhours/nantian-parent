@@ -33,11 +33,11 @@ public class DictionariesController {
 
 
     /**
-      * @Description: 查询字典列表数据
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/6 10:40
+      * @description: 查询字典列表数据
+      * @auther: Mr.Kong
+      * @date: 2019/5/6 10:40
       * @Param:  [dictionaries]
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping(value = "/list" )
     @ResponseBody

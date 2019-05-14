@@ -34,11 +34,11 @@ public class DepartmentController  {
     private UserService userService;
 
     /**
-      * @Description:  添加部门信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/26 10:04
+      * @description:  添加部门信息
+      * @auther: Mr.Kong
+      * @date: 2019/4/26 10:04
       * @Param:  [department]
-      * @Return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/add")
     @ResponseBody
@@ -84,7 +84,6 @@ public class DepartmentController  {
             return ResponseData.forbidden();
         }
     }
-
 
     /**根据id查询员工姓名
      *

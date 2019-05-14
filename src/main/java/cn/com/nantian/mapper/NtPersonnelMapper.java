@@ -60,11 +60,11 @@ public interface NtPersonnelMapper {
     NtPersonnel selectByEmial(String companyEmail);
 
     /**
-      * @Description: 根据 个人邮箱 获取员工信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/6 16:29
+      * @description: 根据 个人邮箱 获取员工信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/6 16:29
       * @Param:  [personEmail] 个人邮箱
-      * @Return: cn.com.nantian.pojo.NtPersonnel
+      * @return: cn.com.nantian.pojo.NtPersonnel
       **/
     NtPersonnel selectByPersonEmail (String personEmail);
 
@@ -91,20 +91,20 @@ public interface NtPersonnelMapper {
     List<NtPersonnel>  selectByName(String name);
 
     /**
-      * @Description: 查询用户列表
+      * @description: 查询用户列表
       * @auther: Mr.Kong
       * @date: 2019/4/26 15:59
       * @param:  [personnel] 查询条件
-      * @return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+      * @return: List<NtPersonnel>
       */
     List<NtPersonnel> queryPersonnelList(NtPersonnel personnel);
 
     /**
-      * @Description:  查询用户列表
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/29 14:16
+      * @description:  查询用户列表
+      * @auther: Mr.Kong
+      * @date: 2019/4/29 14:16
       * @Param:  [personnel]
-      * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+      * @return: List<NtPersonnel>
       **/
     List<NtPersonnel> queryPersonnelListDate(NtPersonnel personnel);
 

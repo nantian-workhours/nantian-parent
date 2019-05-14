@@ -1,5 +1,5 @@
 /**
- * @Description: 节假日信息管理
+ * @description: 节假日信息管理
  * @ClassName: NtHolidayController
  * @author： Mr.Kong
  * @date: 2019/5/10 14:03
@@ -36,11 +36,11 @@ public class NtHolidayController extends BaseController{
     private NtHolidayService holidayService;
 
     /**
-      * @Description: 添加节假日信息
+      * @description: 添加节假日信息
       * @auther: Mr.Kong
       * @date: 2019/5/10 16:53
       * @param:  [ntHoliday]
-      * @return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/add")
     @ResponseBody
@@ -64,11 +64,11 @@ public class NtHolidayController extends BaseController{
     }
 
     /**
-      * @Description: 查询所有节假日信息列表
+      * @description: 查询所有节假日信息列表
       * @auther: Mr.Kong
       * @date: 2019/5/10 16:53
       * @param:  [ntHoliday]
-      * @return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/findAll")
     @ResponseBody
@@ -86,11 +86,11 @@ public class NtHolidayController extends BaseController{
     }
 
     /**
-      * @Description: 查询节假日信息详情
+      * @description: 查询节假日信息详情
       * @auther: Mr.Kong
       * @date: 2019/5/10 16:53
       * @param:  [holidayId]
-      * @return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/findDetail")
     @ResponseBody
@@ -106,11 +106,11 @@ public class NtHolidayController extends BaseController{
 
 
     /**
-      * @Description: 删除节假日信息
+      * @description: 删除节假日信息
       * @auther: Mr.Kong
       * @date: 2019/5/10 16:54
       * @param:  [holidayId]
-      * @return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/delete")
     @ResponseBody
@@ -125,11 +125,11 @@ public class NtHolidayController extends BaseController{
     }
 
     /**
-      * @Description: 修改节假日信息
+      * @description: 修改节假日信息
       * @auther: Mr.Kong
       * @date: 2019/5/10 16:54
       * @param:  [ntHoliday]
-      * @return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/update")
     @ResponseBody

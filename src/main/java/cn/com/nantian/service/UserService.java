@@ -8,38 +8,38 @@ import java.util.List;
 public interface UserService {
 
     /**
-     * @Description: 处理员工工作状态数据
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/6 14:57
+     * @description: 处理员工工作状态数据
+     * @auther: Mr.Kong
+     * @date: 2019/5/6 14:57
      * @Param:  [personnelList]
-     * @Return: void
+     * @return: void
      **/
     public void setWorkStates(List<NtPersonnel> personnelList);
     /**
-      * @Description: 处理用户列表数据
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/29 14:32
+      * @description: 处理用户列表数据
+      * @auther: Mr.Kong
+      * @date: 2019/4/29 14:32
       * @Param:  [personnelList]
-      * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+      * @return: List<NtPersonnel>
       **/
     public List<NtPersonnel> setPersonnelDate(List<NtPersonnel> personnelList);
 
     /**
-     * @Description:  查询用户列表
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/29 14:16
+     * @description:  查询用户列表
+     * @auther: Mr.Kong
+     * @date: 2019/4/29 14:16
      * @Param:  [personnel]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+     * @return: List<NtPersonnel>
      **/
     List<NtPersonnel> queryPersonnelListDate(NtPersonnel personnel);
 
 
     /**
-     * @Description: 查询用户列表
+     * @description: 查询用户列表
      * @auther: Mr.Kong
      * @date: 2019/4/26 15:59
      * @param:  [personnel] 查询条件
-     * @return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+     * @return: List<NtPersonnel>
      */
     List<NtPersonnel> queryPersonnelList(NtPersonnel personnel);
 
@@ -51,19 +51,19 @@ public interface UserService {
      */
     public int addUser(NtPersonnel personnel) throws Exception;
     /**
-     * @Description: 新建 检查传入的参数是否为空 格式是否正确 是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/4/26 14:22
+     * @description: 新建 检查传入的参数是否为空 格式是否正确 是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/4/26 14:22
      * @Param:  [personnel]
-     * @Return: java.lang.String
+     * @return: java.lang.String
      **/
     public String checkAddUserParameter(NtPersonnel personnel);
     /**
-      * @Description: 更新 检查传入的参数是否为空 格式是否正确 是否已存在
-      * @Auther: Mr.Kong
-      * @Date: 2019/5/5 15:23
+      * @description: 更新 检查传入的参数是否为空 格式是否正确 是否已存在
+      * @auther: Mr.Kong
+      * @date: 2019/5/5 15:23
       * @Param:  [personnel]
-      * @Return: java.lang.String
+      * @return: java.lang.String
       **/
     public String checkUpdateUserParameter(NtPersonnel personnel);
 
@@ -82,11 +82,11 @@ public interface UserService {
     List<PersonnelItem> findPersonnelBydeptIdAndName(int deptId , String name);
 
     /**
-      * @Description: 根据部门deptId和员工name查询员工信息
-      * @Auther: Mr.Kong
-      * @Date: 2019/4/3 14:56
+      * @description: 根据部门deptId和员工name查询员工信息
+      * @auther: Mr.Kong
+      * @date: 2019/4/3 14:56
       * @Param: [deptId, name]
-      * @Return: java.util.List<cn.com.nantian.pojo.NtPersonnel>
+      * @return: List<NtPersonnel>
       **/
     public List<NtPersonnel> findPerByDeptIdAndName(int deptId , String name);
 
@@ -158,7 +158,7 @@ public interface UserService {
     int resetPassWord(String idNo);
 
     /**
-      * @Description: 重置密码
+      * @description: 重置密码
       * @auther: Mr.Kong
       * @date: 2019/5/13 10:54
       * @param:  [perId]

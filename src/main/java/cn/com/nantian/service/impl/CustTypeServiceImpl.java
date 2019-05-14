@@ -16,9 +16,9 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Description:
+ * @description:
  * @Author：Mr.Kong
- * @Date: 2019/3/20 15:06
+ * @date: 2019/3/20 15:06
  * @Version：1.0
  */
 @Service
@@ -30,11 +30,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     private DictionariesService dictionariesService;
 
     /**
-     * @Description: 查询客户类型集合
+     * @description: 查询客户类型集合
      * @Param: [custType]
-     * @Return: java.util.List<cn.com.nantian.pojo.NtCustType>
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 15:04
+     * @return: List<NtCustType>
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 15:04
      **/
     @Override
     public List<NtCustType> selectCustTypeList(NtCustType custType) {
@@ -42,11 +42,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     }
 
     /**
-     * @Description: 设置客户类别、工作类别、技术等级 名称
+     * @description: 设置客户类别、工作类别、技术等级 名称
      * @Param: [custTypeList]
-     * @Return: void
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 15:17
+     * @return: void
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 15:17
      **/
     @Override
     public void setCustTypeName(List<NtCustType> custTypeList) {
@@ -87,11 +87,11 @@ public class CustTypeServiceImpl implements CustTypeService {
 
 
     /**
-     * @Description: 设置客户类别、工作类别、技术等级 名称
+     * @description: 设置客户类别、工作类别、技术等级 名称
      * @Param: [custType]
-     * @Return: void
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 17:17
+     * @return: void
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 17:17
      **/
     @Override
     public void setCustTypeName(NtCustType custType) {
@@ -129,11 +129,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     }
 
     /**
-     * @Description: 删除客户类别
+     * @description: 删除客户类别
      * @Param: [custType] 删除条件
-     * @Return: int
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 15:55
+     * @return: int
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 15:55
      **/
     @Override
     public int deleteCustType(int custId) {
@@ -141,11 +141,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     }
 
     /**
-     * @Description: 新增客户类别
+     * @description: 新增客户类别
      * @Param: [custType]
-     * @Return: int
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 16:48
+     * @return: int
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 16:48
      **/
     @Override
     public int addCustType(NtCustType custType) {
@@ -153,11 +153,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     }
 
     /**
-     * @Description: 更新客户类别
+     * @description: 更新客户类别
      * @Param: [custType]
-     * @Return: int
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 17:03
+     * @return: int
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 17:03
      **/
     @Override
     public int updateCustType(NtCustType custType) {
@@ -165,11 +165,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     }
 
     /**
-     * @Description: 查询客户类型
+     * @description: 查询客户类型
      * @Param: [custType]
-     * @Return: cn.com.nantian.pojo.NtCustType
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/20 17:12
+     * @return: NtCustType
+     * @auther: Mr.Kong
+     * @date: 2019/3/20 17:12
      **/
     @Override
     public NtCustType selectCustType(int custId) {
@@ -177,11 +177,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     }
 
     /**
-     * @Description: 检查传入的对象所有属性值，在表中是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/26 14:25
+     * @description: 检查传入的对象所有属性值，在表中是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/3/26 14:25
      * @Param: [NtCustType]
-     * @Return: boolean
+     * @return: boolean
      **/
     @Override
     public boolean checkWhetherRepeat(NtCustType ntCustType) {
@@ -199,11 +199,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     }
 
     /**
-     * @Description: 更新 检查传入的对象所有属性值，在表中是否已存在
-     * @Auther: Mr.Kong
-     * @Date: 2019/5/7 11:28
+     * @description: 更新 检查传入的对象所有属性值，在表中是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/7 11:28
      * @Param: [ntCustType]
-     * @Return: boolean
+     * @return: boolean
      **/
     @Override
     public boolean checkUpdateWhetherRepeat(NtCustType ntCustType) {
@@ -221,11 +221,11 @@ public class CustTypeServiceImpl implements CustTypeService {
     }
 
     /**
-     * @Description: 检查属性值是否为空
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/26 14:23
+     * @description: 检查属性值是否为空
+     * @auther: Mr.Kong
+     * @date: 2019/3/26 14:23
      * @Param: [ntCustType]
-     * @Return: java.lang.String
+     * @return: java.lang.String
      **/
     @Override
     public String checkAttribute(NtCustType ntCustType) {

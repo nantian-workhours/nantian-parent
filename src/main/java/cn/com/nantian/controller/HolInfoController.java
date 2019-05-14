@@ -1,8 +1,8 @@
 /**
- * @Description: 年假信息管理
+ * @description: 年假信息管理
  * @ClassName: HolInfoController
  * @Author： Mr.Kong
- * @Date: 2019/3/29 16:13
+ * @date: 2019/3/29 16:13
  * @Version： 1.0
  */
 package cn.com.nantian.controller;
@@ -36,11 +36,11 @@ public class HolInfoController {
     }
 
     /**
-     * @Description: 查询年假信息列表
-     * @Auther: Mr.Kong
-     * @Date: 2019/3/29 16:39
+     * @description: 查询年假信息列表
+     * @auther: Mr.Kong
+     * @date: 2019/3/29 16:39
      * @Param: [ntHolInfo]
-     * @Return: cn.com.nantian.pojo.entity.ResponseData
+     * @return: ResponseData
      **/
     @RequestMapping("/ntHolInfo/findAll")
     @ResponseBody
