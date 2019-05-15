@@ -54,28 +54,28 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
         } else {
             personnelApply.setWorkDate(DateUtils.parseToDate(personnelApply.getWorkDateStr(), "yyyy-MM-dd"));
         }
-        if (ObjectUtils.isNotNull(personnelApply.getNormalHoursStr())) {
+        if (StringUtils.isNotEmpty(personnelApply.getNormalHoursStr())) {
             if (!StringUtils.isOnePointNumber(personnelApply.getNormalHoursStr())){
                 return "正常工时 格式不正确！";
             }
             personnelApply.setNormalHours(Float.valueOf(personnelApply.getNormalHoursStr()));
         }
 
-        if (ObjectUtils.isNotNull(personnelApply.getWorkHoursStr())) {
+        if (StringUtils.isNotEmpty(personnelApply.getWorkHoursStr())) {
             if (!StringUtils.isOnePointNumber(personnelApply.getWorkHoursStr())){
                 return "加班工时 格式不正确！";
             }
             personnelApply.setWorkHours(Float.valueOf(personnelApply.getWorkHoursStr()));
         }
-        if (ObjectUtils.isNotNull(personnelApply.getLeaveHoursStr())) {
+        if (StringUtils.isNotEmpty(personnelApply.getLeaveHoursStr())) {
             if (!StringUtils.isOnePointNumber(personnelApply.getLeaveHoursStr())){
                 return "请假工时 格式不正确！";
             }
             personnelApply.setLeaveHours(Float.valueOf(personnelApply.getLeaveHoursStr()));
         }
-        if (ObjectUtils.isNull(personnelApply.getNormalHoursStr())
-             && ObjectUtils.isNull(personnelApply.getWorkHoursStr())
-             && ObjectUtils.isNull(personnelApply.getLeaveHoursStr())){
+        if (StringUtils.isEmpty(personnelApply.getNormalHoursStr()) &&
+            StringUtils.isEmpty(personnelApply.getWorkHoursStr()) &&
+            StringUtils.isEmpty(personnelApply.getLeaveHoursStr())){
             return "工时 不能都为空！";
         }
         if (StringUtils.isEmpty(personnelApply.getErrDescribe())) {
