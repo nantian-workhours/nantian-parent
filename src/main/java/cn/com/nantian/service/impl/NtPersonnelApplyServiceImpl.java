@@ -44,6 +44,9 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
      * @return: java.lang.String
      **/
     public String checkAttribute(NtPersonnelApply personnelApply) throws Exception {
+        if (ObjectUtils.isNull(personnelApply.getPerId())) {
+            return "员工编号 不能为空！";
+        }
         if (StringUtils.isEmpty(personnelApply.getWorkDateStr())) {
             return "异议日期 不能为空！";
         } else if (!DateUtils.checkDateReg(personnelApply.getWorkDateStr())) {
@@ -51,14 +54,31 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
         } else {
             personnelApply.setWorkDate(DateUtils.parseToDate(personnelApply.getWorkDateStr(), "yyyy-MM-dd"));
         }
+        if (ObjectUtils.isNotNull(personnelApply.getNormalHoursStr())) {
+            if (!StringUtils.isOnePointNumber(personnelApply.getNormalHoursStr())){
+                return "正常工时 格式不正确！";
+            }
+            personnelApply.setNormalHours(Float.valueOf(personnelApply.getNormalHoursStr()));
+        }
 
-        if (StringUtils.isEmpty(personnelApply.getApplyType())) {
-            return "申请类型 不能为空！";
+        if (ObjectUtils.isNotNull(personnelApply.getWorkHoursStr())) {
+            if (!StringUtils.isOnePointNumber(personnelApply.getWorkHoursStr())){
+                return "加班工时 格式不正确！";
+            }
+            personnelApply.setWorkHours(Float.valueOf(personnelApply.getWorkHoursStr()));
         }
-        if (StringUtils.isEmpty(personnelApply.getApplyValue())) {
-            return "申请值 不能为空！";
+        if (ObjectUtils.isNotNull(personnelApply.getLeaveHoursStr())) {
+            if (!StringUtils.isOnePointNumber(personnelApply.getLeaveHoursStr())){
+                return "请假工时 格式不正确！";
+            }
+            personnelApply.setLeaveHours(Float.valueOf(personnelApply.getLeaveHoursStr()));
         }
-        if (ObjectUtils.isNull(personnelApply.getErrDescribe())) {
+        if (ObjectUtils.isNull(personnelApply.getNormalHoursStr())
+             && ObjectUtils.isNull(personnelApply.getWorkHoursStr())
+             && ObjectUtils.isNull(personnelApply.getLeaveHoursStr())){
+            return "工时 不能都为空！";
+        }
+        if (StringUtils.isEmpty(personnelApply.getErrDescribe())) {
             return "申请理由 不能为空！";
         }
         if (StringUtils.isEmpty(personnelApply.getFileName())) {

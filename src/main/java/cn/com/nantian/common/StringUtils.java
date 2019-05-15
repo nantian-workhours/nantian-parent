@@ -709,13 +709,13 @@ public class StringUtils {
     }
 
     /**
-      * @description: 输入天数效验
+      * @description: 判断小数点后1位的数字的正则表达式
       * @auther: Mr.Kong
       * @date: 2019/5/14 9:48
       * @param:  [date]
       * @return: boolean
       **/
-    public static boolean isDay(String date){
+    public static boolean isOnePointNumber(String date){
         String reg="^(([1-9]{1}\\d*)|([0]{1}))(\\.(\\d){1})?$";
         Pattern pattern = Pattern.compile(reg);
         Matcher m = pattern.matcher(date);

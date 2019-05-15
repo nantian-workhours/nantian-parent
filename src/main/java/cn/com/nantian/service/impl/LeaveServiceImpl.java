@@ -78,7 +78,7 @@ public class LeaveServiceImpl implements LeaveService {
         }
         if (ObjectUtils.isNull(ntLeave.getLeaveCountStr())) {
             return "请假天数 不能为空！";
-        }else if (!StringUtils.isDay(ntLeave.getLeaveCountStr())){
+        }else if (!StringUtils.isOnePointNumber(ntLeave.getLeaveCountStr())){
             return "请假天数 格式不正确！";
         }else {
             ntLeave.setLeaveCount(Float.parseFloat(ntLeave.getLeaveCountStr()));

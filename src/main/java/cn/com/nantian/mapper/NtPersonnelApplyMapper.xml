@@ -5,8 +5,9 @@
     <id column="APPLY_SEQ" property="applySeq" jdbcType="INTEGER" />
     <result column="PER_ID" property="perId" jdbcType="INTEGER" />
     <result column="APPLY_DATE" property="applyDate" jdbcType="TIMESTAMP" />
-    <result column="APPLY_TYPE" property="applyType" jdbcType="CHAR" />
-    <result column="APPLY_VALUE" property="applyValue" jdbcType="VARCHAR" />
+    <result column="NORMAL_HOURS" property="normalHours" jdbcType="REAL" />
+    <result column="WORK_HOURS" property="workHours" jdbcType="REAL" />
+    <result column="LEAVE_HOURS" property="leaveHours" jdbcType="REAL" />
     <result column="WORK_DATE" property="workDate" jdbcType="DATE" />
     <result column="APPLY_STATUS" property="applyStatus" jdbcType="CHAR" />
     <result column="ERR_DESCRIBE" property="errDescribe" jdbcType="VARCHAR" />
@@ -15,9 +16,10 @@
     <result column="FILE_PATH" property="filePath" jdbcType="VARCHAR" />
     <result column="FILE_NAME" property="fileName" jdbcType="VARCHAR" />
     <result column="APPROVE_OPN" property="approveOpn" jdbcType="VARCHAR" />
+
   </resultMap>
   <sql id="Base_Column_List" >
-    APPLY_SEQ, nt_personnel_apply.PER_ID, APPLY_DATE, APPLY_TYPE, APPLY_VALUE, WORK_DATE, APPLY_STATUS,
+    APPLY_SEQ, nt_personnel_apply.PER_ID, APPLY_DATE, NORMAL_HOURS, WORK_HOURS, LEAVE_HOURS, WORK_DATE, APPLY_STATUS,
     ERR_DESCRIBE, APPROVE_DATE, MANAGER_ID, FILE_PATH, FILE_NAME, APPROVE_OPN
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -29,15 +31,10 @@
   <select id="queryPersonApplyList" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
     select
     <include refid="Base_Column_List" />,
-    d.DIC_VALUE applyTypeName,
-    di.DIC_VALUE applyStatusName,
     p.`NAME` userName
     from nt_personnel_apply
-    LEFT JOIN nt_dictionaries d ON d.DIC_CODE = nt_personnel_apply.APPLY_TYPE
-    LEFT JOIN nt_dictionaries di ON di.DIC_CODE = nt_personnel_apply.APPLY_STATUS
     LEFT JOIN nt_personnel p ON p.PER_ID=nt_personnel_apply.PER_ID
     <where>
-      d.DIC_TYPE = 'dis' AND di.DIC_TYPE = 'applyStatus'
       <if test="userName !=null and userName !=''">
         and p.NAME like CONCAT('%',#{userName},'%')
       </if>
@@ -53,15 +50,15 @@
   </delete>
   <insert id="insert" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
     insert into nt_personnel_apply (APPLY_SEQ, PER_ID, APPLY_DATE, 
-      APPLY_TYPE, APPLY_VALUE, WORK_DATE, 
-      APPLY_STATUS, ERR_DESCRIBE, APPROVE_DATE, 
-      MANAGER_ID, FILE_PATH, FILE_NAME, 
-      APPROVE_OPN)
-    values (#{applySeq,jdbcType=INTEGER}, #{perId,jdbcType=INTEGER}, #{applyDate,jdbcType=TIMESTAMP}, 
-      #{applyType,jdbcType=CHAR}, #{applyValue,jdbcType=VARCHAR}, #{workDate,jdbcType=DATE}, 
-      #{applyStatus,jdbcType=CHAR}, #{errDescribe,jdbcType=VARCHAR}, #{approveDate,jdbcType=TIMESTAMP}, 
-      #{managerId,jdbcType=INTEGER}, #{filePath,jdbcType=VARCHAR}, #{fileName,jdbcType=VARCHAR}, 
-      #{approveOpn,jdbcType=VARCHAR})
+      NORMAL_HOURS, WORK_HOURS, LEAVE_HOURS,
+      WORK_DATE, APPLY_STATUS, ERR_DESCRIBE,
+      APPROVE_DATE, MANAGER_ID, FILE_PATH,
+      FILE_NAME, APPROVE_OPN)
+    values (#{applySeq,jdbcType=INTEGER}, #{perId,jdbcType=INTEGER}, #{applyDate,jdbcType=DATE},
+      #{normalHours,jdbcType=REAL}, #{workHours,jdbcType=REAL}, #{leaveHours,jdbcType=REAL},
+      #{workDate,jdbcType=DATE}, #{applyStatus,jdbcType=CHAR}, #{errDescribe,jdbcType=VARCHAR},
+      #{approveDate,jdbcType=TIMESTAMP}, #{managerId,jdbcType=INTEGER}, #{filePath,jdbcType=VARCHAR},
+      #{fileName,jdbcType=VARCHAR}, #{approveOpn,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
     insert into nt_personnel_apply
@@ -73,11 +70,14 @@
         PER_ID,
       </if>
         APPLY_DATE,
-      <if test="applyType != null" >
-        APPLY_TYPE,
+      <if test="normalHours != null" >
+        NORMAL_HOURS,
       </if>
-      <if test="applyValue != null" >
-        APPLY_VALUE,
+      <if test="workHours != null" >
+        WORK_HOURS,
+      </if>
+      <if test="leaveHours != null" >
+        LEAVE_HOURS,
       </if>
       <if test="workDate != null" >
         WORK_DATE,
@@ -112,11 +112,14 @@
         #{perId,jdbcType=INTEGER},
       </if>
       now(),
-      <if test="applyType != null" >
-        #{applyType,jdbcType=CHAR},
+      <if test="normalHours != null" >
+        #{normalHours,jdbcType=REAL},
       </if>
-      <if test="applyValue != null" >
-        #{applyValue,jdbcType=VARCHAR},
+      <if test="workHours != null" >
+        #{workHours,jdbcType=REAL},
+      </if>
+      <if test="leaveHours != null" >
+        #{leaveHours,jdbcType=REAL},
       </if>
       <if test="workDate != null" >
         #{workDate,jdbcType=DATE},
@@ -151,13 +154,16 @@
         PER_ID = #{perId,jdbcType=INTEGER},
       </if>
       <if test="applyDate != null" >
-        APPLY_DATE = #{applyDate,jdbcType=TIMESTAMP},
+        APPLY_DATE = #{applyDate,jdbcType=DATE},
       </if>
-      <if test="applyType != null" >
-        APPLY_TYPE = #{applyType,jdbcType=CHAR},
+      <if test="normalHours != null" >
+        NORMAL_HOURS = #{normalHours,jdbcType=REAL},
       </if>
-      <if test="applyValue != null" >
-        APPLY_VALUE = #{applyValue,jdbcType=VARCHAR},
+      <if test="workHours != null" >
+        WORK_HOURS = #{workHours,jdbcType=REAL},
+      </if>
+      <if test="leaveHours != null" >
+        LEAVE_HOURS = #{leaveHours,jdbcType=REAL},
       </if>
       <if test="workDate != null" >
         WORK_DATE = #{workDate,jdbcType=DATE},
@@ -189,9 +195,10 @@
   <update id="updateByPrimaryKey" parameterType="cn.com.nantian.pojo.NtPersonnelApply" >
     update nt_personnel_apply
     set PER_ID = #{perId,jdbcType=INTEGER},
-      APPLY_DATE = #{applyDate,jdbcType=TIMESTAMP},
-      APPLY_TYPE = #{applyType,jdbcType=CHAR},
-      APPLY_VALUE = #{applyValue,jdbcType=VARCHAR},
+      APPLY_DATE = #{applyDate,jdbcType=DATE},
+      NORMAL_HOURS = #{normalHours,jdbcType=REAL},
+      WORK_HOURS = #{workHours,jdbcType=REAL},
+      LEAVE_HOURS = #{leaveHours,jdbcType=REAL},
       WORK_DATE = #{workDate,jdbcType=DATE},
       APPLY_STATUS = #{applyStatus,jdbcType=CHAR},
       ERR_DESCRIBE = #{errDescribe,jdbcType=VARCHAR},

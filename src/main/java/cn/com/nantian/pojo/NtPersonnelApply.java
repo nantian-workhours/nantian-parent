@@ -15,10 +15,12 @@ public class NtPersonnelApply {
     private Integer perId;
     /**申请日期*/
     private Date applyDate;
-    /**申请类型*/
-    private String applyType;
-    /**申请值*/
-    private String applyValue;
+    /**正常工时*/
+    private Float normalHours;
+    /**加班工时*/
+    private Float workHours;
+    /**请假工时*/
+    private Float leaveHours;
     /**考勤日期*/
     private Date workDate;
     /**处理状态*/
@@ -36,15 +38,17 @@ public class NtPersonnelApply {
     /**审批意见*/
     private String approveOpn;
     //========================================
+    /**正常工时*/
+    private String normalHoursStr;
+    /**加班工时*/
+    private String workHoursStr;
+    /**请假工时*/
+    private String leaveHoursStr;
     /**申请日期*/
     private String applyDateStr;
     /**考勤日期*/
     private String workDateStr;
     /**员工姓名*/
     private String userName;
-    /**申请类型名称*/
-    private String applyTypeName;
-    /**申请状态名称*/
-    private String applyStatusName;
 
 }
