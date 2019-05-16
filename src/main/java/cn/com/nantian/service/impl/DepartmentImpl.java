@@ -21,6 +21,17 @@ public class DepartmentImpl implements DepartmentService {
     @Resource
     private NtDepartmentMapper departmentMapper;
 
+    /**
+     * @description: 根据部门名称查询部门信息
+     * @auther: Mr.Kong
+     * @date: 2019/5/16 15:35
+     * @param:  [deptName]
+     * @return: cn.com.nantian.pojo.NtDepartment
+     **/
+    @Override
+    public NtDepartment queryDepartmentByName(String deptName) {
+        return departmentMapper.queryDepartmentByName(deptName);
+    }
 
     /**
      * 修改部门信息

@@ -7,6 +7,16 @@ import java.util.List;
 
 public interface DepartmentService {
 
+
+    /**
+      * @description: 根据部门名称查询部门信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/16 15:35
+      * @param:  [deptName]
+      * @return: cn.com.nantian.pojo.NtDepartment
+      **/
+    NtDepartment queryDepartmentByName(String deptName);
+
     /**
       * @description:  添加 部门信息
       * @auther: Mr.Kong

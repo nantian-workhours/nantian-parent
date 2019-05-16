@@ -15,6 +15,39 @@ import java.util.regex.Pattern;
 public class DateUtils {
 
     /**
+      * @description: 时间段比较
+      * @auther: Mr.Kong
+      * @date: 2019/5/16 14:45
+      * @param:  [date1, date2, startTime, endDate]
+      * @return: boolean true date1-date2在startTime-endDate时间段内，false 不在范围内
+      **/
+    public static boolean comparisonDate(Date date1, Date date2, Date startTime, Date endDate) {
+        if(date1 != null && date2 != null && startTime != null && endDate != null) {
+            long d1 = date1.getTime();
+            long d2 = date2.getTime();
+            long v = d2-d1;
+            long start = startTime.getTime();
+            long end = endDate.getTime();
+            if (((d1 - start) >=0) && ((end - d2) >=0)){
+                return true;
+            }else {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    public static Date dateToDate(Date date,String pattern) throws Exception{
+        if (ObjectUtils.isNotNull(date)){
+            //时间格式转化
+            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+            String begin = sdf.format(date);
+            date = sdf.parse(begin);
+        }
+        return date;
+    }
+
+    /**
       * @description: 验证日期是yyyy-MM-dd支持闰年的正则表达式
       * @auther: Mr.Kong
       * @date: 2019/4/29 10:43

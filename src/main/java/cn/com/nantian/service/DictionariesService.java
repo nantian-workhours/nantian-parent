@@ -30,6 +30,14 @@ public interface DictionariesService {
       **/
     public NtDictionariesKey selectDictionaries(String dicType, String dicCode);
 
+    /**
+     * @description: 根据字典所属类型、字典值查询数据
+     * @auther: Mr.Kong
+     * @date: 2019/5/16 11:12
+     * @param:  [dicType, dicValue] 字典所属类型、字典值
+     * @return: cn.com.nantian.pojo.NtDictionariesKey
+     **/
+    NtDictionariesKey queryDictionaries(String dicType, String dicValue);
 
     /**
      * 根据类别查询

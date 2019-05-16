@@ -25,6 +25,8 @@ public interface NtDictionariesMapper {
      * @date: 2019/3/20 15:25
      **/
     NtDictionariesKey selectDictionaries(NtDictionariesKey dictionariesKey);
+
+    NtDictionariesKey queryDictionaries(NtDictionariesKey dictionariesKey);
     /**
      * 根据参数类型和code值查询
      * @param dicType

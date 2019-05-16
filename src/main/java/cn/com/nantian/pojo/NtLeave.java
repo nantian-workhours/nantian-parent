@@ -3,6 +3,8 @@ package cn.com.nantian.pojo;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.Objects;
+
 /**
   * @description: 请假信息实体
   * @auther: Mr.Kong
@@ -51,8 +53,5 @@ public class NtLeave {
     private String leaveTypeName;
     /**审批状态名称 R 审核中，Y 通过，N 退回*/
     private String applyStatusName;
-
-
-
 
 }

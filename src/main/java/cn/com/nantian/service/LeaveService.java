@@ -9,6 +9,14 @@ import java.util.Map;
 
 public interface LeaveService {
     /**
+     * @description: 效验请假信息是否已存在
+     * @auther: Mr.Kong
+     * @date: 2019/5/16 13:50
+     * @param:  [ntLeave]
+     * @return: boolean true 有，false 无
+     **/
+    public boolean checkWhetherRepeat(NtLeave ntLeave);
+    /**
      * @description: 更新时 效验传入的参数值
      * @auther: Mr.Kong
      * @date: 2019/5/13 16:07
@@ -80,7 +88,7 @@ public interface LeaveService {
      * @Param: [myfile]
      * @return: Map<String,Object>
      **/
-    Map<String ,Object>  importExcel(MultipartFile myfile);
+    Map<String ,Object>  importExcel(MultipartFile myfile) throws Exception;
     /**
      * @description: 获得xsscell内容
      * @auther: Mr.Kong

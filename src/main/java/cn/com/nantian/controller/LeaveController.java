@@ -8,6 +8,7 @@
 package cn.com.nantian.controller;
 
 import cn.com.nantian.common.DateUtils;
+import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.pojo.NtLeave;
@@ -122,31 +123,27 @@ public class LeaveController {
      **/
     @RequestMapping("/ntLeave/importExcel")
     @ResponseBody
-    public ResponseData importProcess(HttpServletRequest request, @RequestParam("myFile") MultipartFile myfile) {
-        //判断权限是否许可
-        File tempFile = new File(ParamUntil.excelPath1 + "\\" + myfile.getOriginalFilename());
-        if (myfile != null) {
+    public ResponseData importProcess(HttpServletRequest request,
+                                      @RequestParam("myFile") MultipartFile myfile) {
+        try {
+            if (ObjectUtils.isNull(myfile)){
+                return ResponseData.isfailed().putDataValue("error", "上传文件 不能为空！");
+            }
+            File tempFile = new File(ParamUntil.excelPath1 + "\\" + myfile.getOriginalFilename());
             String filename = myfile.getOriginalFilename();
             String a = request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
-            try {
-                //将数据查入到库中
-                Map<String, Object> resultMap = leaveService.importExcel(myfile);
-                if (!resultMap.isEmpty()) {
-                    if (tempFile.exists()) {
-                        return ResponseData.ok().putDataValue("code", resultMap);
-                    } else {
-                        //保存到服务器的路径
-                        SaveFileFromInputStream(myfile.getInputStream(), a, filename);
-                        return ResponseData.ok().putDataValue("code", resultMap);
-                    }
-                } else {
-                    return ResponseData.isfailed().putDataValue("data", "Upload data is empty");
-                }
-            } catch (IOException e) {
-                return ResponseData.isfailed().putDataValue("data", e.toString());
+            //将数据查入到库中
+            Map<String, Object> resultMap = leaveService.importExcel(myfile);
+            if (tempFile.exists()) {
+                return ResponseData.ok().putDataValue("data", resultMap);
+            } else {
+                //保存到服务器的路径
+                SaveFileFromInputStream(myfile.getInputStream(), a, filename);
+                return ResponseData.ok().putDataValue("data", resultMap);
             }
-        } else {
-            return ResponseData.isfailed().putDataValue("data", "Upload data is empty");
+        }catch (Exception e){
+            logger.error("LeaveController.importProcess",e);
+            return ResponseData.isfailed().putDataValue("error", "系统异常，请稍后再试！");
         }
     }
 
@@ -158,7 +155,6 @@ public class LeaveController {
      * @return: void
      **/
     public void SaveFileFromInputStream(InputStream stream, String path, String savefile) {
-
         try {
             FileOutputStream fs = new FileOutputStream(ParamUntil.excelPath + "/" + savefile);
             byte[] buffer = new byte[1024 * 1024];
@@ -170,7 +166,6 @@ public class LeaveController {
                 fs.flush();
             }
             fs.close();
-
             stream.close();
         } catch (IOException e) {
             e.printStackTrace();

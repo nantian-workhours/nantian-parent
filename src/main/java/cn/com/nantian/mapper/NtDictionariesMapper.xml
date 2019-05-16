@@ -109,6 +109,13 @@
     and nt_dictionaries.DIC_CODE=#{dicCode}
   </select>
   <!-- 根据条件查询数据 end-->
+  <select id="queryDictionaries" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtDictionariesKey" >
+    select
+    <include refid="Base_Column_List"/>
+    from nt_dictionaries
+    where nt_dictionaries.DIC_TYPE=#{dicType}
+    and nt_dictionaries.DIC_VALUE=#{dicValue}
+  </select>
   <select id="selectByTypeAndCode" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

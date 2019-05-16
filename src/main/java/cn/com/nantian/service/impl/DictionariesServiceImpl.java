@@ -20,6 +20,19 @@ public class DictionariesServiceImpl implements DictionariesService {
     @Resource
     private NtDictionariesMapper dictionariesMapper;
 
+    /**
+      * @description: 根据字典所属类型、字典值查询数据
+      * @auther: Mr.Kong
+      * @date: 2019/5/16 11:12
+      * @param:  [dicType, dicValue] 字典所属类型、字典值
+      * @return: cn.com.nantian.pojo.NtDictionariesKey
+      **/
+    public NtDictionariesKey queryDictionaries(String dicType, String dicValue){
+        NtDictionariesKey dictionariesKey=new NtDictionariesKey();
+        dictionariesKey.setDicType(dicType);
+        dictionariesKey.setDicValue(dicValue);
+        return dictionariesMapper.queryDictionaries(dictionariesKey);
+    }
 
     /**
      * @description: 根据条件查询字典数据
