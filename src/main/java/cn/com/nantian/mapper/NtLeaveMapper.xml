@@ -4,8 +4,8 @@
   <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.NtLeave">
     <id column="LEAVE_ID" jdbcType="INTEGER" property="leaveId" />
     <result column="PER_ID" jdbcType="INTEGER" property="perId" />
-    <result column="BEG_DATE" jdbcType="DATE" property="begDate" />
-    <result column="END_DATE" jdbcType="DATE" property="endDate" />
+    <result column="BEG_DATE" jdbcType="TIMESTAMP" property="begDate" />
+    <result column="END_DATE" jdbcType="TIMESTAMP" property="endDate" />
     <result column="LEAVE_TYPE" jdbcType="CHAR" property="leaveType" />
     <result column="LEAVE_COUNT" jdbcType="REAL" property="leaveCount" />
     <result column="LEAVE_REMARK" jdbcType="VARCHAR" property="leaveRemark" />
@@ -55,8 +55,8 @@
     END_DATE, LEAVE_TYPE, LEAVE_COUNT,
     LEAVE_REMARK, APPLY_STATUS, APPROVE_DATE,
     MANAGER_ID, APPROVE_OPN)
-    values (#{leaveId,jdbcType=INTEGER}, #{perId,jdbcType=INTEGER}, #{begDate,jdbcType=DATE},
-    #{endDate,jdbcType=DATE}, #{leaveType,jdbcType=CHAR}, #{leaveCount,jdbcType=REAL},
+    values (#{leaveId,jdbcType=INTEGER}, #{perId,jdbcType=INTEGER}, #{begDate,jdbcType=TIMESTAMP},
+    #{endDate,jdbcType=TIMESTAMP}, #{leaveType,jdbcType=CHAR}, #{leaveCount,jdbcType=REAL},
     #{leaveRemark,jdbcType=VARCHAR}, #{applyStatus,jdbcType=CHAR}, #{approveDate,jdbcType=TIMESTAMP},
     #{managerId,jdbcType=INTEGER}, #{approveOpn,jdbcType=VARCHAR})
   </insert>
@@ -105,10 +105,10 @@
         #{perId,jdbcType=INTEGER},
       </if>
       <if test="begDate != null">
-        #{begDate,jdbcType=DATE},
+        #{begDate,jdbcType=TIMESTAMP},
       </if>
       <if test="endDate != null">
-        #{endDate,jdbcType=DATE},
+        #{endDate,jdbcType=TIMESTAMP},
       </if>
       <if test="leaveType != null">
         #{leaveType,jdbcType=CHAR},
@@ -140,10 +140,10 @@
         PER_ID = #{perId,jdbcType=INTEGER},
       </if>
       <if test="begDate != null">
-        BEG_DATE = #{begDate,jdbcType=DATE},
+        BEG_DATE = #{begDate,jdbcType=TIMESTAMP},
       </if>
       <if test="endDate != null">
-        END_DATE = #{endDate,jdbcType=DATE},
+        END_DATE = #{endDate,jdbcType=TIMESTAMP},
       </if>
       <if test="leaveType != null">
         LEAVE_TYPE = #{leaveType,jdbcType=CHAR},
@@ -172,8 +172,8 @@
   <update id="updateByPrimaryKey" parameterType="cn.com.nantian.pojo.NtLeave">
     update nt_leave
     set PER_ID = #{perId,jdbcType=INTEGER},
-    BEG_DATE = #{begDate,jdbcType=DATE},
-    END_DATE = #{endDate,jdbcType=DATE},
+    BEG_DATE = #{begDate,jdbcType=TIMESTAMP},
+    END_DATE = #{endDate,jdbcType=TIMESTAMP},
     LEAVE_TYPE = #{leaveType,jdbcType=CHAR},
     LEAVE_COUNT = #{leaveCount,jdbcType=REAL},
     LEAVE_REMARK = #{leaveRemark,jdbcType=VARCHAR},

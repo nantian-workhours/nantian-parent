@@ -129,18 +129,20 @@ public class LeaveController {
             if (ObjectUtils.isNull(myfile)){
                 return ResponseData.isfailed().putDataValue("error", "上传文件 不能为空！");
             }
-            File tempFile = new File(ParamUntil.excelPath1 + "\\" + myfile.getOriginalFilename());
-            String filename = myfile.getOriginalFilename();
-            String a = request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
             //将数据查入到库中
             Map<String, Object> resultMap = leaveService.importExcel(myfile);
+            return ResponseData.ok().putDataValue("data", resultMap);
+
+            /*File tempFile = new File(ParamUntil.excelPath1 + "\\" + myfile.getOriginalFilename());
+            String filename = myfile.getOriginalFilename();
+            String a = request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
             if (tempFile.exists()) {
                 return ResponseData.ok().putDataValue("data", resultMap);
             } else {
                 //保存到服务器的路径
                 SaveFileFromInputStream(myfile.getInputStream(), a, filename);
                 return ResponseData.ok().putDataValue("data", resultMap);
-            }
+            }*/
         }catch (Exception e){
             logger.error("LeaveController.importProcess",e);
             return ResponseData.isfailed().putDataValue("error", "系统异常，请稍后再试！");

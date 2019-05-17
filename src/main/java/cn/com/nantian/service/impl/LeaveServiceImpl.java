@@ -243,8 +243,8 @@ public class LeaveServiceImpl implements LeaveService {
             xssfWorkbook = new XSSFWorkbook(myfile.getInputStream());
             XSSFSheet sheet = xssfWorkbook.getSheetAt(0);
             //指的行数，一共有多少行
-            int rows = sheet.getLastRowNum()+1;
-            for (int i = 2; i <= rows; i++) {
+            int rows = sheet.getLastRowNum();
+            for (int i = 2; i <= rows+1; i++) {
                 ++errorRow;
                 System.out.println("..................errorRow="+errorRow);
                 //读取左上端单元格
@@ -325,8 +325,8 @@ public class LeaveServiceImpl implements LeaveService {
                     //新增请假
                     NtLeave ntLeave = new NtLeave();
                     ntLeave.setPerId(userList.get(0).getPerId());
-                    ntLeave.setBegDate(DateUtils.dateToDate(begDate,"yyyy-MM-dd HH:mm:ss"));
-                    ntLeave.setEndDate(DateUtils.dateToDate(endDate,"yyyy-MM-dd HH:mm:ss"));
+                    ntLeave.setBegDate(begDate);
+                    ntLeave.setEndDate(endDate);
                     ntLeave.setLeaveType(dictionaries.getDicCode());
                     ntLeave.setLeaveCount(Float.valueOf(leaveDays));
                     ntLeave.setLeaveRemark(leaveRemark);
@@ -334,7 +334,7 @@ public class LeaveServiceImpl implements LeaveService {
                     boolean repeat=this.checkWhetherRepeat(ntLeave);
                     System.out.println("第"+errorRow+"行 信息是否存在！repeat="+repeat);
                     if (repeat){
-                        msg += "第" + errorRow + "行 该时间段 申请请假信息已存在 不能重复申请; ";
+                        msg += "第" + errorRow + "行 该员工时间段 请假信息已申请; ";
                         failNum++;
                         continue;
                     }else {
@@ -344,7 +344,7 @@ public class LeaveServiceImpl implements LeaveService {
                 }
             }
             //总行数
-            map.put("totalNum", rows-2);
+            map.put("totalNum", rows-1);
             //成功条数
             map.put("successNum ", successNum);
             //失败条数
@@ -369,7 +369,7 @@ public class LeaveServiceImpl implements LeaveService {
     public Object getCellValue(Cell cell) {
         Object value = "";
         //格式化number String字符串
-        DecimalFormat df = new DecimalFormat("0");
+        DecimalFormat df = new DecimalFormat("0.0");
         if (cell != null) {
             switch (cell.getCellType()) {
                 case Cell.CELL_TYPE_FORMULA:
