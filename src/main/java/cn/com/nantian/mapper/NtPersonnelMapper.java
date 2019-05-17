@@ -57,7 +57,7 @@ public interface NtPersonnelMapper {
      * @param companyEmail
      * @return
      */
-    NtPersonnel selectByEmial(String companyEmail);
+    NtPersonnel selectByEmail(String companyEmail);
 
     /**
       * @description: 根据 个人邮箱 获取员工信息

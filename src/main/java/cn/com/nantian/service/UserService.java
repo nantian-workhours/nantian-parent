@@ -106,10 +106,21 @@ public interface UserService {
     NtPersonnel findOne(String username);
 
     /**
-     * 验证登录用户名
-     * @param name 登录用户名
-     * @return
-     */
+      * @description: 效验传入的登录用户名、密码
+      * @auther: Mr.Kong
+      * @date: 2019/5/17 14:37
+      * @param:  [name, password]
+      * @return: java.lang.String
+      **/
+    public String checkLoginParameter(String name,String password);
+
+    /**
+     * @description: 验证登录用户名
+     * @auther: Mr.Kong
+     * @date: 2019/5/17 14:44
+     * @param:  [name]
+     * @return: java.lang.String
+     **/
     public String checkLoginName(String name);
 
     /**

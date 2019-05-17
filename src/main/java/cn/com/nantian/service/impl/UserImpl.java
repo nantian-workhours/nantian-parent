@@ -10,6 +10,7 @@ import cn.com.nantian.mapper.PersonnelItemMapper;
 import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.PersonnelItem;
+import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.DictionariesService;
 import cn.com.nantian.service.UserService;
 import org.springframework.stereotype.Service;
@@ -178,7 +179,7 @@ public class UserImpl implements UserService {
         } else if (!RegExpressionUtils.isEmail(personnel.getCompanyEmail())) {
             msg = "公司邮箱 格式填写错误！";
         }else {
-            NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getCompanyEmail());
+            NtPersonnel ntPersonnel = personnelMapper.selectByEmail(personnel.getCompanyEmail());
             if (!ObjectUtils.isNull(ntPersonnel)) {
                 return msg = "公司邮箱 已存在！";
             }
@@ -299,7 +300,7 @@ public class UserImpl implements UserService {
         } else if (!RegExpressionUtils.isEmail(personnel.getCompanyEmail())) {
             msg = "公司邮箱 格式填写错误！";
         }else {
-            NtPersonnel ntPersonnel = personnelMapper.selectByEmial(personnel.getCompanyEmail());
+            NtPersonnel ntPersonnel = personnelMapper.selectByEmail(personnel.getCompanyEmail());
             if (ObjectUtils.isNotNull(ntPersonnel)){
                 if (!ntPersonnel.getPerId().equals(personnel2.getPerId())){
                     return msg = "公司邮箱 已存在！";
@@ -427,7 +428,7 @@ public class UserImpl implements UserService {
         NtPersonnel personnel = null;
         //根据邮箱查询用户
         if (RegExpressionUtils.isEmail(username)) {
-            personnel = personnelMapper.selectByEmial(username);
+            personnel = personnelMapper.selectByEmail(username);
         } else if (RegExpressionUtils.isMobile(username)) {
             //根据手机号获取
             personnel = personnelMapper.selectByPrimaryMobileNo(username);
@@ -439,26 +440,59 @@ public class UserImpl implements UserService {
     }
 
     /**
-     * 验证登录用户名
-     *
-     * @param name 登录用户名
-     * @return
-     */
+     * @description: 效验传入的登录用户名、密码
+     * @auther: Mr.Kong
+     * @date: 2019/5/17 14:37
+     * @param:  [name, password]
+     * @return: java.lang.String
+     **/
+    @Override
+    public String checkLoginParameter(String name,String password) {
+        //查询用户的信息
+        NtPersonnel personnel =null;
+        //效验登录用户名
+        if (StringUtils.isEmpty(name)) {
+            return "用户名 不能为空！";
+        } if (!(RegExpressionUtils.isMobile(name) || RegExpressionUtils.isEmail(name) || RegExpressionUtils.isIDNumber(name))) {
+            return "用户名 格式不正确！";
+        } else if (StringUtils.isEmpty(password)) {
+            return "登录密码 不能为空！";
+        }else {
+            personnel = this.findOne(name);
+            if (ObjectUtils.isNull(personnel)){
+                return "用户名 不存在！";
+            }else if (!DigestUtils.md5DigestAsHex(password.getBytes()).equals(personnel.getPassword())){
+                return "密码不正确！";
+            }
+        }
+        return "";
+    }
+
+
+
+    /**
+      * @description: 验证登录用户名
+      * @auther: Mr.Kong
+      * @date: 2019/5/17 14:44
+      * @param:  [name]
+      * @return: java.lang.String
+      **/
     @Override
     public String checkLoginName(String name) {
-        String msg = "";
+        //查询这个用户的信息
+        NtPersonnel personnel =null;
+        //效验登录用户名
         if (StringUtils.isEmpty(name)) {
-            msg = "登录用户名 不能为空！";
-        } else if (!RegExpressionUtils.isMobile(name)) {
-            msg = "手机号码 填写不正确！";
-        } else if (!RegExpressionUtils.isEmail(name)) {
-            msg = "邮箱 填写不正确！";
-        } else if (!RegExpressionUtils.isIDNumber(name)) {
-            msg = "身份证号码 填写不正确！";
-        } else {
-            msg = "登录用户名错误！只能是手机号或邮箱或身份证号码！";
+            return "用户名 不能为空！";
+        } if (!(RegExpressionUtils.isMobile(name) || RegExpressionUtils.isEmail(name) || RegExpressionUtils.isIDNumber(name))) {
+            return "用户名 格式不正确！";
+        }else {
+            personnel = this.findOne(name);
+            if (ObjectUtils.isNull(personnel)){
+                return "用户不存在！";
+            }
         }
-        return msg;
+        return "";
     }
 
     /**

@@ -119,7 +119,7 @@
     where nt_personnel.NAME like CONCAT('%',#{name},'%')
   </select>
 
-  <select id="selectByEmial" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  <select id="selectByEmail" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from nt_personnel
@@ -133,14 +133,12 @@
     where PERSON_EMAIL = #{personEmail,jdbcType=VARCHAR}
   </select>
 
-
   <select id="selectByPrimaryMobileNo" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from nt_personnel
     where MOBILE_NO = #{mobileNo,jdbcType=VARCHAR}
   </select>
-
 
   <select id="selectByUserId" parameterType="java.lang.Integer" resultType="java.lang.String" >
     select  NAME  from nt_personnel
