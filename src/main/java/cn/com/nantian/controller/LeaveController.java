@@ -131,8 +131,10 @@ public class LeaveController {
             }
             //将数据查入到库中
             Map<String, Object> resultMap = leaveService.importExcel(myfile);
+            String fileName = myfile.getOriginalFilename();
+            System.out.println("...................fileName:"+fileName);
+            resultMap.put("fileName",fileName);
             return ResponseData.ok().putDataValue("data", resultMap);
-
             /*File tempFile = new File(ParamUntil.excelPath1 + "\\" + myfile.getOriginalFilename());
             String filename = myfile.getOriginalFilename();
             String a = request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了

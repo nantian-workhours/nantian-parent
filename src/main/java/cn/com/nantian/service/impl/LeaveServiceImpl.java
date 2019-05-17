@@ -334,7 +334,7 @@ public class LeaveServiceImpl implements LeaveService {
                     boolean repeat=this.checkWhetherRepeat(ntLeave);
                     System.out.println("第"+errorRow+"行 信息是否存在！repeat="+repeat);
                     if (repeat){
-                        msg += "第" + errorRow + "行 该员工时间段 请假信息已申请; ";
+                        msg += "第" + errorRow + "行 该员工请假信息已申请; ";
                         failNum++;
                         continue;
                     }else {
@@ -343,13 +343,13 @@ public class LeaveServiceImpl implements LeaveService {
                     }
                 }
             }
-            //总行数
+            //总记导入数据
             map.put("totalNum", rows-1);
             //成功条数
             map.put("successNum ", successNum);
             //失败条数
             map.put("failNum ", failNum);
-            //异常行数
+            //错误信息
             map.put("error", msg);
             return map;
         } catch (Exception e) {
