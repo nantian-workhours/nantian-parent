@@ -2,8 +2,10 @@ package cn.com.nantian.controller;
 
 
 import cn.com.nantian.common.*;
+import cn.com.nantian.pojo.LoginLog;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.entity.ResponseData;
+import cn.com.nantian.service.LoginLogService;
 import cn.com.nantian.service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,10 +33,13 @@ public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    /*MemCache memCache = MemCache.getInstance();*/
+    //MemCache memCache = MemCache.getInstance();
 
     @Resource
     private UserService userService;
+    @Resource
+    private LoginLogService loginLogService;
+
 
     /**
       * @description:  系统登录
@@ -43,7 +50,8 @@ public class LoginController {
       **/
     @RequestMapping("/login")
     @ResponseBody
-    public ResponseData login(HttpServletResponse response, String name, String password) {
+    public ResponseData login(HttpServletRequest request, HttpServletResponse response,
+                              String name, String password) {
         try {
             Map<String,Object> dataMap=new HashMap<>();
             //效验传入的登录用户名、密码
@@ -59,6 +67,12 @@ public class LoginController {
             memCache.set(uuid, jsonObject.toString(), MemConstans.SYS_USER_TIME);
             WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);*/
             dataMap.put("personnel",personnel);
+            //查询最新一条登录日志信息
+            LoginLog loginLog=loginLogService.queryLoginLogNewestOne(null);
+            dataMap.put("loginLog",loginLog);
+            // 添加登录日志记录
+            loginLogService.insertLoginLog(request,personnel);
+            logger.info(" ++++ sysUser login success: " + personnel.getName() + " is logined ok !");
             return ResponseData.ok().putDataValue("data",dataMap);
         } catch (Exception e) {
             logger.error("LoginController.login", e);

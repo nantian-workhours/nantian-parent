@@ -258,12 +258,19 @@
         <artifactId>gson</artifactId>
         <version>2.2.4</version>
     </dependency>
-    <!-- memcached -->
+    <!-- memCached -->
     <dependency>
         <groupId>net.spy</groupId>
         <artifactId>spymemcached</artifactId>
         <version>2.10.3</version>
     </dependency>
+
+    <dependency>
+        <groupId>eu.bitwalker</groupId>
+        <artifactId>UserAgentUtils</artifactId>
+        <version>1.21</version>
+    </dependency>
+
     </dependencies>
     <build>
 

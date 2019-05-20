@@ -198,7 +198,7 @@ public class WebUtils {
 
         if (ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {
             ipAddress = request.getRemoteAddr();
-            if (ipAddress.equals("127.0.0.1")) {
+            //if (ipAddress.equals("127.0.0.1")) {
                 InetAddress inet = null;
 
                 try {
@@ -209,7 +209,7 @@ public class WebUtils {
 
                 ipAddress = inet.getHostAddress();
             }
-        }
+        //}
 
         if (ipAddress != null && ipAddress.length() > 15 && ipAddress.indexOf(",") > 0) {
             ipAddress = ipAddress.substring(0, ipAddress.indexOf(","));

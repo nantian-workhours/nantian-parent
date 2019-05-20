@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.com.nantian.mapper.LoginLogMapper" >
+  <resultMap id="BaseResultMap" type="cn.com.nantian.pojo.LoginLog" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="LOGIN_TIME" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="OSNAME" property="osname" jdbcType="VARCHAR" />
+    <result column="USER_AGENT" property="userAgent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, LOGIN_TIME, IP, USER_ID, ADDRESS, OSNAME, USER_AGENT
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_login_log
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="queryLoginLogNewestOne" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.LoginLog" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_login_log
+    ORDER BY ID DESC
+    LIMIT 0,1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_login_log
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="cn.com.nantian.pojo.LoginLog" >
+    insert into sys_login_log (ID, LOGIN_TIME, IP, 
+      USER_ID, ADDRESS, OSNAME, 
+      USER_AGENT)
+    values (#{id,jdbcType=INTEGER}, #{loginTime,jdbcType=TIMESTAMP}, #{ip,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, #{osname,jdbcType=VARCHAR}, 
+      #{userAgent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.com.nantian.pojo.LoginLog" >
+    insert into sys_login_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="loginTime != null" >
+        LOGIN_TIME,
+      </if>
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="address != null" >
+        ADDRESS,
+      </if>
+      <if test="osname != null" >
+        OSNAME,
+      </if>
+      <if test="userAgent != null" >
+        USER_AGENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="loginTime != null" >
+        #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="osname != null" >
+        #{osname,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null" >
+        #{userAgent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.com.nantian.pojo.LoginLog" >
+    update sys_login_log
+    <set >
+      <if test="loginTime != null" >
+        LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ip != null" >
+        IP = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="osname != null" >
+        OSNAME = #{osname,jdbcType=VARCHAR},
+      </if>
+      <if test="userAgent != null" >
+        USER_AGENT = #{userAgent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.com.nantian.pojo.LoginLog" >
+    update sys_login_log
+    set LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP},
+      IP = #{ip,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=INTEGER},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      OSNAME = #{osname,jdbcType=VARCHAR},
+      USER_AGENT = #{userAgent,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
