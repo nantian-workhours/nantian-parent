@@ -21,7 +21,7 @@
   <!--查询统计请假信息 start-->
   <select id="queryStatisticalLeaveTotal" parameterType="cn.com.nantian.pojo.NtLeave" resultMap="BaseResultMap">
     select
-    COUNT(nt_leave.PER_ID) totalNum,SUM(nt_leave.LEAVE_COUNT) totalHours
+    COUNT(nt_leave.PER_ID) totalNum,IFNULL(SUM(nt_leave.LEAVE_COUNT), 0)  totalHours
     FROM
     nt_leave
     LEFT JOIN nt_personnel ON nt_leave.PER_ID = nt_personnel.PER_ID
