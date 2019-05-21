@@ -46,7 +46,7 @@ public class LoginController {
       * @auther: Mr.Kong
       * @date: 2019/5/17 16:48
       * @param:  [response, name, password]
-      * @return: cn.com.nantian.pojo.entity.ResponseData
+      * @return: ResponseData
       **/
     @RequestMapping("/login")
     @ResponseBody
