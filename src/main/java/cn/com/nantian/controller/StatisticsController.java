@@ -7,19 +7,35 @@
  */
 package cn.com.nantian.controller;
 
+import cn.com.nantian.pojo.NtLeave;
 import cn.com.nantian.pojo.entity.ResponseData;
+import cn.com.nantian.service.LeaveService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Controller
 public class StatisticsController {
 
     private static final Logger logger = LoggerFactory.getLogger(StatisticsController.class);
+
+    @InitBinder("ntLeave")
+    public void initBindNtLeave(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.setFieldDefaultPrefix("ntLeave.");
+    }
+
+
+    @Resource
+    private LeaveService leaveService;
 
 
     /**
@@ -68,9 +84,10 @@ public class StatisticsController {
      **/
     @RequestMapping("/statistics/leave")
     @ResponseBody
-    public ResponseData getLeaveStatistics(HttpServletRequest request) {
+    public ResponseData getLeaveStatistics(HttpServletRequest request, @ModelAttribute("ntLeave") NtLeave ntLeave) {
         try {
-            return ResponseData.ok().putDataValue("data", null);
+            Map<String,Object> data=leaveService.getStatisticalLeaveTotal(ntLeave);
+            return ResponseData.ok().putDataValue("data", data);
         } catch (Exception e) {
             logger.error("StatisticsController.getLeaveStatistics", e);
             return ResponseData.forbidden();

@@ -54,4 +54,10 @@ public class NtLeave {
     /**审批状态名称 R 审核中，Y 通过，N 退回*/
     private String applyStatusName;
 
+    /**总计人数*/
+    private String totalNum;
+
+    /**总计时长*/
+    private String totalHours;
+
 }

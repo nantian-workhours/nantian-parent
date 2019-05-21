@@ -5,6 +5,8 @@ import cn.com.nantian.pojo.NtLeave;
 import java.util.List;
 
 public interface NtLeaveMapper {
+
+    NtLeave queryStatisticalLeaveTotal(NtLeave ntLeave);
     /**
      * @description: 更新审批状态(R 审核中, Y 通过, N 退回)
      * @auther: Mr.Kong

@@ -8,6 +8,12 @@ import java.util.List;
 import java.util.Map;
 
 public interface LeaveService {
+
+    Map<String,Object> getStatisticalLeaveTotal(NtLeave ntLeave);
+
+
+    NtLeave queryStatisticalLeaveTotal(NtLeave ntLeave);
+
     /**
      * @description: 效验请假信息是否已存在
      * @auther: Mr.Kong

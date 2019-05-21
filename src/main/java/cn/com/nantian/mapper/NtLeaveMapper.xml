@@ -18,6 +18,31 @@
     nt_leave.LEAVE_ID, nt_leave.PER_ID, nt_leave.BEG_DATE, nt_leave.END_DATE, nt_leave.LEAVE_TYPE, nt_leave.LEAVE_COUNT, nt_leave.LEAVE_REMARK, nt_leave.APPLY_STATUS,
     nt_leave.APPROVE_DATE, nt_leave.MANAGER_ID, nt_leave.APPROVE_OPN
   </sql>
+  <!--查询统计请假信息 start-->
+  <select id="queryStatisticalLeaveTotal" parameterType="cn.com.nantian.pojo.NtLeave" resultMap="BaseResultMap">
+    select
+    COUNT(nt_leave.PER_ID) totalNum,SUM(nt_leave.LEAVE_COUNT) totalHours
+    FROM
+    nt_leave
+    LEFT JOIN nt_personnel ON nt_leave.PER_ID = nt_personnel.PER_ID
+    LEFT JOIN nt_department ON nt_personnel.DEPT_ID = nt_department.DEPT_ID
+    <where>
+      <if test="leaveType !=null and leaveType !=''">
+        and nt_leave.LEAVE_TYPE =#{leaveType}
+      </if>
+      <if test="userName !=null and userName !=''">
+        and nt_personnel.NAME like CONCAT('%',#{userName},'%')
+      </if>
+      <if test="deptId !=null and deptId >0">
+        and nt_department.DEPT_ID=#{deptId}
+      </if>
+      <if test="begDate !=null and begDate !=''">
+        and <![CDATA[ nt_leave.BEG_DATE>=#{begDate}]]>
+      </if>
+    </where>
+    order by nt_leave.LEAVE_ID desc
+  </select>
+  <!--查询统计请假信息 end -->
   <select id="selectLeaveList" parameterType="cn.com.nantian.pojo.NtLeave" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />,
