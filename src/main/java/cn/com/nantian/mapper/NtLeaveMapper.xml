@@ -31,16 +31,34 @@
         and nt_leave.LEAVE_TYPE =#{leaveType}
       </if>
       <if test="userName !=null and userName !=''">
-        and nt_personnel.NAME like CONCAT('%',#{userName},'%')
+        and nt_personnel.NAME =#{userName}
+      </if>
+      <if test="idNo !=null and idNo !=''">
+        and nt_personnel.ID_NO =#{idNo}
       </if>
       <if test="deptId !=null and deptId >0">
         and nt_department.DEPT_ID=#{deptId}
       </if>
-      <if test="begDate !=null and begDate !=''">
-        and <![CDATA[ nt_leave.BEG_DATE>=#{begDate}]]>
+      <if test="begDate!=null and begDate!=''">
+        <![CDATA[  and DATE_FORMAT(nt_leave.BEG_DATE, '%Y-%m')>=  DATE_FORMAT(#{begDate}, '%Y-%m') ]]>
+      </if>
+      <if test="endDate!=null and endDate!=''">
+        <![CDATA[  and DATE_FORMAT(nt_leave.BEG_DATE, '%Y-%m') <= DATE_FORMAT(#{endDate}, '%Y-%m')  ]]>
       </if>
     </where>
-    order by nt_leave.LEAVE_ID desc
+  </select>
+
+  <select id="queryStatisticalLeave" parameterType="cn.com.nantian.pojo.NtLeave" resultMap="BaseResultMap">
+    select
+    nt_leave.LEAVE_TYPE,COUNT(nt_leave.PER_ID) totalNum,IFNULL(SUM(nt_leave.LEAVE_COUNT), 0)  totalHours
+    FROM
+    nt_leave
+    LEFT JOIN nt_personnel ON nt_leave.PER_ID = nt_personnel.PER_ID
+    LEFT JOIN nt_department ON nt_personnel.DEPT_ID = nt_department.DEPT_ID
+    group by nt_leave.LEAVE_TYPE
+    <if test="deptId !=null and deptId >0">
+      having nt_department.DEPT_ID=#{deptId}
+    </if>
   </select>
   <!--查询统计请假信息 end -->
   <select id="selectLeaveList" parameterType="cn.com.nantian.pojo.NtLeave" resultMap="BaseResultMap">

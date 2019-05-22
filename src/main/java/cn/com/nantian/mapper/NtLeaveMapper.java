@@ -6,6 +6,8 @@ import java.util.List;
 
 public interface NtLeaveMapper {
 
+    List<NtLeave> queryStatisticalLeave(NtLeave ntLeave);
+
     NtLeave queryStatisticalLeaveTotal(NtLeave ntLeave);
     /**
      * @description: 更新审批状态(R 审核中, Y 通过, N 退回)

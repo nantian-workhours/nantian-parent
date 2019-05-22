@@ -76,6 +76,25 @@ public class StatisticsController {
 
 
     /**
+      * @description: 员工统计信息
+      * @auther: Mr.Kong
+      * @date: 2019/5/22 14:14
+      * @param:  [request]
+      * @return: ResponseData
+      **/
+    @RequestMapping("/statistics/user")
+    @ResponseBody
+    public ResponseData getUserStatistics(HttpServletRequest request) {
+        try {
+            return ResponseData.ok().putDataValue("data", null);
+        } catch (Exception e) {
+            logger.error("StatisticsController.getUserStatistics", e);
+            return ResponseData.forbidden();
+        }
+    }
+
+
+    /**
      * @description: 请假统计信息
      * @auther: Mr.Kong
      * @date: 2019/5/21 14:46
@@ -84,7 +103,7 @@ public class StatisticsController {
      **/
     @RequestMapping("/statistics/leave")
     @ResponseBody
-    public ResponseData getLeaveStatistics(HttpServletRequest request, @ModelAttribute("ntLeave") NtLeave ntLeave) {
+    public ResponseData getLeaveStatistics(@ModelAttribute("ntLeave") NtLeave ntLeave) {
         try {
             Map<String,Object> data=leaveService.getStatisticalLeaveTotal(ntLeave);
             return ResponseData.ok().putDataValue("data", data);

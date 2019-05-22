@@ -33,8 +33,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class LeaveServiceImpl implements LeaveService {
@@ -49,40 +51,36 @@ public class LeaveServiceImpl implements LeaveService {
     private UserService userService;
 
     @Override
-    public Map<String, Object> getStatisticalLeaveTotal(NtLeave ntLeave) {
+    public List<NtLeave> getStatisticalLeave(NtLeave ntLeave){
+        return this.queryStatisticalLeave(ntLeave);
+    }
+
+    @Override
+    public List<NtLeave> queryStatisticalLeave(NtLeave ntLeave) {
+        return leaveMapper.queryStatisticalLeave(ntLeave);
+    }
+
+    @Override
+    public Map<String, Object> getStatisticalLeaveTotal(NtLeave ntLeave) throws Exception{
+        if (StringUtils.isNotEmpty(ntLeave.getBegDateStr())) {
+            ntLeave.setBegDate(DateUtils.parseToDate(ntLeave.getBegDateStr(), "yyyy-MM"));
+        }
+        if (StringUtils.isNotEmpty(ntLeave.getEndDateStr())) {
+            ntLeave.setEndDate(DateUtils.parseToDate(ntLeave.getEndDateStr(), "yyyy-MM"));
+        }
         Map<String, Object> dataMap= new HashMap<>();
-        Map<String,Object> totalNumMap=new HashMap<>();//人数
-        Map<String,Object> totalHoursMap=new HashMap<>();//时长
-        //1	事假
-        ntLeave.setLeaveType("1");
-        NtLeave ntLeave1=this.queryStatisticalLeaveTotal(ntLeave);
-        totalNumMap.put("thingsLeaveNum",ntLeave1.getTotalNum());
-        totalHoursMap.put("thingsLeaveHours",ntLeave1.getTotalHours());
-        //2	年假
-        ntLeave.setLeaveType("2");
-        NtLeave ntLeave2=this.queryStatisticalLeaveTotal(ntLeave);
-        totalNumMap.put("yearLeaveNum",ntLeave2.getTotalNum());
-        totalHoursMap.put("yearLeaveHours",ntLeave2.getTotalHours());
-        //3	调休
-        ntLeave.setLeaveType("3");
-        NtLeave ntLeave3=this.queryStatisticalLeaveTotal(ntLeave);
-        totalNumMap.put("paidLeaveNum",ntLeave3.getTotalNum());
-        totalHoursMap.put("paidLeaveHours",ntLeave3.getTotalHours());
-        //5	婚假
-        ntLeave.setLeaveType("5");
-        NtLeave ntLeave5=this.queryStatisticalLeaveTotal(ntLeave);
-        totalNumMap.put("marriageLeaveNum",ntLeave5.getTotalNum());
-        totalHoursMap.put("marriageLeaveHours",ntLeave5.getTotalHours());
-        //6	丧假
-        ntLeave.setLeaveType("6");
-        NtLeave ntLeave6=this.queryStatisticalLeaveTotal(ntLeave);
-        totalNumMap.put("funeralLeaveNum",ntLeave6.getTotalNum());
-        totalHoursMap.put("funeralLeaveHours",ntLeave6.getTotalHours());
-        //7	产假
-        ntLeave.setLeaveType("7");
-        NtLeave ntLeave7=this.queryStatisticalLeaveTotal(ntLeave);
-        totalNumMap.put("maternityLeaveNum",ntLeave7.getTotalNum());
-        totalHoursMap.put("maternityLeaveHours",ntLeave7.getTotalHours());
+        Map<String,Object> totalNumMap=new HashMap<>();//总人数
+        Map<String,Object> totalHoursMap=new HashMap<>();//总时长
+        List<NtDictionariesKey> dictionariesList=dictionariesService.selectDictionariesByType(ParamUntil.hol);
+        if (ObjectUtils.isNotNull(dictionariesList)){
+            for (int i=0;i<dictionariesList.size();i++){
+                ntLeave.setLeaveType(dictionariesList.get(i).getDicCode());
+                NtLeave ntLeave1=this.queryStatisticalLeaveTotal(ntLeave);
+                totalNumMap.put(dictionariesList.get(i).getDicType()+"_"+dictionariesList.get(i).getDicCode()+"_"+"nums",ntLeave1.getTotalNum());
+                totalHoursMap.put(dictionariesList.get(i).getDicType()+"_"+dictionariesList.get(i).getDicCode()+"_"+"hours",ntLeave1.getTotalHours());
+            }
+
+        }
         dataMap.put("totalNumMap",totalNumMap);
         dataMap.put("totalHoursMap",totalHoursMap);
         return dataMap;

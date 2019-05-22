@@ -9,7 +9,11 @@ import java.util.Map;
 
 public interface LeaveService {
 
-    Map<String,Object> getStatisticalLeaveTotal(NtLeave ntLeave);
+    List<NtLeave> getStatisticalLeave(NtLeave ntLeave);
+
+    List<NtLeave> queryStatisticalLeave(NtLeave ntLeave);
+
+    Map<String,Object> getStatisticalLeaveTotal(NtLeave ntLeave) throws Exception;
 
 
     NtLeave queryStatisticalLeaveTotal(NtLeave ntLeave);

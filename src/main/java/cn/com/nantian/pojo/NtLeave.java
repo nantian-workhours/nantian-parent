@@ -45,6 +45,8 @@ public class NtLeave {
     private String endDateStr;
     /**员工姓名*/
     private String userName;
+    /**身份证号*/
+    private String idNo;
     /**部门id*/
     private Integer deptId;
     /**部门名称*/
