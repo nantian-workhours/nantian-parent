@@ -76,5 +76,11 @@ public class NtPersonnel {
     private String custType;
     /**状态说明（在职 或 离职）*/
     private String workStatus;
+    /**人数总计*/
+    private String totalNum;
+    /**项目编号*/
+    private Integer projectNumber;
+
+
 
   }

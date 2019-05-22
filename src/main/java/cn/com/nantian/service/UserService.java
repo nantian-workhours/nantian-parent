@@ -4,8 +4,13 @@ import cn.com.nantian.pojo.PersonnelItem;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 public interface UserService {
+
+    Map<String,Object> getStatisticalPersonnelNum(NtPersonnel ntPersonnel);
+
+    NtPersonnel queryStatisticalPersonnelNum(NtPersonnel personnel);
 
     /**
      * @description: 处理员工工作状态数据

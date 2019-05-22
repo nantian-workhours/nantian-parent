@@ -6,6 +6,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface NtPersonnelMapper {
+
+    NtPersonnel queryStatisticalPersonnelNum(NtPersonnel personnel);
+
     int countByExample(NtPersonnelExample example);
 
     int deleteByExample(NtPersonnelExample example);

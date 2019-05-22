@@ -20,7 +20,10 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 /**
   * @description: 用户管理
   * @auther: Mr.Kong
@@ -41,6 +44,25 @@ public class UserImpl implements UserService {
     @Resource
     private DictionariesService dictionariesService;
 
+    /**
+      * @description: 按岗位统计员工人数
+      * @auther: Mr.Kong
+      * @date: 2019/5/22 15:18
+      * @param:  [ntPersonnel]
+      * @return: java.util.Map<java.lang.String,java.lang.Object>
+      **/
+    public Map<String,Object> getStatisticalPersonnelNum(NtPersonnel ntPersonnel) {
+        Map<String,Object> totalNumMap=new HashMap<>();//总人数
+        List<NtDictionariesKey> dictionariesList=dictionariesService.selectDictionariesByType(ParamUntil.POST);
+        if (ObjectUtils.isNotNull(dictionariesList)){
+            for (int i=0;i<dictionariesList.size();i++){
+                ntPersonnel.setPost(dictionariesList.get(i).getDicCode());
+                NtPersonnel personnel =personnelMapper.queryStatisticalPersonnelNum(ntPersonnel);
+                totalNumMap.put(ParamUntil.POST+"_"+dictionariesList.get(i).getDicCode()+"_"+"NUMS",personnel.getTotalNum());
+            }
+        }
+        return totalNumMap;
+    }
 
     /**
      * @description: 处理用户列表数据
@@ -64,6 +86,11 @@ public class UserImpl implements UserService {
             }
         }
         return ntPersonnelList;
+    }
+
+    @Override
+    public NtPersonnel queryStatisticalPersonnelNum(NtPersonnel personnel) {
+        return personnelMapper.queryStatisticalPersonnelNum(personnel);
     }
 
     /**

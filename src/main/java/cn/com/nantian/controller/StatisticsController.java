@@ -8,8 +8,10 @@
 package cn.com.nantian.controller;
 
 import cn.com.nantian.pojo.NtLeave;
+import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.LeaveService;
+import cn.com.nantian.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -32,10 +34,16 @@ public class StatisticsController {
     public void initBindNtLeave(HttpServletRequest request, ServletRequestDataBinder binder) {
         binder.setFieldDefaultPrefix("ntLeave.");
     }
+    @InitBinder("ntPersonnel")
+    public void initBindNtPersonnel(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.setFieldDefaultPrefix("ntPersonnel.");
+    }
 
 
     @Resource
     private LeaveService leaveService;
+    @Resource
+    private UserService userService;
 
 
     /**
@@ -84,9 +92,10 @@ public class StatisticsController {
       **/
     @RequestMapping("/statistics/user")
     @ResponseBody
-    public ResponseData getUserStatistics(HttpServletRequest request) {
+    public ResponseData getUserStatistics(@ModelAttribute("ntPersonnel") NtPersonnel ntPersonnel) {
         try {
-            return ResponseData.ok().putDataValue("data", null);
+            Map<String,Object> data=userService.getStatisticalPersonnelNum(ntPersonnel);
+            return ResponseData.ok().putDataValue("data", data);
         } catch (Exception e) {
             logger.error("StatisticsController.getUserStatistics", e);
             return ResponseData.forbidden();
