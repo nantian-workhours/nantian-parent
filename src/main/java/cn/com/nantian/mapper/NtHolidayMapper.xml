@@ -121,12 +121,12 @@
     where HOLIDAY_ID = #{holidayId,jdbcType=INTEGER}
   </update>
   <select id="countByDay" resultType="java.lang.Integer" >
-    select count(*) from nt_holiday_define
+    select count(*) from nt_holiday
     WHERE  HOLIDAY_DATE = #{record.holidayDate,jdbcType=DATE}
     and HOLIDAY_TYPE ="1"
   </select>
   <select id="selectByDay" resultType="java.lang.Integer" >
-    select count(*) from nt_holiday_define
+    select count(*) from nt_holiday
     WHERE  HOLIDAY_DATE = #{record.holidayDate,jdbcType=DATE}
     and HOLIDAY_TYPE ="2"
   </select>
