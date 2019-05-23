@@ -294,6 +294,7 @@
                 <configuration>
                     <path>/</path>
                     <port>8080</port>
+                    <path>/work</path>
                     <uriEncoding>UTF-8</uriEncoding>
                 </configuration>
             </plugin>
