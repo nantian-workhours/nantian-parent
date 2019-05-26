@@ -614,7 +614,7 @@ public class WorkHourceImpl implements WorkHoursService{
                             //判断库中是否有该员工数据
                             NtWorkingHours workingHours = workingHoursMapper.selectByOne(perAlias.getPerId(), date);
                             //判断是否有该数据
-                            if (workingHours!=null ) {
+                            if (ObjectUtils.isEmpty(workingHours)) {
                                 if(workingHours.getPerId()==perAlias.getPerId() && workingHours.getWorkDate().equals(date)){
                                     map.put("error","The table has been imported");
                                     return  map;
@@ -636,8 +636,15 @@ public class WorkHourceImpl implements WorkHoursService{
                     for (int j=0;j<dateList.size();j++) {
                        //查询数据
                         NtWorkingHoursTmp workingHoursTmp = workingHoursTmpMapper.selectByUnify(perIdList.get(i),dateList.get(j));
-                        //插入数据
-                        workingHoursMapper.insertOne(workingHoursTmp.getPerId(),workingHoursTmp.getWorkDate(),workingHoursTmp.getNormalHours(),workingHoursTmp.getOvertimeHours());
+                      try {
+                          //插入数据
+                          workingHoursMapper.insertOne(workingHoursTmp.getPerId(),workingHoursTmp.getWorkDate(),workingHoursTmp.getNormalHours(),workingHoursTmp.getOvertimeHours());
+                      } catch (Exception e) {
+                            e.printStackTrace();
+                            map.put("error", "The table has been imported");
+                            return map;
+                        }
+
                     }
                 }
                 //清空临时表内容
@@ -728,7 +735,7 @@ public class WorkHourceImpl implements WorkHoursService{
                                     //判断库中是否有该员工数据
                                     NtWorkingHours workingHours = workingHoursMapper.selectByOne(perAlias.getPerId(), workDate);
                                     //判断是否有该数据
-                                    if (workingHours != null) {
+                                    if (ObjectUtils.isEmpty(workingHours)) {
                                         if (workingHours.getPerId() == perAlias.getPerId() && workingHours.getWorkDate().equals(workDate)) {
                                             map.put("error", "The table has been imported");
                                             return map;
@@ -736,7 +743,14 @@ public class WorkHourceImpl implements WorkHoursService{
                                     }
                                 }
                                 //将数据插入目标表表中
-                                workingHoursMapper.insertOneTmpLife(perAlias.getPerId(), workDate, singninDate, signbackDate);
+                                try {
+                                    workingHoursMapper.insertOneTmpLife(perAlias.getPerId(), workDate, singninDate, signbackDate);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    map.put("error", "The table has been imported");
+                                    return map;
+                                }
+
                             }else{
                                 return new HashMap<>();
                             }
