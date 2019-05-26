@@ -643,10 +643,10 @@ public class WorkHourceImpl implements WorkHoursService{
                 //清空临时表内容
                 workingHoursTmpMapper.truncateTable();
 
-                map.put("rows ", rows);//总行数
-                map.put("success num ", suct);//成功条数
-                map.put("failed num ", dift);//失败条数
-                map.put("error ", msg);//异常行数
+                map.put("rows", rows);//总行数
+                map.put("successNum", suct);//成功条数
+                map.put("failedNum", dift);//失败条数
+                map.put("error", msg);//异常行数
 
                 return map;
             }else if(custType.equals(ParamUntil._3)){//表示中国人寿的模板
@@ -745,10 +745,10 @@ public class WorkHourceImpl implements WorkHoursService{
                     }
                 }
                     }
-                    map.put("rows ", rows);//总行数
-                    map.put("success num ", suct);//成功条数
-                    map.put("failed num ", dift);//失败条数
-                    map.put("error ", msg);//异常行数
+                    map.put("rows", rows);//总行数
+                    map.put("successNum", suct);//成功条数
+                    map.put("failedNum", dift);//失败条数
+                    map.put("error", msg);//异常行数
                     return map;
 
             }else{
