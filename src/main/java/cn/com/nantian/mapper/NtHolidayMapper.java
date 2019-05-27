@@ -6,6 +6,7 @@
 package cn.com.nantian.mapper;
 
 import cn.com.nantian.pojo.NtHoliday;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
 import java.util.List;
@@ -17,14 +18,14 @@ public interface NtHolidayMapper {
      * @param holidayDate
      * @return
      */
-    int countByDay(Date holidayDate);
+    int countByDay(@Param("holidayDate")Date holidayDate);
 
     /**
      * 查询该周末是否是工作日
      * @param holidayDate
      * @return
      */
-    int  selectByDay(Date holidayDate);
+    int  selectByDay(@Param("holidayDate")Date  holidayDate);
 
     List<NtHoliday> queryHolidayList(NtHoliday record);
 
