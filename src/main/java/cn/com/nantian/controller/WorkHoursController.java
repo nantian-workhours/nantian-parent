@@ -153,12 +153,12 @@ public class WorkHoursController {
     @RequestMapping("/selectworkhours")
     @ResponseBody
 
-    public ResponseData selectWorkHours(int perId, String custType, @DateTimeFormat(pattern = "yyyy-MM")Date startDate,@DateTimeFormat(pattern = "yyyy-MM")Date endDate,String jurisdiction) {
+    public ResponseData selectWorkHours(int perId, String custType, @DateTimeFormat(pattern = "yyyy-MM")Date startDate,@DateTimeFormat(pattern = "yyyy-MM")Date endDate) {
         //获取登录人的姓名
 //        String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
 
         //判断员工权限
-        if(Integer.valueOf(jurisdiction) ==1 || Integer.valueOf(jurisdiction) ==0){//管理员权限,查询所有
+//        if(Integer.valueOf(jurisdiction) ==1 || Integer.valueOf(jurisdiction) ==0){//管理员权限,查询所有
            if(startDate!=null && endDate!=null){
                 if( startDate.before(endDate)  ){//开始的时间要早于结束的时间
                     Map<Object,Object> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
@@ -169,18 +169,18 @@ public class WorkHoursController {
            }else{
                return ResponseData.notFound().putDataValue("code","Start time and end time cannot be left blank ");
            }
-        }else{//普通员工权限,查询自己
-            if(startDate!=null && endDate!=null){
-                if(startDate.before(endDate)){//开始的时间要早于结束的时间
-                    Map<Object,Object> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
-                    return ResponseData.ok().putDataValue("data",workingHoursList);
-                }else{
-                    return ResponseData.notFound().putDataValue("code","Start later than finish");
-                }
-            }else{
-                return ResponseData.notFound().putDataValue("code","Start time and end time cannot be left blank ");
-            }
-        }
+//        }else{//普通员工权限,查询自己
+//            if(startDate!=null && endDate!=null){
+//                if(startDate.before(endDate)){//开始的时间要早于结束的时间
+//                    Map<Object,Object> workingHoursList = workHoursService.findAllWorkHours(perId,custType,startDate,endDate);
+//                    return ResponseData.ok().putDataValue("data",workingHoursList);
+//                }else{
+//                    return ResponseData.notFound().putDataValue("code","Start later than finish");
+//                }
+//            }else{
+//                return ResponseData.notFound().putDataValue("code","Start time and end time cannot be left blank ");
+//            }
+//        }
 
     }
 
