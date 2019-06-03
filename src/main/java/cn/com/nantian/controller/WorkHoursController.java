@@ -147,13 +147,13 @@ public class WorkHoursController {
      * @param custType 客户类别
      * @param startDate 开始日期
      * @param endDate 结束日期
-     * @param jurisdiction 当前查询员工的权限
+     *
      * @return
      */
     @RequestMapping("/selectworkhours")
     @ResponseBody
 
-    public ResponseData selectWorkHours(int perId, String custType, @DateTimeFormat(pattern = "yyyy-MM")Date startDate,@DateTimeFormat(pattern = "yyyy-MM")Date endDate) {
+    public ResponseData selectWorkHours(@RequestParam("perId")Integer perId, @RequestParam("custType")String custType, @DateTimeFormat(pattern = "yyyy-MM")Date startDate,@DateTimeFormat(pattern = "yyyy-MM")Date endDate) {
         //获取登录人的姓名
 //        String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
 
