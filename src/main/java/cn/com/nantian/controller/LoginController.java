@@ -29,7 +29,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/login")
-public class LoginController {
+public class LoginController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -43,7 +43,7 @@ public class LoginController {
 
     /**
       * @description:  系统登录
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/17 16:48
       * @param:  [response, name, password]
       * @return: ResponseData
@@ -61,12 +61,14 @@ public class LoginController {
             }
             NtPersonnel personnel = userService.findOne(name);
 
-            /*String uuid = StringUtils.createUUID().replace("-", "");
-            JsonParser jsonParser = new JsonParser();
+            String uuid = StringUtils.createUUID().replace("-", "");
+            /*JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = jsonParser.parse(new Gson().toJson(personnel)).getAsJsonObject();
             memCache.set(uuid, jsonObject.toString(), MemConstans.SYS_USER_TIME);
             WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);*/
             dataMap.put("personnel",personnel);
+            WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);
+            this.setSessionAttribute(request,uuid,personnel);
             //查询最新一条登录日志信息
             LoginLog loginLog=loginLogService.queryLoginLogNewestOne(null);
             dataMap.put("loginLog",loginLog);

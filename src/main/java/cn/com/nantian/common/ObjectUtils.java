@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  * @description:
- * @Author：Mr.Kong
+ * @Author：Mr.Wind
  * @date: 2019/3/22 10:32
  * @Version：1.0
  */
@@ -136,7 +136,7 @@ public class ObjectUtils {
 
     /**
       * @description: 效验传入的参数是否是价格(Double)格式
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/7 15:48
       * @Param:  [str]
       * @return: boolean

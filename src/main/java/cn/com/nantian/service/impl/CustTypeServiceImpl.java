@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description:
- * @Author：Mr.Kong
+ * @Author：Mr.Wind
  * @date: 2019/3/20 15:06
  * @Version：1.0
  */
@@ -33,7 +33,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @description: 查询客户类型集合
      * @Param: [custType]
      * @return: List<NtCustType>
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:04
      **/
     @Override
@@ -45,7 +45,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @description: 设置客户类别、工作类别、技术等级 名称
      * @Param: [custTypeList]
      * @return: void
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:17
      **/
     @Override
@@ -90,7 +90,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @description: 设置客户类别、工作类别、技术等级 名称
      * @Param: [custType]
      * @return: void
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:17
      **/
     @Override
@@ -132,7 +132,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @description: 删除客户类别
      * @Param: [custType] 删除条件
      * @return: int
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:55
      **/
     @Override
@@ -144,7 +144,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @description: 新增客户类别
      * @Param: [custType]
      * @return: int
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 16:48
      **/
     @Override
@@ -156,7 +156,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @description: 更新客户类别
      * @Param: [custType]
      * @return: int
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:03
      **/
     @Override
@@ -168,7 +168,7 @@ public class CustTypeServiceImpl implements CustTypeService {
      * @description: 查询客户类型
      * @Param: [custType]
      * @return: NtCustType
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:12
      **/
     @Override
@@ -178,7 +178,7 @@ public class CustTypeServiceImpl implements CustTypeService {
 
     /**
      * @description: 检查传入的对象所有属性值，在表中是否已存在
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/26 14:25
      * @Param: [NtCustType]
      * @return: boolean
@@ -200,7 +200,7 @@ public class CustTypeServiceImpl implements CustTypeService {
 
     /**
      * @description: 更新 检查传入的对象所有属性值，在表中是否已存在
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/7 11:28
      * @Param: [ntCustType]
      * @return: boolean
@@ -222,7 +222,7 @@ public class CustTypeServiceImpl implements CustTypeService {
 
     /**
      * @description: 检查属性值是否为空
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/26 14:23
      * @Param: [ntCustType]
      * @return: java.lang.String

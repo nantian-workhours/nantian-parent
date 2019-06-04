@@ -6,13 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
   * @description:  获取用户操作系统 浏览器信息
-  * @auther: Mr.Kong
+  * @auther: Mr.Wind
   * @date: 2019/5/20 11:16
   **/
 public class UserAgentUtil {
     	/**
     	  * @description:  获得用户浏览器ua
-    	  * @auther: Mr.Kong
+    	  * @auther: Mr.Wind
     	  * @date: 2019/5/20 11:16
     	  * @param:  [request]
     	  * @return: java.lang.String 浏览器类型

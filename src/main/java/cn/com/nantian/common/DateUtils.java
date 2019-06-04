@@ -16,7 +16,7 @@ public class DateUtils {
 
     /**
       * @description: 时间段比较
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/16 14:45
       * @param:  [date1, date2, startTime, endDate]
       * @return: boolean true date1-date2在startTime-endDate时间段内，false 不在范围内
@@ -49,7 +49,7 @@ public class DateUtils {
 
     /**
       * @description: 验证日期是yyyy-MM-dd支持闰年的正则表达式
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/29 10:43
       * @Param:  [date]
       * @return: boolean
@@ -66,7 +66,7 @@ public class DateUtils {
 
     /**
      * @description: 验证日期是yyyy-MM-dd HH:mm:ss支持闰年的正则表达式
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/4/29 10:43
      * @Param:  [date]
      * @return: boolean

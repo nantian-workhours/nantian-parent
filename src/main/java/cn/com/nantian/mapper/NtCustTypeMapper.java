@@ -11,7 +11,7 @@ public interface NtCustTypeMapper {
      * @description: 查询客户类型集合
      * @Param: [custType]
      * @return: List<NtCustType>
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:04
      **/
     List<NtCustType> selectCustTypeList(NtCustType custType);
@@ -19,7 +19,7 @@ public interface NtCustTypeMapper {
      * @description: 更新客户类别
      * @Param: [custType]
      * @return: int
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:03
      **/
     int updateCustType(NtCustType custType);
@@ -27,7 +27,7 @@ public interface NtCustTypeMapper {
      * @description: 查询客户类型
      * @Param: [custType]
      * @return: NtCustType
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:12
      **/
     NtCustType selectCustType(int custId);

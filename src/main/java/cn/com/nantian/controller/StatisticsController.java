@@ -1,7 +1,7 @@
 /**
  * @Description: 网站数据统计
  * @ClassName: StatisticsController
- * @author： Mr.Kong
+ * @author： Mr.Wind
  * @date: 2019/5/21 14:42
  * @Version： 1.0
  */
@@ -48,7 +48,7 @@ public class StatisticsController {
 
     /**
       * @description: 登录统计（活跃人数）信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/21 14:46
       * @param:  [request]
       * @return: ResponseData
@@ -66,7 +66,7 @@ public class StatisticsController {
 
     /**
      * @description: 工时统计信息
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/21 14:46
      * @param:  [request]
      * @return: ResponseData
@@ -85,7 +85,7 @@ public class StatisticsController {
 
     /**
       * @description: 员工统计信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/22 14:14
       * @param:  [request]
       * @return: ResponseData
@@ -105,7 +105,7 @@ public class StatisticsController {
 
     /**
      * @description: 请假统计信息
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/21 14:46
      * @param:  [request]
      * @return: ResponseData

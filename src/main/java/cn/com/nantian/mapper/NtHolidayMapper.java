@@ -1,6 +1,6 @@
 /**
  * @description: 节假日信息管理
- * @auther: Mr.Kong
+ * @auther: Mr.Wind
  * @date: 2019/5/10 13:58
  **/
 package cn.com.nantian.mapper;

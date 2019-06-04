@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 单价级别信息管理
- * @Author：Mr.Kong
+ * @Author：Mr.Wind
  * @date: 2019/3/21 11:05
  * @Version：1.0
  */
@@ -36,7 +36,7 @@ public class PriceLeaveController {
      * @description: 查询单价级别信息列表
      * @Param: [ntLeaveInfo] 单价级别实体
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/21 11:14
      **/
     @RequestMapping("/priceLeave/findAll")
@@ -59,7 +59,7 @@ public class PriceLeaveController {
      * @description: 删除一条单价级别信息数据
      * @Param: [ntLeaveInfo] 条件
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/21 16:41
      **/
     @RequestMapping("/priceLeave/delete")
@@ -78,7 +78,7 @@ public class PriceLeaveController {
      * @description: 新增单价级别信息
      * @Param: [ntLeaveInfo]
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/21 16:56
      **/
     @RequestMapping("/priceLeave/add")
@@ -108,7 +108,7 @@ public class PriceLeaveController {
      * @description: 更新单价级别信息
      * @Param: [ntLeaveInfo] 条件
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/21 16:58
      **/
     @RequestMapping("/priceLeave/update")
@@ -141,7 +141,7 @@ public class PriceLeaveController {
      * @description: 查询单价级别信息详情
      * @Param: [priceId]
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/22 9:46
      **/
     @RequestMapping("/priceLeave/findDetail")

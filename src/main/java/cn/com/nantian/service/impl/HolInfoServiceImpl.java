@@ -1,7 +1,7 @@
 /**
  * @description: 年假信息管理
  * @ClassName: HolInfoServiceImpl
- * @Author： Mr.Kong
+ * @Author： Mr.Wind
  * @date: 2019/3/29 16:05
  * @Version： 1.0
  */
@@ -24,7 +24,7 @@ public class HolInfoServiceImpl implements HolInfoService {
 
     /**
      * @description: 查询年假信息列表
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/29 16:40
      * @Param: [ntHolInfo]
      * @return: List<NtHolInfo>

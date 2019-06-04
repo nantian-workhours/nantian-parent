@@ -11,7 +11,7 @@ public interface NtPerAliasMapper {
 
     /**
       * @description: 更新员工别名
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/8 15:53
       * @Param:  [ntPerAlias]
       * @return: int
@@ -20,7 +20,7 @@ public interface NtPerAliasMapper {
 
     /**
       * @description: 查询员工项目别名列表数据
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/8 14:24
       * @Param:  []
       * @return: List<NtPerAlias>

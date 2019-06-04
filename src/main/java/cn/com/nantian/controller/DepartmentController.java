@@ -35,7 +35,7 @@ public class DepartmentController  {
 
     /**
       * @description:  添加部门信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/26 10:04
       * @Param:  [department]
       * @return: ResponseData

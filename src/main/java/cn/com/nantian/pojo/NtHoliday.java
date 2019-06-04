@@ -7,7 +7,7 @@ import java.util.Objects;
 
 /**
   * @description: 节假日信息实体
-  * @auther: Mr.Kong
+  * @auther: Mr.Wind
   * @date: 2019/5/10 13:58
   **/
 @Data

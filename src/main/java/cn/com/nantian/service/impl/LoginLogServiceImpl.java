@@ -1,7 +1,7 @@
 /**
  * @Description: 系统登录日志管理
  * @ClassName: LoginLogServiceImpl
- * @author： Mr.Kong
+ * @author： Mr.Wind
  * @date: 2019/5/20 10:31
  * @Version： 1.0
  */
@@ -28,7 +28,7 @@ public class LoginLogServiceImpl implements LoginLogService {
 
     /**
       * @description: 添加系统后台登录日志记录
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/20 14:24
       * @param:  [request, personnel]
       * @return: int

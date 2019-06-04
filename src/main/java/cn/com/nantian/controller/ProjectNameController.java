@@ -33,7 +33,7 @@ public class ProjectNameController {
 
     /**
      * @description: 添加项目别名
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/8 11:01
      * @Param: [ntPerAlias]
      * @return: ResponseData
@@ -63,7 +63,7 @@ public class ProjectNameController {
 
     /**
      * @description: 查询员工别名列表
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/8 16:20
      * @Param: [ntPerAlias]
      * @return: ResponseData
@@ -83,7 +83,7 @@ public class ProjectNameController {
 
     /**
      * @description: 根据员工身份证号, 别名删除员工别名信息
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/8 16:20
      * @Param: [idNo]
      * @return: ResponseData
@@ -102,7 +102,7 @@ public class ProjectNameController {
 
     /**
      * @description: 修改别名信息
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/8 16:20
      * @Param: [ntPerAlias]
      * @return: ResponseData

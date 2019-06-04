@@ -1,7 +1,7 @@
 /**
  * @description: 节假日信息管理
  * @ClassName: NtHolidayController
- * @author： Mr.Kong
+ * @author： Mr.Wind
  * @date: 2019/5/10 14:03
  * @Version： 1.0
  */
@@ -37,7 +37,7 @@ public class NtHolidayController extends BaseController{
 
     /**
       * @description: 添加节假日信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/10 16:53
       * @param:  [ntHoliday]
       * @return: ResponseData
@@ -65,7 +65,7 @@ public class NtHolidayController extends BaseController{
 
     /**
       * @description: 查询所有节假日信息列表
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/10 16:53
       * @param:  [ntHoliday]
       * @return: ResponseData
@@ -87,7 +87,7 @@ public class NtHolidayController extends BaseController{
 
     /**
       * @description: 查询节假日信息详情
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/10 16:53
       * @param:  [holidayId]
       * @return: ResponseData
@@ -107,7 +107,7 @@ public class NtHolidayController extends BaseController{
 
     /**
       * @description: 删除节假日信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/10 16:54
       * @param:  [holidayId]
       * @return: ResponseData
@@ -126,7 +126,7 @@ public class NtHolidayController extends BaseController{
 
     /**
       * @description: 修改节假日信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/10 16:54
       * @param:  [ntHoliday]
       * @return: ResponseData

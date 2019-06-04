@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
   * @description:  别名实体
-  * @auther: Mr.Kong
+  * @auther: Mr.Wind
   * @date: 2019/5/8 10:53
   **/
 @Data

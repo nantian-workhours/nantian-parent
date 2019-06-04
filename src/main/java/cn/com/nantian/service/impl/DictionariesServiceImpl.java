@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * @description: 字典数据管理
- * @Author：Mr.Kong
+ * @Author：Mr.Wind
  * @date: 2019/3/19 16:48
  * @Version：1.0
  */
@@ -22,7 +22,7 @@ public class DictionariesServiceImpl implements DictionariesService {
 
     /**
       * @description: 根据字典所属类型、字典值查询数据
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/16 11:12
       * @param:  [dicType, dicValue] 字典所属类型、字典值
       * @return: cn.com.nantian.pojo.NtDictionariesKey
@@ -38,7 +38,7 @@ public class DictionariesServiceImpl implements DictionariesService {
      * @description: 根据条件查询字典数据
      * @Param: [dictionariesKey]
      * @return: List<NtDictionariesKey>
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/19 16:49
      **/
     public List<NtDictionariesKey> selectDictionariesList(NtDictionariesKey dictionariesKey){
@@ -49,7 +49,7 @@ public class DictionariesServiceImpl implements DictionariesService {
      * @description: 根据条件查询字典数据
      * @Param: [dicType, dicCode] 类别、编码
      * @return: NtDictionariesKey
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:27
      **/
     public NtDictionariesKey selectDictionaries(String dicType, String dicCode){

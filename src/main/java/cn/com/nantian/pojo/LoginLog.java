@@ -1,6 +1,6 @@
 /**
  * @description: 系统登录日志实体
- * @auther: Mr.Kong
+ * @auther: Mr.Wind
  * @date: 2019/5/20 10:14
  **/
 package cn.com.nantian.pojo;

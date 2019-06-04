@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 客户类别管理
- * @Author： Mr.Kong
+ * @Author： Mr.Wind
  * @date: 2019/3/20 14:46
  * @Version： 1.0
  */
@@ -38,7 +38,7 @@ public class CustTypeController {
      * @description: 查询客户信息列表
      * @Param: [customer] 客户实体
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/19 14:21
      **/
     @RequestMapping("/findAll")
@@ -61,7 +61,7 @@ public class CustTypeController {
      * @description: 根据项目编号删除一条数据
      * @Param: [projectNumber]  项目编号
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 11:21
      **/
     @RequestMapping("/delete")
@@ -80,7 +80,7 @@ public class CustTypeController {
      * @description: 新增客户类别 1
      * @Param: [custType]
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 16:50
      **/
     @RequestMapping("/add")
@@ -108,7 +108,7 @@ public class CustTypeController {
      * @description: 更新客户信息
      * @Param: [customer]
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 14:30
      **/
     @RequestMapping("/update")
@@ -139,7 +139,7 @@ public class CustTypeController {
      * @description: 查询客户类别详情
      * @Param: [custType]
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:19
      **/
     @RequestMapping("/findDetail")

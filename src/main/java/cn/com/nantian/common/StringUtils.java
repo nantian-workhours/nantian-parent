@@ -710,7 +710,7 @@ public class StringUtils {
 
     /**
       * @description: 判断小数点后1位的数字的正则表达式
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/14 9:48
       * @param:  [date]
       * @return: boolean

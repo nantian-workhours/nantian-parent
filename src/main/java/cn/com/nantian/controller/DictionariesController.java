@@ -34,7 +34,7 @@ public class DictionariesController {
 
     /**
       * @description: 查询字典列表数据
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/6 10:40
       * @Param:  [dictionaries]
       * @return: ResponseData

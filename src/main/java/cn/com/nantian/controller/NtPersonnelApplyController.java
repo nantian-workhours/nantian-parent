@@ -1,7 +1,7 @@
 /**
  * @description: 员工考勤异常处理申请管理
  * @ClassName: NtPersonnelApplyController
- * @author： Mr.Kong
+ * @author： Mr.Wind
  * @date: 2019/5/13 16:48
  * @Version： 1.0
  */
@@ -37,7 +37,7 @@ public class NtPersonnelApplyController extends BaseController {
 
     /**
      * @description: 创建员工异议申请
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/14 15:14
      * @param: [personnelApply]
      * @return: ResponseData
@@ -61,7 +61,7 @@ public class NtPersonnelApplyController extends BaseController {
 
     /**
      * @description: 查询员工异议申请信息列表
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/14 15:15
      * @param: [ntPersonnelApply]
      * @return: ResponseData
@@ -83,7 +83,7 @@ public class NtPersonnelApplyController extends BaseController {
 
     /**
      * @description: 查询员工异议申请信息详情
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/14 15:47
      * @param: [applySeq]
      * @return: ResponseData
@@ -102,7 +102,7 @@ public class NtPersonnelApplyController extends BaseController {
 
     /**
      * @description: 更新处理状态
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/14 15:46
      * @param: [ntPersonnelApply]
      * @return: ResponseData

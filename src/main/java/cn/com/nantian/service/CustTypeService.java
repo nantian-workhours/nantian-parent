@@ -6,7 +6,7 @@ import java.util.List;
 
 /**
  * @description: 客户类型管理
- * @Author：Mr.Kong
+ * @Author：Mr.Wind
  * @date: 2019/3/20 14:58
  * @Version：1.0
  */
@@ -16,7 +16,7 @@ public interface CustTypeService {
      * @description: 查询客户类型集合
      * @Param: [custType]
      * @return: List<NtCustType>
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:04
      **/
     public List<NtCustType> selectCustTypeList(NtCustType custType);
@@ -25,7 +25,7 @@ public interface CustTypeService {
      * @description: 设置客户类别、工作类别、技术等级 名称
      * @Param: [custTypeList]
      * @return: void
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:17
      **/
     public void setCustTypeName(List<NtCustType> custTypeList);
@@ -34,7 +34,7 @@ public interface CustTypeService {
      * @description: 设置客户类别、工作类别、技术等级 名称
      * @Param: [custType]
      * @return: void
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:17
      **/
     public void setCustTypeName(NtCustType custType);
@@ -43,7 +43,7 @@ public interface CustTypeService {
      * @description: 删除客户类别
      * @Param: [custType] 删除条件
      * @return: int
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:55
      **/
     public int deleteCustType(int custType);
@@ -52,7 +52,7 @@ public interface CustTypeService {
      * @description: 新增客户类别
      * @Param: [custType]
      * @return: int
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 16:48
      **/
     public int addCustType(NtCustType custType);
@@ -61,7 +61,7 @@ public interface CustTypeService {
      * @description: 更新客户类别
      * @Param: [custType]
      * @return: int
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:03
      **/
     int updateCustType(NtCustType custType);
@@ -70,14 +70,14 @@ public interface CustTypeService {
      * @description: 查询客户类型
      * @Param: [custType]
      * @return: NtCustType
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 17:12
      **/
     NtCustType selectCustType(int custId);
 
     /**
      * @description: 检查客户类别属性值是否为空
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/26 14:19
      * @Param: [NtCustType]
      * @return: java.lang.String
@@ -86,7 +86,7 @@ public interface CustTypeService {
 
     /**
      * @description: 检查传入的对象所有属性值，在表中是否已存在
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/26 14:20
      * @Param: [NtCustType]
      * @return: boolean false 不存在，true 存在
@@ -95,7 +95,7 @@ public interface CustTypeService {
 
     /**
      * @description: 更新 检查传入的对象所有属性值，在表中是否已存在
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/7 11:28
      * @Param:  [ntCustType]
      * @return: boolean

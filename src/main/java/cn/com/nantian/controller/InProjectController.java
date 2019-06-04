@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
   * @description: 员工所在项目管理
-  * @auther: Mr.Kong
+  * @auther: Mr.Wind
   * @date: 2019/5/8 16:46
   **/
 @Controller
@@ -35,7 +35,7 @@ public class InProjectController {
 
     /**
       * @description: 添加员工所在项目信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/8 16:50
       * @Param:  [ntPerInProject]
       * @return: ResponseData
@@ -65,7 +65,7 @@ public class InProjectController {
 
     /**
       * @description: 查询员工所在项目列表数据
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/9 14:31
       * @Param:  [ntPerInProject]
       * @return: ResponseData
@@ -85,7 +85,7 @@ public class InProjectController {
 
     /**
       * @description: 查询员工所在项目详情信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/9 15:49
       * @Param:  [id]
       * @return: ResponseData
@@ -104,7 +104,7 @@ public class InProjectController {
 
     /**
       * @description: 更新员工所在项目信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/9 16:34
       * @Param:  [ntPerInProject]
       * @return: ResponseData

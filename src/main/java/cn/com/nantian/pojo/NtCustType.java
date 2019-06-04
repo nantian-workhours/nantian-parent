@@ -30,7 +30,7 @@ public class NtCustType implements Serializable {
 
     /**
       * @description: 重写equals方法
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/3/26 14:31
       * @Param: [o]
       * @return: boolean

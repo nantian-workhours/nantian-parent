@@ -1,7 +1,7 @@
 /**
  * @description: 员工考勤异常处理申请管理
  * @ClassName: NtPersonnelApplyService
- * @author： Mr.Kong
+ * @author： Mr.Wind
  * @date: 2019/5/13 16:48
  * @Version： 1.0
  */
@@ -15,7 +15,7 @@ public interface NtPersonnelApplyService {
 
     /**
      * @description: 更新处理状态
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/14 15:46
      * @param: [personnelApply]
      * @return: int
@@ -24,7 +24,7 @@ public interface NtPersonnelApplyService {
 
     /**
      * @description: 查询员工异议申请信息列表
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/14 15:15
      * @param: [personnelApply]
      * @return: List<NtPersonnelApply>
@@ -33,7 +33,7 @@ public interface NtPersonnelApplyService {
 
     /**
      * @description: 创建时 效验传入的参数值
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/14 14:08
      * @param: [personnelApply]
      * @return: java.lang.String
@@ -48,7 +48,7 @@ public interface NtPersonnelApplyService {
 
     /**
      * @description: 查询员工异议申请信息详情
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/14 15:48
      * @param: [applySeq]
      * @return: NtPersonnelApply

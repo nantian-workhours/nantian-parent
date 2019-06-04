@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * @description: 员工录入信息
- * @author: Mr.Kong
+ * @author: Mr.Wind
  * @date: 2019/4/26 14:12
  **/
 @Controller
@@ -180,7 +180,7 @@ public class UserController extends BaseController {
 
     /**
       * @description: 修改员工信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/5 15:18
       * @Param:  [personnel]
       * @return: ResponseData
@@ -227,7 +227,7 @@ public class UserController extends BaseController {
 
     /**
       * @description: 查询用户信息列表
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/29 14:17
       * @Param:  [personnel]
       * @return: ResponseData
@@ -271,7 +271,7 @@ public class UserController extends BaseController {
 
     /**
      * @description: 重置密码
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/13 10:43
      * @param: [perId]
      * @return: ResponseData

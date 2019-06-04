@@ -11,7 +11,7 @@ public interface NtLeaveMapper {
     NtLeave queryStatisticalLeaveTotal(NtLeave ntLeave);
     /**
      * @description: 更新审批状态(R 审核中, Y 通过, N 退回)
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/29 15:52
      * @Param: [leave]
      * @return: int
@@ -20,7 +20,7 @@ public interface NtLeaveMapper {
 
     /**
      * @description: 查询请假信息列表
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/29 15:52
      * @Param: [leave]
      * @return: List<NtLeave>

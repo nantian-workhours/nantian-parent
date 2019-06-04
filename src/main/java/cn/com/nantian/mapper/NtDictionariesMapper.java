@@ -12,7 +12,7 @@ public interface NtDictionariesMapper {
      * @description: 根据条件查询字典数据
      * @Param: [dictionariesKey]
      * @return: List<NtDictionariesKey>
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/19 16:46
      **/
     List<NtDictionariesKey> selectDictionariesList(NtDictionariesKey dictionariesKey);
@@ -21,7 +21,7 @@ public interface NtDictionariesMapper {
      * @description: 根据条件查询字典数据
      * @Param: [dictionariesKey]
      * @return: NtDictionariesKey
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 15:25
      **/
     NtDictionariesKey selectDictionaries(NtDictionariesKey dictionariesKey);

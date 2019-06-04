@@ -17,7 +17,7 @@ import java.util.List;
 
 /**
  * @description: 客户管理
- * @auther: Mr.Kong
+ * @auther: Mr.Wind
  **/
 @Controller
 @RequestMapping("/ntProjectInfo")
@@ -36,7 +36,7 @@ public class ProjectInfoController {
      * @description: 查询客户信息列表
      * @Param: [NtProjectInfo] 客户实体
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/19 14:21
      **/
     @RequestMapping("/findAll")
@@ -57,7 +57,7 @@ public class ProjectInfoController {
      * @description: 根据项目编号删除一条数据
      * @Param: [projectNumber]  项目编号
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 11:21
      **/
     @RequestMapping("/delete")
@@ -76,7 +76,7 @@ public class ProjectInfoController {
      * @description: 新增客户信息内容
      * @Param: [NtProjectInfo]
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 13:55
      **/
     @RequestMapping("/add")
@@ -104,7 +104,7 @@ public class ProjectInfoController {
      * @description: 更新客户信息
      * @Param: [NtProjectInfo]
      * @return: ResponseData
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/20 14:30
      **/
     @RequestMapping("/update")
@@ -134,7 +134,7 @@ public class ProjectInfoController {
 
     /**
      * @description: 根据项目编号查询详情
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/27 14:28
      * @Param: [projectNumber] 项目编号
      * @return: ResponseData

@@ -1,7 +1,7 @@
 /**
  * @description: 请假信息管理
  * @ClassName: LeaveController
- * @Author： Mr.Kong
+ * @Author： Mr.Wind
  * @date: 2019/3/29 15:02
  * @Version： 1.0
  */
@@ -45,7 +45,7 @@ public class LeaveController {
 
     /**
      * @description: 查询请假信息列表 1
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/29 15:55s
      * @Param: [leave]
      * @return: ResponseData
@@ -68,7 +68,7 @@ public class LeaveController {
 
     /**
      * @description: 请假申请录入
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/29 15:45
      * @Param: [leave]
      * @return: ResponseData
@@ -92,7 +92,7 @@ public class LeaveController {
 
     /**
      * @description: 更新审批状态(R 审核中, Y 通过, N 退回)
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/29 15:50
      * @Param: [leave]
      * @return: ResponseData
@@ -116,7 +116,7 @@ public class LeaveController {
 
     /**
      * @description: 导入请假信息
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/4/1 17:08
      * @Param: [request, myfile]
      * @return: ResponseData
@@ -153,7 +153,7 @@ public class LeaveController {
 
     /**
      * @description: 将MultipartFile转化为file并保存到服务器上的某地
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/4/1 17:09
      * @Param: [stream, path, savefile]
      * @return: void

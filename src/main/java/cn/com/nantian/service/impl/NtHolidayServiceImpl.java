@@ -1,7 +1,7 @@
 /**
  * @description: 节假日信息管理
  * @ClassName: NtHolidayServiceImpl
- * @author： Mr.Kong
+ * @author： Mr.Wind
  * @date: 2019/5/10 14:02
  * @Version： 1.0
  */
@@ -28,7 +28,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 更新时 效验是否已存在
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:54
      * @param: [ntHoliday]
      * @return: boolean
@@ -49,7 +49,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 创建时 效验是否已存在
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:54
      * @param: [ntHoliday]
      * @return: boolean
@@ -70,7 +70,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 效验传入的参数值
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:54
      * @param: [ntHoliday]
      * @return: java.lang.String
@@ -116,7 +116,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 查询节假日信息列表
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:55
      * @param: [record]
      * @return: List<NtHoliday>
@@ -128,7 +128,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 根据主键ID 删除
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:55
      * @param: [holidayId]
      * @return: int
@@ -140,7 +140,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 新增
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:57
      * @param: [record]
      * @return: int
@@ -152,7 +152,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 新增
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:57
      * @param: [record]
      * @return: int
@@ -164,7 +164,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 根据主键ID 查询单条数据详情
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:58
      * @param: [holidayId]
      * @return: NtHoliday
@@ -176,7 +176,7 @@ public class NtHolidayServiceImpl implements NtHolidayService {
 
     /**
      * @description: 更新
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/10 16:59
      * @param: [record]
      * @return: int

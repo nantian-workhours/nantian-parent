@@ -14,7 +14,7 @@ public interface UserService {
 
     /**
      * @description: 处理员工工作状态数据
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/6 14:57
      * @Param:  [personnelList]
      * @return: void
@@ -22,7 +22,7 @@ public interface UserService {
     public void setWorkStates(List<NtPersonnel> personnelList);
     /**
       * @description: 处理用户列表数据
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/29 14:32
       * @Param:  [personnelList]
       * @return: List<NtPersonnel>
@@ -31,7 +31,7 @@ public interface UserService {
 
     /**
      * @description:  查询用户列表
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/4/29 14:16
      * @Param:  [personnel]
      * @return: List<NtPersonnel>
@@ -41,7 +41,7 @@ public interface UserService {
 
     /**
      * @description: 查询用户列表
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/4/26 15:59
      * @param:  [personnel] 查询条件
      * @return: List<NtPersonnel>
@@ -57,7 +57,7 @@ public interface UserService {
     public int addUser(NtPersonnel personnel) throws Exception;
     /**
      * @description: 新建 检查传入的参数是否为空 格式是否正确 是否已存在
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/4/26 14:22
      * @Param:  [personnel]
      * @return: java.lang.String
@@ -65,7 +65,7 @@ public interface UserService {
     public String checkAddUserParameter(NtPersonnel personnel);
     /**
       * @description: 更新 检查传入的参数是否为空 格式是否正确 是否已存在
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/5 15:23
       * @Param:  [personnel]
       * @return: java.lang.String
@@ -88,7 +88,7 @@ public interface UserService {
 
     /**
       * @description: 根据部门deptId和员工name查询员工信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/3 14:56
       * @Param: [deptId, name]
       * @return: List<NtPersonnel>
@@ -112,7 +112,7 @@ public interface UserService {
 
     /**
       * @description: 效验传入的登录用户名、密码
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/17 14:37
       * @param:  [name, password]
       * @return: java.lang.String
@@ -121,7 +121,7 @@ public interface UserService {
 
     /**
      * @description: 验证登录用户名
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/17 14:44
      * @param:  [name]
      * @return: java.lang.String
@@ -175,7 +175,7 @@ public interface UserService {
 
     /**
       * @description: 重置密码
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/13 10:54
       * @param:  [perId]
       * @return: int

@@ -23,7 +23,7 @@ public class DepartmentImpl implements DepartmentService {
 
     /**
      * @description: 根据部门名称查询部门信息
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/5/16 15:35
      * @param:  [deptName]
      * @return: cn.com.nantian.pojo.NtDepartment
@@ -68,7 +68,7 @@ public class DepartmentImpl implements DepartmentService {
 
     /**
       * @description:  添加部门信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/26 9:54
       * @Param:  [department]
       * @return: int
@@ -81,7 +81,7 @@ public class DepartmentImpl implements DepartmentService {
 
     /**
       * @description: 检查传入放入参数是否为空
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/26 10:01
       * @Param:  [department]
       * @return: java.lang.String
@@ -116,7 +116,7 @@ public class DepartmentImpl implements DepartmentService {
 
     /**
      * @description: 设置服务类别名称
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/4/23 16:42
      * @Param:
      * @return: java.util.List<java.lang.String>

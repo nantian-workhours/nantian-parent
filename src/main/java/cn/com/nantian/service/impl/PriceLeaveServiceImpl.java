@@ -16,7 +16,7 @@ import java.util.List;
 
 /**
  * @description: 单价级别信息管理
- * @Author：Mr.Kong
+ * @Author：Mr.Wind
  * @date: 2019/3/21 11:15
  * @Version：1.0
  */
@@ -30,7 +30,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @description: 查询单价级别列表
       * @Param: [ntLeaveInfo] 查询条件
       * @return: List<NtLeaveInfo>
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/3/21 14:57
       **/
     @Override
@@ -47,7 +47,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @description: 设置客户类别、工作类别、技术等级名称
       * @Param: [ntLeaveInfoList]
       * @return: void
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/3/21 15:32
       **/
     @Override
@@ -81,7 +81,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @description: 设置客户类别、工作类别、技术等级名称
       * @Param: [ntLeaveInfo]
       * @return: void
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/3/21 16:07
       **/
     @Override
@@ -111,7 +111,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @description: 删除单价级别信息
       * @Param: [ntLeaveInfo] 条件
       * @return: int
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/3/21 16:51
       **/
     @Override
@@ -122,7 +122,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @description: 新增单价级别信息
       * @Param: [ntLeaveInfo]
       * @return: int
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/3/21 16:55
       **/
     @Override
@@ -133,7 +133,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @description: 更新单价级别信息
       * @Param: [ntLeaveInfo]
       * @return: int
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/3/21 17:03
       **/
     @Override
@@ -144,7 +144,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
       * @description: 查询 单价级别信息
       * @Param: [ntLeaveInfo]
       * @return: NtLeaveInfo
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/3/21 17:10
       **/
     @Override
@@ -156,7 +156,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
      * @description: 新增时 检查是否有重复数据
      * @Param: [ntLeaveInfo]
      * @return: boolean true 有 , false 无
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/22 9:52
      **/
     public boolean checkWhetherRepeat(NtLeaveInfo ntLeaveInfo) throws Exception{
@@ -178,7 +178,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
 
     /**
       * @description: 更新时 检查是否有重复数据
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/7 15:10
       * @Param:  [ntLeaveInfo]
       * @return: boolean
@@ -203,7 +203,7 @@ public class PriceLeaveServiceImpl implements PriceLeaveService {
 
     /**
       * @description: 检查传入属性值是否为空
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/7 15:04
       * @Param:  [leaveInfo]
       * @return: java.lang.String

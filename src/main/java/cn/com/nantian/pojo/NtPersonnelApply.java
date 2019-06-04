@@ -1,6 +1,6 @@
 /**
   * @description: 员工考勤异常处理申请实体
-  * @auther: Mr.Kong
+  * @auther: Mr.Wind
   * @date: 2019/5/13 16:46
   **/
 package cn.com.nantian.pojo;

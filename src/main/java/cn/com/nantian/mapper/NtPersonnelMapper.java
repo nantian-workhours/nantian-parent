@@ -64,7 +64,7 @@ public interface NtPersonnelMapper {
 
     /**
       * @description: 根据 个人邮箱 获取员工信息
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/5/6 16:29
       * @Param:  [personEmail] 个人邮箱
       * @return: cn.com.nantian.pojo.NtPersonnel
@@ -95,7 +95,7 @@ public interface NtPersonnelMapper {
 
     /**
       * @description: 查询用户列表
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/26 15:59
       * @param:  [personnel] 查询条件
       * @return: List<NtPersonnel>
@@ -104,7 +104,7 @@ public interface NtPersonnelMapper {
 
     /**
       * @description:  查询用户列表
-      * @auther: Mr.Kong
+      * @auther: Mr.Wind
       * @date: 2019/4/29 14:16
       * @Param:  [personnel]
       * @return: List<NtPersonnel>

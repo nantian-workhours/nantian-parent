@@ -34,7 +34,7 @@ public class NtProjectInfo {
 
     /**
      * @description: 重写equals方法
-     * @auther: Mr.Kong
+     * @auther: Mr.Wind
      * @date: 2019/3/26 14:12
      * @Param: [o]
      * @return: boolean
