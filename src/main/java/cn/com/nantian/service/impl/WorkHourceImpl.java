@@ -71,7 +71,7 @@ public class WorkHourceImpl implements WorkHoursService{
      * @param endDate 结束日期
      * @return
      */
-    public  Map<Object,Object> findAllWorkHours(int perId, String custType,Date startDate, Date endDate){
+    public  Map<Object,Object> findAllWorkHours(Integer perId, String custType,Date startDate, Date endDate){
         //初始化map
         Map<Object, Object> map = new HashMap<>();
         if(custType.equals(ParamUntil._3)){//如果客户类型是中国人寿
@@ -100,10 +100,15 @@ public class WorkHourceImpl implements WorkHoursService{
                         Date mEndDate =simple.parse(strArrDate[1]);
                         //获取这个月的正常工作日天数
                         days = calLeaveDays(simple.parse(strArrDate[0]),simple.parse(strArrDate[1]));
-                        //获取当月工时数
+                        List<NtWorkingHours> workingHoursList=null;
+                                //获取当月工时数
                         daysHours = days * 8;
-                        //查询每个月的工时信息列表
-                        List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId,mStartDate,mEndDate);
+                        if(perId ==0 ){
+                            workingHoursList = workingHoursMapper.selectByDate(mStartDate,mEndDate);
+                        }else{
+                            //查询每个月的工时信息列表
+                            workingHoursList = workingHoursMapper.selectByPerId(perId,mStartDate,mEndDate);
+                        }
 
                         //循环工时
                         for (NtWorkingHours workingHours:workingHoursList) {
@@ -230,8 +235,13 @@ public class WorkHourceImpl implements WorkHoursService{
                         days = calLeaveDays(simple.parse(strArrDate[0]),simple.parse(strArrDate[1]));
                         //获取当月工时数
                         daysHours = days * 8;
-                        //查询每个月的工时信息列表
-                        List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId,mStartDate,mEndDate);
+                        List<NtWorkingHours> workingHoursList =null;
+                        if(  perId ==0 ){
+                            workingHoursList = workingHoursMapper.selectByDate(mStartDate,mEndDate);
+                        }else {
+                            workingHoursList = workingHoursMapper.selectByPerId(perId, mStartDate, mEndDate);
+                            //查询每个月的工时信息列表
+                        }
                         //循环工时
                         for (NtWorkingHours workingHours:workingHoursList) {
                             List<Float> list=new ArrayList<>();
@@ -289,8 +299,13 @@ public class WorkHourceImpl implements WorkHoursService{
                         days = calLeaveDays(simple.parse(strArrDate[0]),simple.parse(strArrDate[1]));
                         //获取当月工时数
                         daysHours = days * 8;
-                        //查询这个月的工时信息列表
-                        List<NtWorkingHours> workingHoursList = workingHoursMapper.selectByPerId(perId,mStartDate,mEndDate);
+                        List<NtWorkingHours> workingHoursList =null;
+                        if( perId==0 ){
+                            workingHoursList = workingHoursMapper.selectByDate(mStartDate,mEndDate);
+                        }else {
+                            //查询这个月的工时信息列表
+                         workingHoursList = workingHoursMapper.selectByPerId(perId, mStartDate, mEndDate);
+                        }
                         //循环工时
                         for (NtWorkingHours workingHours:workingHoursList) {
                             List<Float> list=new ArrayList<>();

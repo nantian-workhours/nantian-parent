@@ -67,5 +67,6 @@ public interface NtWorkingHoursMapper {
      * @param perId
      * @return
      */
-    List<NtWorkingHours> selectByPerId(@Param("perId")int perId,@Param("normalHours")Date normalHours, @Param("overtimeHours")Date overtimeHours);
+    List<NtWorkingHours> selectByPerId(@Param("perId")Integer perId,@Param("normalHours")Date normalHours, @Param("overtimeHours")Date overtimeHours);
+    List<NtWorkingHours> selectByDate( @Param("normalHours")Date normalHours, @Param("overtimeHours")Date overtimeHours);
 }
