@@ -7,7 +7,10 @@ package cn.com.nantian.mapper;
 
 import cn.com.nantian.pojo.LoginLog;
 
+
 public interface LoginLogMapper {
+
+    Long queryLoginLogStatisticsViews(LoginLog loginLog);
 
     LoginLog queryLoginLogNewestOne(LoginLog loginLog);
 

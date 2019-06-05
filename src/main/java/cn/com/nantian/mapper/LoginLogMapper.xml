@@ -20,6 +20,18 @@
     where ID = #{id,jdbcType=INTEGER}
   </select>
 
+  <select id="queryLoginLogStatisticsViews" parameterType="cn.com.nantian.pojo.LoginLog"
+          resultType="java.lang.Long">
+    select
+    count(1)
+    from sys_login_log
+    <where>
+      <if test="loginTime!=null and loginTime!=''">
+        <![CDATA[  and DATE_FORMAT(sys_login_log.LOGIN_TIME, '%Y-%m-%d') = DATE_FORMAT(#{loginTime}, '%Y-%m-%d')  ]]>
+      </if>
+    </where>
+  </select>
+
   <select id="queryLoginLogNewestOne" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.LoginLog" >
     select
     <include refid="Base_Column_List" />

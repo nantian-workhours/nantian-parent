@@ -7,10 +7,12 @@
  */
 package cn.com.nantian.controller;
 
+import cn.com.nantian.pojo.LoginLog;
 import cn.com.nantian.pojo.NtLeave;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.LeaveService;
+import cn.com.nantian.service.LoginLogService;
 import cn.com.nantian.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,6 +25,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.crypto.Data;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -44,6 +49,8 @@ public class StatisticsController {
     private LeaveService leaveService;
     @Resource
     private UserService userService;
+    @Resource
+    private LoginLogService loginLogService;
 
 
     /**
@@ -121,4 +128,25 @@ public class StatisticsController {
             return ResponseData.forbidden();
         }
     }
+
+
+    /**
+      * @description: 最近七天的用户访问量
+      * @auther: Mr.Wind
+      * @date: 2019/6/5 14:58
+      * @param:  [ntLeave]
+      * @return: ResponseData
+      **/
+    @RequestMapping("/statistics/views")
+    @ResponseBody
+    public ResponseData getViewsStatistics(HttpServletRequest request) {
+        try {
+            Map<String, Map<String,Object>> dataMap=loginLogService.getLoginLogStatisticsViews();
+            return ResponseData.ok().putDataValue("data", dataMap);
+        } catch (Exception e) {
+            logger.error("StatisticsController.getViewsStatistics", e);
+            return ResponseData.forbidden();
+        }
+    }
+
 }

@@ -7,6 +7,7 @@
  */
 package cn.com.nantian.service.impl;
 
+import cn.com.nantian.common.DateUtils;
 import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.common.UserAgentUtil;
 import cn.com.nantian.common.WebUtils;
@@ -18,13 +19,52 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import java.util.*;
 
 @Service
 public class LoginLogServiceImpl implements LoginLogService {
 
     @Resource
     private LoginLogMapper loginLogMapper;
+
+
+    /**
+      * @description: 最近七天的用户访问量
+      * @auther: Mr.Wind
+      * @date: 2019/6/5 16:11
+      * @param:  []
+      * @return: Map<String,Map<String,Object>>
+      **/
+    public Map<String,Map<String,Object>> getLoginLogStatisticsViews(){
+        Map<String,Map<String,Object>> data = new HashMap<>();
+        for (int i=0;i<7;i++){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(new Date());
+            cal.add(Calendar.DATE, -i);
+            Date time = cal.getTime();
+            String preDay = DateUtils.dateToStr(time);
+            Map<String,Object> map = new HashMap<>();
+            LoginLog loginLog = new LoginLog();
+            loginLog.setLoginTime(time);
+            Long views = this.queryLoginLogStatisticsViews(loginLog);
+            map.put("date",preDay);
+            map.put("views",views);
+            data.put("data_"+i,map);
+        }
+        return data;
+    }
+
+    /**
+      * @description: 查询记录条数
+      * @auther: Mr.Wind
+      * @date: 2019/6/5 15:21
+      * @param:  [loginLog]
+      * @return: java.util.List<cn.com.nantian.pojo.LoginLog>
+      **/
+    @Override
+    public Long queryLoginLogStatisticsViews(LoginLog loginLog) {
+        return loginLogMapper.queryLoginLogStatisticsViews(loginLog);
+    }
 
     /**
       * @description: 添加系统后台登录日志记录

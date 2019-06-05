@@ -9,9 +9,14 @@ import cn.com.nantian.pojo.LoginLog;
 import cn.com.nantian.pojo.NtPersonnel;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
+import java.util.Map;
 
 public interface LoginLogService {
 
+    Map<String, Map<String,Object>> getLoginLogStatisticsViews();
+
+    Long queryLoginLogStatisticsViews(LoginLog loginLog);
 
     int insertLoginLog(HttpServletRequest request, NtPersonnel personnel);
 
