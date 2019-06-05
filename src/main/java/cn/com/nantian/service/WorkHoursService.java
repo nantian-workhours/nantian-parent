@@ -34,7 +34,7 @@ public interface WorkHoursService {
      * @param endDate
      * @return
      */
-    Map<Object,Object>  findAllWorkHours(int  perId, String custType, Date startDate,Date endDate);
+    Map<Object,Object>  findAllWorkHours(Integer  perId, String custType, Date startDate,Date endDate);
 
     /**
      * 修改工时
