@@ -189,6 +189,9 @@
     LEFT JOIN nt_per_alias n  ON n.PER_ID = nt_personnel.PER_ID
     LEFT JOIN NT_PROJECT_INFO t ON t.PROJECT_NUMBER=n.PROJECT_NUMBER
     <where>
+      <if test="perId !=null and perId >0">
+        and nt_personnel.PER_ID=#{perId}
+      </if>
       <if test="deptId !=null and deptId >0">
         and nt_personnel.DEPT_ID=#{deptId}
       </if>

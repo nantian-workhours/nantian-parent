@@ -60,7 +60,6 @@ public class LoginController extends BaseController{
                 return ResponseData.isfailed().putDataValue("error", result);
             }
             NtPersonnel personnel = userService.findOne(name);
-
             String uuid = StringUtils.createUUID().replace("-", "");
             /*JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = jsonParser.parse(new Gson().toJson(personnel)).getAsJsonObject();

@@ -1,7 +1,6 @@
 package cn.com.nantian.controller;
 
-import cn.com.nantian.common.ObjectUtils;
-import cn.com.nantian.common.StringUtils;
+import cn.com.nantian.common.*;
 import cn.com.nantian.pojo.Item1;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.entity.ResponseData;
@@ -79,15 +78,20 @@ public class UserController extends BaseController {
     }
 
     /**
-     * 根据部门deptId和员工name查询员工信息
-     *
-     * @param personnel
-     * @return
-     */
+      * @description: 查询用户列表
+      * @auther: Mr.Wind
+      * @date: 2019/6/6 11:03
+      * @param:  [request, personnel]
+      * @return: ResponseData
+      **/
     @RequestMapping(value = "/findbyidandname")
     @ResponseBody
-    public ResponseData queryPersonnelList(@ModelAttribute("personnel") NtPersonnel personnel) {
+    public ResponseData queryPersonnelList(HttpServletRequest request,
+                                           @ModelAttribute("personnel") NtPersonnel personnel) {
         try {
+            //设置用户查询数据权限条件
+            UserAgentUtil.setUserJurisdiction(request,personnel);
+            //查询用户数据信息
             List<NtPersonnel> personnelList = userService.queryPersonnelList(personnel);
             userService.setWorkStates(personnelList);
             return ResponseData.ok().putDataValue("data", personnelList);

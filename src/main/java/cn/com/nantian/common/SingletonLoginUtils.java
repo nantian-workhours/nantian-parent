@@ -1,11 +1,15 @@
 package cn.com.nantian.common;
 
+import cn.com.nantian.pojo.NtPersonnel;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import static cn.com.nantian.controller.BaseController.getSession;
 
 /**
  * @description :
@@ -98,7 +102,7 @@ public class SingletonLoginUtils {
      *
      * @return SysUser
      */
-    public static JsonObject getSysUser(HttpServletRequest request) {
+     public static JsonObject getSysUser(HttpServletRequest request) {
         String sid = WebUtils.getCookie(request, SysUserConstants.sidadmin);
         if (StringUtils.isNotEmpty(sid)) {
             Object ob = memCache.get(sid);
@@ -106,6 +110,22 @@ public class SingletonLoginUtils {
                 JsonObject user = jsonParser.parse(ob.toString()).getAsJsonObject();
                 return user;
             }
+        }
+        return null;
+     }
+
+   /**
+     * @description: 后台登陆用户（后台）
+     * @auther: Mr.Wind
+     * @date: 2019/6/6 10:46
+     * @param:  [request]
+     * @return: cn.com.nantian.pojo.NtPersonnel
+     **/
+    public static NtPersonnel getSysUsers(HttpServletRequest request) {
+        String sid = WebUtils.getCookie(request, SysUserConstants.sidadmin);
+        if (StringUtils.isNotEmpty(sid)) {
+            NtPersonnel ntPersonnel =(NtPersonnel)getSessionAttribute(request, sid);
+            return ntPersonnel;
         }
         return null;
     }
@@ -187,5 +207,14 @@ public class SingletonLoginUtils {
             regionId = CommonConstants.USER_DEFAULT_REGION_ID;
         }
         return Long.parseLong(regionId);
+    }
+
+    public static void setSessionAttribute(HttpServletRequest request, String name, Object v) {
+        request.getSession().setAttribute(name, v);
+    }
+
+    public static Object getSessionAttribute(HttpServletRequest request, String name) {
+        HttpSession session = getSession(request, false);
+        return session != null ? session.getAttribute(name) : null;
     }
 }

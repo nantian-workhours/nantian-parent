@@ -1,4 +1,5 @@
 package cn.com.nantian.common;
+import cn.com.nantian.pojo.NtPersonnel;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -24,4 +25,20 @@ public class UserAgentUtil {
             OperatingSystem os = userAgent.getOperatingSystem();
         	return browser.getName().toLowerCase()+";"+os.getName().toLowerCase();
         }
+
+        /**
+          * @description: 设置用户查询数据权限条件(若为普通用户,则只能看自己的信息)
+          * @auther: Mr.Wind
+          * @date: 2019/6/6 10:57
+          * @param:  [request, personnel]
+          * @return: void
+          **/
+        public static void setUserJurisdiction(HttpServletRequest request,NtPersonnel personnel){
+			NtPersonnel ntPersonnel=SingletonLoginUtils.getSysUsers(request);
+			if (ObjectUtils.isNotNull(ntPersonnel)){
+				if (ntPersonnel.getJurisdiction().equals("2")){
+					personnel.setPerId(ntPersonnel.getPerId());
+				}
+			}
+		}
 }
