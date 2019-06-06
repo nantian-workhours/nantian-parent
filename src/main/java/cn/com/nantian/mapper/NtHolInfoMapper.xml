@@ -28,6 +28,9 @@
       <if test="deptId !=null and deptId >0">
         and nt_department.DEPT_ID=#{deptId}
       </if>
+      <if test="perId !=null and perId >0">
+        and nt_hol_info.PER_ID=#{perId}
+      </if>
     </where>
   </select>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">

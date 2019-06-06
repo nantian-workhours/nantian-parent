@@ -7,10 +7,7 @@
  */
 package cn.com.nantian.controller;
 
-import cn.com.nantian.common.DateUtils;
-import cn.com.nantian.common.ObjectUtils;
-import cn.com.nantian.common.ParamUntil;
-import cn.com.nantian.common.StringUtils;
+import cn.com.nantian.common.*;
 import cn.com.nantian.pojo.NtLeave;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.LeaveService;
@@ -52,8 +49,11 @@ public class LeaveController {
      **/
     @RequestMapping("/ntLeave/findAll")
     @ResponseBody
-    public ResponseData findAll(@ModelAttribute("ntLeave") NtLeave ntLeave) {
+    public ResponseData findAll(HttpServletRequest request,
+                                @ModelAttribute("ntLeave") NtLeave ntLeave) {
         try {
+            //设置用户查询数据权限条件
+            UserAgentUtil.setUserJurisdiction(request,ntLeave);
             if (StringUtils.isNotEmpty(ntLeave.getBegDateStr()) && DateUtils.checkDateReg(ntLeave.getBegDateStr())){
                 ntLeave.setBegDate(DateUtils.parseToDate(ntLeave.getBegDateStr(), "yyyy-MM-dd"));
             }

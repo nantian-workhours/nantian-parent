@@ -2,6 +2,7 @@ package cn.com.nantian.controller;
 
 import cn.com.nantian.common.ObjectUtils;
 import cn.com.nantian.common.StringUtils;
+import cn.com.nantian.common.UserAgentUtil;
 import cn.com.nantian.pojo.NtPerInProject;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.InProjectService;
@@ -72,8 +73,11 @@ public class InProjectController {
       **/
     @RequestMapping("/findAll")
     @ResponseBody
-    public ResponseData findAll(@ModelAttribute("ntPerInProject") NtPerInProject ntPerInProject){
+    public ResponseData findAll(HttpServletRequest request,
+                                @ModelAttribute("ntPerInProject") NtPerInProject ntPerInProject){
         try {
+            //设置用户查询数据权限条件
+            UserAgentUtil.setUserJurisdiction(request,ntPerInProject);
             List<NtPerInProject> ntPerInProjectList = inProjectService.queryNtPerInProjectList(ntPerInProject);
             inProjectService.setWorkStatus(ntPerInProjectList);
             return ResponseData.ok().putDataValue("data",ntPerInProjectList);

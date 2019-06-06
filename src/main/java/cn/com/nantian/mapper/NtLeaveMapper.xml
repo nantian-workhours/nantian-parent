@@ -77,6 +77,9 @@
       <if test="deptId !=null and deptId >0">
         and nt_department.DEPT_ID=#{deptId}
       </if>
+      <if test="perId !=null and perId >0">
+        and nt_leave.PER_ID=#{perId}
+      </if>
       <if test="begDate !=null and begDate !=''">
         and <![CDATA[ nt_leave.BEG_DATE>=#{begDate}]]>
       </if>

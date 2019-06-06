@@ -7,6 +7,7 @@
  */
 package cn.com.nantian.controller;
 
+import cn.com.nantian.common.UserAgentUtil;
 import cn.com.nantian.pojo.NtHolInfo;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.HolInfoService;
@@ -44,8 +45,11 @@ public class HolInfoController {
      **/
     @RequestMapping("/ntHolInfo/findAll")
     @ResponseBody
-    public ResponseData findAll(@ModelAttribute("ntHolInfo") NtHolInfo ntHolInfo) {
+    public ResponseData findAll(HttpServletRequest request,
+                                @ModelAttribute("ntHolInfo") NtHolInfo ntHolInfo) {
         try {
+            //设置用户查询数据权限条件
+            UserAgentUtil.setUserJurisdiction(request,ntHolInfo);
             List<NtHolInfo> holInfoList = holInfoService.selectHolInfoList(ntHolInfo);
             return ResponseData.ok().putDataValue("data", holInfoList);
         } catch (Exception e) {

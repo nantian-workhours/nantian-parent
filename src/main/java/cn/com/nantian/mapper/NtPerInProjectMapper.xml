@@ -107,6 +107,9 @@
       <if test="Id !=null and Id !=''">
         and nt_per_in_project.ID=#{Id}
       </if>
+      <if test="perId !=null and perId !=''">
+        and nt_per_in_project.PER_ID=#{perId}
+      </if>
     </where>
     order by nt_per_in_project.ID desc
   </select>

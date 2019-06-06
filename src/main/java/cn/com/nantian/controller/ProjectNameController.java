@@ -1,6 +1,7 @@
 package cn.com.nantian.controller;
 
 import cn.com.nantian.common.StringUtils;
+import cn.com.nantian.common.UserAgentUtil;
 import cn.com.nantian.pojo.NtPerAlias;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.ProjectNameService;
@@ -70,8 +71,11 @@ public class ProjectNameController {
      **/
     @RequestMapping("/findAll")
     @ResponseBody
-    public ResponseData queryNtPerAliasList(@ModelAttribute("ntPerAlias") NtPerAlias ntPerAlias) {
+    public ResponseData queryNtPerAliasList(HttpServletRequest request,
+                                            @ModelAttribute("ntPerAlias") NtPerAlias ntPerAlias) {
         try {
+            //设置用户查询数据权限条件
+            UserAgentUtil.setUserJurisdiction(request,ntPerAlias);
             //根据姓名,身份证号  或者客户类型查询信息
             List<NtPerAlias> perAliasList = projectNameService.queryNtPerAliasList(ntPerAlias);
             return ResponseData.ok().putDataValue("data", perAliasList);
