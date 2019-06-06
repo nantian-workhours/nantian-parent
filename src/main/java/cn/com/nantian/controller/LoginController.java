@@ -87,10 +87,11 @@ public class LoginController extends BaseController{
       * @return: ResponseData
       **/
     @RequestMapping("/exit")
+    @ResponseBody
     public ResponseData logout(HttpServletRequest request, HttpServletResponse response) {
         String sid = WebUtils.getCookie(request, SysUserConstants.sidadmin);
         request.getSession().removeAttribute(sid);
         WebUtils.deleteCookie(request,response,SysUserConstants.sidadmin);
-        return ResponseData.ok().putDataValue("message","退出系统操作成功!");
+        return ResponseData.ok().putDataValue("data","退出系统操作成功！");
     }
 }
