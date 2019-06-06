@@ -34,7 +34,7 @@ public class UserAgentUtil {
           * @return: void
           **/
         public static void setUserJurisdiction(HttpServletRequest request,NtPersonnel personnel){
-			NtPersonnel ntPersonnel=SingletonLoginUtils.getSysUsers(request);
+			NtPersonnel ntPersonnel=SingletonLoginUtils.getSysUser(request);
 			if (ObjectUtils.isNotNull(ntPersonnel)){
 				if (ntPersonnel.getJurisdiction().equals("2")){
 					personnel.setPerId(ntPersonnel.getPerId());

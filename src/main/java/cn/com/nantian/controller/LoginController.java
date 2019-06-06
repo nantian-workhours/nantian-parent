@@ -1,15 +1,14 @@
 package cn.com.nantian.controller;
 
 
-import cn.com.nantian.common.*;
+import cn.com.nantian.common.StringUtils;
+import cn.com.nantian.common.SysUserConstants;
+import cn.com.nantian.common.WebUtils;
 import cn.com.nantian.pojo.LoginLog;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.LoginLogService;
 import cn.com.nantian.service.UserService;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,5 +77,20 @@ public class LoginController extends BaseController{
             logger.error("LoginController.login", e);
             return ResponseData.forbidden().putDataValue("error","系统异常，请稍后再试！");
         }
+    }
+
+    /**
+      * @description: 退出系统操作
+      * @auther: Mr.Wind
+      * @date: 2019/6/6 11:12
+      * @param:  [request, response]
+      * @return: ResponseData
+      **/
+    @RequestMapping("/exit")
+    public ResponseData logout(HttpServletRequest request, HttpServletResponse response) {
+        String sid = WebUtils.getCookie(request, SysUserConstants.sidadmin);
+        request.getSession().removeAttribute(sid);
+        WebUtils.deleteCookie(request,response,SysUserConstants.sidadmin);
+        return ResponseData.ok().putDataValue("message","退出系统操作成功!");
     }
 }
