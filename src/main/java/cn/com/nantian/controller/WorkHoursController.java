@@ -35,10 +35,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 工时管理
@@ -54,11 +51,37 @@ public class WorkHoursController {
     private UserService userService;
 
 
+
+
     /**
-     * 导入工时
-     * @param myfile
+     *  工时统计
+     *
      * @return
      */
+    @RequestMapping("/statistics")
+    @ResponseBody
+
+    public ResponseData statisticsWorkHours(  @RequestParam("custType")String custType, @DateTimeFormat(pattern = "yyyy-MM")Date startDate,@DateTimeFormat(pattern = "yyyy-MM")Date endDate) {
+
+        if(custType!=null){
+            try {
+                //将数据查入到库中
+                Map<Object ,Object> resultMap = workHoursService.statisticsWorkHours( custType, startDate,  endDate);
+                return ResponseData.ok().putDataValue("code",resultMap);
+            } catch (Exception e) {
+                return ResponseData.isfailed().putDataValue("error",e.toString());
+            }
+        }else{
+            return ResponseData.isfailed().putDataValue("data","Customer Type cannot be empty");
+        }
+
+
+    }
+        /**
+         * 导入工时
+         * @param myfile
+         * @return
+         */
     @RequestMapping("/importExcel")
     @ResponseBody
     public ResponseData importProcess(HttpServletRequest request, @RequestParam("myFile") MultipartFile myfile ,String custType,String jurisdiction) {

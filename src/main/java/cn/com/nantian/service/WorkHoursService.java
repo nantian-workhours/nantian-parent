@@ -13,7 +13,14 @@ import java.util.Map;
 public interface WorkHoursService {
 
 
-
+    /**
+     * 工时统计
+     * @param custType
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+      Map<Object,Object> statisticsWorkHours( String custType,Date startDate, Date endDate);
     /**
      * 导入工时
      * @param myfile
