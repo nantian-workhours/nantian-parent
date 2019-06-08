@@ -3,10 +3,7 @@ package cn.com.nantian.service.impl;
 
 import cn.com.nantian.common.ParamUntil;
 import cn.com.nantian.mapper.*;
-import cn.com.nantian.pojo.NtPerAlias;
-import cn.com.nantian.pojo.NtProjectInfo;
-import cn.com.nantian.pojo.NtWorkingHours;
-import cn.com.nantian.pojo.NtWorkingHoursTmp;
+import cn.com.nantian.pojo.*;
 import cn.com.nantian.pojo.entity.ProList;
 import cn.com.nantian.service.WorkHoursService;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -50,6 +47,8 @@ public class WorkHourceImpl implements WorkHoursService{
     private NtHolidayMapper holidayMapper;
     @Resource
     private  NtPersonnelMapper personnelMapper;
+    @Resource
+    private NtPerInProjectMapper perInProjectMapper;
 
     /**
      * 根据主键(perId和日期)修改工时
@@ -629,7 +628,7 @@ public class WorkHourceImpl implements WorkHoursService{
                             //判断库中是否有该员工数据
                             NtWorkingHours workingHours = workingHoursMapper.selectByOne(perAlias.getPerId(), date);
                             //判断是否有该数据
-                            if (ObjectUtils.isEmpty(workingHours)) {
+                            if (!ObjectUtils.isEmpty(workingHours)) {
                                 if(workingHours.getPerId()==perAlias.getPerId() && workingHours.getWorkDate().equals(date)){
                                     map.put("error","The table has been imported");
                                     return  map;
@@ -637,7 +636,12 @@ public class WorkHourceImpl implements WorkHoursService{
                             }
                         }
                         //将数据插入临时表中
-                        workingHoursTmpMapper.insertOneTmp(perAlias.getPerId(), date, normalHoursF, overtimeHoursF);
+                        if(perAlias.getPerId()!=0) {
+                            workingHoursTmpMapper.insertOneTmp(perAlias.getPerId(), date, normalHoursF, overtimeHoursF);
+                        }else{
+                            map.put("error","第"+ i +"行员工不存在");
+                            return  map;
+                        }
                         suct++;
                     }
                 }
@@ -759,8 +763,14 @@ public class WorkHourceImpl implements WorkHoursService{
                                 }
                                 //将数据插入目标表表中
                                 try {
-                                    workingHoursMapper.insertOneTmpLife(perAlias.getPerId(), workDate, singninDate, signbackDate);
+                                    if(perAlias.getPerId()!=0 ){
+                                        workingHoursMapper.insertOneTmpLife(perAlias.getPerId(), workDate, singninDate, signbackDate);
+                                    }else{
+                                        map.put("error","第"+ i +"行员工不存在");
+                                        return map;
+                                    }
                                 } catch (Exception e) {
+
                                     e.printStackTrace();
                                     map.put("error", "The table has been imported");
                                     return map;
@@ -838,7 +848,9 @@ public class WorkHourceImpl implements WorkHoursService{
    public NtPerAlias getAliasByCustType(String custType,String name){
        ProList proList = new ProList();
        List<Integer> list = null;
-       NtPerAlias perAlias =null;
+       NtPerAlias perAlias =new NtPerAlias();
+       NtPerAlias perAlias1 =new NtPerAlias();
+        NtPersonnel personnel =null;
        //根据客户类别查询项目编号
       List<NtProjectInfo> projectInfoList = projectInfoMapper.selectByCustType(custType);
        if ( projectInfoList.size()>0) {
@@ -846,13 +858,35 @@ public class WorkHourceImpl implements WorkHoursService{
                for (NtProjectInfo projectInfo:projectInfoList ) {
                    //获取项目列表
                     //list.add(projectInfo.getProjectNumber());
-                   perAlias = perAliasMapper.selectByInProNameAndPronum(projectInfo.getProjectNumber(),name);
-                if(!ObjectUtils.isEmpty(perAlias)){
-                    break;
+                     perAlias1 = perAliasMapper.selectByInProNameAndPronum(projectInfo.getProjectNumber(),name);
+                   //查询出数据结束
+                if(!ObjectUtils.isEmpty(perAlias1)){
+                    perAlias.setPerId(perAlias1.getPerId());
+
                 }
               }
            } catch (Exception e) {
                e.printStackTrace();
+           }
+           //如果查询别名表perAlias还是为空,查询员工表信息
+           if(ObjectUtils.isEmpty(perAlias1)){
+
+              List<NtPerInProject>  perInProjectList =  perInProjectMapper.selectByCustType(custType);
+               for (NtPerInProject perInProject:perInProjectList) {
+                    personnel = personnelMapper.selectByPrimaryKey(perInProject.getPerId());
+                   if(!ObjectUtils.isEmpty(personnel)){
+                       if(name.equals(personnel.getName())==true ){
+                           perAlias.setPerId(personnel.getPerId());
+
+                       }
+                   }else{
+                       perAlias.setPerId(0);
+                   }
+               }
+
+           }
+           if(perAlias.getPerId()==null){
+               perAlias.setPerId(0);
            }
            return perAlias;
        }else{

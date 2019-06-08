@@ -53,5 +53,7 @@ public interface NtPerInProjectMapper {
 
     List<NtPerInProject> selectByProNum(int projectNumber);
 
+    List<NtPerInProject> selectByCustType(String custType);
+
     List<NtPerInProject> selectByPerIdAndProjectNum(@Param("perId")int perId, @Param("projectNumber")int  projectNumber);
 }

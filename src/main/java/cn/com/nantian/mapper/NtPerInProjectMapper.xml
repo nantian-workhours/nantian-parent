@@ -200,6 +200,14 @@
     from nt_per_in_project
     where PROJECT_NUMBER = #{projectNumber,jdbcType=INTEGER}
   </select>
+
+  <select id="selectByCustType" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_per_in_project
+    where CUST_TYPE = #{custType,jdbcType=INTEGER}
+  </select>
+
   <select id="selectByIdNoAndproNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
