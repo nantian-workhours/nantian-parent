@@ -54,6 +54,8 @@ public class NtPerInProject {
     private String deptName;
     /**在场状态*/
     private String workStatus;
+    /**总人数*/
+    private Integer totalNum;
 
 
 

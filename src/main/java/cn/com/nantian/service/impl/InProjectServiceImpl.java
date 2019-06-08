@@ -21,7 +21,7 @@ import java.util.Map;
  * @date: 2019/5/9 10:46
  **/
 @Service
-public class InProjectImpl implements InProjectService {
+public class InProjectServiceImpl implements InProjectService {
     @Resource
     private NtPerInProjectMapper perInProjectMapper;
     @Resource
@@ -30,6 +30,40 @@ public class InProjectImpl implements InProjectService {
     private NtPersonnelMapper personnelMapper;
     @Resource
     private NtDictionariesMapper dictionariesMapper;
+
+    /**
+      * @description: 根据客户分类 统计员人数
+      * @auther: Mr.Wind
+      * @date: 2019/6/8 15:31
+      * @param:  [perInProject]
+      * @return: java.util.Map<java.lang.String,java.lang.Object>
+      **/
+    public Map<String,Object> getStatisticsNumByCustType(NtPerInProject perInProject) {
+        perInProject.setProjectBegdate(new Date());
+        Map<String,Object> map=new HashMap<>();
+        List<NtPerInProject> ntPerInProjectList = perInProjectMapper.queryStatisticsNumByCustType(perInProject);
+        List<NtDictionariesKey> dictionariesKeyList = dictionariesMapper.selectByType(ParamUntil.cust);
+        if (ObjectUtils.isNotNull(dictionariesKeyList)){
+            for (NtDictionariesKey dictionaries:dictionariesKeyList){
+                int totalNum=0;
+                String dicCode=dictionaries.getDicCode();
+                for (NtPerInProject perInProject2:ntPerInProjectList){
+                    if (dicCode.equals(perInProject2.getCustType())){
+                        totalNum=perInProject2.getTotalNum();
+                    }
+                }
+                map.put(ParamUntil.cust+"_"+dicCode,totalNum);
+            }
+        }
+        return map;
+    }
+
+
+
+    @Override
+    public List<NtPerInProject> queryStatisticsNumByCustType(NtPerInProject perInProject) {
+        return perInProjectMapper.queryStatisticsNumByCustType(perInProject);
+    }
 
     /**
      * @description: 创建时 效验传入的参数值

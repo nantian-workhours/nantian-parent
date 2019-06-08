@@ -7,10 +7,11 @@
  */
 package cn.com.nantian.controller;
 
-import cn.com.nantian.pojo.LoginLog;
 import cn.com.nantian.pojo.NtLeave;
+import cn.com.nantian.pojo.NtPerInProject;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.entity.ResponseData;
+import cn.com.nantian.service.InProjectService;
 import cn.com.nantian.service.LeaveService;
 import cn.com.nantian.service.LoginLogService;
 import cn.com.nantian.service.UserService;
@@ -25,9 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.crypto.Data;
-import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -51,6 +49,8 @@ public class StatisticsController {
     private UserService userService;
     @Resource
     private LoginLogService loginLogService;
+    @Resource
+    private InProjectService inProjectService;
 
 
     /**
@@ -102,6 +102,27 @@ public class StatisticsController {
     public ResponseData getUserStatistics(@ModelAttribute("ntPersonnel") NtPersonnel ntPersonnel) {
         try {
             Map<String,Object> data=userService.getStatisticalPersonnelNum(ntPersonnel);
+            return ResponseData.ok().putDataValue("data", data);
+        } catch (Exception e) {
+            logger.error("StatisticsController.getUserStatistics", e);
+            return ResponseData.forbidden();
+        }
+    }
+
+
+
+    /**
+     * @description: 根据客户类别分类 统计员工人数
+     * @auther: Mr.Wind
+     * @date: 2019/5/22 14:14
+     * @param:  [request]
+     * @return: ResponseData
+     **/
+    @RequestMapping("/statistics/CustType/user")
+    @ResponseBody
+    public ResponseData getUserStatisticsCustType(@ModelAttribute("ntPerInProject") NtPerInProject perInProject) {
+        try {
+            Map<String,Object> data=inProjectService.getStatisticsNumByCustType(perInProject);
             return ResponseData.ok().putDataValue("data", data);
         } catch (Exception e) {
             logger.error("StatisticsController.getUserStatistics", e);

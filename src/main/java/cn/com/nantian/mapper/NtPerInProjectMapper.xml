@@ -134,6 +134,12 @@
     and nt_per_in_project.ID=#{Id}
   </select>
 
+  <select id="queryStatisticsNumByCustType" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProject">
+    select CUST_TYPE,COUNT(DISTINCT PER_ID) totalNum
+    from nt_per_in_project
+    GROUP BY CUST_TYPE
+  </select>
+
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProjectExample" >
     select

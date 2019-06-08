@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface NtPerInProjectMapper {
 
+    List<NtPerInProject> queryStatisticsNumByCustType(NtPerInProject perInProject);
+
 
     List<NtPerInProject> queryNtPerInProjectList(NtPerInProject perInProject);
 
