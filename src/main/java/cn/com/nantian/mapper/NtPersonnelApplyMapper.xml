@@ -38,6 +38,9 @@
       <if test="userName !=null and userName !=''">
         and p.NAME like CONCAT('%',#{userName},'%')
       </if>
+      <if test="applyStatus !=null and applyStatus !=''">
+        and nt_personnel_apply.APPLY_STATUS =#{applyStatus}
+      </if>
       <if test="applyDate !=null and applyDate !=''">
         and <![CDATA[ nt_personnel_apply.APPLY_DATE = #{applyDate}]]>
       </if>

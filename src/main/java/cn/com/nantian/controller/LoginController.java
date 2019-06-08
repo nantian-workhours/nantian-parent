@@ -1,13 +1,15 @@
 package cn.com.nantian.controller;
 
 
-import cn.com.nantian.common.StringUtils;
-import cn.com.nantian.common.SysUserConstants;
-import cn.com.nantian.common.WebUtils;
+import cn.com.nantian.common.*;
 import cn.com.nantian.pojo.LoginLog;
+import cn.com.nantian.pojo.NtLeave;
 import cn.com.nantian.pojo.NtPersonnel;
+import cn.com.nantian.pojo.NtPersonnelApply;
 import cn.com.nantian.pojo.entity.ResponseData;
+import cn.com.nantian.service.LeaveService;
 import cn.com.nantian.service.LoginLogService;
+import cn.com.nantian.service.NtPersonnelApplyService;
 import cn.com.nantian.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +21,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -31,13 +34,14 @@ public class LoginController extends BaseController{
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
-    //MemCache memCache = MemCache.getInstance();
-
     @Resource
     private UserService userService;
     @Resource
     private LoginLogService loginLogService;
-
+    @Resource
+    private LeaveService leaveService;
+    @Resource
+    private NtPersonnelApplyService personnelApplyService;
 
     /**
       * @description:  系统登录
@@ -59,14 +63,36 @@ public class LoginController extends BaseController{
             }
             NtPersonnel personnel = userService.findOne(name);
             String uuid = StringUtils.createUUID().replace("-", "");
-            /*JsonParser jsonParser = new JsonParser();
-            JsonObject jsonObject = jsonParser.parse(new Gson().toJson(personnel)).getAsJsonObject();
-            memCache.set(uuid, jsonObject.toString(), MemConstans.SYS_USER_TIME);
-            WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);*/
             dataMap.put("personnel",personnel);
             WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);
             this.setSessionAttribute(request,uuid,personnel);
-            //查询最新一条登录日志信息
+            //本月请假天数
+            NtLeave ntLeave=new NtLeave();
+            ntLeave.setBegDate(DateUtils.getMonthFirstDayDate());
+            ntLeave.setEndDate(DateUtils.getMonthLastDayDate());
+            List<NtLeave> ntLeaveList = leaveService.selectLeaveList(ntLeave);
+            Float leaveDays=0f;
+            if (ObjectUtils.isNotNull(ntLeaveList)){
+                for (NtLeave leave:ntLeaveList){
+                    leaveDays+=leave.getLeaveCount();
+                }
+            }
+            dataMap.put("leaveDays",leaveDays);
+            //本月加班小时数
+            dataMap.put("workHours","30");
+            //本月正常上班天数
+            dataMap.put("workDays","20");
+            //代办事项-异议申请待审核
+            NtPersonnelApply personnelApply=new NtPersonnelApply();
+            personnelApply.setApplyStatus(ParamUntil.R);
+            List<NtPersonnelApply> personApplyList = personnelApplyService.queryPersonApplyList(personnelApply);
+            dataMap.put("personApplyList",personApplyList);
+            //代办事项-请假待审核
+            NtLeave leave=new NtLeave();
+            leave.setApplyStatus(ParamUntil.R);
+            List<NtLeave> leaveList = leaveService.selectLeaveList(leave);
+            dataMap.put("leaveList",leaveList);
+            //最新一条登录日志信息
             LoginLog loginLog=loginLogService.queryLoginLogNewestOne(null);
             dataMap.put("loginLog",loginLog);
             // 添加登录日志记录

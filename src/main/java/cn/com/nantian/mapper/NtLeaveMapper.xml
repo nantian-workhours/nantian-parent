@@ -80,8 +80,14 @@
       <if test="perId !=null and perId >0">
         and nt_leave.PER_ID=#{perId}
       </if>
+      <if test="applyStatus !=null and applyStatus !=''">
+        and nt_leave.APPLY_STATUS=#{applyStatus}
+      </if>
       <if test="begDate !=null and begDate !=''">
         and <![CDATA[ nt_leave.BEG_DATE>=#{begDate}]]>
+      </if>
+      <if test="endDate !=null and endDate !=''">
+        and <![CDATA[ nt_leave.BEG_DATE<=#{endDate}]]>
       </if>
     </where>
     order by nt_leave.LEAVE_ID desc
