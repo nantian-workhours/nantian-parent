@@ -50,9 +50,18 @@ public class WorkHourceImpl implements WorkHoursService{
     @Resource
     private NtPerInProjectMapper perInProjectMapper;
 
+    @Resource
+    private NtLeaveInfoMapper leaveInfoMapper;
 
 
 
+    /**
+     * 工时统计
+     * @param custType
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     @Override
     public  Map<Object,Object> statisticsWorkHours( String custType,Date startDate, Date endDate) {
         //初始化map
@@ -60,6 +69,7 @@ public class WorkHourceImpl implements WorkHoursService{
         if (custType.equals(ParamUntil._3)) {//如果客户类型是中国人寿
             double days = 0.0;//初始化当月天数
             double daysHours = 0.0;//初始化当月工时数
+
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
                 String startDateStr = sdf.format(startDate);
@@ -70,7 +80,7 @@ public class WorkHourceImpl implements WorkHoursService{
                     float workTime = 0; //当月正常出勤工时
                     float addedHours = 0; //当月加班工时
                     int count = 0;
-
+                    double allHP = 0.0; //工时价格
                     Map<Object, Object> workMap = new HashMap<>();
                     //将时间转化为每个月的1号
                     String strDateDay = strDate + "-01";
@@ -170,6 +180,12 @@ public class WorkHourceImpl implements WorkHoursService{
                                     }
                                 }
                             }
+                            //获取该员工的工时单价
+                            double parice =  getPriace(workingHours.getPerId(),custType,workingHours.getWorkDate());
+                            if(parice!=0.0){
+                                allHP += parice * workTimeOne ;
+                            }
+
                             list.add( workTimeOne );//添加每日正常工时
                             list1.add( addedHoursOne );//添加每日加班工时
 
@@ -192,6 +208,7 @@ public class WorkHourceImpl implements WorkHoursService{
                         }
                         workMap.put("allH", allH);
                         workMap.put("allA", allA);
+                        workMap.put("allHP", allHP);
 
                         if (workMap == null) {
                             workMap.put("workingHours", Math.floor(daysHours));//向下取整  当月工时数
@@ -213,6 +230,7 @@ public class WorkHourceImpl implements WorkHoursService{
             //如果客户类型是中国银行
             double days = 0.0;//初始化当月天数
             double daysHours = 0.0;//初始化当月工时数
+
             try {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
                 String startDateStr = sdf.format(startDate);
@@ -222,7 +240,8 @@ public class WorkHourceImpl implements WorkHoursService{
                 for (String strDate : daysList) {
                     float workTime = 0; //当月正常出勤工时
                     float addedHours = 0; //当月加班工时
-
+                    double allHP = 0.0; //工时价格
+                    double allAP = 0.0; //加班工时价格
                     Map<Object, Object> workMap = new HashMap<>();
                     //将时间转化为每个月的1号
                     String strDateDay = strDate + "-01";
@@ -255,12 +274,24 @@ public class WorkHourceImpl implements WorkHoursService{
                         List<Float> list = new ArrayList<>();
                         List<Float> list1 = new ArrayList<>();
                         for (NtWorkingHours workingHours : workingHoursList) {
-                            list.add(workingHours.getNormalHours());//添加正常工时
-                            list1.add(workingHours.getOvertimeHours());//添加加班工时
-                            workTime += workingHours.getNormalHours();//正常工时累加
 
-                            addedHours += workingHours.getOvertimeHours();//加班工时累加
+                            if(workingHours.getNormalHours()==null || workingHours.getOvertimeHours()==null){
+                                continue;
+                            }else {
+                                list.add(workingHours.getNormalHours());//添加正常工时
+                                list1.add(workingHours.getOvertimeHours());//添加加班工时
+                                workTime += workingHours.getNormalHours();//正常工时累加
+
+                                addedHours += workingHours.getOvertimeHours();//加班工时累加
 //                            workMap.put(workingHours.getWorkDate(), list);//添加平时工作日
+                                //获取该员工的工时单价
+                                double parice =  getPriace(workingHours.getPerId(),custType,workingHours.getWorkDate());
+                                if(parice!=0.0){
+                                    allHP += parice * workingHours.getNormalHours() ;
+                                    allAP += workingHours.getOvertimeHours() * 30.0;
+                                }
+                            }
+
 
                         }
 //                        float allH=0;//正常
@@ -273,7 +304,8 @@ public class WorkHourceImpl implements WorkHoursService{
 //                        }
                         workMap.put("allH", workTime);
                         workMap.put("allA", addedHours);
-
+                        workMap.put("allHP", allHP);
+                        workMap.put("allAP", allAP);
 
                         if (workMap == null) {
 //                            workMap.put("workingDays", Math.floor(days));//向下取整 当月天数
@@ -298,13 +330,30 @@ public class WorkHourceImpl implements WorkHoursService{
     }
 
 
+    /**
+     *
+     * @param perId
+     * @param custType
+     * @param date 时间
+     *
+     * @return
+     */
+    private  Double getPriace(int perId,String  custType,Date date){
+        double parice =0.0;
+        //查询员工所在项目的技术等级
+       NtPerInProject perInProject =  perInProjectMapper.selectByPerIdAndDate(perId,custType,date);
+        if(StringUtils.isEmpty(perInProject)){
+            return 0.0;
+        }
+       //根据技术等级查询单价信息
+        NtLeaveInfo levelInfo = leaveInfoMapper.selectLeaveInfoBylevel(custType,perInProject.getWorkLevel());
+        if(StringUtils.isEmpty(levelInfo)) {
+            return 0.0;
+        }
+            parice =levelInfo.getLevelPrice();
 
-
-
-
-
-
-
+        return parice;
+    }
 
 
 

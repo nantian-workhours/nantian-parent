@@ -105,6 +105,19 @@
     from nt_leave_info
     WHERE PRICE_ID = #{priceId}
   </select>
+
+
+  <select id="selectLeaveInfoBylevel" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from nt_leave_info
+    WHERE  CUST_TYPE=#{custType}
+    and  WORK_LEAVE =#{workLevel}
+
+  </select>
+
+
+
   <delete id="deleteByExample" parameterType="cn.com.nantian.pojo.NtLeaveInfoExample" >
     delete from nt_leave_info
     <if test="_parameter != null" >

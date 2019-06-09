@@ -214,6 +214,20 @@
     where CUST_TYPE = #{custType,jdbcType=INTEGER}
   </select>
 
+
+  <select id="selectByPerIdAndDate" resultMap="BaseResultMap"   >
+    select
+    <include refid="Base_Column_List" />
+    from nt_per_in_project
+    where PER_ID = #{perId,jdbcType=INTEGER}
+   and CUST_TYPE = #{custType}
+   and PROJECT_BEGDATE &lt;= #{date ,jdbcType=REAL}
+  and PROJECT_ENDDATE &gt;=#{date ,jdbcType=REAL}
+    and STATUS=0
+
+  </select>
+
+
   <select id="selectByIdNoAndproNum" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />

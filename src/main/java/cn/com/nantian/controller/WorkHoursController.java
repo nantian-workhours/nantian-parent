@@ -69,7 +69,7 @@ public class WorkHoursController {
                 Map<Object ,Object> resultMap = workHoursService.statisticsWorkHours( custType, startDate,  endDate);
                 return ResponseData.ok().putDataValue("code",resultMap);
             } catch (Exception e) {
-                return ResponseData.isfailed().putDataValue("error",e.toString());
+                return ResponseData.isfailed().putDataValue("error","system error");
             }
         }else{
             return ResponseData.isfailed().putDataValue("data","Customer Type cannot be empty");
@@ -230,7 +230,7 @@ public class WorkHoursController {
                         return ResponseData.isfailed().putDataValue("status","update failed");
                     }
                 } catch ( Exception e) {
-                    return ResponseData.isfailed().putDataValue("data",e.toString());
+                    return ResponseData.isfailed().putDataValue("data","system error");
                 }
 
 

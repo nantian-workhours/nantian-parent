@@ -4,11 +4,14 @@ import cn.com.nantian.pojo.NtPerInProject;
 import cn.com.nantian.pojo.NtPerInProjectExample;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface NtPerInProjectMapper {
 
     List<NtPerInProject> queryStatisticsNumByCustType(NtPerInProject perInProject);
+
+    NtPerInProject selectByPerIdAndDate( @Param("perId")int perId,@Param("custType")String  custType,@Param("date")Date date);
 
 
     List<NtPerInProject> queryNtPerInProjectList(NtPerInProject perInProject);

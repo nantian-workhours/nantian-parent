@@ -4,6 +4,7 @@ import cn.com.nantian.pojo.NtLeaveInfo;
 import cn.com.nantian.pojo.NtLeaveInfoExample;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface NtLeaveInfoMapper {
@@ -32,6 +33,10 @@ public interface NtLeaveInfoMapper {
      **/
     NtLeaveInfo selectLeaveInfo(int priceId);
     int countByExample(NtLeaveInfoExample example);
+
+
+   NtLeaveInfo selectLeaveInfoBylevel(@Param("custType")String custType,@Param("workLevel")String workLevel);
+
 
     int deleteByExample(NtLeaveInfoExample example);
 
