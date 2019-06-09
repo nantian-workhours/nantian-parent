@@ -449,13 +449,13 @@ public class WorkHourceImpl implements WorkHoursService{
 //                            workMap.put(cal.get(Calendar.DAY_OF_MONTH),list);//添加平时工作日
                             workMap.put(date,list);//添加平时工作日
                         }
-                        if(workMap==null){
+//                        if(workMap==null){
                             workMap.put("workingDays",Math.floor(days));//向下取整 当月天数
                             workMap.put("workingHours",Math.floor(daysHours));//向下取整  当月工时数
                             workMap.put("custType","中国人寿");
                             workMap.put("allHours",workTime);
                             workMap.put("addedHours",addedHours);
-                        }
+//                        }
 
                             map.put(strDate, workMap);
 
@@ -511,9 +511,9 @@ public class WorkHourceImpl implements WorkHoursService{
                                 }else{
                                     list.add(0,workingHours.getNormalHours());//添加正常工时
                                     list.add(1,workingHours.getOvertimeHours());//添加加班工时
-//                                workTime += workingHours.getNormalHours();//正常工时累加
-//
-//                                addedHours += workingHours.getOvertimeHours();//加班工时累加
+                                workTime += workingHours.getNormalHours();//正常工时累加
+
+                                addedHours += workingHours.getOvertimeHours();//加班工时累加
                                 }
                                 workMap.put(workingHours.getWorkDate(),list);//添加平时工作日
 
@@ -521,11 +521,11 @@ public class WorkHourceImpl implements WorkHoursService{
                         }
 
 //                        if(workMap==null) {
-//                            workMap.put("workingDays", Math.floor(days));//向下取整 当月天数
-//                            workMap.put("workingHours", Math.floor(daysHours));//向下取整  当月工时数
-//                            workMap.put("custType", "中国银行");
-//                            workMap.put("allHours", workTime);
-//                            workMap.put("addedHours", addedHours);
+                            workMap.put("workingDays", Math.floor(days));//向下取整 当月天数
+                            workMap.put("workingHours", Math.floor(daysHours));//向下取整  当月工时数
+                            workMap.put("custType", "中国银行");
+                            workMap.put("allHours", workTime);
+                            workMap.put("addedHours", addedHours);
 //                        }
 
                             map.put(strDate, workMap);
@@ -663,13 +663,13 @@ public class WorkHourceImpl implements WorkHoursService{
                             }
 
                         }
-                    if(workMap==null) {
+//                    if(workMap==null) {
                         workMap.put("workingDays", Math.floor(days));//向下取整 当月天数
                         workMap.put("workingHours", Math.floor(daysHours));//向下取整  当月工时数
 //                        workMap.put("custType","中国银行");
                         workMap.put("allHours", workTime);
                         workMap.put("addedHours", addedHours);
-                    }
+//                    }
 
                         map.put(strDate, workMap);
 
