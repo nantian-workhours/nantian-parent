@@ -537,7 +537,7 @@ public class WorkHourceImpl implements WorkHoursService{
                 e.printStackTrace();
                 return  new HashMap<>();
             }
-        }else if(custType==null ||"".equals(custType)){//如果客户类型为空
+        }else if( StringUtils.isEmpty(custType)){//如果客户类型为空
 
             double days=0.0;//初始化当月天数
             double daysHours=0.0;//初始化当月工时数
