@@ -176,6 +176,16 @@
   </select>
   <!--按岗位统计员工人数 end -->
 
+  <select id="queryStatisticsUserNumByDept"  resultMap="BaseResultMap"  parameterType="cn.com.nantian.pojo.NtPersonnel">
+    SELECT POST,COUNT(1) totalNum from nt_personnel
+    <where>
+      <if test="deptId !=null and deptId >0">
+        and nt_personnel.DEPT_ID =#{deptId}
+      </if>
+    </where>
+    GROUP BY POST
+  </select>
+
   <select id="queryPersonnelList" parameterType="cn.com.nantian.pojo.NtPersonnel" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />,

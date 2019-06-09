@@ -8,6 +8,10 @@ import java.util.Map;
 
 public interface UserService {
 
+    public Map<String,Object> getStatisticsUserNum(NtPersonnel personnel);
+
+    List<NtPersonnel> queryStatisticsUserNumByDept(NtPersonnel personnel);
+
     Map<String,Object> getStatisticalPersonnelNum(NtPersonnel ntPersonnel);
 
     NtPersonnel queryStatisticalPersonnelNum(NtPersonnel personnel);

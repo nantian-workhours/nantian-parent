@@ -1,6 +1,7 @@
 package cn.com.nantian.pojo;
 
 import lombok.Data;
+import net.spy.memcached.transcoders.IntegerTranscoder;
 
 import java.util.Date;
 
@@ -77,7 +78,7 @@ public class NtPersonnel {
     /**状态说明（在职 或 离职）*/
     private String workStatus;
     /**人数总计*/
-    private String totalNum;
+    private Integer totalNum;
     /**项目编号*/
     private Integer projectNumber;
 

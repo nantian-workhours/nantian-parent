@@ -50,6 +50,7 @@ public class InProjectServiceImpl implements InProjectService {
                 for (NtPerInProject perInProject2:ntPerInProjectList){
                     if (dicCode.equals(perInProject2.getCustType())){
                         totalNum=perInProject2.getTotalNum();
+                        break;
                     }
                 }
                 map.put(ParamUntil.cust+"_"+dicCode,totalNum);

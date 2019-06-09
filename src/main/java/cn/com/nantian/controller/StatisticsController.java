@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -112,7 +113,7 @@ public class StatisticsController {
 
 
     /**
-     * @description: 根据客户类别分类 统计员工人数
+     * @description: 根据客户类别分类 -统计员工人数
      * @auther: Mr.Wind
      * @date: 2019/5/22 14:14
      * @param:  [request]
@@ -124,6 +125,25 @@ public class StatisticsController {
         try {
             Map<String,Object> data=inProjectService.getStatisticsNumByCustType(perInProject);
             return ResponseData.ok().putDataValue("data", data);
+        } catch (Exception e) {
+            logger.error("StatisticsController.getUserStatistics", e);
+            return ResponseData.forbidden();
+        }
+    }
+
+    /**
+     * @description: 根据部门名称 -统计员工人数
+     * @auther: Mr.Wind
+     * @date: 2019/5/22 14:14
+     * @param:  [request]
+     * @return: ResponseData
+     **/
+    @RequestMapping("/statistics/dept/user")
+    @ResponseBody
+    public ResponseData getUserStatisticsDept(@ModelAttribute("ntPersonnel") NtPersonnel personnel) {
+        try {
+            Map<String, Object> statisticsUserNum = userService.getStatisticsUserNum(personnel);
+            return ResponseData.ok().putDataValue("data", statisticsUserNum);
         } catch (Exception e) {
             logger.error("StatisticsController.getUserStatistics", e);
             return ResponseData.forbidden();

@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 public interface NtPersonnelMapper {
 
+    List<NtPersonnel> queryStatisticsUserNumByDept(NtPersonnel personnel);
+
     NtPersonnel queryStatisticalPersonnelNum(NtPersonnel personnel);
 
     int countByExample(NtPersonnelExample example);

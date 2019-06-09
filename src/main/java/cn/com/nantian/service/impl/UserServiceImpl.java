@@ -7,10 +7,12 @@ import cn.com.nantian.common.RegExpressionUtils;
 import cn.com.nantian.mapper.NtPerAliasMapper;
 import cn.com.nantian.mapper.NtPersonnelMapper;
 import cn.com.nantian.mapper.PersonnelItemMapper;
+import cn.com.nantian.pojo.NtDepartment;
 import cn.com.nantian.pojo.NtDictionariesKey;
 import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.PersonnelItem;
 import cn.com.nantian.pojo.entity.ResponseData;
+import cn.com.nantian.service.DepartmentService;
 import cn.com.nantian.service.DictionariesService;
 import cn.com.nantian.service.UserService;
 import org.springframework.stereotype.Service;
@@ -30,7 +32,7 @@ import java.util.Map;
   * @date: 2019/4/29 14:33
   **/
 @Service
-public class UserImpl implements UserService {
+public class UserServiceImpl implements UserService {
 
     @Resource
     private NtPersonnelMapper personnelMapper;
@@ -43,6 +45,33 @@ public class UserImpl implements UserService {
 
     @Resource
     private DictionariesService dictionariesService;
+
+
+    @Override
+    public Map<String,Object> getStatisticsUserNum(NtPersonnel personnel){
+        Map<String, Object> map = new HashMap<>();
+        List<NtDictionariesKey> dictionariesList = dictionariesService.selectDictionariesByType(ParamUntil.POST);
+        List<NtPersonnel> ntPersonnelList = personnelMapper.queryStatisticsUserNumByDept(personnel);
+        if (ObjectUtils.isNotNull(dictionariesList) && ObjectUtils.isNotNull(ntPersonnelList)){
+            for (NtDictionariesKey dictionaries:dictionariesList){
+                String dicCode=dictionaries.getDicCode();
+                int totalNum=0;
+                for (NtPersonnel ntPersonnel:ntPersonnelList){
+                    if (dicCode.equals(ntPersonnel.getPost())){
+                        totalNum=ntPersonnel.getTotalNum();
+                        break;
+                    }
+                }
+                map.put(ParamUntil.POST+"_"+dicCode,totalNum);
+            }
+        }
+        return map;
+    }
+
+    @Override
+    public List<NtPersonnel> queryStatisticsUserNumByDept(NtPersonnel personnel) {
+        return personnelMapper.queryStatisticsUserNumByDept(personnel);
+    }
 
     /**
       * @description: 按岗位统计员工人数
