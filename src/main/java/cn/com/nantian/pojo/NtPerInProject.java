@@ -56,6 +56,8 @@ public class NtPerInProject {
     private String workStatus;
     /**总人数*/
     private Integer totalNum;
+    /**部门id*/
+    private String deptId;
 
 
 

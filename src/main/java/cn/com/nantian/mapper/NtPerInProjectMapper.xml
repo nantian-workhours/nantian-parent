@@ -140,6 +140,20 @@
     GROUP BY CUST_TYPE
   </select>
 
+  <select id="queryStatisticsUserNum" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProject">
+    SELECT WORK_LEVEL,COUNT(1) totalNum from nt_per_in_project
+    LEFT JOIN nt_personnel p ON  p.PER_ID=nt_per_in_project.PER_ID
+    <where>
+      <if test="custType != null and custType !='' " >
+        AND nt_per_in_project.CUST_TYPE = #{custType}
+      </if>
+      <if test="deptId != null and deptId >0 " >
+        AND  p.DEPT_ID = #{deptId}
+      </if>
+    </where>
+    GROUP BY WORK_LEVEL
+  </select>
+
 
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProjectExample" >
     select

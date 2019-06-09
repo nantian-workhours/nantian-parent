@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -38,9 +37,15 @@ public class StatisticsController {
     public void initBindNtLeave(HttpServletRequest request, ServletRequestDataBinder binder) {
         binder.setFieldDefaultPrefix("ntLeave.");
     }
+
     @InitBinder("ntPersonnel")
     public void initBindNtPersonnel(HttpServletRequest request, ServletRequestDataBinder binder) {
         binder.setFieldDefaultPrefix("ntPersonnel.");
+    }
+
+    @InitBinder("ntPerInProject")
+    public void initBindNtPerInProject(HttpServletRequest request, ServletRequestDataBinder binder) {
+        binder.setFieldDefaultPrefix("ntPerInProject.");
     }
 
 
@@ -143,6 +148,25 @@ public class StatisticsController {
     public ResponseData getUserStatisticsDept(@ModelAttribute("ntPersonnel") NtPersonnel personnel) {
         try {
             Map<String, Object> statisticsUserNum = userService.getStatisticsUserNum(personnel);
+            return ResponseData.ok().putDataValue("data", statisticsUserNum);
+        } catch (Exception e) {
+            logger.error("StatisticsController.getUserStatistics", e);
+            return ResponseData.forbidden();
+        }
+    }
+
+    /**
+      * @description: 根据客户类型、部门名称查询时-统计员工人数
+      * @auther: Mr.Wind
+      * @date: 2019/6/9 12:33
+      * @param:  [perInProject]
+      * @return: cn.com.nantian.pojo.entity.ResponseData
+      **/
+    @RequestMapping("/statistics/cusType/dept/user")
+    @ResponseBody
+    public ResponseData getUserStatisticsCusTypeAndDept(@ModelAttribute("ntPerInProject") NtPerInProject perInProject) {
+        try {
+            Map<String, Object> statisticsUserNum = inProjectService.getStatisticsUserNum(perInProject);
             return ResponseData.ok().putDataValue("data", statisticsUserNum);
         } catch (Exception e) {
             logger.error("StatisticsController.getUserStatistics", e);

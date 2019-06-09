@@ -12,6 +12,10 @@ import java.util.Map;
   **/
 public interface InProjectService {
 
+    public Map<String,Object> getStatisticsUserNum(NtPerInProject perInProject);
+
+    List<NtPerInProject> queryStatisticsUserNum(NtPerInProject perInProject);
+
     /**
      * @description: 根据客户分类 统计员人数
      * @auther: Mr.Wind

@@ -31,6 +31,32 @@ public class InProjectServiceImpl implements InProjectService {
     @Resource
     private NtDictionariesMapper dictionariesMapper;
 
+    public Map<String,Object> getStatisticsUserNum(NtPerInProject perInProject){
+        Map<String, Object> map = new HashMap<>();
+        List<NtDictionariesKey> dictionariesList = dictionariesMapper.selectByType(ParamUntil.dc);
+        List<NtPerInProject> ntPerInProjectList = perInProjectMapper.queryStatisticsUserNum(perInProject);
+        if (ObjectUtils.isNotNull(dictionariesList) && ObjectUtils.isNotNull(ntPerInProjectList)){
+            for (NtDictionariesKey dictionaries:dictionariesList){
+                String dicCode=dictionaries.getDicCode();
+                int totalNum=0;
+                for (NtPerInProject ntPerInProject:ntPerInProjectList){
+                    if (dicCode.equals(ntPerInProject.getWorkLevel())){
+                        totalNum=ntPerInProject.getTotalNum();
+                        break;
+                    }
+                }
+                map.put(ParamUntil.dc+"_"+dicCode,totalNum);
+            }
+        }
+        return map;
+    }
+
+
+    @Override
+    public List<NtPerInProject> queryStatisticsUserNum(NtPerInProject perInProject) {
+        return perInProjectMapper.queryStatisticsUserNum(perInProject);
+    }
+
     /**
       * @description: 根据客户分类 统计员人数
       * @auther: Mr.Wind

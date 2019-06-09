@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface NtPerInProjectMapper {
 
+    List<NtPerInProject> queryStatisticsUserNum(NtPerInProject perInProject);
+
     List<NtPerInProject> queryStatisticsNumByCustType(NtPerInProject perInProject);
 
     NtPerInProject selectByPerIdAndDate( @Param("perId")int perId,@Param("custType")String  custType,@Param("date")Date date);
