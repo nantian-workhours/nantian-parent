@@ -188,7 +188,6 @@ public class UserServiceImpl implements UserService {
         }
         //设置员工的初始化密码
         personnel.setPassword(DigestUtils.md5DigestAsHex("nt0000".getBytes()));
-        //设置用户的权限,超级管理员->0,管理员->1,普通用户->2
         return personnelMapper.insert(personnel);
     }
 

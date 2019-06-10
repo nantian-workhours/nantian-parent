@@ -37,7 +37,7 @@ public class UserAgentUtil {
 	public static void setUserJurisdiction(HttpServletRequest request,NtPersonnel personnel){
 		NtPersonnel ntPersonnel=SingletonLoginUtils.getSysUser(request);
 		if (ObjectUtils.isNotNull(ntPersonnel)){
-			if (ntPersonnel.getJurisdiction().equals("2")){
+			if (ntPersonnel.getJurisdiction().equals("0")){
 				personnel.setPerId(ntPersonnel.getPerId());
 			}
 		}
@@ -46,7 +46,7 @@ public class UserAgentUtil {
 	public static void setUserJurisdiction(HttpServletRequest request, NtPerAlias perAlias){
 		NtPersonnel ntPersonnel=SingletonLoginUtils.getSysUser(request);
 		if (ObjectUtils.isNotNull(ntPersonnel)){
-			if (ntPersonnel.getJurisdiction().equals("2")){
+			if (ntPersonnel.getJurisdiction().equals("0")){
 				perAlias.setPerId(ntPersonnel.getPerId());
 			}
 		}
@@ -55,7 +55,7 @@ public class UserAgentUtil {
 	public static void setUserJurisdiction(HttpServletRequest request, NtPerInProject perInProject){
 		NtPersonnel ntPersonnel=SingletonLoginUtils.getSysUser(request);
 		if (ObjectUtils.isNotNull(ntPersonnel)){
-			if (ntPersonnel.getJurisdiction().equals("2")){
+			if (ntPersonnel.getJurisdiction().equals("0")){
 				perInProject.setPerId(ntPersonnel.getPerId());
 			}
 		}
@@ -64,7 +64,7 @@ public class UserAgentUtil {
 	public static void setUserJurisdiction(HttpServletRequest request, NtLeave leave){
 		NtPersonnel ntPersonnel=SingletonLoginUtils.getSysUser(request);
 		if (ObjectUtils.isNotNull(ntPersonnel)){
-			if (ntPersonnel.getJurisdiction().equals("2")){
+			if (ntPersonnel.getJurisdiction().equals("0")){
 				leave.setPerId(ntPersonnel.getPerId());
 			}
 		}
@@ -73,7 +73,7 @@ public class UserAgentUtil {
 	public static void setUserJurisdiction(HttpServletRequest request, NtHolInfo holInfo){
 		NtPersonnel ntPersonnel=SingletonLoginUtils.getSysUser(request);
 		if (ObjectUtils.isNotNull(ntPersonnel)){
-			if (ntPersonnel.getJurisdiction().equals("2")){
+			if (ntPersonnel.getJurisdiction().equals("0")){
 				holInfo.setPerId(ntPersonnel.getPerId());
 			}
 		}

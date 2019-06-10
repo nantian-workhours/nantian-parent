@@ -52,7 +52,7 @@ public class NtPersonnel {
     private String nativePlace;
     /**婚姻*/
     private String marriageStatus;
-    /**权限*/
+    /**权限 0 普通用户;1 管理员;2 超级管理员*/
     private String jurisdiction;
     //===============================
 

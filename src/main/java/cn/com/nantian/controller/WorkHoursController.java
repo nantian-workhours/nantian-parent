@@ -88,7 +88,7 @@ public class WorkHoursController {
         //获取登录人的姓名
 //        String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
         //判断权限是否许可
-        if(Integer.valueOf(jurisdiction) <= 1){
+        if(Integer.valueOf(jurisdiction) >0){
 
             File tempFile =new File( ParamUntil.excelPath1+"\\"+myfile.getOriginalFilename());
             if (myfile != null){
