@@ -10,6 +10,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface NtWorkingHoursMapper {
+
+    NtWorkingHours queryUserWorkHours(NtWorkingHoursKey key);
+
     Float queryMonthWorkHours(NtWorkingHoursKey key);
 
     int queryMonthWorkDays(NtWorkingHoursKey key);

@@ -1,17 +1,19 @@
 package cn.com.nantian.service;
 
-import cn.com.nantian.pojo.NtPerAlias;
 import cn.com.nantian.pojo.NtWorkingHours;
 import cn.com.nantian.pojo.NtWorkingHoursKey;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.xml.crypto.Data;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 //工时管理类
 public interface WorkHoursService {
+
+    public NtWorkingHours queryUserWorkHours(int perId,Date workDate);
+
+
+    NtWorkingHours queryUserWorkHours(NtWorkingHoursKey key);
 
     /**
       * @description: 查询本月加班总小时数

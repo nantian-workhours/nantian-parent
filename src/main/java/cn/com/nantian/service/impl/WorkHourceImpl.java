@@ -36,7 +36,6 @@ public class WorkHourceImpl implements WorkHoursService{
 
     @Resource
     private NtWorkingHoursMapper workingHoursMapper;
-
     @Resource
     private NtPerAliasMapper perAliasMapper;
     @Resource
@@ -49,9 +48,21 @@ public class WorkHourceImpl implements WorkHoursService{
     private  NtPersonnelMapper personnelMapper;
     @Resource
     private NtPerInProjectMapper perInProjectMapper;
-
     @Resource
     private NtLeaveInfoMapper leaveInfoMapper;
+
+    @Override
+    public NtWorkingHours queryUserWorkHours(int perId,Date workDate) {
+        NtWorkingHoursKey work = new NtWorkingHoursKey();
+        work.setPerId(perId);
+        work.setWorkDate(workDate);
+        return workingHoursMapper.queryUserWorkHours(work);
+    }
+
+    @Override
+    public NtWorkingHours queryUserWorkHours(NtWorkingHoursKey key) {
+        return workingHoursMapper.queryUserWorkHours(key);
+    }
 
     /**
      * @description: 查询本月加班总小时数
