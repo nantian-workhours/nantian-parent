@@ -2,6 +2,7 @@ package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtPerAlias;
 import cn.com.nantian.pojo.NtWorkingHours;
+import cn.com.nantian.pojo.NtWorkingHoursKey;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.crypto.Data;
@@ -11,6 +12,24 @@ import java.util.Map;
 
 //工时管理类
 public interface WorkHoursService {
+
+    /**
+      * @description: 查询本月加班总小时数
+      * @auther: Mr.Wind
+      * @date: 2019/6/11 10:35
+      * @param:  [key]
+      * @return: Float
+      **/
+    Float queryMonthWorkHours(NtWorkingHoursKey key);
+
+    /**
+      * @description: 查询本月正常上班总天数
+      * @auther: Mr.Wind
+      * @date: 2019/6/11 10:36
+      * @param:  [key]
+      * @return: int
+      **/
+    int queryMonthWorkDays(NtWorkingHoursKey key);
 
 
     /**

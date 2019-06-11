@@ -92,6 +92,14 @@
     </where>
     order by nt_leave.LEAVE_ID desc
   </select>
+
+  <select id="queryMonthLeaveCount" parameterType="cn.com.nantian.pojo.NtLeave" resultType="java.lang.Float">
+    select IFNULL(SUM(LEAVE_COUNT), 0) FROM nt_leave
+    where PER_ID=#{perId}
+    and <![CDATA[DATE_FORMAT(BEG_DATE, '%Y-%m-%d')>=  DATE_FORMAT(#{begDate}, '%Y-%m-%d') ]]>
+    and <![CDATA[DATE_FORMAT(BEG_DATE, '%Y-%m-%d')<=  DATE_FORMAT(#{endDate}, '%Y-%m-%d') ]]>
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

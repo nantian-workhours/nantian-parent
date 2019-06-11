@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface NtLeaveMapper {
 
+    Float queryMonthLeaveCount(NtLeave ntLeave);
+
+
     List<NtLeave> queryStatisticalLeave(NtLeave ntLeave);
 
     NtLeave queryStatisticalLeaveTotal(NtLeave ntLeave);

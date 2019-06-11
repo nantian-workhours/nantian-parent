@@ -9,6 +9,15 @@ import java.util.Map;
 
 public interface LeaveService {
 
+    /**
+      * @description: 查询本月请假总天数
+      * @auther: Mr.Wind
+      * @date: 2019/6/11 10:38
+      * @param:  [ntLeave]
+      * @return: Float
+      **/
+    Float queryMonthLeaveCount(NtLeave ntLeave);
+
     List<NtLeave> getStatisticalLeave(NtLeave ntLeave);
 
     List<NtLeave> queryStatisticalLeave(NtLeave ntLeave);

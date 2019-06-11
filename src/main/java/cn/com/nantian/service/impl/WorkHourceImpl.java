@@ -53,7 +53,28 @@ public class WorkHourceImpl implements WorkHoursService{
     @Resource
     private NtLeaveInfoMapper leaveInfoMapper;
 
-
+    /**
+     * @description: 查询本月加班总小时数
+     * @auther: Mr.Wind
+     * @date: 2019/6/11 10:35
+     * @param:  [key]
+     * @return: Float
+     **/
+    @Override
+    public Float queryMonthWorkHours(NtWorkingHoursKey key) {
+        return workingHoursMapper.queryMonthWorkHours(key);
+    }
+    /**
+     * @description: 查询本月正常上班总天数
+     * @auther: Mr.Wind
+     * @date: 2019/6/11 10:36
+     * @param:  [key]
+     * @return: int
+     **/
+    @Override
+    public int queryMonthWorkDays(NtWorkingHoursKey key) {
+        return workingHoursMapper.queryMonthWorkDays(key);
+    }
 
     /**
      * 工时统计

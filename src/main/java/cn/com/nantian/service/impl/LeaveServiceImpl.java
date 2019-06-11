@@ -50,6 +50,18 @@ public class LeaveServiceImpl implements LeaveService {
     @Resource
     private UserService userService;
 
+    /**
+     * @description: 查询本月请假总天数
+     * @auther: Mr.Wind
+     * @date: 2019/6/11 10:38
+     * @param:  [ntLeave]
+     * @return: Float
+     **/
+    @Override
+    public Float queryMonthLeaveCount(NtLeave ntLeave) {
+        return leaveMapper.queryMonthLeaveCount(ntLeave);
+    }
+
     @Override
     public List<NtLeave> getStatisticalLeave(NtLeave ntLeave){
         return this.queryStatisticalLeave(ntLeave);

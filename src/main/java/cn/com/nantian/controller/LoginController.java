@@ -2,15 +2,9 @@ package cn.com.nantian.controller;
 
 
 import cn.com.nantian.common.*;
-import cn.com.nantian.pojo.LoginLog;
-import cn.com.nantian.pojo.NtLeave;
-import cn.com.nantian.pojo.NtPersonnel;
-import cn.com.nantian.pojo.NtPersonnelApply;
+import cn.com.nantian.pojo.*;
 import cn.com.nantian.pojo.entity.ResponseData;
-import cn.com.nantian.service.LeaveService;
-import cn.com.nantian.service.LoginLogService;
-import cn.com.nantian.service.NtPersonnelApplyService;
-import cn.com.nantian.service.UserService;
+import cn.com.nantian.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -20,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +37,9 @@ public class LoginController extends BaseController{
     private LeaveService leaveService;
     @Resource
     private NtPersonnelApplyService personnelApplyService;
+    @Resource
+    private WorkHoursService workHoursService;
+
 
     /**
       * @description:  系统登录
@@ -66,22 +64,22 @@ public class LoginController extends BaseController{
             dataMap.put("personnel",personnel);
             WebUtils.setCookie(response, SysUserConstants.sidadmin, uuid,2);
             this.setSessionAttribute(request,uuid,personnel);
-            //本月请假天数
+            //本月请假总天数
             NtLeave ntLeave=new NtLeave();
+            ntLeave.setPerId(personnel.getPerId());
             ntLeave.setBegDate(DateUtils.getMonthFirstDayDate());
             ntLeave.setEndDate(DateUtils.getMonthLastDayDate());
-            List<NtLeave> ntLeaveList = leaveService.selectLeaveList(ntLeave);
-            Float leaveDays=0f;
-            if (ObjectUtils.isNotNull(ntLeaveList)){
-                for (NtLeave leave:ntLeaveList){
-                    leaveDays+=leave.getLeaveCount();
-                }
-            }
+            Float leaveDays = leaveService.queryMonthLeaveCount(ntLeave);
             dataMap.put("leaveDays",leaveDays);
-            //本月加班小时数
-            dataMap.put("workHours","30");
-            //本月正常上班天数
-            dataMap.put("workDays","20");
+            NtWorkingHoursKey work=new NtWorkingHoursKey();
+            work.setPerId(personnel.getPerId());
+            work.setWorkDate(new Date());
+            //本月加班总小时数
+            Float workHours = workHoursService.queryMonthWorkHours(work);
+            dataMap.put("workHours",workHours);
+            //本月正常上班总天数
+            int workDays = workHoursService.queryMonthWorkDays(work);
+            dataMap.put("workDays",workDays);
             //代办事项-异议申请待审核
             NtPersonnelApply personnelApply=new NtPersonnelApply();
             personnelApply.setApplyStatus(ParamUntil.R);

@@ -84,6 +84,23 @@
       order by ${orderByClause}
     </if>
   </select>
+
+  <select id="queryMonthWorkHours" resultType="java.lang.Float"  parameterType="cn.com.nantian.pojo.NtWorkingHoursKey" >
+    select
+    IFNULL(SUM(OVERTIME_HOURS), 0)
+    from nt_working_hours
+    where PER_ID = #{perId}
+    and <![CDATA[DATE_FORMAT(WORK_DATE, '%Y-%m')>=  DATE_FORMAT(#{workDate}, '%Y-%m') ]]>
+  </select>
+
+  <select id="queryMonthWorkDays" resultType="java.lang.Integer"  parameterType="cn.com.nantian.pojo.NtWorkingHoursKey" >
+    select
+    COUNT(1)
+    from nt_working_hours
+    where PER_ID = #{perId}
+    and <![CDATA[DATE_FORMAT(WORK_DATE, '%Y-%m')>=  DATE_FORMAT(#{workDate}, '%Y-%m') ]]>
+  </select>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtWorkingHoursKey" >
     select 
     <include refid="Base_Column_List" />
