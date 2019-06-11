@@ -67,14 +67,13 @@ public class LoginController extends BaseController{
             //本月请假总天数
             NtLeave ntLeave=new NtLeave();
             ntLeave.setPerId(personnel.getPerId());
-            ntLeave.setBegDate(DateUtils.getMonthFirstDayDate());
-            ntLeave.setEndDate(DateUtils.getMonthLastDayDate());
+            ntLeave.setBegDate(new Date());
             Float leaveDays = leaveService.queryMonthLeaveCount(ntLeave);
             dataMap.put("leaveDays",leaveDays);
+            //本月加班总小时数
             NtWorkingHoursKey work=new NtWorkingHoursKey();
             work.setPerId(personnel.getPerId());
             work.setWorkDate(new Date());
-            //本月加班总小时数
             Float workHours = workHoursService.queryMonthWorkHours(work);
             dataMap.put("workHours",workHours);
             //本月正常上班总天数
