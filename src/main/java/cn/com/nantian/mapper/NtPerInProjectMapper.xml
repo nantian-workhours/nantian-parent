@@ -137,6 +137,8 @@
   <select id="queryStatisticsNumByCustType" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtPerInProject">
     select CUST_TYPE,COUNT(DISTINCT PER_ID) totalNum
     from nt_per_in_project
+    where <![CDATA[ PROJECT_BEGDATE<=NOW()]]>
+    AND (<![CDATA[ PROJECT_ENDDATE>= NOW()]]>  or  PROJECT_ENDDATE is null )
     GROUP BY CUST_TYPE
   </select>
 
@@ -144,6 +146,8 @@
     SELECT WORK_LEVEL,COUNT(1) totalNum from nt_per_in_project
     LEFT JOIN nt_personnel p ON  p.PER_ID=nt_per_in_project.PER_ID
     <where>
+      <![CDATA[ nt_per_in_project.PROJECT_BEGDATE<=NOW()]]>
+      AND (<![CDATA[ nt_per_in_project.PROJECT_ENDDATE>= NOW()]]>  or  nt_per_in_project.PROJECT_ENDDATE is null )
       <if test="custType != null and custType !='' " >
         AND nt_per_in_project.CUST_TYPE = #{custType}
       </if>
