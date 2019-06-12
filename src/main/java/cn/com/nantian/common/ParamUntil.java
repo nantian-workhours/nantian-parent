@@ -35,6 +35,7 @@ public class ParamUntil {
     public static String P;  //项目外包
     public static String WORK_STATES;  //在职状态
     public static String POST;  //岗位
+    public static String imagePath;//图片地址
 
 
     static {
@@ -73,6 +74,7 @@ public class ParamUntil {
             P=prop.getProperty("P");
             WORK_STATES=prop.getProperty("WORK_STATES");
             POST=prop.getProperty("POST");
+            imagePath=prop.getProperty("imagePath");
 
         } catch (IOException e) {
             e.printStackTrace();

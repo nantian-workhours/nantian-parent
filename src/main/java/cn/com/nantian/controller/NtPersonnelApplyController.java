@@ -9,6 +9,7 @@ package cn.com.nantian.controller;
 
 import cn.com.nantian.common.DateUtils;
 import cn.com.nantian.common.StringUtils;
+import cn.com.nantian.common.UploadUtil;
 import cn.com.nantian.pojo.NtPersonnelApply;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.NtPersonnelApplyService;
@@ -17,10 +18,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/person/apply")
@@ -44,13 +48,25 @@ public class NtPersonnelApplyController extends BaseController {
      **/
     @RequestMapping("/add")
     @ResponseBody
-    public ResponseData addApply(@ModelAttribute("ntPersonnelApply") NtPersonnelApply personnelApply) {
+    public ResponseData addApply(HttpServletRequest request,
+                                 @ModelAttribute("ntPersonnelApply") NtPersonnelApply personnelApply,
+                                 @RequestParam("myFile") MultipartFile myFile) {
         try {
+            String path = request.getSession().getServletContext().getRealPath("/");
+            System.out.println(path);
             //效验传入的参数值
-            String result = personnelApplyService.checkAttribute(personnelApply);
+            String result = personnelApplyService.checkAttribute(personnelApply,myFile);
             if (StringUtils.isNotEmpty(result)) {
                 return ResponseData.isfailed().putDataValue("error", result);
             }
+            Map<String, Object> stringObjectMap = UploadUtil.doFileUpload(myFile,path);
+            String code=stringObjectMap.get("code").toString();
+            String msg=stringObjectMap.get("msg").toString();
+            if (code.equals("F")){
+                return ResponseData.isfailed().putDataValue("error", msg);
+            }
+            personnelApply.setFilePath(stringObjectMap.get("imagePath").toString());
+            personnelApply.setFileName(stringObjectMap.get("imageName").toString());
             int a = personnelApplyService.insertSelective(personnelApply);
             return ResponseData.ok().putDataValue("添加成功", a);
         } catch (Exception e) {

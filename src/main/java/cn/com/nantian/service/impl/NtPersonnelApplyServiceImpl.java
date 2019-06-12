@@ -14,6 +14,7 @@ import cn.com.nantian.mapper.NtPersonnelApplyMapper;
 import cn.com.nantian.pojo.NtPersonnelApply;
 import cn.com.nantian.service.NtPersonnelApplyService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -43,7 +44,7 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
      * @param: [personnelApply]
      * @return: java.lang.String
      **/
-    public String checkAttribute(NtPersonnelApply personnelApply) throws Exception {
+    public String checkAttribute(NtPersonnelApply personnelApply, MultipartFile file) throws Exception {
         if (ObjectUtils.isNull(personnelApply.getPerId())) {
             return "员工编号 不能为空！";
         }
@@ -81,11 +82,8 @@ public class NtPersonnelApplyServiceImpl implements NtPersonnelApplyService {
         if (StringUtils.isEmpty(personnelApply.getErrDescribe())) {
             return "申请理由 不能为空！";
         }
-        if (StringUtils.isEmpty(personnelApply.getFileName())) {
-            return "附件名称 不能为空！";
-        }
-        if (StringUtils.isEmpty(personnelApply.getFilePath())) {
-            return "附件路径 不能为空！";
+        if (ObjectUtils.isNull(file)){
+            return "附件 不能为空！";
         }
         personnelApply.setApplyStatus("R");//审核中
         return "";

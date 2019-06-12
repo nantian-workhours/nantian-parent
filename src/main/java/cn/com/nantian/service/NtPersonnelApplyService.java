@@ -8,6 +8,7 @@
 package cn.com.nantian.service;
 
 import cn.com.nantian.pojo.NtPersonnelApply;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public interface NtPersonnelApplyService {
      * @param: [personnelApply]
      * @return: java.lang.String
      **/
-    String checkAttribute(NtPersonnelApply personnelApply) throws Exception;
+    String checkAttribute(NtPersonnelApply personnelApply, MultipartFile file) throws Exception;
 
     int deleteByPrimaryKey(Integer applySeq);
 
