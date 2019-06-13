@@ -8,6 +8,7 @@
 package cn.com.nantian.common;
 
 
+import cn.com.nantian.pojo.NtPersonnel;
 import com.oreilly.servlet.multipart.FilePart;
 import com.oreilly.servlet.multipart.MultipartParser;
 import com.oreilly.servlet.multipart.ParamPart;
@@ -24,7 +25,7 @@ import java.util.Map;
 
 public class UploadUtil {
 
-    public static Map<String,Object> doFileUpload(MultipartFile srcFile,String path) throws IOException{
+    public static Map<String,Object> doFileUpload(MultipartFile srcFile, String path) throws IOException{
 
         /*
          * 注意:传入参数时，文件的注解@ReuqestParam("variable") -->variable指:前端的h5的控件的name值.
@@ -56,9 +57,10 @@ public class UploadUtil {
             //3.操作文件对象，写入本地目录的文件中
             //3.1 截取文件后缀
             String fileName = srcFile.getOriginalFilename().substring(srcFile.getContentType().lastIndexOf( ".")+1);
-            fileName=new String(fileName.getBytes("utf-8"),"utf-8");
             //3.2 实例化目标文件，根据当前的操作系统，指定目录文件,
-            destFile = new File(path+File.separator+ParamUntil.imagePath+File.separator+fileName);
+            String key = DateUtils.dateToStr(new Date(), "yyyyMMddhhmmss");
+            String imageType = fileName.substring(fileName.indexOf(".")+1).trim();//逗号后面
+            destFile = new File(path+File.separator+ParamUntil.imagePath+File.separator+key+"."+imageType);
             //3.3 实例化流
             fos = new FileOutputStream(destFile);
             //3.4 获取写入的字节数组,并写入文件
@@ -70,7 +72,7 @@ public class UploadUtil {
             result.put( "code", "S");
             result.put( "msg", "服务调用成功");
             result.put( "path", destFile.getAbsolutePath());
-            result.put( "imagePath",File.separator+ParamUntil.imagePath+File.separator+fileName);
+            result.put( "imagePath",File.separator+ParamUntil.imagePath+File.separator+key+"."+imageType);
             String imageName = fileName.substring(0, fileName.lastIndexOf("."));
             result.put( "imageName", imageName);
             return result;

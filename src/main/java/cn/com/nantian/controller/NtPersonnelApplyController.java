@@ -8,8 +8,10 @@
 package cn.com.nantian.controller;
 
 import cn.com.nantian.common.DateUtils;
+import cn.com.nantian.common.SingletonLoginUtils;
 import cn.com.nantian.common.StringUtils;
 import cn.com.nantian.common.UploadUtil;
+import cn.com.nantian.pojo.NtPersonnel;
 import cn.com.nantian.pojo.NtPersonnelApply;
 import cn.com.nantian.pojo.entity.ResponseData;
 import cn.com.nantian.service.NtPersonnelApplyService;
