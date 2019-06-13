@@ -26,40 +26,51 @@ import java.util.Map;
 public class UploadUtil {
 
     public static Map<String,Object> doFileUpload(MultipartFile srcFile, String path) throws IOException{
-
         /*
          * 注意:传入参数时，文件的注解@ReuqestParam("variable") -->variable指:前端的h5的控件的name值.
-         *
          * 文件处理功能: 1.将获取的字节数组转化为文件对象，并保存在本地目录中;
-         *
          * 文件处理思路: 1.将获取的(source)file对象，通过函数获取字节数组；
          * 				2.实例化文件对象和文件输出流；
          * 				3.将字节数组写入文件即可.
-         *
          * 功能难度: 简单.
          */
-
         //1.变量声明
         Map<String,Object> result = null;// 返回结果变量
         FileOutputStream fos = null; 	//写入文件的变量
         File destFile = null;	//写入的目的地文件(distination)
-
         try {
             result = new HashMap<String,Object>();
-
             //2.参数验证
             if(srcFile == null){
-                throw new RuntimeException("上传文件不存在");
+                result.put( "code", "F");
+                result.put( "msg", "上传文件不存在!");
+                return result;
+                //throw new RuntimeException("上传文件不存在!");
             }
             if(srcFile.getBytes().length == 0){
-                throw new RuntimeException("上传文件内容为空");
+                result.put( "code", "F");
+                result.put( "msg", "上传文件内容不能为空!");
+                return result;
+                //throw new RuntimeException("上传文件内容为空!");
+            }
+            boolean isSize = FileUtil.checkFileSize(srcFile.getSize(), 500, "K");
+            if (!isSize){
+                result.put( "code", "F");
+                result.put( "msg", "上传文件不能超过500kb!");
+                return result;
+                //throw new RuntimeException("上传文件不超过500kb!");
             }
             //3.操作文件对象，写入本地目录的文件中
             //3.1 截取文件后缀
             String fileName = srcFile.getOriginalFilename().substring(srcFile.getContentType().lastIndexOf( ".")+1);
-            //3.2 实例化目标文件，根据当前的操作系统，指定目录文件,
-            String key = DateUtils.dateToStr(new Date(), "yyyyMMddhhmmss");
             String imageType = fileName.substring(fileName.indexOf(".")+1).trim();//逗号后面
+            if (!imageType.equals("jpg") && !imageType.equals("png")){
+                result.put( "code", "F");
+                result.put( "msg", "只能上传jpg/png格式文件!");
+                return result;
+            }
+            //3.2 实例化目标文件，根据当前的操作系统，指定目录文件,
+            String key = DateUtils.dateToStr(new Date(), "yyyyMMddHHmmss");
             destFile = new File(path+File.separator+ParamUntil.imagePath+File.separator+key+"."+imageType);
             //3.3 实例化流
             fos = new FileOutputStream(destFile);
@@ -94,7 +105,6 @@ public class UploadUtil {
 
     public static Map<String, String> upload(HttpServletRequest request,
                                              int maxSize, String path) {
-
         //以map形式保存数据 key对应保存的是获取界面上的name名称 value保存的是获取界面上的name对应的值
         Map<String, String> map = new HashMap<String, String>();
         Part part = null;
