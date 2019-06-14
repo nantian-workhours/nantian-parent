@@ -960,7 +960,7 @@ public class WorkHourceImpl implements WorkHoursService{
                         }
                         //根据项目中的名字和客户类别查询用户perId
                         NtPerAlias perAlias = getAliasByCustType(custType, inProjectName);
-                        if (ObjectUtils.isEmpty(perAlias)) {
+                        if (ObjectUtils.isEmpty(perAlias.getPerId())) {
                             msg += "第" + i + "行用户不存在; ";
                             dift++;
                             continue;
@@ -1050,7 +1050,7 @@ public class WorkHourceImpl implements WorkHoursService{
                     String inProjectName = getCellValue(row.getCell((short) 1)).toString();// 用户在项目中的名字
                     //根据项目中的名字和客户类别查询用户perId
                     NtPerAlias perAlias = getAliasByCustType(custType, inProjectName);
-                    if (ObjectUtils.isEmpty(perAlias)) {
+                    if (ObjectUtils.isEmpty(perAlias.getPerId())) {
                         msg += "第" + i + "行用户不存在; ";
                         dift++;
                         continue;
