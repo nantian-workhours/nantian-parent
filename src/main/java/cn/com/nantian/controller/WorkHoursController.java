@@ -77,10 +77,12 @@ public class WorkHoursController {
 //        String loginName = SecurityContextHolder.getContext().getAuthentication().getName();
         //判断权限是否许可
         if (Integer.valueOf(jurisdiction) > 0) {
-            File tempFile = new File(ParamUntil.excelPath1 + "\\" + myfile.getOriginalFilename());
+            String path = request.getSession().getServletContext().getRealPath("/");
+            File tempFile = new File(path+File.separator+ParamUntil.excelPath+File.separator + myfile.getOriginalFilename());
+            //File tempFile = new File(ParamUntil.excelPath1 + "\\" + myfile.getOriginalFilename());
             if (myfile != null) {
                 String filename = myfile.getOriginalFilename();
-                String a = request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
+                //String a = request.getRealPath("D:/item");//这个没用 ,直接修改配置文件中的路径就可以了
                 try {
                     //将数据查入到库中
                     Map<String, Object> resultMap = workHoursService.importExcel(myfile, custType);
@@ -89,7 +91,7 @@ public class WorkHoursController {
                             return ResponseData.ok().putDataValue("code", resultMap);
                         } else {
                             //保存到服务器的路径
-                            SaveFileFromInputStream(myfile.getInputStream(), a, filename);
+                            SaveFileFromInputStream(myfile.getInputStream(), path, filename);
                             return ResponseData.ok().putDataValue("code", resultMap);
                         }
                     } else {
@@ -118,7 +120,7 @@ public class WorkHoursController {
      */
     public void SaveFileFromInputStream(InputStream stream, String path, String savefile) {
         try {
-            FileOutputStream fs = new FileOutputStream(ParamUntil.excelPath + "/" + savefile);
+            FileOutputStream fs = new FileOutputStream(path+File.separator+ParamUntil.excelPath+File.separator + savefile);
             byte[] buffer = new byte[1024 * 1024];
             int bytesum = 0;
             int byteread = 0;
