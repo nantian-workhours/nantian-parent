@@ -71,4 +71,12 @@ public interface WorkHoursService {
      */
     int  updateWorkHours(NtWorkingHours workingHours);
 
+
+    /**
+     * 异议申请
+     * @param perId
+     * @param startDate
+     * @return
+     */
+    Map<Object,Object> findOneWorkHours(Integer perId ,Date startDate);
 }

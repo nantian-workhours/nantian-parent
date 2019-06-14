@@ -124,12 +124,12 @@
     select count(*) from nt_holiday
     WHERE  BEGIN_DATE >=  #{holidayDate,jdbcType=DATE}
     and END_DATE &lt;= #{holidayDate,jdbcType=DATE}
-    and HOLIDAY_TYPE ="1"
+    and HOLIDAY_TYPE ="H"
   </select>
   <select id="selectByDay" resultType="java.lang.Integer" >
     select count(*) from nt_holiday
     WHERE   BEGIN_DATE >=  #{holidayDate,jdbcType=DATE}
     and END_DATE &gt;= #{holidayDate,jdbcType=DATE}
-    and HOLIDAY_TYPE ="2"
+    and HOLIDAY_TYPE ="W"
   </select>
 </mapper>

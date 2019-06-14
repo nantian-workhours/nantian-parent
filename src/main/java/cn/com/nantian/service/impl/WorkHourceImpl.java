@@ -201,14 +201,16 @@ public class WorkHourceImpl implements WorkHoursService{
                                     if (dateEndTime.after(simDf.parse("17:00"))) {
                                         workTimeOne += 4;//签退时间在五点之后,正常工时加4
                                         workTime += 4;
-                                    } else if (dateEndTime.after(simDf.parse("19:00"))) {
+                                    }  else {
+                                        workTimeOne += 0;
+                                        workTime += 0;
+                                    }
+
+                                     if (dateEndTime.after(simDf.parse("19:00"))) {
                                         long time = getDatePoor(simDf.parse("19:00"), dateEndTime);
                                         //签退时间在19:00之后,就是加班工时,不足一小时,舍去
                                         addedHoursOne += time;
                                         addedHours += time;
-                                    } else {
-                                        workTimeOne += 0;
-                                        workTime += 0;
                                     }
                                 }
                             }
@@ -509,14 +511,15 @@ public class WorkHourceImpl implements WorkHoursService{
                                     if(dateEndTime.after(simDf.parse("17:00")) ){
                                         workTimeOne += 4;//签退时间在五点之后,正常工时加4
                                         workTime += 4;
-                                    }else if(dateEndTime.after(simDf.parse("19:00")) ){
+                                    }else{
+                                        workTimeOne +=0;
+                                        workTime +=0;
+                                    }
+                                     if(dateEndTime.after(simDf.parse("19:00")) ){
                                         long time = getDatePoor(simDf.parse("19:00"),dateEndTime);
                                         //签退时间在19:00之后,就是加班工时,不足一小时,舍去
                                         addedHoursOne += time;
                                         addedHours += time;
-                                    }else{
-                                        workTimeOne +=0;
-                                        workTime +=0;
                                     }
                                 }
                             }
@@ -648,7 +651,7 @@ public class WorkHourceImpl implements WorkHoursService{
                         //获取当月工时数
                         daysHours = days * 8;
                         List<NtWorkingHours> workingHoursList =null;
-                        if( perId==0 ){
+                        if(  StringUtils.isEmpty(perId)){
                             workingHoursList = workingHoursMapper.selectByDate(mStartDate,mEndDate);
                         }else {
                             //查询这个月的工时信息列表
@@ -720,14 +723,15 @@ public class WorkHourceImpl implements WorkHoursService{
                                         if(dateEndTime.after(simDf.parse("17:00")) ){
                                             workTimeOne += 4;//签退时间在五点之后,正常工时加4
                                             workTime += 4;
-                                        }else if(dateEndTime.after(simDf.parse("19:00")) ){
+                                        }else{
+                                            workTimeOne +=0;
+                                            workTime +=0;
+                                        }
+                                       if(dateEndTime.after(simDf.parse("19:00")) ){
                                             long time = getDatePoor(simDf.parse("19:00"),dateEndTime);
                                             //签退时间在19:00之后,就是加班工时,不足一小时,舍去
                                             addedHoursOne += time;
                                             addedHours += time;
-                                        }else{
-                                            workTimeOne +=0;
-                                            workTime +=0;
                                         }
                                     }
                                 }
@@ -769,11 +773,147 @@ public class WorkHourceImpl implements WorkHoursService{
 
 
     /**
-     * 获取两个时间段时间分钟数
-     * @param nowDate
-     * @param endDate
+     * 异议申请
+     * @param perId
+     * @param startDate
      * @return
      */
+    public  Map<Object,Object> findOneWorkHours(Integer perId ,Date startDate) {
+        //初始化map
+        Map<Object, Object> map = new HashMap<>();
+
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            String startDateStr = sdf.format(startDate);
+            Date mStartDate =sdf.parse(startDateStr);
+
+
+//            for (String strDate:daysList) {
+                float workTime =0; //正常出勤工时
+                float addedHours =0; //加班工时
+                float holHours =0;
+                int count =0;
+
+                if (startDateStr!=null) {
+
+                    NtWorkingHours workingHours =null;
+                    if(  StringUtils.isEmpty(perId)){
+                        return  new HashMap<>();
+                    }else {
+                        //查询这个条数据的工时
+                        workingHours = workingHoursMapper.selectByOne(perId,mStartDate);
+                    }
+                    //循环工时
+//                    for (NtWorkingHours workingHours:workingHoursList) {
+//                        List<Float> list=new ArrayList<>();
+                        Float a = workingHours.getNormalHours();// 正常工时
+                        Float b = workingHours.getOvertimeHours();// 加班工时
+                        if(a!= null || b!=null ){//有直接的加班类型的情况
+//                            list.add(0,a);//添加正常工时
+//                            list.add(1,b);//添加加班工时
+                            workTime = a;//正常工时
+                            addedHours = b;//加班工时
+                            holHours =8 - a; //请假工时
+//                             map.put("workTime",workTime);
+//                             map.put("addedHours",addedHours);
+//                             map.put("holHours",holHours);
+
+                        }else  {//没有加班数据的情况(可以根据签到签退计算,这个是人寿的模板)
+//                            float workTimeOne =0; //正常出勤工时
+//                            float addedHoursOne =0; //加班工时
+
+                            SimpleDateFormat simDf = new SimpleDateFormat("HH:mm");
+                            //判断这一天是不是非工作日加班(例如:五一,周六,周天),如果是节假日加班就直接判断为节假日加班
+                            int t = holidayMapper.countByDay(workingHours.getWorkDate());//判断这一天那是不是节假日
+                            boolean flag = isWeekend(workingHours.getWorkDate());
+
+                            if(t>0 || flag){//这一整天是节假日加班,
+                                String strStartTime = null;
+                                Date dateStartTime = null;
+                                String strEndTime = null;
+                                Date dateEndTime =null;
+
+                                Date startTime =workingHours.getSigninTime() ;//签到时间
+                                Date endTime =workingHours.getSignbackTime() ;//签退时间
+                                if (startTime!=null && endTime!=null) {//处理签到时间
+                                    strStartTime = simDf.format(startTime);
+                                    dateStartTime = simDf.parse(strStartTime);//将时间格式转化
+                                    strEndTime = simDf.format(endTime);
+                                    dateEndTime = simDf.parse(strEndTime);//将时间格式转化
+                                    long time = getDatePoor(dateStartTime,dateEndTime);
+                                    //签到签退两个小时时间相减,不足一小时,舍去
+                                    addedHours += time;
+                                }else{
+                                    addedHours += 0;
+                                }
+
+                            }else{//否则就是工作日工时,正常处理
+                                Date startTime =workingHours.getSigninTime() ;//签到时间
+                                if (startTime!=null) {//处理签到时间
+                                    String strStartTime = simDf.format(startTime);
+                                    Date dateStartTime = simDf.parse(strStartTime);//将时间格式转化
+                                    if(dateStartTime.before(simDf.parse("09:00")) && dateStartTime.after(simDf.parse("05:00")) ){
+                                        workTime += 4;//如果签到时间在九点之前,五点之后,正常工时加4
+
+                                    }else if(dateStartTime.after(simDf.parse("09:00")) && dateStartTime.after(simDf.parse("10:00"))){
+                                        count++;//如果签到时间在九点之后,十点之前,次数加1
+                                        if(count<=3){//如果九点之后签到的次数在九点之后超过三次就不算半天的工时
+//                                            workTimeOne += 4;
+                                            workTime += 4;
+                                        }
+                                    }else{
+//                                        workTimeOne += 0;
+                                        workTime += 0;
+                                    }
+                                }
+                                Date endTime =workingHours.getSignbackTime() ;//签退时间
+                                if (endTime!=null) {//处理签退时间
+                                    String strEndTime = simDf.format(endTime);
+                                    Date dateEndTime = simDf.parse(strEndTime);//将时间格式转化
+                                    if(dateEndTime.after(simDf.parse("17:00")) ){
+//                                        workTimeOne += 4;//签退时间在五点之后,正常工时加4
+                                        workTime += 4;
+                                    }else{
+//                                        workTimeOne +=0;
+                                        workTime +=0;
+                                    }
+
+                                    if(dateEndTime.after(simDf.parse("19:00")) ){
+                                        long time = getDatePoor(simDf.parse("19:00"),dateEndTime);
+                                        //签退时间在19:00之后,就是加班工时,不足一小时,舍去
+//                                        addedHoursOne += time;
+                                        addedHours += time;
+                                    }
+                                }
+                            }
+                            holHours = 8 - workTime; //请假工时
+
+
+                        }
+                    map.put("workTime",workTime);
+                    map.put("addedHours",addedHours);
+                    map.put("holHours",holHours);
+
+
+                }
+
+
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return  new HashMap<>();
+        }
+
+
+    }
+
+
+        /**
+         * 获取两个时间段时间分钟数
+         * @param nowDate
+         * @param endDate
+         * @return
+         */
     private   long getDatePoor( Date nowDate,Date endDate) {
 
         long nd = 1000 * 24 * 60 * 60;//每天毫秒数
