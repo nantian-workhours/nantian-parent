@@ -58,6 +58,6 @@
 	<beans:bean id="UserDetailsService" class="cn.com.nantian.common.UserDetailsServiceImpl">
 		<beans:property name="userService" ref="userService"></beans:property>
 	</beans:bean>
-	<beans:bean id="userService" class="cn.com.nantian.service.impl.UserImpl"></beans:bean>
+	<beans:bean id="userService" class="cn.com.nantian.service.impl.UserServiceImpl"></beans:bean>
 
 </beans:beans>
