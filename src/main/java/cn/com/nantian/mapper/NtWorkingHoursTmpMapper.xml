@@ -70,6 +70,13 @@
   <sql id="Base_Column_List" >
     PER_ID, WORK_DATE, NORMAL_HOURS, OVERTIME_HOURS, SIGNIN_TIME, SIGNBACK_TIME
   </sql>
+
+  <insert id="insertToTemp" parameterType="cn.com.nantian.pojo.NtWorkingHoursTmp" useGeneratedKeys="false">
+    insert into nt_working_hours
+    (select *
+    from nt_working_hours_tmp)
+  </insert>
+
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.com.nantian.pojo.NtWorkingHoursTmpExample" >
     select
     <if test="distinct" >

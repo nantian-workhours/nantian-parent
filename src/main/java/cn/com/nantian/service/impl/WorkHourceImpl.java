@@ -1134,8 +1134,9 @@ public class WorkHourceImpl implements WorkHoursService{
                         suct++;
                     }
                 }
+
                 //查询所有的员工编号
-               List<Integer> perIdList =  workingHoursTmpMapper.selectPerId();
+              /* List<Integer> perIdList =  workingHoursTmpMapper.selectPerId();
                 //查询所有日期
                 List<Date> dateList =  workingHoursTmpMapper.selectWorkDate();
 
@@ -1152,12 +1153,13 @@ public class WorkHourceImpl implements WorkHoursService{
                             map.put("error", "The table has been imported");
                             return map;
                         }
-
                     }
-                }
+                }*/
+
+                //将临时表数据写入工时表
+                workingHoursTmpMapper.insertToTemp();
                 //清空临时表内容
                 workingHoursTmpMapper.truncateTable();
-
                 map.put("rows", rows);//总行数
                 map.put("successNum", suct);//成功条数
                 map.put("failedNum", dift);//失败条数

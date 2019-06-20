@@ -9,6 +9,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface NtWorkingHoursTmpMapper {
+
+    void insertToTemp();
+
     int countByExample(NtWorkingHoursTmpExample example);
 
     int deleteByExample(NtWorkingHoursTmpExample example);
